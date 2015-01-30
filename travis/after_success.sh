@@ -7,11 +7,10 @@ echo "   UserKnownHostsFile=/dev/null" >> ~/.ssh/config;
 if [[ $TRAVIS_PULL_REQUEST == "false" && $TRAVIS_BRANCH == "master" ]]
   then
     gem install heroku
-    heroku keys:clear
     echo yes | heroku keys:add
     grunt build
     echo yes | grunt buildcontrol:heroku
-    heroku keys:clear
+    heroku keys:remove `cat ~/.ssh/id_rsa.pub | cut -d \  -f 3`
 fi
 if [[ $TRAVIS_PULL_REQUEST == "false" ]]
   then

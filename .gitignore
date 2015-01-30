@@ -6,3 +6,5 @@ public
 client/bower_components
 dist
 /server/config/local.env.js
+travis/travis_heroku_rsa
+travis/travis_heroku_rsa.pub

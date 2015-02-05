@@ -24,4 +24,34 @@ angular.module('roadAmicoApp')
     $scope.$on('$destroy', function () {
       socket.unsyncUpdates('thing');
     });
+
+
+
+    ///  Datepicker
+
+    //$scope.dt = new Date();
+
+
+    $scope.openCalendar = function($event) {
+      $event.preventDefault();
+      $event.stopPropagation();
+
+      $scope.opened = true;
+    };
+
+    $scope.dateOptions = {
+      formatYear: 'yy',
+      startingDay: 1
+    };
+
+    $scope.dateFormat = 'MMMM dd, yyyy';
+
+    // Categories
+
+    $scope.activities = [
+      'a tennis match',
+      'a golf partner',
+      'an open piano'
+    ]
+
   });

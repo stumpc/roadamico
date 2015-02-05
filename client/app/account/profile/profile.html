@@ -1,0 +1,57 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="profile">
+  <div class="container">
+    <h1>Profile</h1>
+
+    <div class="row">
+      <div class="col-md-6">
+
+
+        <!-- http://codepen.io/sevilayha/pen/xFcdI -->
+        <form name="userForm" ng-submit="save()" novalidate>
+
+          <!-- NAME -->
+          <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+            <label>Name</label>
+            <input type="text" name="name" class="form-control" ng-model="user.name" required>
+            <p ng-show="userForm.name.$invalid && !userForm.name.$pristine" class="help-block">Your name is required.</p>
+          </div>
+
+          <!-- EMAIL -->
+          <div class="form-group" ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }">
+            <label>Email</label>
+            <input type="email" name="email" class="form-control" ng-model="user.email" required>
+            <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Enter a valid email.</p>
+          </div>
+
+          <!-- PHONE -->
+          <div class="form-group" ng-class="{ 'has-error' : userForm.phone.$invalid && !userForm.phone.$pristine }">
+            <label>Phone Number</label>
+            <input type="text" name="phone" class="form-control" ng-model="user.phone">
+          </div>
+
+          <!-- PHOTO -->
+          <div class="form-group" ng-class="{ 'has-error' : userForm.photo.$invalid && !userForm.photo.$pristine }">
+            <label>Profile Picture URL</label>
+            <input type="text" name="photo" class="form-control" ng-model="user.photo" ng-model-options="{'updateOn': 'blur'}">
+          </div>
+
+          <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid || userForm.$pristine">Save</button>
+
+        </form>
+
+      </div>
+      <div class="col-md-6">
+
+        <div class="profile-pic-placeholder">
+          <div class="profile-pic" style="background-image: url({{user.photo}})"></div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+  </div>
+</div>

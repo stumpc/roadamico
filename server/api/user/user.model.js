@@ -10,6 +10,8 @@ var UserSchema = new Schema({
   email: { type: String, lowercase: true },
   image: String,
   phone: String,
+  photo: String,
+  location: String,
   role: {
     type: String,
     default: 'user'
@@ -43,7 +45,11 @@ UserSchema
   .get(function() {
     return {
       'name': this.name,
-      'role': this.role
+      'role': this.role,
+      email: this.email,
+      phone: this.phone,
+      photo: this.photo,
+      location: this.location
     };
   });
 

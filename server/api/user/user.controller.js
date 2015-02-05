@@ -4,6 +4,7 @@ var User = require('./user.model');
 var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
+var _ = require('lodash');
 
 var validationError = function(res, err) {
   return res.json(422, err);
@@ -76,6 +77,25 @@ exports.changePassword = function(req, res, next) {
     } else {
       res.send(403);
     }
+  });
+};
+
+/**
+ * Updates a user's profile
+ */
+exports.update = function(req, res, next) {
+  var userId = req.user._id;
+
+  // TODO: Verify that the user is authorized
+
+  User.findById(userId, function (err, user) {
+    if (err) return next(err);
+    if (!user) return res.send(401);
+    var updated = _.merge(user, req.body);
+    updated.save(function (err) {
+      if (err) return validationError(res, err);
+      res.json(user.profile);
+    });
   });
 };
 

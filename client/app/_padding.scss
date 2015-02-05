@@ -1,0 +1,44 @@
+
+$small-spacing:  10px;
+$medium-spacing: 25px;
+$large-spacing:  50px;
+
+.space-top-small {
+  margin-top: $small-spacing;
+}
+.space-top-medium {
+  margin-top: $medium-spacing;
+}
+.space-top-large {
+  margin-top: $large-spacing;
+}
+
+.space-right-small {
+  margin-right: $small-spacing;
+}
+.space-right-medium {
+  margin-right: $medium-spacing;
+}
+.space-right-large {
+  margin-right: $large-spacing;
+}
+
+.space-bottom-small {
+  margin-bottom: $small-spacing;
+}
+.space-bottom-medium {
+  margin-bottom: $medium-spacing;
+}
+.space-bottom-large {
+  margin-bottom: $large-spacing;
+}
+
+.space-left-small {
+  margin-left: $small-spacing;
+}
+.space-left-medium {
+  margin-left: $medium-spacing;
+}
+.space-left-large {
+  margin-left: $large-spacing;
+}

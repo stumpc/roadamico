@@ -1,30 +1,68 @@
-.thing-form {
+.main {
+  .thing-form {
     margin: 20px 0;
-}
+  }
 
-#banner {
+  #banner {
     border-bottom: none;
     margin-top: -20px;
-}
 
-#banner h1 {
-    font-size: 60px;
-    line-height: 1;
-    letter-spacing: -1px;
-}
+    &.hero-unit {
+      position: relative;
+      padding: 30px 15px;
+      color: #F5F5F5;
+      text-align: center;
+      text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+      //    background: #4393B9;
+      background: url(http://blog.mytennislessons.com/wp-content/uploads/2014/10/photodune-1768934-women-playing-tennis-m1.jpeg) 0 25%;
+      background-size: cover;
+    }
 
-.hero-unit {
-    position: relative;
-    padding: 30px 15px;
-    color: #F5F5F5;
+    h1 {
+      font-size: 35px;
+      line-height: 1;
+      letter-spacing: -1px;
+    }
+
+    .shaded {
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 5px;
+      margin: 40px 0;
+      padding: 20px;
+      text-align: center;
+    }
+
+  }
+
+  #quick-search {
+    padding: 50px 0;
+    background: $gray-lighter;
+
+    .padded-text {
+      display: inline-block;
+      padding: 0 20px;
+    }
+  }
+
+  .category {
     text-align: center;
-    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-    background: #4393B9;
-}
+    padding: 20px 0;
+    background: $bluejeans-light;
+    border-radius: 4px;
+    color: $lightgray-light;
 
-.footer {
+    a {
+      color: $lightgray-light;
+      &:hover {
+        color: $lightgray-light;
+      }
+    }
+  }
+
+  .footer {
     text-align: center;
     padding: 30px 0;
     margin-top: 70px;
     border-top: 1px solid #E5E5E5;
+  }
 }

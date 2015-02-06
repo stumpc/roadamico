@@ -55,18 +55,17 @@ User.find({}).remove(function() {
       email: faker.internet.email(),
       emailPublic: true,
       password: 'test',
-
       phone: faker.phone.phoneNumber(),
-      phonePublic: true,
-
       location: faker.address.streetAddress() + ", " + faker.address.city() + ", " + faker.address.state() + " " + faker.address.zipCode(),
-      locationPublic: true,
-
       workplace: faker.company.companyName(),
-      workplacePublic: true,
-
       bio: faker.lorem.paragraph(),
-      photo: faker.image.people(400, 400)
+      photo: faker.image.people(400, 400),
+
+      publicInfo: {
+        email: Math.random()<.5,
+        location: Math.random()<.5,
+        workplace: Math.random()<.5
+      }
     }
   });
   console.log('Creating fake users...');

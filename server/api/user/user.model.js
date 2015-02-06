@@ -12,14 +12,17 @@ var UserSchema = new Schema({
 
   // Profile
   phone: String,
-  phonePublic: Boolean,
   photo: String,
   location: String,
-  locationPublic: Boolean,
   bio: String,
   workplace: String,
-  workplacePublic: Boolean,
   verification: String,
+
+  publicInfo: {
+    phone: Boolean,
+    location: Boolean,
+    workplace: Boolean
+  },
 
   idUrl: String,
   role: {
@@ -62,10 +65,10 @@ UserSchema
     };
 
     // Add in public information
-    if (this.emailPublic) { profile.email = this.email; }
-    if (this.phonePublic) { profile.phone = this.phone; }
-    if (this.locationPublic) { profile.location = this.location; }
-    if (this.workplacePublic) { profile.workplace = this.workplace; }
+    if (this.publicInfo.email) { profile.email = this.email; }
+    if (this.publicInfo.phone) { profile.phone = this.phone; }
+    if (this.publicInfo.location) { profile.location = this.location; }
+    if (this.publicInfo.workplace) { profile.workplace = this.workplace; }
 
     return profile;
   });

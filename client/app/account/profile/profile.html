@@ -3,6 +3,7 @@
 <div class="profile">
   <div class="container">
     <h1>Profile</h1>
+    <a href="/user/{{user._id}}">View public profile</a>
 
     <div class="row">
       <div class="col-md-6">
@@ -29,6 +30,18 @@
           <div class="form-group" ng-class="{ 'has-error' : userForm.phone.$invalid && !userForm.phone.$pristine }">
             <label>Phone Number</label>
             <input type="text" name="phone" class="form-control" ng-model="user.phone">
+          </div>
+
+          <!-- WORKPLACE -->
+          <div class="form-group" ng-class="{ 'has-error' : userForm.workplace.$invalid && !userForm.workplace.$pristine }">
+            <label>Workplace</label>
+            <input type="text" name="workplace" class="form-control" ng-model="user.workplace">
+          </div>
+
+          <!-- BIO -->
+          <div class="form-group" ng-class="{ 'has-error' : userForm.bio.$invalid && !userForm.bio.$pristine }">
+            <label>Bio</label>
+            <textarea ng-model="user.bio" class="form-control" name="bio"></textarea>
           </div>
 
           <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid || userForm.$pristine">Save</button>

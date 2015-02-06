@@ -8,10 +8,20 @@ var authTypes = ['github', 'twitter', 'facebook', 'google'];
 var UserSchema = new Schema({
   name: String,
   email: { type: String, lowercase: true },
-  image: String,
+  emailPublic: Boolean,
+
+  // Profile
   phone: String,
+  phonePublic: Boolean,
   photo: String,
   location: String,
+  locationPublic: Boolean,
+  bio: String,
+  workplace: String,
+  workplacePublic: Boolean,
+  verification: String,
+
+  idUrl: String,
   role: {
     type: String,
     default: 'user'
@@ -43,14 +53,21 @@ UserSchema
 UserSchema
   .virtual('profile')
   .get(function() {
-    return {
+    var profile = {
       'name': this.name,
       'role': this.role,
-      email: this.email,
-      phone: this.phone,
       photo: this.photo,
-      location: this.location
+      bio: this.bio,
+      verified: this.verified
     };
+
+    // Add in public information
+    if (this.emailPublic) { profile.email = this.email; }
+    if (this.phonePublic) { profile.phone = this.phone; }
+    if (this.locationPublic) { profile.location = this.location; }
+    if (this.workplacePublic) { profile.workplace = this.workplace; }
+
+    return profile;
   });
 
 // Non-sensitive info we'll be putting in the token

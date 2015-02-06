@@ -15,7 +15,7 @@ angular.module('roadAmicoApp')
         })
         .then( function() {
           // Logged in, redirect to home
-          $location.path('/');
+          $location.path('/home');
         })
         .catch( function(err) {
           $scope.errors.other = err.message;

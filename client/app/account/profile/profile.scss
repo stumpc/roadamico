@@ -1,20 +1,16 @@
 
-.profile {
+.profile-pic-placeholder {
+  width: 200px;
+  height: 200px;
+  background-image: url(/assets/images/profile_placeholder.png);
+  background-size: cover;
+  border: 5px solid $lightgray-light;
+  border-radius: 3px;
 
-  .profile-pic-placeholder {
-    width: 200px;
-    height: 200px;
-    background-image: url(/assets/images/profile_placeholder.png);
+  .profile-pic {
+    width: 100%;
+    height: 100%;
     background-size: cover;
-    border: 5px solid $lightgray-light;
-    border-radius: 3px;
-
-    .profile-pic {
-      width: 100%;
-      height: 100%;
-      background-size: cover;
-      background-position: center center;
-    }
+    background-position: center center;
   }
-
 }

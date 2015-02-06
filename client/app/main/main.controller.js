@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('MainCtrl', function ($scope, $http, socket) {
+  .controller('MainCtrl', function ($scope, $http, $state, socket, Auth) {
+
     $scope.awesomeThings = [];
 
     $http.get('/api/things').success(function(awesomeThings) {

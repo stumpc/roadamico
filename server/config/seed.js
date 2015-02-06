@@ -8,6 +8,8 @@
 var Thing = require('../api/thing/thing.model');
 var User = require('../api/user/user.model');
 var Service = require('../api/service/service.model');
+var faker = require('faker');
+var _ = require('lodash');
 
 Thing.find({}).remove(function() {
   Thing.create({
@@ -43,23 +45,32 @@ User.find({}).remove(function() {
     name: 'Admin',
     email: 'admin@admin.com',
     password: 'admin'
-  }, function() {
-      console.log('finished populating users');
-      createServices();
-    }
-  );
-});
-
-function createServices() {
-
-  User.find({email: 'admin@admin.com'}, function (err, user) {
-    Service.create({
-      name: 'Tennis Match',
-      description: 'Play w/ me @ the public courts',
-      location: 'Public tennis courts',
-      provider: user._id,
-      availability: []
-    })
   });
 
-}
+  // Create a bunch of fake guys
+  var guys = _.times(25, function (n) {
+    return {
+      provider: 'local',
+      name: faker.name.findName(),
+      email: faker.internet.email(),
+      emailPublic: true,
+      password: 'test',
+
+      phone: faker.phone.phoneNumber(),
+      phonePublic: true,
+
+      location: faker.address.streetAddress() + ", " + faker.address.city() + ", " + faker.address.state() + " " + faker.address.zipCode(),
+      locationPublic: true,
+
+      workplace: faker.company.companyName(),
+      workplacePublic: true,
+
+      bio: faker.lorem.paragraph(),
+      photo: faker.image.people(400, 400)
+    }
+  });
+  console.log('Creating fake users...');
+  User.create(guys);
+
+});
+

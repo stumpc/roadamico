@@ -9,6 +9,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var express = require('express');
 var mongoose = require('mongoose');
+var multer = require('multer');
 var config = require('./config/environment');
 
 // Connect to database
@@ -24,8 +25,12 @@ var socketio = require('socket.io')(server, {
   serveClient: (config.env === 'production') ? false : true,
   path: '/socket.io-client'
 });
+app.use(multer({
+  dest: './uploads/'
+}));
 require('./config/socketio')(socketio);
 require('./config/express')(app);
+require('./config/cloudinary');
 require('./routes')(app);
 
 // Start server

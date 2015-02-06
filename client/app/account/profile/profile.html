@@ -31,12 +31,6 @@
             <input type="text" name="phone" class="form-control" ng-model="user.phone">
           </div>
 
-          <!-- PHOTO -->
-          <div class="form-group" ng-class="{ 'has-error' : userForm.photo.$invalid && !userForm.photo.$pristine }">
-            <label>Profile Picture URL</label>
-            <input type="text" name="photo" class="form-control" ng-model="user.photo" ng-model-options="{'updateOn': 'blur'}">
-          </div>
-
           <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid || userForm.$pristine">Save</button>
 
         </form>
@@ -46,6 +40,10 @@
 
         <div class="profile-pic-placeholder">
           <div class="profile-pic" style="background-image: url({{user.photo}})"></div>
+        </div>
+
+        <div>
+          <button class="btn" ng-file-select="onFileSelect($files)" ng-multiple="false">Change</button>
         </div>
 
       </div>

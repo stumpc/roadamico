@@ -5,6 +5,8 @@ var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
 var _ = require('lodash');
+var cloudinary = require('cloudinary');
+var fs = require('fs');
 
 var validationError = function(res, err) {
   return res.json(422, err);
@@ -118,4 +120,24 @@ exports.me = function(req, res, next) {
  */
 exports.authCallback = function(req, res, next) {
   res.redirect('/');
+};
+
+/**
+ * Uploading a profile picture
+ */
+exports.uploadImage = function (req, res, next) {
+
+  var img = req.files.file;
+  cloudinary.uploader.upload(img.path, function(result) {
+    console.log(result);
+    fs.unlinkSync(img.path); // Delete the file
+
+    // Save the user
+    req.user.photo = result.url;
+    req.user.save(function (err, user) {
+      if (err) return validationError(res, err);
+      res.send(user.photo);
+    });
+  });
+
 };

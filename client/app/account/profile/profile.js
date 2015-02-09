@@ -6,6 +6,7 @@ angular.module('roadAmicoApp')
       .state('profile', {
         url: '/profile',
         templateUrl: 'app/account/profile/profile.html',
-        controller: 'ProfileCtrl'
+        controller: 'ProfileCtrl',
+        authenticate: true
       });
   });

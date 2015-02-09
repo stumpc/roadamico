@@ -59,12 +59,17 @@ User.find({}).remove(function() {
       location: faker.address.streetAddress() + ", " + faker.address.city() + ", " + faker.address.state() + " " + faker.address.zipCode(),
       workplace: faker.company.companyName(),
       bio: faker.lorem.paragraph(),
-      photo: faker.image.people(400, 400),
+      photo: faker.image.avatar(400, 400),
 
       publicInfo: {
-        email: Math.random()<.5,
+        phone: Math.random()<.5,
         location: Math.random()<.5,
         workplace: Math.random()<.5
+      },
+
+      verification: {
+        status: ['none', 'pending', 'approved', 'denied'][~~(Math.random()*4)],
+        idUrl: faker.image.abstract(600, 400)
       }
     }
   });

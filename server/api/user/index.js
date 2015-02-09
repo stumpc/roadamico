@@ -16,4 +16,5 @@ router.get('/:id', controller.show);
 router.post('/', controller.create);
 router.post('/pic', auth.isAuthenticated(), controller.uploadImage);
 
+
 module.exports = router;

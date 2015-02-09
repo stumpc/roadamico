@@ -32,6 +32,12 @@
             <input type="text" name="phone" class="form-control" ng-model="user.phone">
           </div>
 
+          <!-- LOCATION -->
+          <div class="form-group" ng-class="{ 'has-error' : userForm.location.$invalid && !userForm.location.$pristine }">
+            <label>Location</label>
+            <input type="text" name="location" id='location' ng-autocomplete class="form-control" ng-model="user.location">
+          </div>
+
           <!-- WORKPLACE -->
           <div class="form-group" ng-class="{ 'has-error' : userForm.workplace.$invalid && !userForm.workplace.$pristine }">
             <label>Workplace</label>
@@ -58,6 +64,8 @@
         <div>
           <button class="btn" ng-file-select="onFileSelect($files)" ng-multiple="false">Change</button>
         </div>
+
+        <!-- TODO: Maybe use this: http://cloudinary.com/documentation/upload_widget -->
 
       </div>
 

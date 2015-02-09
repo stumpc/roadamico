@@ -16,7 +16,10 @@ var UserSchema = new Schema({
   location: String,
   bio: String,
   workplace: String,
-  verification: String,
+  verification: {
+    idUrl: String,
+    status: String // none, pending, denied, approved
+  },
 
   publicInfo: {
     phone: Boolean,
@@ -24,7 +27,6 @@ var UserSchema = new Schema({
     workplace: Boolean
   },
 
-  idUrl: String,
   role: {
     type: String,
     default: 'user'

@@ -122,7 +122,7 @@ exports.me = function(req, res, next) {
  * Authentication callback
  */
 exports.authCallback = function(req, res, next) {
-  res.redirect('/');
+  res.redirect('/home');
 };
 
 /**
@@ -138,7 +138,7 @@ exports.uploadImage = function (req, res, next) {
     // Save the user
     req.user.photo = result.url;
     req.user.save(function (err, user) {
-      if (err) return validationError(res, err);
+      if (err) return next(err);
       res.send(user.photo);
     });
   });

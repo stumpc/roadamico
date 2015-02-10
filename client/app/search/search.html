@@ -2,6 +2,6 @@
 
 <div class="col-md-12">
   <ul>
-    <li ng-repeat="user in users"><a href="/user/{{user._id}}">{{user.name}}</a></li>
+    <li ng-repeat="user in users"><a href="/user/{{user._id}}">{{user.name}}</a> <span ng-if="user.verification.status == 'approved'">(V)</span></li>
   </ul>
 </div>

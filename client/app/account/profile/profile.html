@@ -67,6 +67,39 @@
 
         <!-- TODO: Maybe use this: http://cloudinary.com/documentation/upload_widget -->
 
+        <div>
+          <div ng-switch="user.verification.status">
+            <div ng-switch-when="approved">
+              Account status: <span class="label label-success"><i class="fa fa-check"></i> Verified</span>
+            </div>
+
+            <div ng-switch-when="denied">
+              Account status: <span class="label label-danger"><i class="fa fa-ban"></i> Verification Denied</span>
+
+              <p>
+                The photo ID that you uploaded was not a valid ID. Please choose another.
+                <button class="btn" ng-file-select="idSelect($files)" ng-multiple="false">Choose File</button>
+              </p>
+            </div>
+
+            <div ng-switch-when="pending">
+              Account status: <span class="label label-warning"><i class="fa fa-clock-o"></i> Verification Pending</span>
+
+              <p>The moderation staff has been notified of your request.</p>
+            </div>
+
+            <div ng-switch-default>
+              Account status: <span class="label label-warning"><i class="fa fa-times"></i> Not Verified</span>
+              <p>
+                To verify your account, you must upload a picture of an official photo ID validating your identity.
+                <button class="btn" ng-file-select="idSelect($files)" ng-multiple="false">Choose File</button>
+              </p>
+            </div>
+          </div>
+
+
+        </div>
+
       </div>
 
     </div>

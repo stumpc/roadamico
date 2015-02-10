@@ -24,6 +24,18 @@ exports.index = function(req, res) {
 };
 
 /**
+ * Get list of all users' profile
+ */
+exports.profiles = function(req, res) {
+  User.find({}, function (err, users) {
+    if(err) return res.send(500, err);
+    res.json(200, users.map(function (user) {
+      return user.profile;
+    }));
+  });
+};
+
+/**
  * Creates a new user
  */
 exports.create = function (req, res, next) {
@@ -132,7 +144,6 @@ exports.uploadImage = function (req, res, next) {
 
   var img = req.files.file;
   cloudinary.uploader.upload(img.path, function(result) {
-    console.log(result);
     fs.unlinkSync(img.path); // Delete the file
 
     // Save the user

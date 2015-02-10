@@ -3,8 +3,8 @@
 angular.module('roadAmicoApp')
   .config(function ($stateProvider) {
     $stateProvider
-      .state('verify', {
-        url: '/admin/verify',
+      .state('admin.verify', {
+        url: '/verify',
         templateUrl: 'app/admin/verify/verify.html',
         controller: 'VerifyCtrl',
         admin: true

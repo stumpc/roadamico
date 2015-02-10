@@ -1,17 +1,54 @@
-<div ng-include="'components/navbar/navbar.html'"></div>
+<tabset justified="true">
 
-<div class="container">
-  <div class="col-md-12">
-    <tabset justified="true">
-      <tab heading="Pending">
-        List of all pending submissions
-      </tab>
-      <tab heading="Approved">
-        List of all approved submissions
-      </tab>
-      <tab heading="Denied">
-        List of all denied submissions
-      </tab>
-    </tabset>
-  </div>
-</div>
+  <tab heading="Pending ({{pending.length}})">
+    <table class="table table-striped">
+      <tr>
+        <th>Name</th>
+        <th>ID Document</th>
+        <th>Actions</th>
+      </tr>
+      <tr ng-repeat="user in pending">
+        <td><a href="/user/{{user._id}}">{{user.name}}</a></td>
+        <td><button class="btn" ng-click="viewImg(user.name, user.verification.idUrl)">View</button></td>
+        <td>
+          <button class="btn btn-success" ng-click="approve(user, pending)">Approve</button>
+          <button class="btn btn-danger" ng-click="deny(user, pending)">Deny</button>
+        </td>
+      </tr>
+    </table>
+  </tab>
+  <tab heading="Approved ({{approved.length}})">
+
+    <table class="table table-striped">
+      <tr>
+        <th>Name</th>
+        <th>ID Document</th>
+        <th>Actions</th>
+      </tr>
+      <tr ng-repeat="user in approved">
+        <td><a href="/user/{{user._id}}">{{user.name}}</a></td>
+        <td><button class="btn" ng-click="viewImg(user.name, user.verification.idUrl)">View</button></td>
+        <td>
+          <button class="btn btn-danger" ng-click="deny(user, approved)">Revoke</button>
+        </td>
+      </tr>
+    </table>
+  </tab>
+  <tab heading="Denied ({{denied.length}})">
+
+    <table class="table table-striped">
+      <tr>
+        <th>Name</th>
+        <th>ID Document</th>
+        <th>Actions</th>
+      </tr>
+      <tr ng-repeat="user in denied">
+        <td><a href="/user/{{user._id}}">{{user.name}}</a></td>
+        <td><button class="btn" ng-click="viewImg(user.name, user.verification.idUrl)">View</button></td>
+        <td>
+          <button class="btn btn-success"ng-click="approve(user, denied)">Approve</button>
+        </td>
+      </tr>
+    </table>
+  </tab>
+</tabset>

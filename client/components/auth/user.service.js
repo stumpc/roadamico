@@ -20,6 +20,11 @@ angular.module('roadAmicoApp')
         params: {
           id:'me'
         }
+      },
+      profiles: {
+        method: 'GET',
+        url: '/api/users/profiles',
+        isArray: true
       }
 	  });
   });

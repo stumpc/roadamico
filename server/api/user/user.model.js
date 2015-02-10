@@ -59,11 +59,12 @@ UserSchema
   .virtual('profile')
   .get(function() {
     var profile = {
+      _id: this._id,
       'name': this.name,
       'role': this.role,
       photo: this.photo,
       bio: this.bio,
-      verified: this.verified
+      verification: this.verification
     };
 
     // Add in public information

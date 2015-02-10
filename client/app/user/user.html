@@ -4,6 +4,10 @@
 
   <h1>{{user.name}}</h1>
 
+  <div ng-if="user.verification.status == 'approved'">
+    <span class="label label-success"><i class="fa fa-check"></i> Verified Account</span>
+  </div>
+
   <div><strong>Phone:</strong> {{user.phone}}</div>
   <div><strong>Location:</strong> {{user.location}}</div>
   <div><strong>Workplace:</strong> {{user.workplace}}</div>

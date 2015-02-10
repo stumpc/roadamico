@@ -4,5 +4,5 @@ angular.module('roadAmicoApp')
   .controller('SearchCtrl', function ($scope, User) {
     $scope.message = 'Hello';
 
-    $scope.users = User.query();
+    $scope.users = User.profiles();
   });

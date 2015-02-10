@@ -23,3 +23,12 @@
 .modal-danger .modal-header {
   background: $brand-danger;
 }
+.modal-body .modal-image-holder {
+  width: 100%;
+  text-align: center;
+
+  img {
+    max-width: 100%;
+    margin: 10px 0;
+  }
+}

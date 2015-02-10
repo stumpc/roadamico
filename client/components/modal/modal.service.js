@@ -8,7 +8,7 @@ angular.module('roadAmicoApp')
      * @param  {String} modalClass - (optional) class(es) to be applied to the modal
      * @return {Object}            - the instance $modal.open() returns
      */
-    function openModal(scope, modalClass) {
+    function openModal(scope, modalClass, size) {
       var modalScope = $rootScope.$new();
       scope = scope || {};
       modalClass = modalClass || 'modal-default';
@@ -18,7 +18,8 @@ angular.module('roadAmicoApp')
       return $modal.open({
         templateUrl: 'components/modal/modal.html',
         windowClass: modalClass,
-        scope: modalScope
+        scope: modalScope,
+        size: size
       });
     }
 
@@ -33,7 +34,7 @@ angular.module('roadAmicoApp')
          * @param  {Function} del - callback, ran when delete is confirmed
          * @return {Function}     - the function to open the modal (ex. myModalFn)
          */
-        delete: function(del) {
+        'delete': function(del) {
           del = del || angular.noop;
 
           /**
@@ -71,6 +72,54 @@ angular.module('roadAmicoApp')
               del.apply(event, args);
             });
           };
+        }
+      },
+
+      /* Information modals */
+      info: {
+        error: function (title, message) {
+
+          if (!message) {
+            message = title;
+            title = "Error";
+          }
+
+          var errorModal;
+          errorModal = openModal({
+            modal: {
+              dismissable: true,
+              title: title,
+              text: message,
+              buttons: [{
+                classes: 'btn-default',
+                text: 'Close',
+                click: function (e) {
+                  errorModal.dismiss(e);
+                }
+              }]
+            }
+          }, 'modal-danger');
+
+        },
+
+        image: function (name, src, alt) {
+
+          var imageModal;
+          imageModal = openModal({
+            modal: {
+              dismissable: true,
+              title: name,
+              img: src,
+              alt: alt,
+              buttons: [{
+                classes: 'btn-default',
+                text: 'Close',
+                click: function (e) {
+                  imageModal.dismiss(e);
+                }
+              }]
+            }
+          }, 'modal-info', 'lg');
         }
       }
     };

@@ -1,5 +1,7 @@
 
 var User = require('../user/user.model');
+var cloudinary = require('cloudinary');
+var fs = require('fs');
 
 
 exports.getUsersByStatus = function (status) {
@@ -38,4 +40,26 @@ exports.setStatus = function (status) {
       });
     })
   };
+};
+
+exports.submit = function (req, res, next) {
+
+  var img = req.files.file;
+  cloudinary.uploader.upload(img.path, function(result) {
+    fs.unlinkSync(img.path); // Delete the file
+
+    // Save the user
+    req.user.verification = {
+      status: 'pending',
+      idUrl: result.url
+    };
+
+    // TODO: Send a notification to the admins
+
+    req.user.save(function (err, user) {
+      if (err) return next(err);
+      res.send(user.verification);
+    });
+  });
+
 };

@@ -1,0 +1,23 @@
+.navbar.navbar-inverse.navbar-red {
+  background-color: $ra-red;
+  color: $ra-faded;
+  border-color: transparent;
+
+  .navbar-nav {
+    li > a {
+      color: $ra-faded;
+    }
+    .active > a {
+      background-color: $ra-red-dark;
+    }
+  }
+
+  .navbar-brand {
+    color: $ra-faded;
+    font-family: 'Satisfy', cursive;
+  }
+
+  .navbar-text {
+    color: $ra-faded;
+  }
+}

@@ -4,7 +4,6 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 @import 'bootstrap-sass-official/vendor/assets/stylesheets/bootstrap';
 @import 'font-awesome/scss/font-awesome';
 @import 'bootflatv2/bootflat/scss/bootflat';
-@import '_padding';
 
 /**
  * App-wide Styles
@@ -19,6 +18,7 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 
 // Component styles are injected through grunt
 // injector
+@import '_branding.scss';
 @import '_padding.scss';
 @import 'account/login/login.scss';
 @import 'account/profile/profile.scss';
@@ -29,6 +29,7 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 @import 'main/main.scss';
 @import 'search/search.scss';
 @import 'user/user.scss';
+@import 'footer/footer.scss';
 @import 'modal/modal.scss';
 @import 'navbar/navbar.scss';
 // endinjector

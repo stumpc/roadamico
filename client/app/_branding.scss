@@ -1,0 +1,77 @@
+
+$ra-red: #e74c3c;
+$ra-red-dark: darken($ra-red, 15%);
+$ra-red-light: lighten($ra-red, 7%);
+$ra-faded: #eff3f3;
+
+// Body
+
+body.roadAmico {
+  background-color: $ra-faded;
+}
+
+
+// Text
+
+.cursive {
+  font-family: 'Satisfy', cursive;
+}
+
+
+// Buttons
+
+.btn {
+
+  @at-root &-ra-red {
+    &,
+    &:active,
+    &.active,
+    &.disabled,
+    &[disabled],
+    .open .dropdown-toggle.btn {
+      border-color: $ra-red;
+      background-color: $ra-red;
+    }
+    &:hover,
+    &:focus {
+      border-color: $ra-red-light;
+      background-color: $ra-red-light;
+    }
+  }
+
+  @at-root &-hollow {
+    &,
+    &:active,
+    &.active,
+    &.disabled,
+    &[disabled],
+    .open .dropdown-toggle.btn {
+      border-color: $lightgray-light;
+      background-color: transparent;
+    }
+    &:hover,
+    &:focus {
+      border-color: white;
+      background-color: transparent;
+    }
+  }
+
+  @at-root &-ra-red-hollow {
+    &,
+    &:active,
+    &.active,
+    &.disabled,
+    &[disabled],
+    .open .dropdown-toggle.btn {
+      border-color: $ra-red;
+      background-color: transparent;
+      color: $ra-red;
+    }
+    &:hover,
+    &:focus {
+      border-color: $ra-red;
+      background-color: $ra-red;
+      color: $lightgray-light;
+    }
+  }
+}

@@ -28,7 +28,7 @@
     <script type="text/javascript"
             src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDAWaUG115RhqKOnqMnBbrEj6M0JTfBCwU"></script>
   </head>
-  <body ng-app="roadAmicoApp">
+  <body ng-app="roadAmicoApp" class="roadAmico">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -66,11 +66,12 @@
       <script src="bower_components/angular-socket-io/socket.js"></script>
       <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
       <script src="bower_components/ngAutocomplete/src/ngAutocomplete.js"></script>
+      <script src="bower_components/ngmap/build/scripts/ng-map.js"></script>
       <!-- endbower -->
       <script src="socket.io-client/socket.io.js"></script>
     <!-- endbuild -->
 
-    <!-- Manually included upload components -->
+    <!-- Manually included components -->
     <script src="bower_components/danialfarid-angular-file-upload/dist/angular-file-upload.js"></script>
 
         <!-- build:js({.tmp,client}) app/app.js -->
@@ -99,6 +100,7 @@
           <script src="app/user/user.js"></script>
           <script src="components/auth/auth.service.js"></script>
           <script src="components/auth/user.service.js"></script>
+          <script src="components/footer/footer.ctrl.js"></script>
           <script src="components/modal/modal.service.js"></script>
           <script src="components/mongoose-error/mongoose-error.directive.js"></script>
           <script src="components/navbar/navbar.controller.js"></script>

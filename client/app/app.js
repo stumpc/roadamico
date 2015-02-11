@@ -8,7 +8,8 @@ angular.module('roadAmicoApp', [
   'ui.router',
   'ui.bootstrap',
   'angularFileUpload',
-  'ngAutocomplete'
+  'ngAutocomplete',
+  'ngMap'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider

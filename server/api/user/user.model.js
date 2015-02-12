@@ -20,11 +20,28 @@ var UserSchema = new Schema({
     idUrl: String,
     status: String // none, pending, denied, approved
   },
+  categories: [String],
 
   publicInfo: {
     phone: Boolean,
     location: Boolean,
     workplace: Boolean
+  },
+
+  // Financial information
+  financial: {
+    cards: [{
+      number: String, // Encrypted
+      display: String, // ********1234
+      exp: {
+        month: Number,
+        year: Number
+      },
+      cvc: String // Encrypted
+    }]
+
+    // TODO: Do we want to support Google Wallet, PayPal, Apple Pay, or Amazon Payments?
+
   },
 
   role: {
@@ -64,7 +81,8 @@ UserSchema
       'role': this.role,
       photo: this.photo,
       bio: this.bio,
-      verification: this.verification
+      verification: this.verification,
+      categories: this.categories
     };
 
     // Add in public information
@@ -174,6 +192,37 @@ UserSchema.methods = {
     if (!password || !this.salt) return '';
     var salt = new Buffer(this.salt, 'base64');
     return crypto.pbkdf2Sync(password, salt, 10000, 64).toString('base64');
+  },
+
+  encrypt: function (value, password) {
+    var cipher = crypto.createCipher('aes-256-cbc', password);
+    var crypted = cipher.update(value, 'utf8', 'hex');
+    crypted += cipher.final('hex');
+    return crypted;
+  },
+
+  decrypt: function (value, password) {
+    var decipher = crypto.createDecipher('aes-256-cbc', password);
+    var dec = decipher.update(value, 'hex', 'utf8');
+    dec += decipher.final('utf8');
+    return dec;
+  },
+
+  addCard: function (card, password) {
+    card.number = String(card.number);
+    card.cvc = String(card.cvc);
+
+    var newCard = {
+      number: this.encrypt(card.number, password),
+      display: new Array(card.number.length-3).join('*') + card.number.substr(card.number.length-4,4),
+      exp: card.exp,
+      cvc: this.encrypt(card.cvc, password)
+    };
+
+    if (!this.financial) { this.financial = {}; }
+    if (!this.financial.cards) { this.financial.cards = []; }
+    this.financial.cards.push(newCard);
+    return newCard;
   }
 };
 

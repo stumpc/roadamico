@@ -17,5 +17,9 @@ router.get('/:id', controller.show);
 router.post('/', controller.create);
 router.post('/pic', auth.isAuthenticated(), controller.uploadImage);
 
+// Financial endpoints
+router.post('/card', auth.isAuthenticated(), controller.saveCard);
+router.delete('/card/:id', auth.isAuthenticated(), controller.deleteCard);
+
 
 module.exports = router;

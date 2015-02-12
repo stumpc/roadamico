@@ -75,13 +75,56 @@ angular.module('roadAmicoApp')
         }
       },
 
+      prompt: {
+        password: function (cb, note) {
+          cb = cb || angular.noop;
+
+          var message = '<p>Please enter your password to continue:</p>';
+          if (note) {
+            message = '<p><strong>'+note+'</strong></p>' + message;
+          }
+
+          var promptModal;
+          promptModal = openModal({
+            modal: {
+              dismissable: true,
+              title: 'Verify Password',
+              html: message,
+              password: true,
+              buttons: [{
+                classes: 'btn-primary',
+                text: 'Done',
+                click: function(e, data) {
+                  promptModal.close(data.password);
+                }
+              }, {
+                classes: 'btn-default',
+                text: 'Cancel',
+                click: function(e) {
+                  promptModal.dismiss(e);
+                }
+              }]
+            }
+          }, 'modal-primary');
+
+          promptModal.result.then(function(password) {
+            cb(password);
+          });
+        }
+      },
+
       /* Information modals */
       info: {
-        error: function (title, message) {
+        error: function (title, message1, message2) {
 
-          if (!message) {
-            message = title;
+          if (!message1) {
+            message1 = title;
             title = "Error";
+          }
+
+          var message = '<p>' + message1 + '</p>';
+          if (message2) {
+            message += '<p><strong>' + message2 + '</strong></p>';
           }
 
           var errorModal;
@@ -89,7 +132,7 @@ angular.module('roadAmicoApp')
             modal: {
               dismissable: true,
               title: title,
-              text: message,
+              html: message,
               buttons: [{
                 classes: 'btn-default',
                 text: 'Close',

@@ -8,7 +8,8 @@
   <div ng-if="modal.img" class="modal-image-holder">
     <img ng-src="{{modal.img}}" alt="{{modal.alt}}"/>
   </div>
+  <input ng-if="modal.password" type="password" class="form-control" ng-model="modal.data.password"/>
 </div>
 <div class="modal-footer">
-  <button ng-repeat="button in modal.buttons" ng-class="button.classes" ng-click="button.click($event)" ng-bind="button.text" class="btn"></button>
+  <button ng-repeat="button in modal.buttons" ng-class="button.classes" ng-click="button.click($event, modal.data)" ng-bind="button.text" class="btn"></button>
 </div>

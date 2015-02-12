@@ -17,7 +17,7 @@ var validationError = function(res, err) {
  * restriction: 'admin'
  */
 exports.index = function(req, res) {
-  User.find({}, '-salt -hashedPassword', function (err, users) {
+  User.find({}, '-salt -hashedPassword -financial', function (err, users) {
     if(err) return res.send(500, err);
     res.json(200, users);
   });
@@ -101,19 +101,20 @@ exports.update = function(req, res, next) {
 
   // Delete information that the user can't change
   delete req.body.verified;
+  delete req.body.financial;
 
-  User.findById(req.user._id, function (err, user) {
-    if (err) return next(err);
-    if (!user) return res.send(401);
-    var updated = _.merge(user, req.body);
+  //User.findById(req.user._id, function (err, user) {
+  //  if (err) return next(err);
+  //  if (!user) return res.send(401);
+    var updated = _.merge(req.user, req.body);
     updated.save(function (err) {
       if (err) return validationError(res, err);
 
-      delete user.salt;
-      delete user.hashedPassword;
+      delete updated.salt;
+      delete updated.hashedPassword;
       res.json(user);
     });
-  });
+  //});
 };
 
 /**
@@ -154,4 +155,43 @@ exports.uploadImage = function (req, res, next) {
     });
   });
 
+};
+
+exports.saveCard = function (req, res, next) {
+  if(req.user.authenticate(req.body.password)) {
+
+    // Validate
+    var card = req.body.card;
+    if (!card || !card.number || !card.cvc || !card.exp.month || !card.exp.year || card.exp.month < 1 ||
+        card.exp.month > 12) {
+      return validationError(res, {reason: 'Invalid card data'});
+    }
+
+    req.user.addCard(card, req.body.password);
+    req.user.save(function (err, user) {
+      if (err) return next(err);
+      res.json(user.financial);
+    });
+
+  } else {
+    res.send(403);
+  }
+};
+
+exports.deleteCard = function (req, res, next) {
+  var found = false;
+  for (var i = 0; i < req.user.financial.cards.length; i++) {
+    if (req.user.financial.cards[i]._id = req.params.id) {
+      found = true;
+      req.user.financial.cards.splice(i, 1);
+      req.user.save(function (err, user) {
+        if (err) return next(err);
+        res.json(user.financial);
+      });
+      break;
+    }
+  }
+  if (!found) {
+    res.send(404);
+  }
 };

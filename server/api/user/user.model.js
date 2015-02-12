@@ -8,7 +8,7 @@ var authTypes = ['github', 'twitter', 'facebook', 'google'];
 var UserSchema = new Schema({
   name: String,
   email: { type: String, lowercase: true },
-  emailPublic: Boolean,
+  joined: String,
 
   // Profile
   phone: String,
@@ -20,12 +20,15 @@ var UserSchema = new Schema({
     idUrl: String,
     status: String // none, pending, denied, approved
   },
-  categories: [{ type: Schema.Types.ObjectId, ref: 'Category' }],
+  categories: [{
+    name: String
+  }],
 
   publicInfo: {
     phone: Boolean,
     location: Boolean,
-    workplace: Boolean
+    workplace: Boolean,
+    email: Boolean
   },
 
   // Financial information

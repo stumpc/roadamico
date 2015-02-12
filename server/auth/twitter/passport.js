@@ -1,7 +1,8 @@
-exports.setup = function (User, config) {
-  var passport = require('passport');
-  var TwitterStrategy = require('passport-twitter').Strategy;
+var passport = require('passport');
+var TwitterStrategy = require('passport-twitter').Strategy;
+var moment = require('moment');
 
+exports.setup = function (User, config) {
   passport.use(new TwitterStrategy({
     consumerKey: config.twitter.clientID,
     consumerSecret: config.twitter.clientSecret,
@@ -20,7 +21,8 @@ exports.setup = function (User, config) {
           username: profile.username,
           role: 'user',
           provider: 'twitter',
-          twitter: profile._json
+          twitter: profile._json,
+          joined: moment().toISOString()
         });
         user.save(function(err) {
           if (err) return done(err);

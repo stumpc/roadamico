@@ -26,17 +26,33 @@
             <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Enter a valid email.</p>
           </div>
 
+          <label>
+            Email Public
+            <input type="checkbox" ng-model="user.publicInfo.email" class="form-control"/>
+          </label>
+
           <!-- PHONE -->
           <div class="form-group" ng-class="{ 'has-error' : userForm.phone.$invalid && !userForm.phone.$pristine }">
             <label>Phone Number</label>
             <input type="text" name="phone" class="form-control" ng-model="user.phone">
           </div>
 
+          <label>
+            Phone Public
+            <input type="checkbox" ng-model="user.publicInfo.phone" class="form-control"/>
+          </label>
+
           <!-- LOCATION -->
           <div class="form-group" ng-class="{ 'has-error' : userForm.location.$invalid && !userForm.location.$pristine }">
             <label>Location</label>
-            <input type="text" name="location" id='location' ng-autocomplete class="form-control" ng-model="user.location">
+            <input type="text" name="location" id='location' ng-autocomplete class="form-control" ng-model="user.location" details="dloc">
+            <!-- TODO: Maybe preload the lat/lng data from dloc into the user object -->
           </div>
+
+          <label>
+            Location Public
+            <input type="checkbox" ng-model="user.publicInfo.location" class="form-control"/>
+          </label>
 
           <!-- WORKPLACE -->
           <div class="form-group" ng-class="{ 'has-error' : userForm.workplace.$invalid && !userForm.workplace.$pristine }">
@@ -44,19 +60,23 @@
             <input type="text" name="workplace" class="form-control" ng-model="user.workplace">
           </div>
 
+          <label>
+            Workplace Public
+            <input type="checkbox" ng-model="user.publicInfo.workplace" class="form-control"/>
+          </label>
+
           <!-- BIO -->
           <div class="form-group" ng-class="{ 'has-error' : userForm.bio.$invalid && !userForm.bio.$pristine }">
             <label>Bio</label>
             <textarea ng-model="user.bio" class="form-control" name="bio"></textarea>
           </div>
-          {{user}}
 
           <!-- CATEGORIES -->
           <!-- TODO: Use a nicer multi-select plugin -->
-          <div class="form-group">
-            <label>Categories</label>
-            <select multiple name="categories" class="form-control" ng-model="user.categories" ng-options="category._id as category.name for category in categories"></select>
-          </div>
+          <!--<div class="form-group">-->
+            <!--<label>Categories</label>-->
+            <!--<select multiple name="categories" class="form-control" ng-model="user.categories" ng-options="category for category in categories"></select>-->
+          <!--</div>-->
 
           <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid || userForm.$pristine">Save</button>
 

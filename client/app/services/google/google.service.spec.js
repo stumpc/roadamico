@@ -1,18 +1,18 @@
 'use strict';
 
-describe('Service: categories', function () {
+describe('Service: Google', function () {
 
   // load the service's module
   beforeEach(module('roadAmicoApp'));
 
   // instantiate service
-  var Category;
-  beforeEach(inject(function (_Category_) {
-    Category = _Category_;
+  var Google;
+  beforeEach(inject(function (_Google_) {
+    Google = _Google_;
   }));
 
   it('should do something', function () {
-    expect(!!Category).toBe(true);
+    expect(!!Google).toBe(true);
   });
 
 });

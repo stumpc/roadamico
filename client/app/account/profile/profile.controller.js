@@ -6,7 +6,7 @@ angular.module('roadAmicoApp')
 
     $scope.user = Auth.getCurrentUser();
 
-    $scope.categories = Category.query();
+    $scope.categories = Category;
 
     $scope.years = [0,1,2,3,4,5,6,7,8,9,10].map(function (i) {
       return moment().year() + i;

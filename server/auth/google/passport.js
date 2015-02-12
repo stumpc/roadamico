@@ -1,5 +1,6 @@
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var moment = require('moment');
 
 exports.setup = function (User, config) {
   passport.use(new GoogleStrategy({
@@ -18,7 +19,8 @@ exports.setup = function (User, config) {
             role: 'user',
             username: profile.username,
             provider: 'google',
-            google: profile._json
+            google: profile._json,
+            joined: moment().toISOString()
           });
           user.save(function(err) {
             if (err) done(err);

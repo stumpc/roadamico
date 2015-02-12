@@ -7,6 +7,7 @@ var jwt = require('jsonwebtoken');
 var _ = require('lodash');
 var cloudinary = require('cloudinary');
 var fs = require('fs');
+var moment = require('moment');
 
 var validationError = function(res, err) {
   return res.json(422, err);
@@ -40,6 +41,7 @@ exports.profiles = function(req, res) {
  */
 exports.create = function (req, res, next) {
   var newUser = new User(req.body);
+  newUser.joined = moment().toISOString();
   newUser.provider = 'local';
   newUser.role = 'user';
   newUser.save(function(err, user) {

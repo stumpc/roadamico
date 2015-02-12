@@ -7,7 +7,6 @@
 
 var Thing = require('../api/thing/thing.model');
 var User = require('../api/user/user.model');
-var Category = require('../api/category/category.model');
 var Service = require('../api/service/service.model');
 var faker = require('faker');
 var _ = require('lodash');
@@ -57,7 +56,7 @@ User.find({}).remove(function() {
       emailPublic: true,
       password: 'test',
       phone: faker.phone.phoneNumber(),
-      location: faker.address.streetAddress() + ", " + faker.address.city() + ", " + faker.address.state() + " " + faker.address.zipCode(),
+      location: [faker.address.city(), faker.address.state(), faker.address.zipCode()][~~(Math.random*3)],
       workplace: faker.company.companyName(),
       bio: faker.lorem.paragraph(),
       photo: faker.image.avatar(400, 400),
@@ -76,45 +75,5 @@ User.find({}).remove(function() {
   });
   console.log('Creating fake users...');
   User.create(guys);
-
-});
-
-Category.find({}).remove(function () {
-  var numColors = 8;
-  var categories = [
-    'Amusement Park',
-    'Badminton',
-    'Baseball',
-    'Basketball',
-    'Billiards',
-    'Board Games',
-    'Boating',
-    'Bowling',
-    'Bungee Jumping',
-    'Cycling',
-    'Fishing',
-    'Golf',
-    'Hiking',
-    'Horse Riding',
-    'Lawn Tennis',
-    'Museum Visit',
-    'Nature Walk',
-    'Painting',
-    'River Rafting',
-    'Scuba Diving',
-    'Surfing',
-    'Swimming',
-    'Table Tennis',
-    'Team Games',
-    'Volleyball'
-  ].map(function (category) {
-      return {
-        name: category,
-        colorCode: ~~(Math.random()*numColors)
-      }
-    });
-
-  console.log('Creating categories...');
-  Category.create(categories);
 
 });

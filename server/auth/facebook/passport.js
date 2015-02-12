@@ -1,5 +1,6 @@
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
+var moment = require('moment');
 
 exports.setup = function (User, config) {
   passport.use(new FacebookStrategy({
@@ -22,7 +23,8 @@ exports.setup = function (User, config) {
             role: 'user',
             username: profile.username,
             provider: 'facebook',
-            facebook: profile._json
+            facebook: profile._json,
+            joined: moment().toISOString()
           });
           user.save(function(err) {
             if (err) done(err);

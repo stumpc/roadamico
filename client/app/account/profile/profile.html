@@ -49,6 +49,14 @@
             <label>Bio</label>
             <textarea ng-model="user.bio" class="form-control" name="bio"></textarea>
           </div>
+          {{user}}
+
+          <!-- CATEGORIES -->
+          <!-- TODO: Use a nicer multi-select plugin -->
+          <div class="form-group">
+            <label>Categories</label>
+            <select multiple name="categories" class="form-control" ng-model="user.categories" ng-options="category._id as category.name for category in categories"></select>
+          </div>
 
           <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid || userForm.$pristine">Save</button>
 

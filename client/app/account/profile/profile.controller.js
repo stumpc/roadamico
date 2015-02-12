@@ -1,10 +1,12 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('ProfileCtrl', function ($scope, $upload, $http, Auth, Modal) {
+  .controller('ProfileCtrl', function ($scope, $upload, $http, Auth, Modal, Category) {
     $scope.message = 'Hello';
 
     $scope.user = Auth.getCurrentUser();
+
+    $scope.categories = Category.query();
 
     $scope.years = [0,1,2,3,4,5,6,7,8,9,10].map(function (i) {
       return moment().year() + i;
@@ -43,6 +45,7 @@ angular.module('roadAmicoApp')
           $scope.user.financial = data;
           $scope.addCard = false;
           $scope.newCard = {};
+          $scope.newCardForm.$setPristine();
         }).error(function (data) {
           if (data === 'Forbidden') {
             Modal.prompt.password(sv, 'Invalid password');

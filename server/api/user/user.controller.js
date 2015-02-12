@@ -100,21 +100,17 @@ exports.changePassword = function(req, res, next) {
 exports.update = function(req, res, next) {
 
   // Delete information that the user can't change
-  delete req.body.verified;
-  delete req.body.financial;
+  delete req.body.verification;
 
-  //User.findById(req.user._id, function (err, user) {
-  //  if (err) return next(err);
-  //  if (!user) return res.send(401);
-    var updated = _.merge(req.user, req.body);
-    updated.save(function (err) {
-      if (err) return validationError(res, err);
+  var updated = _.merge(req.user, req.body);
+  updated.categories = req.body.categories;
+  updated.save(function (err, user) {
+    if (err) return validationError(res, err);
 
-      delete updated.salt;
-      delete updated.hashedPassword;
-      res.json(user);
-    });
-  //});
+    delete updated.salt;
+    delete updated.hashedPassword;
+    res.json(user);
+  });
 };
 
 /**

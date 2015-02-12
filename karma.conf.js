@@ -25,6 +25,7 @@ module.exports = function(config) {
       'client/bower_components/danialfarid-angular-file-upload/dist/angular-file-upload.min.js',
       'client/bower_components/ngAutocomplete/src/ngAutocomplete.js',
       'client/bower_components/ngmap/build/scripts/ng-map.js',
+      'client/bower_components/moment/moment.js',
       'client/app/app.js',
       'client/app/app.coffee',
       'client/app/**/*.js',

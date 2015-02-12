@@ -20,7 +20,7 @@ var UserSchema = new Schema({
     idUrl: String,
     status: String // none, pending, denied, approved
   },
-  categories: [String],
+  categories: [{ type: Schema.Types.ObjectId, ref: 'Category' }],
 
   publicInfo: {
     phone: Boolean,

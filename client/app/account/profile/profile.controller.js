@@ -12,9 +12,9 @@ angular.module('roadAmicoApp')
       return moment().year() + i;
     });
 
-    $scope.save = function () {
+    $scope.save = function (form) {
       $scope.user.$update();
-      $scope.userForm.$setPristine();
+      form.$setPristine();
     };
 
     $scope.onFileSelect = function (image) {

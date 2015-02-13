@@ -8,21 +8,42 @@
   border-radius: 100px;
   box-shadow: 0 0 0 5px rgba(0,0,0,0.5);
   overflow: hidden;
+  margin: 10px;
+  display: inline-block;
 
   .profile-pic {
     width: 100%;
     height: 100%;
     background-size: cover;
     background-position: center center;
+
+    &>button {
+      margin-top: 85px;
+      display: none;
+    }
+    &:hover > button {
+      display: inline-block;
+    }
   }
 }
 
 .profile {
-  .newCardForm {
+  .card {
     padding: 10px;
     background: white;
     border: 1px solid lightgray;
     border-radius: 4px;
     box-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    margin: 10px 0;
+
+    h2 {
+      font-size: 30px;
+      margin: 20px 0;
+    }
+  }
+
+  .note {
+    color: $gray-light;
+    margin: 15px 0 5px 0;
   }
 }

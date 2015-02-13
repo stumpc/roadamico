@@ -59,6 +59,12 @@ var all = {
     callbackURL:  (process.env.DOMAIN || '') + '/auth/google/callback'
   },
 
+  linkedin: {
+    clientID:     process.env.LINKEDIN_ID || 'id',
+    clientSecret: process.env.LINKEDIN_SECRET || 'secret',
+    callbackURL:  (process.env.DOMAIN || '') + '/auth/linkedin/callback'
+  },
+
   // Cloudinary for image uploads
   cloudinary: {
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,

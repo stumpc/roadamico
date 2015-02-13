@@ -4,7 +4,7 @@
   <div class="row space-bottom-large">
     <div class="col-md-3 col-md-offset-2">
       <div class="profile-pic-placeholder">
-        <div class="profile-pic" style="background-image: url({{user.photo}})"></div>
+        <div class="profile-pic" style="background-image: url({{user.photo | https}})"></div>
       </div>
     </div>
     <div class="col-md-5">

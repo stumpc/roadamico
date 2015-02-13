@@ -7,7 +7,7 @@
       <div class="col-md-3">
         <div class="text-center">
           <div class="profile-pic-placeholder">
-            <div class="profile-pic" style="background-image: url({{user.photo}})">
+            <div class="profile-pic" style="background-image: url({{user.photo | https}})">
               <button class="btn btn-ra-red-hollow" ng-file-select="onFileSelect($files)" ng-multiple="false"><i class="fa fa-upload"></i> Change picture</button>
             </div>
           </div>

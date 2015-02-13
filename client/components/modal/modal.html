@@ -6,7 +6,7 @@
   <p ng-if="modal.text" ng-bind="modal.text"></p>
   <div ng-if="modal.html" ng-bind-html="modal.html"></div>
   <div ng-if="modal.img" class="modal-image-holder">
-    <img ng-src="{{modal.img}}" alt="{{modal.alt}}"/>
+    <img ng-src="{{modal.img | https}}" alt="{{modal.alt}}"/>
   </div>
   <input ng-if="modal.password" type="password" class="form-control" ng-model="modal.data.password"/>
 </div>

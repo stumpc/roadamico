@@ -81,6 +81,7 @@ UserSchema
       _id: this._id,
       'name': this.name,
       'role': this.role,
+      joined: this.joined,
       photo: this.photo,
       bio: this.bio,
       verification: this.verification,

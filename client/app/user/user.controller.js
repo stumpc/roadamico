@@ -4,7 +4,6 @@ angular.module('roadAmicoApp')
   .controller('UserCtrl', function ($scope, $stateParams, $state, User, Google) {
 
     $scope.user = User.get({id: $stateParams.userId});
-    $scope.joined = moment($scope.user.joined || '2015-02-14').format('MMMM D, YYYY');
 
     // Leave this page if given an invalid user ID
     $scope.user.$promise.then(angular.noop, function (err) {
@@ -38,17 +37,17 @@ angular.module('roadAmicoApp')
     }
 
     // Begin geocoding the address
-    var geocoder = new Google().maps.Geocoder();
+    var geocoder = new Google.maps.Geocoder();
     $scope.user.$promise.then(function () {
       if ($scope.user.location) {
         geocoder.geocode({address: $scope.user.location}, function (results, status) {
-          if (status == Google().maps.GeocoderStatus.OK && results.length) {
+          if (status == Google.maps.GeocoderStatus.OK && results.length) {
 
-            var pos = new Google().maps.LatLng(results[0].geometry.location.k, results[0].geometry.location.D);
+            var pos = new Google.maps.LatLng(results[0].geometry.location.k, results[0].geometry.location.D);
             withMap(function () {
               map.setCenter(pos);
 
-              new Google().maps.Marker({
+              new Google.maps.Marker({
                 position: pos,
                 map: map,
                 title: $scope.user.location

@@ -26,7 +26,10 @@ exports.create = function(req, res) {
       to: signup.email,
       subject: 'Thank you for signing up with RoadAmico'
     });
-    console.log(email);
+
+    // TODO: if there is a referral, send them an email too (#88557886)
+
+
     emails.sendgrid.send(email, function (err, json) {
       if (err) { return console.error(err); }
       console.log(json);

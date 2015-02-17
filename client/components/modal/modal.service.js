@@ -145,6 +145,29 @@ angular.module('roadAmicoApp')
 
         },
 
+        message: function (title, message) {
+          if (!message) {
+            message = title;
+            title = "Info";
+          }
+
+          var infoModal;
+          infoModal = openModal({
+            modal: {
+              dismissable: true,
+              title: title,
+              text: message,
+              buttons: [{
+                classes: 'btn-default',
+                text: 'Close',
+                click: function (e) {
+                  infoModal.dismiss(e);
+                }
+              }]
+            }
+          }, 'modal-info');
+        },
+
         image: function (name, src, alt) {
 
           var imageModal;

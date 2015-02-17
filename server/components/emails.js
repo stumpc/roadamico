@@ -6,7 +6,6 @@ var fs = require('fs');
 var mustache = require('mustache');
 var config = require('../config/environment');
 var sendgrid = require('sendgrid');
-var basepath = require('path').dirname(process.mainModule.filename);
 
 var emails = {
   store: {},
@@ -14,11 +13,11 @@ var emails = {
 };
 
 // Pre-load the email templates
-fs.readdirSync(basepath + '/components/emails').forEach(function (file) {
+fs.readdirSync(__dirname + '/emails').forEach(function (file) {
   var parts = file.split('.');
   var name = parts[0];
   emails.store[name] = emails.store[name] || {};
-  emails.store[name][parts[1]] = fs.readFileSync(basepath + '/components/emails/' + file, {
+  emails.store[name][parts[1]] = fs.readFileSync(__dirname + '/emails/' + file, {
     encoding: 'utf8'
   });
 });

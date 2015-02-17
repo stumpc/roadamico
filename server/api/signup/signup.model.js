@@ -5,6 +5,7 @@ var mongoose = require('mongoose'),
 
 var SignupSchema = new Schema({
   email: { type: String, lowercase: true },
+  refer: { type: String, lowercase: true },
   date: String
 });
 

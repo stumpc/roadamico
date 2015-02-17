@@ -36,24 +36,28 @@
 
       <div class="container">
         <header class="hero-unit">
-          <h1><em>Travelers</em><br/><span class="color-bluejeans-light">Unite</span></h1>
+          <div class="row">
+            <div class="col-md-6">
+              <h1><em>Travelers</em><br/><span class="color-bluejeans-light">Unite</span></h1>
 
-          <div class="space-top-large">
-            <p>Quality services. Real reviews. Instant booking.</p>
-            <p>RoadAmico connects you with the lifestyle activities you love wherever your business takes you.</p>
-          </div>
-
-          <div class="space-top-large space-bottom-medium">
-            <strong>Enter your email for early access &amp; six months free.</strong>
-
-            <form class="form-inline space-top-small">
-              <div class="form-group">
-                <label class="sr-only" for="exampleInputEmail3">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Enter email">
+              <div class="space-top-large">
+                <p>Quality services. Real reviews. Instant booking.</p>
+                <p>RoadAmico connects you with the lifestyle activities you love wherever your business takes you.</p>
               </div>
-              <button type="submit" class="btn btn-ra-red">Sign Up</button>
-            </form>
 
+              <div class="space-top-large space-bottom-medium">
+                <strong>Enter your email for early access &amp; six months free.</strong>
+
+                <form class="form-inline space-top-small">
+                  <div class="form-group">
+                    <label class="sr-only" for="email1">Email address</label>
+                    <input type="email" class="form-control" id="email1" placeholder="Enter email" ng-model="email">
+                  </div>
+                  <button type="submit" class="btn btn-ra-red" ng-click="signup()">Sign Up</button>
+                </form>
+
+              </div>
+            </div>
           </div>
         </header>
       </div>
@@ -62,34 +66,36 @@
   </div>
 
   <!-- Thing 2 -->
-  <section class="container">
-    <h2 class="text-center cursive">Learn More <i class="fa fa-arrow-down"></i></h2>
+  <section class="learn-more">
+    <div class="container">
+      <h2 class="text-center cursive">Learn More <i class="fa fa-arrow-down"></i></h2>
 
-    <div class="row">
-      <div class="col-md-6 text-center">
-        <h3>
-          <span class="color-bluejeans-light">Bring your</span><br/>
-          <span class="color-bluejeans-light">lifestyle</span><br/>
-          on the go
-        </h3>
-      </div>
-      <div class="col-md-6">
-        <p>
-          Want a manicure in Rome? A reiki session in San Diego? A snowboarding lesson at Lake Tahoe? No sweat:
-          RoadAmico connects you to the real people fellow business travelers trust who provide you the experiences you
-          deserve.
-        </p>
-        <p>
-          Book instantly. When you're on the go, you don't have time to wait around. Our global calendar shows you only
-          service providers available exactly when you need them every hour. With a few clicks, your appointment is
-          ready no matter where you are.
-        </p>
-        <p>
-          Read trusted recommendations from fellow travelers: only RoadAmico members can leave reviews.
-        </p>
-        <p>
-          Write reviews with peace of mind: service providers cannot see who their reviewers are.
-        </p>
+      <div class="row">
+        <div class="col-md-6 text-center">
+          <h3>
+            <span class="color-bluejeans-light">Bring your</span><br/>
+            <span class="color-bluejeans-light">lifestyle</span><br/>
+            on the go
+          </h3>
+        </div>
+        <div class="col-md-6">
+          <p>
+            Want a manicure in Rome? A reiki session in San Diego? A snowboarding lesson at Lake Tahoe? No sweat:
+            RoadAmico connects you to the real people fellow business travelers trust who provide you the experiences you
+            deserve.
+          </p>
+          <p>
+            Book instantly. When you're on the go, you don't have time to wait around. Our global calendar shows you only
+            service providers available exactly when you need them every hour. With a few clicks, your appointment is
+            ready no matter where you are.
+          </p>
+          <p>
+            Read trusted recommendations from fellow travelers: only RoadAmico members can leave reviews.
+          </p>
+          <p>
+            Write reviews with peace of mind: service providers cannot see who their reviewers are.
+          </p>
+        </div>
       </div>
     </div>
   </section>
@@ -129,7 +135,7 @@
     </div>
   </section>
 
-  <section>
+  <section class="pre-register">
     <div class="container">
       <div class="row">
         <div class="col-md-6 col-md-offset-6">
@@ -142,10 +148,10 @@
 
           <form class="form-inline space-top-small">
             <div class="form-group">
-              <label class="sr-only" for="exampleInputEmail3">Email address</label>
-              <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Enter email">
+              <label class="sr-only" for="email2">Email address</label>
+              <input type="email" class="form-control" id="email2" placeholder="Enter email" ng-model="email">
             </div>
-            <button type="submit" class="btn btn-ra-red">Sign Up</button>
+            <button type="submit" class="btn btn-ra-red" ng-click="signup()">Sign Up</button>
           </form>
 
           <h3 class="color-bluejeans-light">Double Your Experience</h3>
@@ -155,10 +161,56 @@
             fingertips.
           </p>
 
-          <button class="btn btn-ra-red-hollow">Refer</button>
+          <button class="btn btn-ra-red-hollow" ng-click="refer()">Refer</button>
+
+          <div class="see-you-soon cursive">See you soon!</div>
         </div>
       </div>
     </div>
   </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="clearfix">
+        <div class="footer-logo"><a href="#" class="cursive">RoadAmico</a></div>
+        <dl class="footer-nav">
+          <dt class="nav-title">ABOUT</dt>
+          <dd class="nav-item"><a href="#">Blog</a></dd>
+          <dd class="nav-item"><a href="#">The Company</a></dd>
+          <dd class="nav-item"><a href="#">Privacy Policy</a></dd>
+          <dd class="nav-item"><a href="#">Terms of Use</a></dd>
+        </dl>
+        <dl class="footer-nav">
+          <dt class="nav-title">CONNECT WITH US</dt>
+          <dd class="nav-item">
+            <a href="#"><i class="fa fa-2x fa-facebook-square"></i></a>
+            <a href="#"><i class="fa fa-2x fa-linked-in-square"></i></a>
+            <a href="#"><i class="fa fa-2x fa-github-square"></i></a>
+            <a href="#"><i class="fa fa-2x fa-pinterest-square"></i></a>
+            <a href="#"><i class="fa fa-2x fa-twitter-square"></i></a>
+            <a href="#"><i class="fa fa-2x fa-google-plus-square"></i></a>
+          </dd>
+        </dl>
+        <dl class="footer-nav">
+          <dt class="nav-title">NEED HELP?</dt>
+          <dd class="nav-item"><a href="mailto:help@roadamico.com">help@roadamico.com</a></dd>
+        </dl>
+        <!--<dl class="footer-nav">-->
+          <!--<dt class="nav-title">GALLERY</dt>-->
+          <!--<dd class="nav-item"><a href="#">Flickr</a></dd>-->
+          <!--<dd class="nav-item"><a href="#">Picasa</a></dd>-->
+          <!--<dd class="nav-item"><a href="#">iStockPhoto</a></dd>-->
+          <!--<dd class="nav-item"><a href="#">PhotoDune</a></dd>-->
+        <!--</dl>-->
+        <!--<dl class="footer-nav">-->
+          <!--<dt class="nav-title">CONTACT</dt>-->
+          <!--<dd class="nav-item"><a href="#">Basic Info</a></dd>-->
+          <!--<dd class="nav-item"><a href="#">Map</a></dd>-->
+          <!--<dd class="nav-item"><a href="#">Conctact Form</a></dd>-->
+        <!--</dl>-->
+      </div>
+      <div class="footer-copyright text-center">Copyright © 2015 RoadAmico. All rights reserved.</div>
+    </div>
+  </footer>
 
 </div>

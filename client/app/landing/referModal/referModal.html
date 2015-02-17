@@ -1,0 +1,20 @@
+<div class="modal-header">
+  <button type="button" ng-click="$dismiss()" class="close">&times;</button>
+  <h4 class="modal-title">Refer a Friend</h4>
+</div>
+<div class="modal-body">
+  <form ng-submit="$close(referral)">
+    <div class="form-group">
+      <label for="email1">Your Email</label>
+      <input type="email" class="form-control" id="email1" placeholder="Your email" ng-model="referral.email">
+    </div>
+    <div class="form-group">
+      <label for="email2">Friend's Email</label>
+      <input type="email" class="form-control" id="email2" placeholder="Friend's email" ng-model="referral.refer">
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button ng-click="$dismiss()" class="btn btn-default">Close</button>
+  <button ng-click="$close(referral)" class="btn btn-primary">Refer</button>
+</div>

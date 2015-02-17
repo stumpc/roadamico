@@ -4,7 +4,14 @@
   }
 
   .header-background {
-    background: $mediumgray-light;
+    background: url(/assets/images/landing/businesstravel.jpg) center no-repeat;
+    background-size: cover;
+  }
+
+  .learn-more {
+    background: white;
+    border-top: 3px solid $mediumgray-light;
+    border-bottom: 3px solid $mediumgray-light;
   }
 
   .how-it-works {
@@ -15,5 +22,19 @@
   .box {
     margin: 20px;
     padding: 15px;
+  }
+
+  .pre-register {
+    background: url(/assets/images/landing/travel2.jpg) center no-repeat;
+    background-size: cover;
+  }
+
+  .see-you-soon {
+    font-size: 30px;
+    margin: 16px 0;
+  }
+
+  .footer {
+    margin-top: 0;
   }
 }

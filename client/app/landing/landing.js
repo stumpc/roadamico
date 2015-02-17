@@ -3,9 +3,9 @@
 angular.module('roadAmicoApp')
   .config(function ($stateProvider) {
     $stateProvider
-      .state('signup', {
+      .state('landing', {
         url: '/',
-        templateUrl: 'app/signup/signup.html',
-        controller: 'SignupCtrl'
+        templateUrl: 'app/landing/landing.html',
+        controller: 'LandingCtrl'
       });
   });

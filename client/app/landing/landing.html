@@ -1,0 +1,97 @@
+<div class="landing">
+  <div class="navbar navbar-inverse navbar-static-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button class="navbar-toggle" type="button" ng-click="isCollapsed = !isCollapsed">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a href="/" class="navbar-brand cursive">RoadAmico</a>
+      </div>
+      <div collapse="isCollapsed" class="navbar-collapse collapse" id="navbar-main">
+        <ul class="nav navbar-nav">
+          <li ng-repeat="item in menu" ng-class="{active: isActive(item.link)}" ng-if="!item.authenticated">
+            <a ng-href="{{item.link}}">{{item.title}}</a>
+          </li>
+          <li ng-show="isAdmin()" ng-class="{active: isActive('/admin')}"><a href="/admin">Admin</a></li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+          <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/signup')}"><a href="/signup">Sign up</a></li>
+          <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/login')}"><a href="/login">Login</a></li>
+          <li ng-show="isLoggedIn()"><p class="navbar-text">Hello {{ getCurrentUser().name }}</p> </li>
+          <li ng-show="isLoggedIn()" ng-class="{active: isActive('/settings')}"><a href="/settings"><i class="fa fa-cog"></i></a></li>
+          <li ng-show="isLoggedIn()" ng-class="{active: isActive('/profile')}"><a href="/profile"><i class="fa fa-user"></i></a></li>
+          <li ng-show="isLoggedIn()" ng-class="{active: isActive('/logout')}"><a href="" ng-click="logout()">Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <div class="row header-background">
+    <div class="col-md-5 col-md-offset-1">
+
+      <div class="container">
+        <header class="hero-unit">
+          <h1><em>Travelers</em><br/><span class="color-bluejeans-light">Unite</span></h1>
+
+          <div class="space-top-large">
+            <p>Quality services. Real reviews. Instant booking.</p>
+            <p>RoadAmico connects you with the lifestyle activities you love wherever your business takes you.</p>
+          </div>
+
+          <div class="space-top-large space-bottom-medium">
+            <strong>Enter your email for early access &amp; six months free.</strong>
+
+            <form class="form-inline space-top-small">
+              <div class="form-group">
+                <label class="sr-only" for="exampleInputEmail3">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Enter email">
+              </div>
+              <button type="submit" class="btn btn-ra-red">Sign Up</button>
+            </form>
+
+          </div>
+        </header>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Thing 2 -->
+  <div class="container">
+    <h2 class="text-center cursive">Learn More <i class="fa fa-arrow-down"></i></h2>
+
+    <div class="row">
+      <div class="col-md-6 text-center">
+        <h3>
+          <span class="color-bluejeans-light">Bring your</span><br/>
+          <span class="color-bluejeans-light">lifestyle</span><br/>
+          on the go
+        </h3>
+      </div>
+      <div class="col-md-6">
+        <p>
+          Want a manicure in Rome? A reiki session in San Diego? A snowboarding lesson at Lake Tahoe? No sweat:
+          RoadAmico connects you to the real people fellow business travelers trust who provide you the experiences you
+          deserve.
+        </p>
+        <p>
+          Book instantly. When you're on the go, you don't have time to wait around. Our global calendar shows you only
+          service providers available exactly when you need them every hour. With a few clicks, your appointment is
+          ready no matter where you are.
+        </p>
+        <p>
+          Read trusted recommendations from fellow travelers: only RoadAmico members can leave reviews.
+        </p>
+        <p>
+          Write reviews with peace of mind: service providers cannot see who their reviewers are.
+        </p>
+      </div>
+    </div>
+  </div>
+
+</div>

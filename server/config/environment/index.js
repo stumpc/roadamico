@@ -41,6 +41,12 @@ var all = {
     }
   },
 
+  // Email settings
+  email: {
+    adminEmail: 'admin@roadamico.com',
+    adminName: 'RoadAmico Admin'
+  },
+
   facebook: {
     clientID:     process.env.FACEBOOK_ID || 'id',
     clientSecret: process.env.FACEBOOK_SECRET || 'secret',
@@ -70,6 +76,12 @@ var all = {
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key:    process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET
+  },
+
+  // SendGrid for emails
+  sendgrid: {
+    username: process.env.SENDGRID_USERNAME,
+    password: process.env.SENDGRID_PASSWORD
   }
 };
 

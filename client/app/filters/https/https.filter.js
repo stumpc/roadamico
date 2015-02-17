@@ -3,6 +3,10 @@
 angular.module('roadAmicoApp')
   .filter('https', function () {
     return function (input) {
-      return input.replace('http://', 'https://')
+      if (!input) {
+        return input;
+      } else {
+        return input.replace('http://', 'https://')
+      }
     };
   });

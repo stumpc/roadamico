@@ -4,6 +4,7 @@ angular.module('roadAmicoApp')
   .controller('UserCtrl', function ($scope, $stateParams, $state, User, Google) {
 
     $scope.user = User.get({id: $stateParams.userId});
+    $scope.joined = $scope.user.joined || moment('02-14-2015').toISOString();
 
     // Leave this page if given an invalid user ID
     $scope.user.$promise.then(angular.noop, function (err) {

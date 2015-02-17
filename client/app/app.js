@@ -30,10 +30,10 @@ angular.module('roadAmicoApp', [
         return config;
       },
 
-      // Intercept 401s and redirect you to login
+      // Intercept 401s and redirect you to home
       responseError: function(response) {
         if(response.status === 401) {
-          $location.path('/login');
+          $location.path('/');
           // remove any stale tokens
           $cookieStore.remove('token');
           return $q.reject(response);
@@ -52,7 +52,7 @@ angular.module('roadAmicoApp', [
         if ((next.authenticate || next.admin) && !loggedIn) {
 
           // Redirect to login if route requires auth and you're not logged in
-          $location.path('/login');
+          $location.path('/');
         } else if (next.admin && !Auth.isAdmin()) {
 
           // If route requires admin and you are not one then go home

@@ -65,6 +65,7 @@ function signToken(id) {
  */
 function setTokenCookie(req, res) {
   if (!req.user) return res.json(404, { message: 'Something went wrong, please try again.'});
+  if (!config.appLive) return res.redirect('/?message=' + encodeURIComponent("RoadAmico isn't allowing open registration yet. That means that, until then, you can't use social login."));
   var token = signToken(req.user._id, req.user.role);
   res.cookie('token', JSON.stringify(token));
   res.redirect('/');

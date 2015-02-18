@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('SignupCtrl', function ($scope, Auth, $location, $window) {
+  .controller('SignupCtrl', function ($scope, $location, $window, Auth, Modal) {
     $scope.user = {};
     $scope.errors = {};
 
@@ -20,6 +20,10 @@ angular.module('roadAmicoApp')
         })
         .catch( function(err) {
           err = err.data;
+          if (err.message) {
+            Modal.info.error(err.message);
+          }
+
           $scope.errors = {};
 
           // Update validity of form fields that match the mongoose errors

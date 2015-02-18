@@ -6,22 +6,18 @@ var crypto = require('crypto');
 var authTypes = ['github', 'twitter', 'facebook', 'google', 'linkedin'];
 
 var UserSchema = new Schema({
+  // Profile
   name: String,
   email: { type: String, lowercase: true },
   joined: String,
-
-  // Profile
   phone: String,
   photo: String,
   location: String,
   bio: String,
   workplace: String,
-  verification: {
-    idUrl: String,
-    status: String // none, pending, denied, approved
-  },
   categories: [],
 
+  // Privacy
   publicInfo: {
     phone: Boolean,
     location: Boolean,
@@ -40,15 +36,20 @@ var UserSchema = new Schema({
       },
       cvc: String // Encrypted
     }]
-
-    // TODO: Do we want to support Google Wallet, PayPal, Apple Pay, or Amazon Payments?
-
   },
 
+  // Only admin can set. These fields must be deleted in user.controller#update
+  verification: {
+    idUrl: String,
+    status: String // none, pending, denied, approved
+  },
+  activated: Boolean,
   role: {
     type: String,
     default: 'user'
   },
+
+  // Credentials
   hashedPassword: String,
   provider: String,
   salt: String,
@@ -78,14 +79,18 @@ UserSchema
   .virtual('profile')
   .get(function() {
     var profile = {
-      _id: this._id,
-      'name': this.name,
-      'role': this.role,
-      joined: this.joined,
-      photo: this.photo,
-      bio: this.bio,
+      _id:          this._id,
+      name:         this.name,
+      email:        this.email,
+      joined:       this.joined,
+      phone:        this.phone,
+      photo:        this.photo,
+      location:     this.location,
+      bio:          this.bio,
+      workplace:    this.workplace,
+      categories:   this.categories,
       verification: this.verification,
-      categories: this.categories
+      activated:    this.activated
     };
 
     // Add in public information
@@ -103,7 +108,8 @@ UserSchema
   .get(function() {
     return {
       '_id': this._id,
-      'role': this.role
+      'role': this.role,
+      'activated': this.activated
     };
   });
 

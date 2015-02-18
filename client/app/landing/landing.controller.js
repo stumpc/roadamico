@@ -1,7 +1,12 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('LandingCtrl', function ($scope, $http, $log, $modal, Modal) {
+  .controller('LandingCtrl', function ($scope, $http, $log, $modal, $location, Modal) {
+
+    // Check for messages
+    if ($location.search().message) {
+      Modal.info[$location.search().messageType || 'error']($location.search().message);
+    }
 
     function save(obj) {
       $http.post('/api/signups', obj).success(function () {

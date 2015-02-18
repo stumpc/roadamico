@@ -1,6 +1,7 @@
 var passport = require('passport');
 var LinkedInStrategy = require('passport-linkedin').Strategy;
 var moment = require('moment');
+var config = require('../../config/environment');
 
 exports.setup = function (User, config) {
   passport.use(new LinkedInStrategy({
@@ -17,6 +18,8 @@ exports.setup = function (User, config) {
             return done(err);
           }
           if (!user) {
+            if (!config.appLive) return done(null, {});
+
             user = new User({
               name: profile.displayName,
               //email: profile.emails[0].value,

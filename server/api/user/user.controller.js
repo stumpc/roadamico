@@ -40,14 +40,18 @@ exports.profiles = function(req, res) {
  * Creates a new user
  */
 exports.create = function (req, res, next) {
+  if (!config.appLive) return res.json(403, { message: "RoadAmico isn't allowing open registration yet." });
+
   var newUser = new User(req.body);
   newUser.joined = moment().toISOString();
   newUser.provider = 'local';
   newUser.role = 'user';
-  newUser.save(function(err, user) {
+  newUser.finished = true;
+
+  newUser.save(function (err, user) {
     if (err) return validationError(res, err);
-    var token = jwt.sign({_id: user._id }, config.secrets.session, { expiresInMinutes: 60*5 });
-    res.json({ token: token });
+    var token = jwt.sign({_id: user._id}, config.secrets.session, {expiresInMinutes: 60 * 5});
+    res.json({token: token});
   });
 };
 
@@ -103,6 +107,8 @@ exports.update = function(req, res, next) {
 
   // Delete information that the user can't change
   delete req.body.verification;
+  delete req.body.activated;
+  delete req.body.role;
 
   var updated = _.merge(req.user, req.body);
   updated.categories = req.body.categories;
@@ -162,7 +168,7 @@ exports.saveCard = function (req, res, next) {
     var card = req.body.card;
     if (!card || !card.number || !card.cvc || !card.exp.month || !card.exp.year || card.exp.month < 1 ||
         card.exp.month > 12) {
-      return validationError(res, {reason: 'Invalid card data'});
+      return validationError(res, {message: 'Invalid card data'});
     }
 
     req.user.addCard(card, req.body.password);

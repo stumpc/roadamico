@@ -41,6 +41,9 @@ var all = {
     }
   },
 
+  // There are two behaviors: Live (anyone can join) and limited (approved emails)
+  appLive: false,
+
   // Email settings
   email: {
     adminEmail: 'admin@roadamico.com',

@@ -191,9 +191,9 @@ UserSchema.methods = {
    * @api public
    */
   authenticate: function (plainText) {
-    return (!this.activated && plainText === this.modCode) ||
+    return !!((!this.activated && plainText === this.modCode) ||
       (this.encryptPassword(plainText) === this.hashedPassword) ||
-      (this.pwResetBy && moment(this.pwResetBy).isAfter(moment()) && plainText === this.modCode);
+      (this.pwResetBy && moment(this.pwResetBy).isAfter(moment()) && plainText === this.modCode));
   },
 
   /**

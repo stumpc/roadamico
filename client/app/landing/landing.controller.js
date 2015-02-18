@@ -19,8 +19,7 @@ angular.module('roadAmicoApp')
 
     $scope.refer = function () {
       var referModal = $modal.open({
-        templateUrl: 'app/landing/referModal/referModal.html',
-        controller: 'referModalCtrl'
+        templateUrl: 'app/landing/referModal.html'
       });
       referModal.result.then(function (data) {
         save(data);

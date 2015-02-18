@@ -1,0 +1,10 @@
+Hello!
+
+Your friend {{referrer}} has just signed up for RoadAmico and thought that you would also like it.
+
+RoadAmico connects you with locals wherever you go, allowing you to do the things you love even when you're far from home. It's simple: just enter when and where you're traveling to instantly book time with service providers.
+
+Please visit http://www.roadamico.com to sign up to receive access to premier services when you travel.
+
+Cheers,
+The RoadAmico Team

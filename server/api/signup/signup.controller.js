@@ -22,18 +22,20 @@ exports.create = function(req, res) {
     if(err) { return handleError(res, err); }
 
     // Send an email
-    var email = emails.create('signup', {
+    emails.create('signup', {
       to: signup.email,
       subject: 'Thank you for signing up with RoadAmico'
-    });
+    }).send();
 
-    // TODO: if there is a referral, send them an email too (#88557886)
-
-
-    emails.sendgrid.send(email, function (err, json) {
-      if (err) { return console.error(err); }
-      console.log(json);
-    });
+    // If there is a referral, send them an email too (#88557886)
+    if (signup.refer) {
+      emails.create('referral', {
+        to: signup.refer,
+        subject: 'Join your friends on RoadAmico'
+      }, {
+        referrer: signup.email
+      }).send();
+    }
 
     return res.json(201, signup);
   });

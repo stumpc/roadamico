@@ -22,6 +22,25 @@ fs.readdirSync(__dirname + '/emails').forEach(function (file) {
   });
 });
 
+// A wrapper around the email payload in order to chain the send method
+function Email(payload) {
+  this.send = function (cb) {
+
+    // If no callback is defined, then just log
+    cb = cb || function (err, result) {
+      if (err) {
+        console.error('Error sending email', err);
+      } else {
+        console.log('Email sent', result);
+      }
+    };
+
+    emails.sendgrid.send(payload, cb);
+  };
+}
+
+
+
 emails.create = function (name, data, view) {
   // Email contents
   if (emails.store[name] && emails.store[name].txt) {
@@ -35,7 +54,7 @@ emails.create = function (name, data, view) {
   data.from = data.from || config.email.adminEmail;
   data.fromname = data.fromname || config.email.adminName;
 
-  return data;
+  return new Email(data);
 };
 
 module.exports = emails;

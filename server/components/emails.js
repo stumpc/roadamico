@@ -25,7 +25,6 @@ fs.readdirSync(__dirname + '/emails').forEach(function (file) {
 // A wrapper around the email payload in order to chain the send method
 function Email(payload) {
   this.send = function (cb) {
-
     // If no callback is defined, then just log
     cb = cb || function (err, result) {
       if (err) {
@@ -35,6 +34,10 @@ function Email(payload) {
       }
     };
 
+    // Only actually send an email if in production mode
+    if (process.env.NODE_ENV != 'production') {
+      return cb(null, {message: '[fake] success'});
+    }
     emails.sendgrid.send(payload, cb);
   };
 }

@@ -13,10 +13,10 @@ router.delete('/:id',       auth.hasRole('admin'), controller.destroy);
 //router.put('/:id/activate', auth.hasRole('admin'), controller.activate);
 
 // User routes
-router.get('/me',           auth.isAuthenticated(), controller.me);
+router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
 router.put('/',             auth.isAuthenticated(), controller.update);
 router.put('/:id',          auth.isAuthenticated(), controller.update);
-router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
+router.get('/me',           auth.isAuthenticated(), controller.me);
 router.post('/pic',         auth.isAuthenticated(), controller.uploadImage);
 router.post('/card',        auth.isAuthenticated(), controller.saveCard);
 router.delete('/card/:id',  auth.isAuthenticated(), controller.deleteCard);

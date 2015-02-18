@@ -1,0 +1,52 @@
+<div class="container finalize">
+
+  <h1>Finalize your account details</h1>
+
+  <form name="userForm1" ng-submit="save1()" novalidate>
+
+    <h2><i class="fa fa-info-circle"></i> Account Information</h2>
+
+    <!-- NAME -->
+    <div class="form-group" ng-class="{ 'has-error' : userForm1.name.$invalid && !userForm1.name.$pristine }">
+      <label>Name</label>
+      <input type="text" name="name" class="form-control" ng-model="user.name" required>
+      <p ng-show="userForm1.name.$invalid && !userForm1.name.$pristine" class="help-block">Your name is required.</p>
+    </div>
+
+    <!-- EMAIL -->
+    <div class="form-group" ng-class="{ 'has-error' : userForm1.email.$invalid && !userForm1.email.$pristine }">
+      <label>Email</label>
+      <input type="email" name="email" class="form-control" ng-model="user.email" required>
+      <p ng-show="userForm1.email.$invalid && !userForm1.email.$pristine" class="help-block">Enter a valid email.</p>
+      <p class="help-block" ng-show="userForm1.email.$error.mongoose">
+        {{ errors.email }}
+      </p>
+    </div>
+
+    <button type="submit" class="btn btn-primary" ng-disabled="userForm1.$invalid && !submitted">Save</button>
+  </form>
+
+  <div class="coverable">
+    <div class="cover" ng-hide="step >= 2"></div>
+    <form name="userForm2" ng-submit="save2()" novalidate>
+
+      <h2><i class="fa fa-key"></i> Password</h2>
+
+      <!-- PASSWORD 1 -->
+      <div class="form-group" ng-class="{ 'has-error' : userForm2.password1.$invalid && !userForm2.password1.$pristine }">
+        <label>Password</label>
+        <input type="password" name="password1" class="form-control" ng-model="password1" required minlength="8">
+        <p ng-show="userForm2.password1.$error.minlength" class="help-block">Password must be at least 8 characters long.</p>
+      </div>
+
+      <!-- PASSWORD 2 -->
+      <div class="form-group" ng-class="{ 'has-error' : userForm2.password2.$invalid && !userForm2.password2.$pristine }">
+        <label>Re-enter Password</label>
+        <input type="password" name="password2" class="form-control" ng-model="password2" pw-check="password1" required>
+        <p ng-show="userForm2.password2.$error.pwMismatch" class="help-block">Passwords must match.</p>
+      </div>
+
+      <button type="submit" class="btn btn-primary" ng-disabled="userForm2.$invalid || userForm2.$pristine">Save</button>
+    </form>
+  </div>
+</div>

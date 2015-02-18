@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .factory('Auth', function Auth($location, $rootScope, $http, User, $cookieStore, $q) {
+  .factory('Auth', function Auth($location, $rootScope, $http, User, $cookieStore, $q, $state) {
     var currentUser = {};
     if($cookieStore.get('token')) {
       currentUser = User.get();
@@ -28,6 +28,12 @@ angular.module('roadAmicoApp')
           $cookieStore.put('token', data.token);
           currentUser = User.get();
           deferred.resolve(data);
+
+          currentUser.$promise.then(function () {
+            if (!currentUser.activated) {
+              $state.go('finalize');
+            }
+          });
           return cb();
         }).
         error(function(err) {

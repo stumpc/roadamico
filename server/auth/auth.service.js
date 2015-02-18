@@ -56,8 +56,8 @@ function hasRole(roleRequired) {
 /**
  * Returns a jwt token signed by the app secret
  */
-function signToken(id) {
-  return jwt.sign({ _id: id }, config.secrets.session, { expiresInMinutes: 60*5 });
+function signToken(user) {
+  return jwt.sign(user.token, config.secrets.session, { expiresInMinutes: 60*5 });
 }
 
 /**
@@ -66,9 +66,15 @@ function signToken(id) {
 function setTokenCookie(req, res) {
   if (!req.user) return res.json(404, { message: 'Something went wrong, please try again.'});
   if (!config.appLive) return res.redirect('/?message=' + encodeURIComponent("RoadAmico isn't allowing open registration yet. That means that, until then, you can't use social login."));
-  var token = signToken(req.user._id, req.user.role);
+  var token = signToken(req.user);
   res.cookie('token', JSON.stringify(token));
-  res.redirect('/');
+
+  if (req.user.activated)
+    res.redirect('/');
+  else {
+    // TODO: Send an email
+    res.redirect('/finalize');
+  }
 }
 
 exports.isAuthenticated = isAuthenticated;

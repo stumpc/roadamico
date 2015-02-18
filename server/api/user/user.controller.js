@@ -3,11 +3,12 @@
 var User = require('./user.model');
 var passport = require('passport');
 var config = require('../../config/environment');
-var jwt = require('jsonwebtoken');
+//var jwt = require('jsonwebtoken');
 var _ = require('lodash');
 var cloudinary = require('cloudinary');
 var fs = require('fs');
 var moment = require('moment');
+var auth = require('../../auth/auth.service');
 
 var validationError = function(res, err) {
   return res.json(422, err);
@@ -28,6 +29,7 @@ exports.index = function(req, res) {
  * Get list of all users' profile
  */
 exports.profiles = function(req, res) {
+  // TODO: Don't show non-activated accounts
   User.find({}, function (err, users) {
     if(err) return res.send(500, err);
     res.json(200, users.map(function (user) {
@@ -50,7 +52,7 @@ exports.create = function (req, res, next) {
 
   newUser.save(function (err, user) {
     if (err) return validationError(res, err);
-    var token = jwt.sign({_id: user._id}, config.secrets.session, {expiresInMinutes: 60 * 5});
+    var token = auth.signToken(user);
     res.json({token: token});
   });
 };
@@ -59,6 +61,7 @@ exports.create = function (req, res, next) {
  * Get a single user
  */
 exports.show = function (req, res, next) {
+  // TODO: Don't show non-activated accounts
   var userId = req.params.id;
 
   User.findById(userId, function (err, user) {
@@ -90,6 +93,8 @@ exports.changePassword = function(req, res, next) {
   User.findById(userId, function (err, user) {
     if(user.authenticate(oldPass)) {
       user.password = newPass;
+      if (user.email && !user.activated) user.activated = true;
+
       user.save(function(err) {
         if (err) return validationError(res, err);
         res.send(200);

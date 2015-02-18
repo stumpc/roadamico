@@ -38,13 +38,22 @@ User.find({}).remove(function() {
     provider: 'local',
     name: 'Test User',
     email: 'test@test.com',
-    password: 'test'
+    password: 'test',
+    activated: true
   }, {
     provider: 'local',
     role: 'admin',
     name: 'Admin',
     email: 'admin@admin.com',
-    password: 'admin'
+    password: 'admin',
+    activated: true
+  }, {
+    provider: 'local',
+    name: 'Joe',
+    email: 'asdfasdf',
+    password: 'joe',
+    activated: false,
+    modCode: '1234'
   });
 
   // Create a bunch of fake guys

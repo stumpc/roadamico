@@ -13,12 +13,23 @@ exports.setup = function (User, config) {
         if (err) return done(err);
 
         if (!user) {
-          return done(null, false, { message: 'This email is not registered.' });
+
+          // A user can also use their ID instead of email
+          User.findById(email, function (err, user) {
+            if (err || !user) return done(null, false, { message: 'This email is not registered.' });
+
+            if (!user.authenticate(password)) {
+              return done(null, false, {message: 'This password is not correct.'});
+            }
+            return done(null, user);
+          });
+        } else {
+
+          if (!user.authenticate(password)) {
+            return done(null, false, {message: 'This password is not correct.'});
+          }
+          return done(null, user);
         }
-        if (!user.authenticate(password)) {
-          return done(null, false, { message: 'This password is not correct.' });
-        }
-        return done(null, user);
       });
     }
   ));

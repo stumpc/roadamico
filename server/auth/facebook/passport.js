@@ -2,6 +2,7 @@ var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var moment = require('moment');
 var config = require('../../config/environment');
+var genCode = require('../../components/genCode');
 
 exports.setup = function (User, config) {
   passport.use(new FacebookStrategy({
@@ -27,7 +28,8 @@ exports.setup = function (User, config) {
             username: profile.username,
             provider: 'facebook',
             facebook: profile._json,
-            joined: moment().toISOString()
+            joined: moment().toISOString(),
+            modCode: genCode()
           });
           user.save(function(err) {
             if (err) done(err);

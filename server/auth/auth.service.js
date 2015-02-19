@@ -73,7 +73,7 @@ function setTokenCookie(req, res) {
     res.redirect('/');
   else {
     // TODO: Send an email
-    res.redirect('/finalize');
+    res.redirect('/finalize?code=' + req.user.modCode);
   }
 }
 

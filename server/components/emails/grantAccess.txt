@@ -1,0 +1,9 @@
+Hello and welcome to RoadAmico!
+
+You have been granted access to RoadAmico. To finish making your profile and begin enjoying doing the things you love when you travel, please use the following URL:
+
+http://www.roadamico.com/finalize?id={{id}}&code={{modCode}}
+
+
+Thanks and see you soon!
+The RoadAmico Team

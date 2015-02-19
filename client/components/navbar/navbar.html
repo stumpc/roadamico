@@ -10,7 +10,7 @@
       <a href="/" class="navbar-brand">RoadAmico</a>
     </div>
     <div collapse="isCollapsed" class="navbar-collapse collapse" id="navbar-main">
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav" ng-show="config.appLive || isLoggedIn()">
         <li ng-repeat="item in menu" ng-class="{active: isActive(item.link)}" ng-if="!item.authenticated">
             <a ng-href="{{item.link}}">{{item.title}}</a>
         </li>

@@ -2,6 +2,7 @@ var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var moment = require('moment');
 var config = require('../../config/environment');
+var genCode = require('../../components/genCode');
 
 exports.setup = function (User, config) {
   passport.use(new GoogleStrategy({
@@ -23,7 +24,8 @@ exports.setup = function (User, config) {
             username: profile.username,
             provider: 'google',
             google: profile._json,
-            joined: moment().toISOString()
+            joined: moment().toISOString(),
+            modCode: genCode()
           });
           user.save(function(err) {
             if (err) done(err);

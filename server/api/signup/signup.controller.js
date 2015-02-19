@@ -5,6 +5,7 @@ var Signup = require('./signup.model');
 var User = require('../user/user.model');
 var emails = require('../../components/emails');
 var moment = require('moment');
+var genCode = require('../../components/genCode');
 
 // Get list of signups
 exports.index = function(req, res) {
@@ -50,7 +51,9 @@ exports.grant = function (req, res) {
     // Create an account w/ a random modCode
     User.create({
       email: signup.email,
-      modCode: Math.random().toString(36).slice(2)
+      modCode: genCode(),
+      password: genCode(),
+      joined: moment().toISOString()
     }, function (err, user) {
       if (err) { return handleError(res, err); }
       if (!user) return res.json(404, { message: 'No user created.'});
@@ -62,7 +65,7 @@ exports.grant = function (req, res) {
         id: user._id,
         modCode: user.modCode
       });
-      console.log(email.text);
+      console.log(email.payload.text);
       email.send();
 
       return res.json(200, { message: 'Access granted and email sent.' });

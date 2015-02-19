@@ -2,6 +2,7 @@ var passport = require('passport');
 var LinkedInStrategy = require('passport-linkedin').Strategy;
 var moment = require('moment');
 var config = require('../../config/environment');
+var genCode = require('../../components/genCode');
 
 exports.setup = function (User, config) {
   passport.use(new LinkedInStrategy({
@@ -26,7 +27,8 @@ exports.setup = function (User, config) {
               role: 'user',
               provider: 'linkedin',
               linkedin: profile._json,
-              joined: moment().toISOString()
+              joined: moment().toISOString(),
+              modCode: genCode()
             });
             user.save(function(err) {
               if (err) done(err);

@@ -11,8 +11,12 @@ angular.module('roadAmicoApp')
         email: signup.email
       }).success(function (data) {
         Modal.info.message(data.message);
-      }).error(function () {
-        Modal.info.message('Error granting access.');
+      }).error(function (err) {
+        var message = Object.keys(err.errors).map(function (e) {
+          return err.errors[e].message;
+        }).join(' ');
+        Modal.info.error(err.message, message);
+        console.log(err);
       });
     });
   });

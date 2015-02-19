@@ -24,6 +24,7 @@ fs.readdirSync(__dirname + '/emails').forEach(function (file) {
 
 // A wrapper around the email payload in order to chain the send method
 function Email(payload) {
+  this.payload = payload;
   this.send = function (cb) {
     // If no callback is defined, then just log
     cb = cb || function (err, result) {

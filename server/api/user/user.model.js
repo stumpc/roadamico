@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var crypto = require('crypto');
 var authTypes = ['github', 'twitter', 'facebook', 'google', 'linkedin'];
+var moment = require('moment');
 
 var UserSchema = new Schema({
   // Profile
@@ -45,13 +46,13 @@ var UserSchema = new Schema({
   },
   activated: Boolean,
   modCode: String,
-  pwResetBy: String,
   role: {
     type: String,
     default: 'user'
   },
 
   // Credentials
+  pwResetBy: String,
   hashedPassword: String,
   provider: String,
   salt: String,
@@ -193,7 +194,7 @@ UserSchema.methods = {
   authenticate: function (plainText) {
     return !!((!this.activated && plainText === this.modCode) ||
       (this.encryptPassword(plainText) === this.hashedPassword) ||
-      (this.pwResetBy && moment(this.pwResetBy).isAfter(moment()) && plainText === this.modCode));
+      (this.modCode && this.pwResetBy && moment(this.pwResetBy).isAfter(moment()) && plainText === this.modCode));
   },
 
   /**

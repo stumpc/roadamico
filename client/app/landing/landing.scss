@@ -1,6 +1,13 @@
 .landing {
   .navbar {
     margin-bottom: 0;
+
+    .navbar-brand .brand-logo {
+      opacity: 0.5;
+    }
+    .navbar-brand:hover .brand-logo {
+      opacity: 1;
+    }
   }
 
   .header-background {

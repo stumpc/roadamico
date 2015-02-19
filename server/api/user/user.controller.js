@@ -9,6 +9,8 @@ var cloudinary = require('cloudinary');
 var fs = require('fs');
 var moment = require('moment');
 var auth = require('../../auth/auth.service');
+var genCode = require('../../components/genCode');
+var emails = require('../../components/emails');
 
 var validationError = function(res, err) {
   return res.json(422, err);
@@ -93,6 +95,8 @@ exports.changePassword = function(req, res, next) {
   User.findById(userId, function (err, user) {
     if(user.authenticate(oldPass)) {
       user.password = newPass;
+      user.pwResetBy = '';
+      user.modCode = '';
       if (user.email && !user.activated) user.activated = true;
 
       user.save(function(err) {
@@ -203,4 +207,29 @@ exports.deleteCard = function (req, res, next) {
   if (!found) {
     res.send(404);
   }
+};
+
+exports.resetPassword = function (req, res, next) {
+
+  User.findOne({email: req.body.email.toLowerCase()}, function (err, user) {
+    if (err) return res.json(500, err);
+    if (!user) return res.json(404, { message: 'No user found' });
+
+    user.modCode = genCode();
+    user.pwResetBy = moment().add(2, 'days').toISOString();
+    user.save(function (err) {
+      if (err) return res.json(500, err);
+
+      emails.create('resetPassword', {
+        to: user.email,
+        subject: 'RoadAmico Password Reset'
+      }, {
+        email: user.email,
+        id: user._id,
+        modCode: user.modCode
+      }).send();
+
+      res.send(200);
+    });
+  });
 };

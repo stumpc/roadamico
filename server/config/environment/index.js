@@ -43,7 +43,7 @@ var all = {
 
   // There are two behaviors: Live (anyone can join) and limited (approved emails)
   // Also change the client-side config in client/app/config/config.js
-  appLive: true,
+  appLive: false,
 
   // Email settings
   email: {

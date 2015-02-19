@@ -1,7 +1,11 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('MainCtrl', function ($scope, $http, $state, socket, Auth) {
+  .controller('MainCtrl', function ($scope, $http, $state, config, socket) {
+
+    if (!config.appLive) {
+      $state.go('landing');
+    }
 
     $scope.awesomeThings = [];
 

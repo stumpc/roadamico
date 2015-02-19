@@ -49,9 +49,9 @@ angular.module('roadAmicoApp')
           $scope.newCardForm.$setPristine();
         }).error(function (data) {
           if (data === 'Forbidden') {
-            Modal.prompt.password(sv, 'Invalid password');
+            Modal.prompt.password('Invalid password', sv);
           } else {
-            Modal.info.error('Error', 'There was an error saving your card', data.reason);
+            Modal.info.error('There was an error saving your card. <strong>' + data.reason + '</strong>');
           }
         });
       }
@@ -62,7 +62,7 @@ angular.module('roadAmicoApp')
       $http.delete('/api/users/card/'+id).success(function (data) {
         $scope.user.financial = data;
       }).error(function () {
-        Modal.info.error('Error', 'Could not delete card');
+        Modal.info.error('Could not delete card');
       });
     });
   });

@@ -8,7 +8,11 @@
   <div ng-if="modal.img" class="modal-image-holder">
     <img ng-src="{{modal.img | https}}" alt="{{modal.alt}}"/>
   </div>
-  <input ng-if="modal.password" type="password" class="form-control" ng-model="modal.data.password"/>
+
+  <!-- Input -->
+  <input ng-if="modal.input.password" placeholder="Enter Password" type="password" class="form-control" ng-model="modal.data.password"/>
+  <input ng-if="modal.input.email" placeholder="Enter Email" type="email" class="form-control" ng-model="modal.data.email"/>
+  <input ng-if="modal.input.text" type="text" class="form-control" ng-model="modal.data.text"/>
 </div>
 <div class="modal-footer">
   <button ng-repeat="button in modal.buttons" ng-class="button.classes" ng-click="button.click($event, modal.data)" ng-bind="button.text" class="btn"></button>

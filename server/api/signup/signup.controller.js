@@ -58,15 +58,13 @@ exports.grant = function (req, res) {
       if (err) { return handleError(res, err); }
       if (!user) return res.json(404, { message: 'No user created.'});
 
-      var email = emails.create('grantAccess', {
+      emails.create('grantAccess', {
         to: signup.email,
         subject: 'Welcome to RoadAmico!'
       }, {
         id: user._id,
         modCode: user.modCode
-      });
-      console.log(email.payload.text);
-      email.send();
+      }).send();
 
       return res.json(200, { message: 'Access granted and email sent.' });
     });

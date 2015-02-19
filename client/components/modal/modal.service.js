@@ -116,12 +116,16 @@ angular.module('roadAmicoApp')
       },
 
       prompt: {
-        password: function (cb, note) {
+        password: function (note, cb) {
+          if (!cb) {
+            cb = note;
+            note = null;
+          }
           cb = cb || angular.noop;
 
-          var message = '<p>Please enter your password to continue:</p>';
+          var message = '<p>Please enter your password:</p>';
           if (note) {
-            message = '<p><strong>'+note+'</strong></p>' + message;
+            message += '<p><strong>'+note+'</strong></p>';
           }
 
           var promptModal;
@@ -130,12 +134,15 @@ angular.module('roadAmicoApp')
               dismissable: true,
               title: 'Verify Password',
               html: message,
-              password: true,
+              input: {
+                password: true
+              },
               buttons: [{
                 classes: 'btn-primary',
                 text: 'Done',
                 click: function(e, data) {
-                  promptModal.close(data.password);
+                  if (data) data = data.password;
+                  promptModal.close(data);
                 }
               }, {
                 classes: 'btn-default',
@@ -150,21 +157,54 @@ angular.module('roadAmicoApp')
           promptModal.result.then(function(password) {
             cb(password);
           });
+        },
+
+        email: function (message, cb) {
+          if (!cb) {
+            cb = message;
+            message = null;
+          }
+          cb = cb || angular.noop;
+
+          var promptModal;
+          promptModal = openModal({
+            modal: {
+              dismissable: true,
+              title: 'Enter Email',
+              html: message,
+              input: {
+                email: true
+              },
+              buttons: [{
+                classes: 'btn-primary',
+                text: 'Done',
+                click: function(e, data) {
+                  if (data) data = data.email;
+                  promptModal.close(data);
+                }
+              }, {
+                classes: 'btn-default',
+                text: 'Cancel',
+                click: function(e) {
+                  promptModal.dismiss(e);
+                }
+              }]
+            }
+          }, 'modal-primary');
+
+          promptModal.result.then(function(email) {
+            cb(email);
+          });
         }
       },
 
       /* Information modals */
       info: {
-        error: function (title, message1, message2) {
+        error: function (title, message) {
 
-          if (!message1) {
-            message1 = title;
+          if (!message) {
+            message = title;
             title = "Error";
-          }
-
-          var message = '<p>' + message1 + '</p>';
-          if (message2) {
-            message += '<p><strong>' + message2 + '</strong></p>';
           }
 
           var errorModal;

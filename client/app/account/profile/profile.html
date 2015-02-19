@@ -53,8 +53,7 @@
             <!-- LOCATION -->
             <div class="form-group" ng-class="{ 'has-error' : userForm.location.$invalid && !userForm.location.$pristine }">
               <label>Location</label>
-              <input type="text" name="location" id='location' ng-autocomplete class="form-control" ng-model="user.location" details="dloc">
-              <!-- TODO: Maybe preload the lat/lng data from dloc into the user object -->
+              <input type="text" name="location" id='location' ng-autocomplete class="form-control" ng-model="user.location" details="user.locationDetails">
             </div>
 
             <!-- WORKPLACE -->

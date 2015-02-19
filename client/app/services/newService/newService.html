@@ -1,0 +1,40 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container page">
+  <h1>Offer a New Service</h1>
+
+  <form name="form" ng-submit="create()" novalidate>
+
+    <!-- NAME -->
+    <div class="form-group" ng-class="{ 'has-error' : form.name.$invalid && !form.name.$pristine }">
+      <label>Name</label>
+      <input type="text" name="name" class="form-control" ng-model="service.name" required>
+      <p ng-show="form.name.$invalid && !form.name.$pristine" class="help-block">Service name is required.</p>
+    </div>
+
+    <!-- Description -->
+    <div class="form-group" ng-class="{ 'has-error' : form.description.$invalid && !form.description.$pristine }">
+      <label>Description</label>
+      <input type="text" name="description" class="form-control" ng-model="service.description" required>
+      <p ng-show="form.description.$invalid && !form.description.$pristine" class="help-block">Service description is required.</p>
+    </div>
+
+    <!-- Category -->
+    <div class="form-group" ng-class="{ 'has-error' : form.category.$invalid && !form.category.$pristine }">
+      <label>Category</label>
+      <select name="category" class="form-control" ng-options="category for category in categories" ng-model="service.category" required></select>
+      <p ng-show="form.category.$invalid && !form.category.$pristine" class="help-block">Service category is required.</p>
+    </div>
+
+    <!-- LOCATION -->
+    <div class="form-group" ng-class="{ 'has-error' : form.location.$invalid && !form.location.$pristine }">
+      <label>Location</label>
+      <input type="text" name="location" id='location' ng-autocomplete class="form-control" ng-model="service.location" details="service.locationDetails" required>
+      <p ng-show="form.location.$invalid && !form.location.$pristine" class="help-block">Service category is required.</p>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+  </form>
+</div>
+
+<div ng-include="'components/footer/footer.html'"></div>

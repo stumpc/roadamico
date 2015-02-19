@@ -7,6 +7,7 @@
 
 var Thing = require('../api/thing/thing.model');
 var User = require('../api/user/user.model');
+var Signup = require('../api/signup/signup.model');
 var Service = require('../api/service/service.model');
 var faker = require('faker');
 var _ = require('lodash');
@@ -83,6 +84,57 @@ User.find({}).remove(function() {
     }
   });
   console.log('Creating fake users...');
-  User.create(guys);
+  User.create(guys, function () {
+    User.find({}, function (err, users) {
+
+      // Now have each user offer a service
+      Service.find({}).remove(function () {
+        console.log('Creating fake services');
+        users.forEach(createService);
+        users.forEach(createService);
+      });
+    });
+  });
 
 });
+
+// Random service creator
+var categories = [
+  'Amusement Park',
+  'Badminton',
+  'Baseball',
+  'Basketball',
+  'Billiards',
+  'Board Games',
+  'Boating',
+  'Bowling',
+  'Bungee Jumping',
+  'Cycling',
+  'Fishing',
+  'Golf',
+  'Hiking',
+  'Horse Riding',
+  'Lawn Tennis',
+  'Museum Visit',
+  'Nature Walk',
+  'Painting',
+  'River Rafting',
+  'Scuba Diving',
+  'Surfing',
+  'Swimming',
+  'Table Tennis',
+  'Team Games',
+  'Volleyball'
+];
+function createService(user) {
+  var category = categories[~~(Math.random()*categories.length)];
+  Service.create({
+    name: category + ' with ' + user.name,
+    description: faker.hacker.phrase(),
+    location: user.location,
+    provider: user
+  });
+}
+
+// Remove all signups
+Signup.find({}).remove();

@@ -7,6 +7,7 @@ var ServiceSchema = new Schema({
   name: String,
   description: String,
   location: String,
+  locationDetails: {},
   provider: { type: Schema.Types.ObjectId, ref: 'User' },
   availability: [{
     datetime: String,

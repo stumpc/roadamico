@@ -14,6 +14,7 @@ var UserSchema = new Schema({
   phone: String,
   photo: String,
   location: String,
+  locationDetails: {},
   bio: String,
   workplace: String,
   categories: [],
@@ -84,13 +85,8 @@ UserSchema
     var profile = {
       _id: this._id,
       name: this.name,
-      email: this.email,
       joined: this.joined,
-      phone: this.phone,
       photo: this.photo,
-      location: this.location,
-      bio: this.bio,
-      workplace: this.workplace,
       categories: this.categories,
       verification: this.verification,
       activated: this.activated
@@ -105,6 +101,7 @@ UserSchema
     }
     if (this.publicInfo.location) {
       profile.location = this.location;
+      profile.locationDetails = this.locationDetails;
     }
     if (this.publicInfo.workplace) {
       profile.workplace = this.workplace;

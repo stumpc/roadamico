@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('LoginCtrl', function ($scope, Auth, $location, $window) {
+  .controller('LoginCtrl', function ($scope, Auth, $location, $window, config) {
+    $scope.config = config;
     $scope.user = {};
     $scope.errors = {};
 

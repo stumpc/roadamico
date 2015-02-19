@@ -16,7 +16,7 @@ angular.module('roadAmicoApp')
           Modal.info.error('Invalid user ID');
         });
       } else {
-        $state.go('home');
+        $state.go('landing');
       }
     } else {
       $scope.user = Auth.getCurrentUser();

@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('NavbarCtrl', function ($scope, $location, Auth) {
+  .controller('NavbarCtrl', function ($scope, $location, Auth, config) {
+    $scope.config = config;
+
     $scope.menu = [
       {
         title: 'Home',

@@ -1,0 +1,21 @@
+<div class="col-md-12">
+
+  <button class="btn btn-primary"><i class="fa fa-envelope"></i> Grant to a specific email</button>
+
+  <table class="table table-striped">
+    <tr>
+      <th>Email</th>
+      <th>Referral</th>
+      <th>Date</th>
+      <th>Actions</th>
+    </tr>
+    <tr ng-repeat="signup in signups">
+      <td>{{signup.email}}</td>
+      <td>{{signup.refer}}</td>
+      <td>{{signup.date | date:'medium'}}</td>
+      <td>
+        <button class="btn btn-ra-red-hollow" ng-click="grant('grant access to ' + signup.email, signup)">Grant</button>
+      </td>
+    </tr>
+  </table>
+</div>

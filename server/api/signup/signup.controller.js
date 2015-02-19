@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var Signup = require('./signup.model');
+var User = require('../user/user.model');
 var emails = require('../../components/emails');
 var moment = require('moment');
 
@@ -38,6 +39,34 @@ exports.create = function(req, res) {
     }
 
     return res.json(201, signup);
+  });
+};
+
+exports.grant = function (req, res) {
+  Signup.findById(req.params.id, function (err, signup) {
+    if(err) { return handleError(res, err); }
+    if(!signup) { return res.send(404); }
+
+    // Create an account w/ a random modCode
+    User.create({
+      email: signup.email,
+      modCode: Math.random().toString(36).slice(2)
+    }, function (err, user) {
+      if (err) { return handleError(res, err); }
+      if (!user) return res.json(404, { message: 'No user created.'});
+
+      var email = emails.create('grantAccess', {
+        to: signup.email,
+        subject: 'Welcome to RoadAmico!'
+      }, {
+        id: user._id,
+        modCode: user.modCode
+      });
+      console.log(email.text);
+      email.send();
+
+      return res.json(200, { message: 'Access granted and email sent.' });
+    });
   });
 };
 

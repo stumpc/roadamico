@@ -72,6 +72,46 @@ angular.module('roadAmicoApp')
               del.apply(event, args);
             });
           };
+        },
+
+        'yesno': function(op) {
+          op = op || angular.noop;
+
+          /**
+           * Open a delete confirmation modal
+           * @param  {String} name   - name or info to show on modal
+           * @param  {All}           - any additional args are passed staight to del callback
+           */
+          return function() {
+            var args = Array.prototype.slice.call(arguments),
+              name = args.shift(),
+              confirmModal;
+
+            confirmModal = openModal({
+              modal: {
+                dismissable: true,
+                title: 'Confirm',
+                html: '<p>Are you sure you want to ' + name + '?</p>',
+                buttons: [{
+                  classes: 'btn-primary',
+                  text: 'Yes',
+                  click: function(e) {
+                    confirmModal.close(e);
+                  }
+                }, {
+                  classes: 'btn-default',
+                  text: 'No',
+                  click: function(e) {
+                    confirmModal.dismiss(e);
+                  }
+                }]
+              }
+            }, 'modal-info');
+
+            confirmModal.result.then(function(event) {
+              op.apply(event, args);
+            });
+          };
         }
       },
 

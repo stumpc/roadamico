@@ -1,0 +1,15 @@
+<div class="col-md-12">
+This is the test view.
+</div>
+<div>Sent: {{sent}}</div>
+<div>Received: {{received}}</div>
+<hr/>
+<div>
+  to: <select name="to" id="to" class="form-control" ng-model="message.to" ng-options="user._id as user.name for user in users"></select>
+</div>
+<div>
+  message: <textarea name="message" id="message" class="form-control" ng-model="message.message"></textarea>
+</div>
+<button class="btn" ng-click="send()">Send</button>
+
+{{message}}

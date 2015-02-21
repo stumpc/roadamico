@@ -18,6 +18,7 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+  require('../api/message/message.socket').register(socket);
   require('../api/signup/signup.socket').register(socket);
   require('../api/service/service.socket').register(socket);
   require('../api/thing/thing.socket').register(socket);
@@ -29,15 +30,16 @@ module.exports = function (socketio) {
   //
   // ex: DEBUG: "http*,socket.io:socket"
 
+
   // We can authenticate socket.io users and access their token through socket.handshake.decoded_token
   //
   // 1. You will need to send the token in `client/components/socket/socket.service.js`
   //
   // 2. Require authentication here:
-  // socketio.use(require('socketio-jwt').authorize({
-  //   secret: config.secrets.session,
-  //   handshake: true
-  // }));
+  socketio.use(require('socketio-jwt').authorize({
+     secret: config.secrets.session,
+     handshake: true
+  }));
 
   socketio.on('connection', function (socket) {
     socket.address = socket.handshake.address !== null ?

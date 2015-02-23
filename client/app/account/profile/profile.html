@@ -85,31 +85,36 @@
 
             <p>Select which pieces of information you would like to make public:</p>
 
-            <div>
-              <label>
+            <div class="form-group">
+              <label class="toggle" for="emailPublic">
+                <span>
+                  <input type="checkbox" ng-model="user.publicInfo.email" id="emailPublic"> <span class="handle"></span>
+                </span>
                 Email
-                <input name="email" type="checkbox" ng-model="user.publicInfo.email" class="form-control"/>
               </label>
             </div>
-
-            <div>
-              <label>
+            <div class="form-group">
+              <label class="toggle" for="phonePublic">
+                <span>
+                  <input type="checkbox" ng-model="user.publicInfo.phone" id="phonePublic"> <span class="handle"></span>
+                </span>
                 Phone
-                <input name="phone" type="checkbox" ng-model="user.publicInfo.phone" class="form-control"/>
               </label>
             </div>
-
-            <div>
-              <label>
+            <div class="form-group">
+              <label class="toggle" for="locationPublic">
+                <span>
+                  <input type="checkbox" ng-model="user.publicInfo.location" id="locationPublic"> <span class="handle"></span>
+                </span>
                 Location
-                <input name="location" type="checkbox" ng-model="user.publicInfo.location" class="form-control"/>
               </label>
             </div>
-
-            <div>
-              <label>
+            <div class="form-group">
+              <label class="toggle" for="workplacePublic">
+                <span>
+                  <input type="checkbox" ng-model="user.publicInfo.workplace" id="workplacePublic"> <span class="handle"></span>
+                </span>
                 Workplace
-                <input name="workplace" type="checkbox" ng-model="user.publicInfo.workplace" class="form-control"/>
               </label>
             </div>
 

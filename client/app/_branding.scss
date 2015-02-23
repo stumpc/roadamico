@@ -187,3 +187,15 @@ $white-x-url: '/assets/images/white-x@2x.png';
     background-position: 0 0;
   }
 }
+
+
+// Toggle button
+
+.toggle {
+  display: block;
+
+  > span {
+    display: inline-block;
+    margin-right: 12px;
+  }
+}

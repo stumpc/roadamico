@@ -3,6 +3,20 @@
 <div class="container home-page page">
   <h1>RoadAmico Home</h1>
   <div>
-    <a ui-sref="newService" class="btn">Offer a Service</a>
+    <a ui-sref="service.new" class="btn">Offer a Service</a>
+  </div>
+  <div ng-if="services.length">
+    <h2>My Services</h2>
+    <div ng-repeat="service in services" class="well bg-bluejeans-light">
+      <strong>{{service.name}}</strong>
+
+      <div class="space-top-small">
+        <div class="btn-group" role="group" aria-label="Service actions">
+          <a href="/service/view/{{service._id}}" class="btn btn-default"><i class="fa fa-eye"></i> View</a>
+          <a href="/service/edit/{{service._id}}" class="btn btn-default"><i class="fa fa-pencil"></i> Edit</a>
+          <a href="#" class="btn btn-default"><i class="fa fa-trash"></i> Delete</a>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

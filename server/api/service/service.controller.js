@@ -40,15 +40,18 @@ exports.create = function(req, res) {
 
 // Updates an existing service in the DB.
 exports.update = function(req, res) {
-  if(req.body._id) { delete req.body._id; }
+  delete req.body._id;
+  delete req.body.provider;
+
   Service.findById(req.params.id, function (err, service) {
     if (err) { return handleError(res, err); }
     if(!service) { return res.send(404); }
 
     // Check that the provider matches the user
-    if (service.provider != req.user._id) { return res.json(403, { message: 'Unauthorized to modify. Not your service!' }); }
+    if (!req.user._id.equals(service.provider)) { return res.json(403, { message: 'Unauthorized to modify. Not your service!' }); }
 
     var updated = _.merge(service, req.body);
+    updated.availability = service.availability; // Don't update the availability slots here (lodash doesn't merge well)
     updated.save(function (err) {
       if (err) { return handleError(res, err); }
       return res.json(200, service);
@@ -62,7 +65,8 @@ exports.destroy = function(req, res) {
     if(err) { return handleError(res, err); }
     if(!service) { return res.send(404); }
 
-    // TODO: Check that the provider matches the user
+    // Check that the provider matches the user
+    if (!req.user._id.equals(service.provider)) { return res.json(403, { message: 'Unauthorized to modify. Not your service!' }); }
 
     service.remove(function(err) {
       if(err) { return handleError(res, err); }

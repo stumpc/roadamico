@@ -1,9 +1,11 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <div class="container page">
-  <h1>Offer a New Service</h1>
 
-  <div service-form="service" buttontext="Create" submit="create()" cancel="/home"></div>
+  <h1>Edit Service</h1>
+
+  <div service-form="service" submit="save()" cancel="/service/view/{{service._id}}"></div>
+
 </div>
 
 <div ng-include="'components/footer/footer.html'"></div>

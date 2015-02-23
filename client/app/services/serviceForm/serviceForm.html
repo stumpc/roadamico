@@ -1,0 +1,40 @@
+<form name="form" ng-submit="submit()" novalidate>
+
+  <!-- NAME -->
+  <div class="form-group" ng-class="{ 'has-error' : form.name.$invalid && !form.name.$pristine }">
+    <label>Name</label>
+    <input type="text" name="name" class="form-control" ng-model="service.name" required>
+    <p ng-show="form.name.$invalid && !form.name.$pristine" class="help-block">Service name is required.</p>
+  </div>
+
+  <!-- Description -->
+  <div class="form-group" ng-class="{ 'has-error' : form.description.$invalid && !form.description.$pristine }">
+    <label>Description</label>
+    <input type="text" name="description" class="form-control" ng-model="service.description" required>
+    <p ng-show="form.description.$invalid && !form.description.$pristine" class="help-block">Service description is required.</p>
+  </div>
+
+  <!-- LOCATION -->
+  <div class="form-group" ng-class="{ 'has-error' : form.location.$invalid && !form.location.$pristine }">
+    <label>Location</label>
+    <input type="text" name="location" id='location' ng-autocomplete class="form-control" ng-model="service.location" details="service.locationDetails" required>
+    <p ng-show="form.location.$invalid && !form.location.$pristine" class="help-block">Service category is required.</p>
+  </div>
+
+  <!-- Category -->
+  <div class="form-group" ng-class="{ 'has-error' : form.category.$invalid && !form.category.$pristine }">
+    <label>Category</label>
+    <select name="category" chosen class="form-control" ng-options="category for category in categories" ng-model="service.category" required></select>
+    <p ng-show="form.category.$invalid && !form.category.$pristine" class="help-block">Service category is required.</p>
+  </div>
+
+  <!-- Cost -->
+  <div class="form-group" ng-class="{ 'has-error' : form.cost.$invalid && !form.cost.$pristine }">
+    <label>Cost</label>
+    <input type="text" name="cost" class="form-control" ng-model="service.cost" required>
+    <p ng-show="form.cost.$invalid && !form.cost.$pristine" class="help-block">Service cost is required.</p>
+  </div>
+
+  <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid || form.$pristine">{{save}}</button>
+  <a class="space-left-small" href="{{cancel}}">Cancel</a>
+</form>

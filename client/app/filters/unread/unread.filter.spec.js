@@ -11,9 +11,9 @@ describe('Filter: unread', function () {
     unread = $filter('unread');
   }));
 
-  it('should return the input prefixed with "unread filter:"', function () {
-    var text = 'angularjs';
-    expect(unread(text)).toBe('unread filter: ' + text);
-  });
+  //it('should return the input prefixed with "unread filter:"', function () {
+  //  var text = 'angularjs';
+  //  expect(unread(text)).toBe('unread filter: ' + text);
+  //});
 
 });

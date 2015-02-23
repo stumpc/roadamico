@@ -1,0 +1,36 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container page">
+
+  <h1>{{service.name}}</h1>
+  <p>
+    By <a href="/user/{{service.provider._id}}">{{service.provider.name}}</a>
+  </p>
+  <div>
+    <a href="#" class="btn btn-ra-red"><i class="fa fa-book"></i> Book Now</a>
+    <a ng-if="service.provider._id == user._id" class="space-left-small" href="/service/edit/{{service._id}}"><i class="fa fa-pencil"></i> Edit</a>
+  </div>
+
+  <hr/>
+  <div>
+    <h2>Description</h2>
+    {{service.description}}
+  </div>
+  <div>
+    <h2>Location</h2>
+    <p ng-if="service.location">{{service.location}}</p>
+    <p ng-if="!service.location">No location is provided for this service.</p>
+
+
+
+    <!-- Map -->
+    <div ng-if="service.location">
+      <map zoom="12" center="[35.910419, -79.049592]" scrollwheel="false"></map>
+    </div>
+  </div>
+
+
+
+</div>
+
+<div ng-include="'components/footer/footer.html'"></div>

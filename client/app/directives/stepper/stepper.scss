@@ -1,0 +1,21 @@
+
+// Fixes the positioning of the stepper
+.stepper {
+  position: relative;
+  width: 100%;
+
+  .stepper-input {
+    padding: 0 0 0 10px;
+    background: white;
+  }
+
+  .stepper-arrow {
+    right: 0;
+    background: $bluejeans-light;
+    border: none;
+
+    &.up {
+      border: 1px solid $bluejeans-light;
+    }
+  }
+}

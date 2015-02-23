@@ -2,6 +2,14 @@
 
 angular.module('roadAmicoApp')
   .controller('TestCtrl', function ($scope, Message, User, Auth, socket) {
+
+    $scope.things = [
+      'Thing 1',
+      'thing 2',
+      'Three 3',
+      'Happy money!'
+    ];
+
     $scope.sent = Message.sent();
     $scope.received = Message.received();
 

@@ -19,8 +19,13 @@
 
     <!-- build:css(client) app/vendor.css -->
       <!-- bower:css -->
+      <link rel="stylesheet" href="bower_components/Stepper/jquery.fs.stepper.css" />
       <!-- endbower -->
     <!-- endbuild -->
+
+    <!-- Manually included JS components -->
+    <link rel="stylesheet" href="bower_components/chosen/chosen.min.css"/>
+
     <!-- build:css({.tmp,client}) app/app.css -->
     <link rel="stylesheet" href="app/app.css">
       <!-- injector:css -->
@@ -70,12 +75,16 @@
       <script src="bower_components/ngAutocomplete/src/ngAutocomplete.js"></script>
       <script src="bower_components/ngmap/build/scripts/ng-map.js"></script>
       <script src="bower_components/moment/moment.js"></script>
+      <script src="bower_components/angular-chosen-localytics/chosen.js"></script>
+      <script src="bower_components/Stepper/jquery.fs.stepper.js"></script>
       <!-- endbower -->
       <script src="socket.io-client/socket.io.js"></script>
     <!-- endbuild -->
 
-    <!-- Manually included components -->
-    <script src="bower_components/danialfarid-angular-file-upload/dist/angular-file-upload.js"></script>
+    <!-- Manually included JS components -->
+    <script src="bower_components/danialfarid-angular-file-upload/dist/angular-file-upload.min.js"></script>
+    <script src="bower_components/chosen/chosen.jquery.min.js"></script>
+    <script src="bower_components/iCheck/icheck.min.js"></script>
 
         <!-- build:js({.tmp,client}) app/app.js -->
         <script src="app/app.js"></script>
@@ -100,7 +109,9 @@
           <script src="app/admin/verify/verify.controller.js"></script>
           <script src="app/admin/verify/verify.js"></script>
           <script src="app/config/config.js"></script>
+          <script src="app/directives/icheck/icheck.directive.js"></script>
           <script src="app/directives/pwCheck.directive.js"></script>
+          <script src="app/directives/stepper/stepper.directive.js"></script>
           <script src="app/filters/https/https.filter.js"></script>
           <script src="app/filters/unread/unread.filter.js"></script>
           <script src="app/home/home.controller.js"></script>

@@ -1,0 +1,14 @@
+
+// Fixes the URL from the bootflat file
+
+$icheck-img:                "/bower_components/bootflatv2/bootflat/img/check_flat/default.png" !default;
+
+
+.icheckbox_flat,
+.iradio_flat {
+  background: url($icheck-img) no-repeat;
+}
+
+.iradio_flat {
+  background-position: -88px 0;
+}

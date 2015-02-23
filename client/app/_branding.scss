@@ -101,3 +101,89 @@ body.roadAmico {
     }
   }
 }
+
+
+// Chosen plugin
+// TODO: Organize these better
+
+$white-x-url: '/assets/images/white-x@2x.png';
+
+.chosen-container.chosen-container-single, .chosen-container.chosen-container-multi  {
+  min-width: 100%;
+  display: block;
+  margin: 5px 0;
+}
+
+.chosen-container-single {
+
+  .chosen-search {
+    margin: 10px 2px;
+
+    input[type=text] {
+      border-radius: 4px;
+      padding: 5px;
+      height: 30px;
+    }
+  }
+
+  .chosen-single {
+    background: white;
+    height: 30px;
+    padding: 2px 0 0 8px;
+    box-shadow: none;
+  }
+}
+
+.chosen-container-active.chosen-with-drop .chosen-single {
+  background: white;
+}
+
+//.chosen-container-multi {
+//  min-width: 100%;
+//}
+
+.chosen-container-multi .chosen-choices {
+  background: white;
+  border-radius: 4px;
+  padding: 5px;
+}
+
+.chosen-container .chosen-results li.highlighted  {
+  background: $bluejeans-light;
+  border-radius: 3px;
+}
+
+.chosen-container-multi .chosen-choices li.search-choice {
+  background: $bluejeans-light;
+  border: none;
+  box-shadow: none;
+  color: white;
+  padding: 8px 20px 8px 8px;
+}
+
+.chosen-container-multi .chosen-results {
+  padding: 7px;
+  border-radius: 5px;
+}
+
+.chosen-container.chosen-container-multi.chosen-with-drop .chosen-drop {
+  border-radius: 5px;
+}
+
+.chosen-container.chosen-with-drop .chosen-drop {
+  border-radius: 0 0 5px 5px;
+}
+
+.chosen-container-multi .chosen-choices li.search-choice .search-choice-close {
+  background-image: url($white-x-url) !important;
+  background-size: 70% !important;
+  background-position: 0 0;
+  right: 0;
+  opacity: 0.75;
+
+  &:hover {
+    background-image: url($white-x-url) !important;
+    opacity: 1;
+    background-position: 0 0;
+  }
+}

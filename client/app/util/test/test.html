@@ -1,15 +1,94 @@
-<div class="col-md-12">
-This is the test view.
-</div>
-<div>Sent: {{sent}}</div>
-<div>Received: {{received}}</div>
-<hr/>
-<div>
-  to: <select name="to" id="to" class="form-control" ng-model="message.to" ng-options="user._id as user.name for user in users"></select>
-</div>
-<div>
-  message: <textarea name="message" id="message" class="form-control" ng-model="message.message"></textarea>
-</div>
-<button class="btn" ng-click="send()">Send</button>
+<div class="container">
+  <h1>Test Page</h1>
 
-{{message}}
+  <div class="page">
+    <h2>Messages</h2>
+
+    <div>Sent: {{sent}}</div>
+    <div>Received: {{received}}</div>
+    <hr/>
+    <div>
+      to: <select name="to" id="to" class="form-control" ng-model="message.to" ng-options="user._id as user.name for user in users"></select>
+    </div>
+    <div>
+      message: <textarea name="message" id="message" class="form-control" ng-model="message.message"></textarea>
+    </div>
+    <button class="btn" ng-click="send()">Send</button>
+
+    {{messages}}
+  </div>
+
+  <div class="page space-top-large">
+    <h2>Form Elements</h2>
+
+    <form name="form">
+
+      <div class="form-group">
+        <label for="stepper">Stepper</label>
+        <input type="number" stepper id="stepper" class="form-control" min="3" max="20" step="2" ng-model="stepper" />
+        Value = {{stepper}}
+      </div>
+
+      <div class="form-group">
+        Single Select
+        <select id="singleselect" chosen ng-model="singleselect" ng-options="s for s in things">
+        </select>
+        {{singleselect}}
+      </div>
+
+      <div class="form-group">
+        Multi Select
+        <select id="multiselect" chosen multiple ng-model="multiselect" ng-options="s for s in things">
+        </select>
+        {{multiselect}}
+      </div>
+
+      <div class="form-group">
+        <div>
+          <label for="foobox">
+            <input type="checkbox" id="foobox" icheck ng-model="foobox"/>
+            Check box
+          </label>
+        </div>
+        <div>
+          <label for="fooboxd">
+            <input type="checkbox" id="fooboxd" icheck ng-model="foobox" disabled/>
+            Check box (disabled)
+          </label>
+        </div>
+        Value = {{foobox}}
+      </div>
+
+      <div class="form-group">
+        <div>
+          <label>
+            <input type="radio" icheck ng-model="fooradio" value="1"/>
+            Radio 1
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="radio" icheck ng-model="fooradio" value="2"/>
+            Radio 2
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="radio" icheck ng-model="fooradio" value="3" disabled />
+            Radio 3
+          </label>
+        </div>
+        Value = {{fooradio}}
+      </div>
+
+      <div class="form-group">
+        <label class="toggle" for="toggle">
+          <input type="checkbox" ng-model="toggle" id="toggle"> <span class="handle"></span>
+          Toggle
+        </label>
+        Value = {{toggle}}
+      </div>
+
+    </form>
+  </div>
+</div>

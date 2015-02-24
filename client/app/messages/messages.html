@@ -5,28 +5,51 @@
 
   <div class="row">
     <!-- TODO: Figure out how this works on mobile -->
-    <div class="col-md-4">
+    <div class="col-md-4 message-targets">
       <div ng-if="!messageData.length">
         You have no messages
       </div>
 
       <a href="#" ng-click="view(messageGroup)" ng-repeat="messageGroup in messageData">
-        <div class="well">
-          {{messageGroup[0] | messageTarget:'name'}}
-          <span ng-show="messageGroup | unread:true" class="badge badge-primary pull-right">{{messageGroup | unread:true}}</span>
+        <div class="message-target text-center" ng-class="{active: messageGroup.active}">
+          <div class="profile-pic-placeholder small-pic pull-left">
+            <div class="profile-pic" style="background-image: url({{messageGroup[0] | messageTarget:'photo' | https}})"></div>
+          </div>
+          <div class="name">
+            {{messageGroup[0] | messageTarget:'name'}}
+            <span ng-show="messageGroup | unread:true" class="badge badge-primary pull-right">{{messageGroup | unread:true}}</span>
+          </div>
         </div>
       </a>
     </div>
-    <div class="col-md-8">
+
+    <div class="col-md-8" ng-show="activeGroup.length">
+
+      <h3>Conversation with {{activeGroup[0] | messageTarget:'name'}}</h3>
+
+      <!-- List of messages -->
       <div class="message-holder">
-        <div ng-repeat="message in activeGroup" class="message" ng-class="{'from-me': message.from._id == user._id}">
-          {{message.message}}
-          <div class="small text-right">{{message.time | date:'medium'}}</div>
+        <div>
+          <div ng-repeat="message in activeGroup" class="message" ng-class="{'from-me': message.from._id == user._id}">
+            {{message.message}}
+            <div class="small text-right">{{message.time | date:'medium'}}</div>
+          </div>
         </div>
       </div>
+
+      <!-- Respond form -->
+      <form ng-submit="respond()">
+        <div class="row">
+          <div class="col-xs-9">
+            <textarea class="form-control" ng-model="messageText"></textarea>
+          </div>
+          <div class="col-xs-3">
+            <button ng-disabled="!messageText" type="submit" class="btn btn-success btn-block"><i class="fa fa-send"></i> Send</button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
-
 </div>
 
 <div ng-include="'components/footer/footer.html'"></div>

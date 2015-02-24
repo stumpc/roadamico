@@ -5,17 +5,17 @@ describe('Controller: MessagesCtrl', function () {
   // load the controller's module
   beforeEach(module('roadAmicoApp'));
 
-  var MessagesCtrl, scope;
+  //var MessagesCtrl, scope;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope) {
-    scope = $rootScope.$new();
-    MessagesCtrl = $controller('MessagesCtrl', {
-      $scope: scope
-    });
-  }));
-
-  it('should ...', function () {
-    expect(1).toEqual(1);
-  });
+  //beforeEach(inject(function ($controller, $rootScope) {
+  //  scope = $rootScope.$new();
+  //  MessagesCtrl = $controller('MessagesCtrl', {
+  //    $scope: scope
+  //  });
+  //}));
+  //
+  //it('should ...', function () {
+  //  expect(1).toEqual(1);
+  //});
 });

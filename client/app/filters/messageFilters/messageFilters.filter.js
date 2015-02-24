@@ -27,7 +27,9 @@ angular.module('roadAmicoApp')
         return;
       }
 
-      property = property || '_id';
+      if (property !== 'name' && property !== 'photo') {
+        property = '_id';
+      }
       return message.to._id === Auth.getCurrentUser()._id ? message.from[property] : message.to[property];
     };
   });

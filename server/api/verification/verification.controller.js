@@ -2,7 +2,7 @@
 var User = require('../user/user.model');
 var cloudinary = require('cloudinary');
 var fs = require('fs');
-
+var communication = require('../../components/communication');
 
 exports.getUsersByStatus = function (status) {
   return function (req, res, next) {
@@ -35,6 +35,7 @@ exports.setStatus = function (status) {
         if (err) return next(err);
 
         // TODO: Add message here when messages are implemented
+        //communication.notify(user._id, 'Your RoadAmico account verification sumbmission was ' + status);
 
         res.send(200);
       });

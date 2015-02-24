@@ -2,54 +2,43 @@
 
 angular.module('roadAmicoApp')
   .controller('MessagesCtrl', function ($scope, $filter, Message, Auth, socket) {
-    //var sent = Message.sent();
-    //var received = Message.received();
-    //sent.$promise.then(received.$promise.then(function () {
-    //  socket.syncUpdates('message', $scope.received, function (message) {
-    //    return message.to._id === userId;
-    //  });
-    //}));
-
     $scope.activeGroup = [];
+    $scope.user = Auth.getCurrentUser();
+
     $scope.view = function (group) {
+      $scope.activeGroup.active = false;
       $scope.activeGroup = group;
+      $scope.activeGroup.active = true;
 
       group.filter($filter('unread')).forEach(function (message) {
-        //console.log(message);
         message.read = true;
         Message.mark(message);
       });
     };
-
-    $scope.user = Auth.getCurrentUser();
-
-    // TODO: Make filters
-    //$scope.getMessageName = function (message) {
-    //  return message.to._id === $scope.user._id ? message.from.name : message.to.name;
-    //};
-
-    //$scope.countUnread = function (group) {
-    //  return group.filter(function (message) {
-    //    return message.to._id == $scope.user._id && !message.read;
-    //  }).length;
-    //};
 
     function process() {
       $scope.messageData = _(messages)
         .forEach(function (message) {                         // Add the moment property
           message.moment = moment(message.time);
         })
-        .groupBy($filter('messageTarget'))
-        //.groupBy(function (message) {                         // Group by user
-        //  return message.to._id === $scope.user._id ? message.from._id : message.to._id;
-        //})
+        .groupBy($filter('messageTarget'))                    // Group by user
         .mapValues(function (messageGroup) {                  // Sort within groups by date
           return _(messageGroup).sortBy('moment').value().reverse();
         })
         .sortBy(function (messageGroup) {                     // Sort groups by most recent
           return messageGroup[0].moment;
         })
-        .value().reverse();
+        .value().reverse();                                   // Most recent first
+
+      // Update the active group
+      if ($scope.activeGroup.length) {
+        $scope.activeGroup = _.find($scope.messageData, function (group) {
+          return $filter('messageTarget')(group[0]) === $filter('messageTarget')($scope.activeGroup[0]);
+        });
+      } else if ($scope.messageData.length) {
+        $scope.activeGroup = $scope.messageData[0];
+      }
+      $scope.activeGroup.active = true;
     }
 
     var messages = Message.mine();
@@ -58,6 +47,13 @@ angular.module('roadAmicoApp')
       socket.syncUpdates('message', messages, process);
     });
 
-
+    $scope.respond = function () {
+      var message = {
+        message: $scope.messageText,
+        to: $filter('messageTarget')($scope.activeGroup[0])
+      };
+      Message.save(message);
+      $scope.messageText = '';
+    };
 
   });

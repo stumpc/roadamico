@@ -3,6 +3,8 @@
 var _ = require('lodash');
 var Message = require('./message.model');
 var moment = require('moment');
+var emails = require('../../components/emails');
+var communication = require('../../components/communication');
 
 // Get list of messages
 exports.index = function (req, res) {
@@ -77,6 +79,12 @@ exports.create = function (req, res) {
   Message.create(req.body, function (err, message) {
     if (err) {
       return handleError(res, err);
+    }
+
+    if (message.notification) {
+      communication.notify(message.to, message.message);
+    } else {
+      communication.message(message.to, message.from, message.message);
     }
 
     // Populate the fields

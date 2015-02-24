@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('UserCtrl', function ($scope, $stateParams, $state, $q, User, Google, Geolocator, Service) {
+  .controller('UserCtrl', function ($scope, $stateParams, $state, $q, User, Google, Geolocator, Service, MessageModal) {
 
     $scope.user = User.get({id: $stateParams.userId});
     $scope.joined = $scope.user.joined || moment('02-14-2015').toISOString();
@@ -13,12 +13,13 @@ angular.module('roadAmicoApp')
       $state.go('^');
     });
 
+
+    $scope.message = MessageModal;
+
+
     $scope.map = {
       //center: [0,0]
     };
-
-
-
 
     // Map async loader
     var mapLoader = (function () {

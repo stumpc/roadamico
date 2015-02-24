@@ -6,7 +6,7 @@ var auth = require('../../auth/auth.service');
 
 var router = express.Router();
 
-router.get('/', controller.index); // TODO: Remove this after dev
+//router.get('/', controller.index); // Dev only
 
 router.get('/sent',     auth.isAuthenticated(), controller.sent);
 router.get('/received', auth.isAuthenticated(), controller.received);

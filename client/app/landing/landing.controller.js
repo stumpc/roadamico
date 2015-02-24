@@ -28,6 +28,6 @@ angular.module('roadAmicoApp')
       });
       referModal.result.then(function (data) {
         save(data);
-      })
+      });
     };
   });

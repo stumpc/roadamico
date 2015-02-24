@@ -5,6 +5,6 @@ angular.module('roadAmicoApp')
     $scope.message = 'Hello';
 
     $scope.user = Auth.getCurrentUser();
-    $scope.services = Service.listByProvider({id: $scope.user._id})
+    $scope.services = Service.listByProvider({id: $scope.user._id});
 
   });

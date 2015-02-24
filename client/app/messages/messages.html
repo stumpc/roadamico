@@ -1,0 +1,32 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container page messages-page">
+  <h1>Messages</h1>
+
+  <div class="row">
+    <!-- TODO: Figure out how this works on mobile -->
+    <div class="col-md-4">
+      <div ng-if="!messageData.length">
+        You have no messages
+      </div>
+
+      <a href="#" ng-click="view(messageGroup)" ng-repeat="messageGroup in messageData">
+        <div class="well">
+          {{messageGroup[0] | messageTarget:'name'}}
+          <span ng-show="messageGroup | unread:true" class="badge badge-primary pull-right">{{messageGroup | unread:true}}</span>
+        </div>
+      </a>
+    </div>
+    <div class="col-md-8">
+      <div class="message-holder">
+        <div ng-repeat="message in activeGroup" class="message" ng-class="{'from-me': message.from._id == user._id}">
+          {{message.message}}
+          <div class="small text-right">{{message.time | date:'medium'}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div ng-include="'components/footer/footer.html'"></div>

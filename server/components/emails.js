@@ -36,7 +36,7 @@ function Email(payload) {
     };
 
     // Only actually send an email if in production mode
-    if (process.env.NODE_ENV != 'production') {
+    if (process.env.NODE_ENV !== 'production') {
       return cb(null, {message: '[fake] success'});
     }
     emails.sendgrid.send(payload, cb);

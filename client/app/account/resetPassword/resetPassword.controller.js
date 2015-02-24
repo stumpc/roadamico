@@ -19,7 +19,7 @@ angular.module('roadAmicoApp')
           Modal.info.message('Password changed.');
           $state.go('home');
         }).catch(function (err) {
-          Modal.info.error("Couldn't change password", err.message);
+          Modal.info.error('Couldn\'t change password', err.message);
           Auth.logout();
           $state.go('main');
         });

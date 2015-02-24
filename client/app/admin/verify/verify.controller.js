@@ -18,7 +18,7 @@ angular.module('roadAmicoApp')
         src.splice(src.indexOf(user), 1);
         $scope.approved = Verification.approved();
       }, function () {
-        Modal.info.error("Couldn't approve: " + user.name);
+        Modal.info.error('Couldn\'t approve: ' + user.name);
       });
     };
 
@@ -27,7 +27,7 @@ angular.module('roadAmicoApp')
         src.splice(src.indexOf(user), 1);
         $scope.denied = Verification.denied();
       }, function () {
-        Modal.info.error("Couldn't deny: " + user.name);
+        Modal.info.error('Couldn\'t deny: ' + user.name);
       });
     };
 

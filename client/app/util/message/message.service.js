@@ -5,7 +5,7 @@ angular.module('roadAmicoApp')
     return $resource('/api/messages/:id', { id: '@_id' }, {
 
       mark: {
-        url: '/api/messages/read',
+        url: '/api/messages/:id',
         method: 'PUT'
       },
       sent: {
@@ -15,6 +15,11 @@ angular.module('roadAmicoApp')
       },
       received: {
         url: '/api/messages/received',
+        method: 'GET',
+        isArray: true
+      },
+      mine: {
+        url: '/api/messages/mine',
         method: 'GET',
         isArray: true
       }

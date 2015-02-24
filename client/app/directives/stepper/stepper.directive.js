@@ -3,7 +3,7 @@
 angular.module('roadAmicoApp')
   .directive('stepper', function () {
     return {
-      link: function (scope, element, attrs) {
+      link: function (scope, element) {
         $(element).stepper();
       }
     };

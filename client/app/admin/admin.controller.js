@@ -1,5 +1,5 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('AdminCtrl', function ($scope) {
+  .controller('AdminCtrl', function () {
   });

@@ -1,0 +1,20 @@
+.messages-page {
+
+  .message-holder {
+
+  }
+
+  .message {
+    width: 75%;
+    padding: 5px;
+    margin: 10px 0;
+    border-radius: 3px;
+    background-color: $lightgray-light;
+
+    &.from-me {
+      background-color: $bluejeans-light;
+      color: white;
+      margin-left: 25%;
+    }
+  }
+}

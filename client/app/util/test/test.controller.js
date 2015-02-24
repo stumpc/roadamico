@@ -29,7 +29,7 @@ angular.module('roadAmicoApp')
       socket.unsyncUpdates('message');
     });
 
-    $scope.users = User.query();
+    $scope.users = User.profiles();
     $scope.send = function () {
       Message.save($scope.message).$promise
         .then(function (data) {

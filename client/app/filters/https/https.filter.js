@@ -6,7 +6,7 @@ angular.module('roadAmicoApp')
       if (!input) {
         return input;
       } else {
-        return input.replace('http://', 'https://')
+        return input.replace('http://', 'https://');
       }
     };
   });

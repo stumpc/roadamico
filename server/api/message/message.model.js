@@ -6,6 +6,7 @@ var mongoose = require('mongoose'),
 var MessageSchema = new Schema({
   from: { type: Schema.Types.ObjectId, ref: 'User' },
   to: { type: Schema.Types.ObjectId, ref: 'User' },
+  time: String,
   message: String,
   read: Boolean,
   notification: Boolean

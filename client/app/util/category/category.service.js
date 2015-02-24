@@ -29,6 +29,6 @@ angular.module('roadAmicoApp')
       'Table Tennis',
       'Team Games',
       'Volleyball'
-    ]
+    ];
 
   });

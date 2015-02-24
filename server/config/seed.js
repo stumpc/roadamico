@@ -66,19 +66,19 @@ User.find({}).remove(function() {
       emailPublic: true,
       password: 'test',
       phone: faker.phone.phoneNumber(),
-      location: [faker.address.city(), faker.address.state(), faker.address.zipCode()][~~(Math.random*3)],
+      location: [faker.address.city(), faker.address.state(), faker.address.zipCode()][Math.floor(Math.random*3)],
       workplace: faker.company.companyName(),
       bio: faker.lorem.paragraph(),
       photo: faker.image.avatar(400, 400),
 
       publicInfo: {
-        phone: Math.random()<.5,
-        location: Math.random()<.5,
-        workplace: Math.random()<.5
+        phone: Math.random() < 0.5,
+        location: Math.random() < 0.5,
+        workplace: Math.random() < 0.5
       },
 
       verification: {
-        status: ['none', 'pending', 'approved', 'denied'][~~(Math.random()*4)],
+        status: ['none', 'pending', 'approved', 'denied'][Math.floor(Math.random()*4)],
         idUrl: faker.image.abstract(600, 400)
       }
     }
@@ -127,7 +127,7 @@ var categories = [
   'Volleyball'
 ];
 function createService(user) {
-  var category = categories[~~(Math.random()*categories.length)];
+  var category = categories[Math.floor(Math.random()*categories.length)];
   Service.create({
     name: category + ' with ' + user.name,
     description: faker.hacker.phrase(),

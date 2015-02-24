@@ -20,18 +20,18 @@ angular.module('roadAmicoApp')
         // Begin geocoding the address
         var geocoder = new Google.maps.Geocoder();
         geocoder.geocode({address: user.location}, function (results, status) {
-          if (status == Google.maps.GeocoderStatus.OK && results.length) {
+          if (status === Google.maps.GeocoderStatus.OK && results.length) {
             deferred.resolve(getLatLng(results[0].geometry));
           } else {
-            deferred.reject({ message: 'Unable to look up address'});
+            deferred.reject({message: 'Unable to look up address'});
           }
         });
 
       } else {
-        deferred.reject({ message: 'No location'});
+        deferred.reject({message: 'No location'});
       }
 
       return deferred.promise;
-    }
+    };
 
   });

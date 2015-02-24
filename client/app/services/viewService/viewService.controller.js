@@ -23,6 +23,6 @@ angular.module('roadAmicoApp')
           map: map,
           title: $scope.service.location
         });
-      })
+      });
     });
   });

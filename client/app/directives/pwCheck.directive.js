@@ -8,14 +8,13 @@ angular.module('roadAmicoApp').directive('pwCheck', function () {
     },
     link: function (scope, elem, attrs, ctrl) {
       scope.$watch('password', function (val) {
-        ctrl.$setValidity('pwMismatch', val == ctrl.$viewValue);
+        ctrl.$setValidity('pwMismatch', val === ctrl.$viewValue);
       });
 
       ctrl.$validators.pwMismatch = function (modelValue, viewValue) {
         var value = modelValue || viewValue;
-        return value == scope.password;
+        return value === scope.password;
       };
     }
-  }
-
+  };
 });

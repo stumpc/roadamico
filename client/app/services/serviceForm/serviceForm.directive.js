@@ -9,8 +9,8 @@ angular.module('roadAmicoApp')
         cancel: '@'
       },
       templateUrl: 'app/services/serviceForm/serviceForm.html',
-      link: function (scope, elem, attrs, ctrl) {
-        scope.save = attrs['buttontext'] || 'Save';
+      link: function (scope, elem, attrs) {
+        scope.save = attrs.buttontext || 'Save';
         scope.categories = Category;
         scope.submit = scope.submit || angular.noop();
       }

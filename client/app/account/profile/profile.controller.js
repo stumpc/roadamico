@@ -8,7 +8,7 @@ angular.module('roadAmicoApp')
 
     $scope.categories = Category;
 
-    $scope.years = [0,1,2,3,4,5,6,7,8,9,10].map(function (i) {
+    $scope.years = _.range(11).map(function (i) {
       return moment().year() + i;
     });
 
@@ -22,7 +22,7 @@ angular.module('roadAmicoApp')
       $upload.upload({
         url: 'api/users/pic',
         file: image
-      }).success(function (data, status, headers, config) {
+      }).success(function (data) {
         $scope.user.photo = data;
       });
     };
@@ -31,7 +31,7 @@ angular.module('roadAmicoApp')
       $upload.upload({
         url: 'api/verification',
         file: image
-      }).success(function (data, status, headers, config) {
+      }).success(function (data) {
         console.log(data);
         $scope.user.verification = data;
       });

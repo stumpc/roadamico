@@ -12,7 +12,7 @@ angular.module('roadAmicoApp')
           password: code
         }).then(function () {
           $scope.user = Auth.getCurrentUser();
-        }, function (err) {
+        }, function () {
           Modal.info.error('Invalid user ID');
         });
       } else {
@@ -41,13 +41,13 @@ angular.module('roadAmicoApp')
           $scope.userForm1[field].$setValidity('mongoose', false);
           $scope.errors[field] = error.message;
         });
-      })
+      });
     };
 
     $scope.save2 = function () {
       Auth.changePassword(code, $scope.password1).then(function () {
         $state.go('home');
-      }, function (err) {
+      }, function () {
         Modal.info.error('Error changing password');
       });
     };

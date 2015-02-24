@@ -10,6 +10,7 @@ router.get('/', controller.index); // TODO: Remove this after dev
 
 router.get('/sent',     auth.isAuthenticated(), controller.sent);
 router.get('/received', auth.isAuthenticated(), controller.received);
+router.get('/mine',     auth.isAuthenticated(), controller.mine);
 router.get('/:id',      auth.isAuthenticated(), controller.show);
 router.post('/',        auth.isAuthenticated(), controller.create);
 router.put('/:id',      auth.isAuthenticated(), controller.mark);

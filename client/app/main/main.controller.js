@@ -57,6 +57,6 @@ angular.module('roadAmicoApp')
       'a tennis match',
       'a golf partner',
       'an open piano'
-    ]
+    ];
 
   });

@@ -34,7 +34,7 @@ angular.module('roadAmicoApp')
          * @param  {Function} del - callback, ran when delete is confirmed
          * @return {Function}     - the function to open the modal (ex. myModalFn)
          */
-        'delete': function(del) {
+        'delete': function (del) {
           del = del || angular.noop;
 
           /**
@@ -42,10 +42,10 @@ angular.module('roadAmicoApp')
            * @param  {String} name   - name or info to show on modal
            * @param  {All}           - any additional args are passed staight to del callback
            */
-          return function() {
+          return function () {
             var args = Array.prototype.slice.call(arguments),
-                name = args.shift(),
-                deleteModal;
+              name = args.shift(),
+              deleteModal;
 
             deleteModal = openModal({
               modal: {
@@ -55,26 +55,26 @@ angular.module('roadAmicoApp')
                 buttons: [{
                   classes: 'btn-danger',
                   text: 'Delete',
-                  click: function(e) {
+                  click: function (e) {
                     deleteModal.close(e);
                   }
                 }, {
                   classes: 'btn-default',
                   text: 'Cancel',
-                  click: function(e) {
+                  click: function (e) {
                     deleteModal.dismiss(e);
                   }
                 }]
               }
             }, 'modal-danger');
 
-            deleteModal.result.then(function(event) {
+            deleteModal.result.then(function (event) {
               del.apply(event, args);
             });
           };
         },
 
-        'yesno': function(op) {
+        'yesno': function (op) {
           op = op || angular.noop;
 
           /**
@@ -82,7 +82,7 @@ angular.module('roadAmicoApp')
            * @param  {String} name   - name or info to show on modal
            * @param  {All}           - any additional args are passed staight to del callback
            */
-          return function() {
+          return function () {
             var args = Array.prototype.slice.call(arguments),
               name = args.shift(),
               confirmModal;
@@ -95,20 +95,20 @@ angular.module('roadAmicoApp')
                 buttons: [{
                   classes: 'btn-primary',
                   text: 'Yes',
-                  click: function(e) {
+                  click: function (e) {
                     confirmModal.close(e);
                   }
                 }, {
                   classes: 'btn-default',
                   text: 'No',
-                  click: function(e) {
+                  click: function (e) {
                     confirmModal.dismiss(e);
                   }
                 }]
               }
             }, 'modal-info');
 
-            confirmModal.result.then(function(event) {
+            confirmModal.result.then(function (event) {
               op.apply(event, args);
             });
           };
@@ -125,7 +125,7 @@ angular.module('roadAmicoApp')
 
           var message = '<p>Please enter your password:</p>';
           if (note) {
-            message += '<p><strong>'+note+'</strong></p>';
+            message += '<p><strong>' + note + '</strong></p>';
           }
 
           var promptModal;
@@ -140,21 +140,23 @@ angular.module('roadAmicoApp')
               buttons: [{
                 classes: 'btn-primary',
                 text: 'Done',
-                click: function(e, data) {
-                  if (data) data = data.password;
+                click: function (e, data) {
+                  if (data) {
+                    data = data.password;
+                  }
                   promptModal.close(data);
                 }
               }, {
                 classes: 'btn-default',
                 text: 'Cancel',
-                click: function(e) {
+                click: function (e) {
                   promptModal.dismiss(e);
                 }
               }]
             }
           }, 'modal-primary');
 
-          promptModal.result.then(function(password) {
+          promptModal.result.then(function (password) {
             cb(password);
           });
         },
@@ -178,21 +180,23 @@ angular.module('roadAmicoApp')
               buttons: [{
                 classes: 'btn-primary',
                 text: 'Done',
-                click: function(e, data) {
-                  if (data) data = data.email;
+                click: function (e, data) {
+                  if (data) {
+                    data = data.email;
+                  }
                   promptModal.close(data);
                 }
               }, {
                 classes: 'btn-default',
                 text: 'Cancel',
-                click: function(e) {
+                click: function (e) {
                   promptModal.dismiss(e);
                 }
               }]
             }
           }, 'modal-primary');
 
-          promptModal.result.then(function(email) {
+          promptModal.result.then(function (email) {
             cb(email);
           });
         }
@@ -204,7 +208,7 @@ angular.module('roadAmicoApp')
 
           if (!message) {
             message = title;
-            title = "Error";
+            title = 'Error';
           }
 
           var errorModal;
@@ -228,7 +232,7 @@ angular.module('roadAmicoApp')
         message: function (title, message) {
           if (!message) {
             message = title;
-            title = "Info";
+            title = 'Info';
           }
 
           var infoModal;

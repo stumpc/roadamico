@@ -193,18 +193,16 @@ exports.saveCard = function (req, res, next) {
 
 exports.deleteCard = function (req, res, next) {
   var found = false;
-  for (var i = 0; i < req.user.financial.cards.length; i++) {
-    if (req.user.financial.cards[i]._id = req.params.id) {
-      found = true;
-      req.user.financial.cards.splice(i, 1);
-      req.user.save(function (err, user) {
-        if (err) return next(err);
-        res.json(user.financial);
-      });
-      break;
-    }
-  }
-  if (!found) {
+  var index = _.findIndex(req.user.financial.cards, function (card) {
+    return card._id.equals(req.params.id);
+  });
+  if (index >= 0) {
+    req.user.financial.cards.splice(index, 1);
+    req.user.save(function (err, user) {
+      if (err) return next(err);
+      res.json(user.financial);
+    });
+  } else {
     res.send(404);
   }
 };

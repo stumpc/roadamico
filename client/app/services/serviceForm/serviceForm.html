@@ -29,12 +29,42 @@
   </div>
 
   <!-- Cost -->
-  <div class="form-group" ng-class="{ 'has-error' : form.cost.$invalid && !form.cost.$pristine }">
-    <label>Cost</label>
-    <input type="text" name="cost" class="form-control" ng-model="service.cost" required>
-    <p ng-show="form.cost.$invalid && !form.cost.$pristine" class="help-block">Service cost is required.</p>
+  <!--<div class="form-group" ng-class="{ 'has-error' : form.cost.$invalid && !form.cost.$pristine }">-->
+    <!--<label>Cost</label>-->
+    <!--<input type="text" name="cost" class="form-control" ng-model="service.cost" required>-->
+    <!--<p ng-show="form.cost.$invalid && !form.cost.$pristine" class="help-block">Service cost is required.</p>-->
+  <!--</div>-->
+
+  <div class="space-top-large">
+    <label>Details</label>
+
+    <div ng-show="!service.details.length"><em>No details are defined.</em></div>
+    <div ng-repeat="detail in service.details" class="row">
+      <div class="col-sm-3">
+        <div class="form-group">
+          <input type="text" class="form-control" ng-model="detail.cost" placeholder="Cost"/>
+        </div>
+      </div>
+      <div class="col-sm-1 text-center">
+        for
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <input type="text" class="form-control" ng-model="detail.product" placeholder="Product"/>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <button class="btn btn-ra-red" ng-click="remove($index)"><i class="fa fa-trash"></i></button>
+      </div>
+    </div>
+
+    <div>
+      <button type="button" class="btn btn-primary" ng-click="add()"><i class="fa fa-plus"></i> Add Detail</button>
+    </div>
   </div>
 
-  <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid || form.$pristine">{{save}}</button>
-  <a class="space-left-small" href="{{cancel}}">Cancel</a>
+  <div class="space-top-large">
+    <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid || form.$pristine">{{save}}</button>
+    <a class="space-left-small" href="{{cancel}}">Cancel</a>
+  </div>
 </form>

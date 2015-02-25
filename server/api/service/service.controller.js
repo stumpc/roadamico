@@ -67,7 +67,11 @@ exports.update = function (req, res) {
     }
 
     var updated = _.merge(service, req.body);
-    updated.availability = service.availability; // Don't update the availability slots here (lodash doesn't merge well)
+
+    // Don't use updated arrays. Lodash ruins them
+    updated.details = req.body.details;
+    updated.availability = service.availability;
+
     updated.save(function (err) {
       if (err) {
         return handleError(res, err);

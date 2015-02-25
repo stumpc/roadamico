@@ -28,6 +28,7 @@ module.exports = function(config) {
       'client/bower_components/moment/moment.js',
       'client/bower_components/chosen/chosen.jquery.js',
       'client/bower_components/angular-chosen-localytics/chosen.js',
+      'client/bower_components/angular-translate/angular-translate.js',
       'client/app/app.js',
       'client/app/app.coffee',
       'client/app/**/*.js',

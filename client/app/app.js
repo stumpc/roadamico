@@ -10,7 +10,8 @@ angular.module('roadAmicoApp', [
   'angularFileUpload',
   'ngAutocomplete',
   'ngMap',
-  'localytics.directives'
+  'localytics.directives',
+  'pascalprecht.translate'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider

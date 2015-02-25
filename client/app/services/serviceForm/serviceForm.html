@@ -24,7 +24,7 @@
   <!-- Category -->
   <div class="form-group" ng-class="{ 'has-error' : form.category.$invalid && !form.category.$pristine }">
     <label>Category</label>
-    <select name="category" chosen class="form-control" ng-options="category for category in categories" ng-model="service.category" required></select>
+    <select name="category" chosen class="form-control" ng-options="category._id as category.name for category in categories" ng-model="service.category._id" required></select>
     <p ng-show="form.category.$invalid && !form.category.$pristine" class="help-block">Service category is required.</p>
   </div>
 

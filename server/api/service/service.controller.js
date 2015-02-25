@@ -5,16 +5,17 @@ var Service = require('./service.model');
 
 // Get list of services
 exports.index = function (req, res) {
-  Service.find().populate('provider', 'name photo').exec(function (err, services) {
-    if (err) {
-      return handleError(res, err);
-    }
-    return res.json(200, services);
-  });
+  Service.find()
+    .populate('provider', 'name photo').populate('category', 'name color icon').exec(function (err, services) {
+      if (err) {
+        return handleError(res, err);
+      }
+      return res.json(200, services);
+    });
 };
 
 exports.listByProvider = function (req, res) {
-  Service.find({provider: req.params.id}).exec(function (err, services) {
+  Service.find({provider: req.params.id}).populate('category', 'name color icon').exec(function (err, services) {
     if (err) {
       return handleError(res, err);
     }
@@ -24,15 +25,16 @@ exports.listByProvider = function (req, res) {
 
 // Get a single service
 exports.show = function (req, res) {
-  Service.findById(req.params.id).populate('provider', 'name photo').exec(function (err, service) {
-    if (err) {
-      return handleError(res, err);
-    }
-    if (!service) {
-      return res.send(404);
-    }
-    return res.json(service);
-  });
+  Service.findById(req.params.id)
+    .populate('provider', 'name photo').populate('category', 'name color icon').exec(function (err, service) {
+      if (err) {
+        return handleError(res, err);
+      }
+      if (!service) {
+        return res.send(404);
+      }
+      return res.json(service);
+    });
 };
 
 // Creates a new service in the DB.
@@ -40,6 +42,12 @@ exports.create = function (req, res) {
 
   // Auto populate the provider with the user's ID
   req.body.provider = req.user._id;
+
+  // Possibly fix the category
+  if (typeof req.body.category === 'object') {
+    req.body.category = req.body.category._id || req.body.category.id;
+  }
+
   Service.create(req.body, function (err, service) {
     if (err) {
       return handleError(res, err);
@@ -52,6 +60,11 @@ exports.create = function (req, res) {
 exports.update = function (req, res) {
   delete req.body._id;
   delete req.body.provider;
+
+  // Possibly fix the category
+  if (typeof req.body.category === 'object') {
+    req.body.category = req.body.category._id || req.body.category.id;
+  }
 
   Service.findById(req.params.id, function (err, service) {
     if (err) {
@@ -76,7 +89,12 @@ exports.update = function (req, res) {
       if (err) {
         return handleError(res, err);
       }
-      return res.json(200, service);
+      Service.populate(service, [{path: 'provider', select: 'name photo'}, {path: 'category', select: 'name color icon'}], function (err, s2) {
+        if (err) {
+          return handleError(res, err);
+        }
+        return res.json(200, s2);
+      });
     });
   });
 };

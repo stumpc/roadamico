@@ -7,8 +7,8 @@ var ServiceSchema = new Schema({
   name: String,
   description: String,
   location: String,
-  category: String,
   locationDetails: {},
+  category: { type: Schema.Types.ObjectId, ref: 'Category' },
   //cost: String,
   details: [{
     cost: String,

@@ -4,6 +4,9 @@
 
   <h1>{{service.name}}</h1>
   <p>
+    <span class="label">{{service.category.name}}</span>
+  </p>
+  <p>
     By <a href="/user/{{service.provider._id}}">{{service.provider.name}}</a>
   </p>
   <div>
@@ -16,12 +19,19 @@
     <h2>Description</h2>
     {{service.description}}
   </div>
+  <div ng-if="service.details.length">
+    <h2>Details</h2>
+
+    <div ng-repeat="detail in service.details">
+      <strong>{{detail.cost}}</strong>
+      for
+      <strong>{{detail.product}}</strong>
+    </div>
+  </div>
   <div>
     <h2>Location</h2>
     <p ng-if="service.location">{{service.location}}</p>
     <p ng-if="!service.location">No location is provided for this service.</p>
-
-
 
     <!-- Map -->
     <div ng-if="service.location">

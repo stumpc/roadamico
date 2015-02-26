@@ -1,0 +1,26 @@
+.browse-page {
+
+  a.category {
+    border-radius: 4px;
+    margin: 7px 0;
+    padding: 4px 4px 4px 15px;
+    display: block;
+    font-size: 18px;
+    &:hover, :active, :visited, :focus {
+      color: white;
+    }
+
+    &.bg-none {
+      border: 1px solid $mediumgray-light;
+      color: $darkgray-light;
+      &:hover, :active, :visited, :focus {
+        color: $darkgray-light;
+      }
+    }
+
+    h2 {
+      font-size: 18px;
+      margin: 4px 0;
+    }
+  }
+}

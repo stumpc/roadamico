@@ -8,6 +8,7 @@ var router = express.Router();
 
 router.get('/',             controller.index);
 router.get('/provider/:id', controller.listByProvider);
+router.get('/category/:id', controller.listByCategory);
 router.get('/:id',          controller.show);
 
 router.post('/',      auth.isAuthenticated(), controller.create);

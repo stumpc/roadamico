@@ -15,12 +15,23 @@ exports.index = function (req, res) {
 };
 
 exports.listByProvider = function (req, res) {
-  Service.find({provider: req.params.id}).populate('category', 'name color icon').exec(function (err, services) {
-    if (err) {
-      return handleError(res, err);
-    }
-    return res.json(200, services);
-  });
+  Service.find({provider: req.params.id})
+    .populate('provider', 'name photo').populate('category', 'name color icon').exec(function (err, services) {
+      if (err) {
+        return handleError(res, err);
+      }
+      return res.json(200, services);
+    });
+};
+
+exports.listByCategory = function (req, res) {
+  Service.find({category: req.params.id})
+    .populate('provider', 'name photo').populate('category', 'name color icon').exec(function (err, services) {
+      if (err) {
+        return handleError(res, err);
+      }
+      return res.json(200, services);
+    });
 };
 
 // Get a single service
@@ -89,7 +100,10 @@ exports.update = function (req, res) {
       if (err) {
         return handleError(res, err);
       }
-      Service.populate(service, [{path: 'provider', select: 'name photo'}, {path: 'category', select: 'name color icon'}], function (err, s2) {
+      Service.populate(service, [{path: 'provider', select: 'name photo'}, {
+        path: 'category',
+        select: 'name color icon'
+      }], function (err, s2) {
         if (err) {
           return handleError(res, err);
         }

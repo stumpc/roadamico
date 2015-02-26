@@ -10,6 +10,10 @@ angular.module('roadAmicoApp')
       listByProvider: {
         url: '/api/services/provider/:id',
         isArray: true
+      },
+      listByCategory: {
+        url: '/api/services/category/:id',
+        isArray: true
       }
     });
 

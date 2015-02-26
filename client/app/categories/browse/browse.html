@@ -1,0 +1,27 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container page browse-page">
+  <h1>Find Services</h1>
+
+  <h2>{{parentCategory.name}}</h2>
+
+  <div ng-if="subcategories.length">
+    <h3>Sub-categories</h3>
+    <a ui-sref="^.browse({parent: category._id})" ng-repeat="category in subcategories" class="category bg-{{category.color || 'none'}}" ng-click="select(category)">
+      <i class="fa fa-{{category.icon}}"></i> {{category.name}}
+    </a>
+  </div>
+
+  <div ng-if="services.length">
+    <h3>Services</h3>
+    <div ng-repeat="service in services" class="well">
+      <h4>{{service.name}}</h4>
+      <p>By <a ui-sref="user({userId: service.provider._id})">{{service.provider.name}}</a></p>
+      <p ng-if="service.location">Location: {{service.location}}</p>
+      <a class="btn btn-primary" ui-sref="service.view({id: service._id})">View</a>
+    </div>
+  </div>
+
+</div>
+
+<div ng-include="'components/footer/footer.html'"></div>

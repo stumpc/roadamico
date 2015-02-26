@@ -10,8 +10,8 @@ angular.module('roadAmicoApp')
         link: '/home'
       },
       {
-        title: 'Search',
-        link: '/search'
+        title: 'Find Services',
+        link: '/categories/browse'
       }
     ];
 
@@ -42,6 +42,7 @@ angular.module('roadAmicoApp')
     };
 
     $scope.isActive = function(route) {
-      return route === $location.path();
+      //return route === $location.path();
+      return $location.path().indexOf(route) === 0;
     };
   });

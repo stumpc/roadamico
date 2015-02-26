@@ -1,0 +1,9 @@
+<div class="colorpicker">
+  <div class="color no-color" ng-class="{active: !active}" ng-click="select(null, $event)">
+    <i class="fa fa-2x fa-ban"></i>
+  </div>
+  <div class="color" ng-repeat="color in colors" ng-class="{active: active == color}" ng-click="select(color, $event)">
+    <div ng-if="isHex(color)" class="fill" style="background: {{color}}"></div>
+    <div ng-if="!isHex(color)" class="fill bg-{{color}}"></div>
+  </div>
+</div>

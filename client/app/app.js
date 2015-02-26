@@ -35,7 +35,7 @@ angular.module('roadAmicoApp', [
       // Intercept 401s and redirect you to home
       responseError: function(response) {
         if(response.status === 401) {
-          if (!$location.path() === '/login') {
+          if ($location.path() !== '/login') {
             $location.path('/');
           }
           // remove any stale tokens

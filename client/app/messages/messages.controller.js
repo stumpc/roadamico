@@ -16,6 +16,7 @@ angular.module('roadAmicoApp')
       });
     };
 
+    // Take the messages and group them by user and sort them
     function process() {
       $scope.messageData = _(messages)
         .forEach(function (message) {                         // Add the moment property
@@ -45,6 +46,10 @@ angular.module('roadAmicoApp')
     messages.$promise.then(function () {
       process();
       socket.syncUpdates('message', messages, process);
+    });
+
+    $scope.$on('$destroy', function () {
+      socket.unsyncUpdates('message');
     });
 
     $scope.respond = function () {

@@ -4,8 +4,9 @@ angular.module('roadAmicoApp')
   .config(function ($stateProvider) {
     $stateProvider
       .state('admin.grantAccess', {
-        url: '/grantAccess',
+        url: '/grant-access',
         templateUrl: 'app/admin/grantAccess/grantAccess.html',
-        controller: 'GrantaccessCtrl'
+        controller: 'GrantaccessCtrl',
+        admin: true
       });
   });

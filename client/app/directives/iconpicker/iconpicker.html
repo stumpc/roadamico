@@ -1,0 +1,16 @@
+<div class="iconpicker">
+  <div class="search-field">
+    <div class="form-search search-only">
+      <i class="search-icon fa fa-search"></i>
+      <input type="text" class="form-control search-query" ng-model="searchFilter"/>
+    </div>
+  </div>
+  <div class="icons">
+    <div class="icon" ng-class="{active: !active}" ng-show="show('none')" ng-click="select(null)">
+      None
+    </div>
+    <div ng-repeat="icon in icons" class="icon" ng-class="{active: icon == active}" ng-show="show(icon)" ng-click="select(icon)">
+      <i class="fa fa-{{icon}}"></i> {{icon | capitalize}}
+    </div>
+  </div>
+</div>

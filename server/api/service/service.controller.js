@@ -44,7 +44,7 @@ exports.create = function (req, res) {
   req.body.provider = req.user._id;
 
   // Possibly fix the category
-  if (typeof req.body.category === 'object') {
+  if (req.body.category && typeof req.body.category === 'object') {
     req.body.category = req.body.category._id || req.body.category.id;
   }
 
@@ -62,7 +62,7 @@ exports.update = function (req, res) {
   delete req.body.provider;
 
   // Possibly fix the category
-  if (typeof req.body.category === 'object') {
+  if (req.body.category && typeof req.body.category === 'object') {
     req.body.category = req.body.category._id || req.body.category.id;
   }
 

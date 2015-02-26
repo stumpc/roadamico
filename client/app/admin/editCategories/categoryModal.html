@@ -1,0 +1,49 @@
+<div class="modal-header">
+  <button type="button" ng-click="$dismiss()" class="close">&times;</button>
+  <h4 class="modal-title">Create a New Category</h4>
+</div>
+<form name="form" ng-submit="$close(category)" novalidate>
+  <div class="modal-body">
+
+    <!-- Name -->
+    <div class="form-group" ng-class="{ 'has-error' : form.name.$invalid && !form.name.$pristine }">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" id="name" name="name" placeholder="Name" ng-model="category.name" required>
+      <p ng-show="form.name.$invalid && !form.name.$pristine" class="help-block">A name is required.</p>
+    </div>
+
+    <!-- Aliases -->
+    <div class="form-group" ng-class="{ 'has-error' : form.aliases.$invalid && !form.aliases.$pristine }">
+      <label for="aliases">Aliases (comma separated)</label>
+      <input type="text" class="form-control" id="aliases" name="aliases" placeholder="Aliases" ng-list ng-model="category.aliases">
+      <p ng-show="form.aliases.$invalid && !form.aliases.$pristine" class="help-block">Invalid aliases</p>
+    </div>
+
+    <!-- Parent -->
+    <div class="form-group" ng-class="{ 'has-error' : form.parent.$invalid && !form.parent.$pristine }">
+      <label for="parent">Parent Category</label>
+      <select chosen id="parent" class="form-control" ng-options="c._id as c.name for c in categories" ng-model="category.parent._id">
+        <option value=""></option>
+      </select>
+      <p ng-show="form.aliases.$invalid && !form.aliases.$pristine" class="help-block">Invalid aliases</p>
+    </div>
+
+    <!-- Color -->
+    <div class="form-group" ng-class="{ 'has-error' : form.color.$invalid && !form.color.$pristine }">
+      <label for="color">Color</label>
+      <colorpicker ng-model="category.color" id="color"></colorpicker>
+    </div>
+
+    <!-- Icon -->
+    <div class="form-group" ng-class="{ 'has-error' : form.icon.$invalid && !form.icon.$pristine }">
+      <label for="icon">Icon</label>
+      <iconpicker ng-model="category.icon" id="icon"></iconpicker>
+    </div>
+
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" ng-click="$dismiss()" class="btn btn-default">Close</button>
+    <button type="submit" class="btn btn-success" ng-disabled="form.$invalid || form.$pristine">Create</button>
+  </div>
+</form>

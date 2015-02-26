@@ -48,6 +48,12 @@ exports.show = function (req, res) {
 
 // Creates a new category in the DB.
 exports.create = function (req, res) {
+
+  // Possibly fix the parent
+  if (req.body.parent && typeof req.body.parent === 'object') {
+    req.body.parent = req.body.parent._id || req.body.parent.id;
+  }
+
   Category.create(req.body, function (err, category) {
     if (err) {
       return handleError(res, err);
@@ -66,7 +72,12 @@ exports.update = function (req, res) {
   if (req.body._id) {
     delete req.body._id;
   }
-  delete req.body.parent; // Can't update the parent. Should delete and re-create instead
+
+  // Possibly fix the parent
+  if (req.body.parent && typeof req.body.parent === 'object') {
+    req.body.parent = req.body.parent._id || req.body.parent.id;
+  }
+
   Category.findById(req.params.id, function (err, category) {
     if (err) {
       return handleError(res, err);
@@ -74,13 +85,16 @@ exports.update = function (req, res) {
     if (!category) {
       return res.send(404);
     }
+
     var updated = _.merge(category, req.body);
+    updated.aliases = req.body.aliases;
+    updated.markModified('aliases');
     updated.save(function (err) {
       if (err) {
         return handleError(res, err);
       }
 
-      Category.populate(category, {path: 'parent', select: 'name color icon'}, function (err, c2) {
+      Category.populate(updated, {path: 'parent', select: 'name color icon'}, function (err, c2) {
         if (err) {
           return handleError(res, err);
         }

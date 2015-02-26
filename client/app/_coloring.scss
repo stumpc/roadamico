@@ -1,4 +1,4 @@
-.color-bluejeans-ra-red {
+.color-ra-red {
   color: $ra-red;
 }
 
@@ -79,107 +79,36 @@
 }
 
 
-// Backgrounds
-.bg-ra-red {
-  background-color: $ra-red;
-  color: white;
-}
+$colors:
+  "ra-red" $ra-red,
+  "bluejeans-light"   $bluejeans-light,
+  "bluejeans-dark"    $bluejeans-dark,
+  "aqua-light"        $aqua-light,
+  "aqua-dark"         $aqua-dark,
+  "mint-light"        $mint-light,
+  "mint-dark"         $mint-dark,
+  "grass-light"       $grass-light,
+  "grass-dark"        $grass-dark,
+  "sunflower-light"   $sunflower-light,
+  "sunflower-dark"    $sunflower-dark,
+  "bittersweet-light" $bittersweet-light,
+  "bittersweet-dark"  $bittersweet-dark,
+  "grapefruit-light"  $grapefruit-light,
+  "grapefruit-dark"   $grapefruit-dark,
+  "lavender-light"    $lavender-light,
+  "lavender-dark"     $lavender-dark,
+  "pinkrose-light"    $pinkrose-light,
+  "pinkrose-dark"     $pinkrose-dark,
+  "lightgray-light"   $lightgray-light,
+  "lightgray-dark"    $lightgray-dark,
+  "mediumgray-light"  $mediumgray-light,
+  "mediumgray-dark"   $mediumgray-dark,
+  "darkgray-light"    $darkgray-light,
+  "darkgray-dark"     $darkgray-dark;
 
-
-.bg-bluejeans-dark {
-  background-color: $bluejeans-dark;
-  color: white;
-}
-.bg-aqua-dark {
-  background-color: $aqua-dark;
-  color: white;
-}
-.bg-mint-dark {
-  background-color: $mint-dark;
-  color: white;
-}
-.bg-grass-dark {
-  background-color: $grass-dark;
-  color: white;
-}
-.bg-sunflower-dark {
-  background-color: $sunflower-dark;
-  color: white;
-}
-.bg-bittersweet-dark, {
-  background-color: $bittersweet-dark;
-  color: white;
-}
-.bg-grapefruit-dark {
-  background-color: $grapefruit-dark;
-  color: white;
-}
-.bg-lavender-dark {
-  background-color: $lavender-dark;
-  color: white;
-}
-.bg-pinkrose-dark {
-  background-color: $pinkrose-dark;
-  color: white;
-}
-.bg-lightgray-dark {
-  background-color: $lightgray-dark;
-  color: black;
-}
-.bg-mediumgray-dark {
-  background-color: $mediumgray-dark;
-  color: white;
-}
-.bg-darkgray-dark {
-  background-color: $darkgray-dark;
-  color: white;
-}
-
-.bg-bluejeans-light {
-  background-color: $bluejeans-light;
-  color: white;
-}
-.bg-aqua-light {
-  background-color: $aqua-light;
-  color: white;
-}
-.bg-mint-light {
-  background-color: $mint-light;
-  color: white;
-}
-.bg-grass-light {
-  background-color: $grass-light;
-  color: white;
-}
-.bg-sunflower-light {
-  background-color: $sunflower-light;
-  color: white;
-}
-.bg-bittersweet-light {
-  background-color: $bittersweet-light;
-  color: white;
-}
-.bg-grapefruit-light {
-  background-color: $grapefruit-light;
-  color: white;
-}
-.bg-lavender-light {
-  background-color: $lavender-light;
-  color: white;
-}
-.bg-pinkrose-light {
-  background-color: $pinkrose-light;
-  color: white;
-}
-.bg-lightgray-light {
-  background-color: $lightgray-light;
-  color: black;
-}
-.bg-mediumgray-light {
-  background-color: $mediumgray-light;
-  color: black;
-}
-.bg-darkgray-light {
-  background-color: $darkgray-light;
-  color: white;
+@each $color in $colors {
+  .bg-#{nth($color, 1)} {
+    background-color: nth($color, 2);
+    color: white;
+  }
 }

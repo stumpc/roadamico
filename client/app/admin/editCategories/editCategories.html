@@ -1,0 +1,23 @@
+<button class="btn btn-success" ng-click="create()"><i class="fa fa-plus"></i> New Category</button>
+
+<table class="table table-bordered">
+  <tr>
+    <th>Name</th>
+    <th>Aliases</th>
+    <th>Color</th>
+    <th>Icon</th>
+    <th>Parent</th>
+    <th>Actions</th>
+  </tr>
+  <tr ng-repeat="category in categories">
+    <td>{{category.name}}</td>
+    <td>{{category.aliases.join(', ')}}</td>
+    <td>{{category.color}}</td>
+    <td>{{category.icon}}</td>
+    <td>{{category.parent.name}}</td>
+    <td>
+      <button class="btn btn-ra-red" ng-click="confirm(category.name, category)"><i class="fa fa-trash"></i></button>
+      <button class="btn btn-primary" ng-click="edit(category)"><i class="fa fa-pencil"></i></button>
+    </td>
+  </tr>
+</table>

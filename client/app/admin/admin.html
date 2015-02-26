@@ -3,26 +3,12 @@
 <div class="container admin page">
   <h1>Site Administration</h1>
 
-  <div class="row space-bottom-medium">
-    <div class="col-xs-2">
-      <a ui-sref="admin.verify" class="btn btn-block" ui-sref-active="btn-primary">
-        Account Verification
-      </a>
-    </div>
-    <div class="col-xs-2">
-      <a ui-sref="admin.users" class="btn btn-block" ui-sref-active="btn-primary">
-        Users
-      </a>
-    </div>
-    <div class="col-xs-2">
-      <a ui-sref="admin.grantAccess" class="btn btn-block" ui-sref-active="btn-primary">
-        Grant Access
-      </a>
-    </div>
+  <div class="space-bottom-medium btn-group">
+    <a class="btn btn-default" ui-sref=".users"><i class="fa fa-user"></i> Users</a>
+    <a class="btn btn-default" ui-sref=".verify"><i class="fa fa-certificate"></i> Verification</a>
+    <a class="btn btn-default" ui-sref=".grantAccess"><i class="fa fa-user-plus"></i> Grant Access</a>
+    <a class="btn btn-default" ui-sref=".categories"><i class="fa fa-tags"></i> Categories</a>
   </div>
-
-  <!--<a href="/admin/users">Users</a>-->
-  <!--<a ui-sref="admin.verify">Verify</a>-->
 
   <div ui-view></div>
 </div>

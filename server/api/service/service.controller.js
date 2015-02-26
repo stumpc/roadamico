@@ -137,6 +137,25 @@ exports.destroy = function (req, res) {
   });
 };
 
+/**
+ * Location search:
+ *  - Name matches
+ *  - Great circle distance between lat/lng points
+ *
+ * Service search:
+ *  - Name matches of service name, category name, or category alias names
+ *
+ * @param req
+ * @param res
+ */
+exports.search = function (req, res) {
+  var query = {};
+  Service.find(query)
+    .populate('provider', 'name photo').populate('category', 'name color icon').exec(function (err, services) {
+
+    });
+};
+
 function handleError(res, err) {
   return res.send(500, err);
 }

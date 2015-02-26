@@ -8,14 +8,14 @@ describe('Controller: BrowseCtrl', function () {
   var BrowseCtrl, scope;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope) {
-    scope = $rootScope.$new();
-    BrowseCtrl = $controller('BrowseCtrl', {
-      $scope: scope
-    });
-  }));
-
-  it('should ...', function () {
-    expect(1).toEqual(1);
-  });
+  //beforeEach(inject(function ($controller, $rootScope) {
+  //  scope = $rootScope.$new();
+  //  BrowseCtrl = $controller('BrowseCtrl', {
+  //    $scope: scope
+  //  });
+  //}));
+  //
+  //it('should ...', function () {
+  //  expect(1).toEqual(1);
+  //});
 });

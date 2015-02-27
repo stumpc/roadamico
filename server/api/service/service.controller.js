@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var Service = require('./service.model');
+var Search = require('../../components/search/search');
 
 // Get list of services
 exports.index = function (req, res) {
@@ -149,9 +150,94 @@ exports.destroy = function (req, res) {
  * @param res
  */
 exports.search = function (req, res) {
-  var query = {};
-  Service.find(query)
-    .populate('provider', 'name photo').populate('category', 'name color icon').exec(function (err, services) {
+  var search = new Search();
+
+  Service.find({})
+    .populate('provider', 'name photo').populate('category', 'name color icon aliases').exec(function (err, services) {
+
+      var results = {};
+
+      function saveResult(id, score) {
+        if (!results[id]) {
+          results[id] = score;
+        } else {
+          results[id] = Math.max(score, results[id]);
+        }
+      }
+
+      services.forEach(function (service) {
+        // Distance search
+        if (req.body.position && service.locationDetails && service.locationDetails.geometry) {
+          var position = [service.locationDetails.geometry.location.k, service.locationDetails.geometry.location.D];
+          saveResult(service._id, search.scoreDist(position, req.body.position));
+        }
+
+        // Location name search (only when position not provided)
+        if (!req.body.position && req.body.location && service.location) {
+          saveResult(service._id, search.scoreText(service.location, req.body.location));
+        }
+
+        // Name search
+        if (req.body.name) {
+          saveResult(service._id, search.scoreText(service.name, req.body.name));
+        }
+        if (service.aliases) {
+          service.aliases.forEach(function (alias) {
+            saveResult(service._id, search.scoreText(alias, req.body.name));
+          });
+        }
+      });
+      //
+      //// Distance search
+      //if (req.body.position && req.body.position.length) {
+      //  results = results.concat(services.filter(function (service) {
+      //    return service.locationDetails && service.locationDetails.geometry;
+      //  }).map(function (service) {
+      //    var position = [service.locationDetails.geometry.location.k, service.locationDetails.geometry.location.D];
+      //    return [search.scoreDist(position, req.body.position), service._id];
+      //  }));
+      //}
+      //
+      //// Location name search (only when position not provided)
+      //if (!req.body.position && req.body.location) {
+      //  results = results.concat(services.filter(function (service) {
+      //    return service.location;
+      //  }).map(function (service) {
+      //    return [search.scoreText(service.location, req.body.location), service._id];
+      //  }));
+      //}
+
+      // Name
+      //if (req.body.name) {
+      //  // Name of service
+      //  results = results.concat(services.map(function (service) {
+      //    return [search.scoreText(service.name, req.body.name), service._id];
+      //  }));
+      //
+      //  // Name of category
+      //  results = results.concat(services.map(function (service) {
+      //    var score = search.scoreText(service.category.name, req.body.name);
+      //
+      //    // Aliases of category
+      //    if (service.aliases) {
+      //      service.aliases.forEach(function (alias) {
+      //        score = Math.max(score, search.scoreText(alias, req.body.name));
+      //      });
+      //    }
+      //    return [score, service._id];
+      //  }));
+      //}
+
+      // TODO: Reduce
+      //var merged = [];
+      //merged.concat.apply(merged, results);
+      var sorted =_(Object.keys(results).map(function (id) {
+        return {
+          id: id,
+          score: results[id]
+        };
+      })).sortBy('score').value().reverse();
+      res.json(200, sorted);
 
     });
 };

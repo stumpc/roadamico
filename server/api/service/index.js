@@ -10,6 +10,7 @@ router.get('/',             controller.index);
 router.get('/provider/:id', controller.listByProvider);
 router.get('/category/:id', controller.listByCategory);
 router.get('/:id',          controller.show);
+router.post('/search',      controller.search);
 
 router.post('/',      auth.isAuthenticated(), controller.create);
 router.put('/:id',    auth.isAuthenticated(), controller.update);

@@ -6,6 +6,7 @@ angular.module('roadAmicoApp')
       .state('main', {
         url: config.appLive ? '/' : '/main',
         templateUrl: 'app/main/main.html',
-        controller: 'MainCtrl'
+        controller: 'MainCtrl',
+        authenticated: true
       });
   });

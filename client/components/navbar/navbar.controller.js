@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('NavbarCtrl', function ($scope, $location, Auth, Message, config, $injector) {
+  .controller('NavbarCtrl', function ($scope, $location, Auth, config, sessionCache) {
     $scope.config = config;
 
     $scope.menu = [
@@ -25,20 +25,7 @@ angular.module('roadAmicoApp')
     $scope.getCurrentUser = Auth.getCurrentUser;
 
     // Received Messages
-    $scope.messages = [];
-    if (Auth.isLoggedIn()) {
-      // Don't load the socket until we are logged in
-      var socket = $injector.get('socket');
-      $scope.messages = Message.received();
-
-      socket.syncUpdatesIf('message', $scope.messages, function (message) {
-        return message.to._id === Auth.getCurrentUser()._id;
-      });
-
-      $scope.$on('$destroy', function () {
-        socket.unsyncUpdates('message');
-      });
-    }
+    $scope.messages = sessionCache.messages();
 
     $scope.logout = function() {
       Auth.logout();

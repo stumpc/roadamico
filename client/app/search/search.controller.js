@@ -1,12 +1,12 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('SearchCtrl', function ($scope, $http, Service) {
+  .controller('SearchCtrl', function ($scope, $http, sessionCache) {
     $scope.message = 'Hello';
 
     //$scope.users = User.profiles();
     var serviceMap = {};
-    var services = Service.query();
+    var services = sessionCache.services();
     services.$promise.then(function () {
       angular.forEach(services, function (service) {
         serviceMap[service._id] = service;

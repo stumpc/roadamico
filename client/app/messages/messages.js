@@ -6,6 +6,7 @@ angular.module('roadAmicoApp')
       .state('messages', {
         url: '/messages',
         templateUrl: 'app/messages/messages.html',
-        controller: 'MessagesCtrl'
+        controller: 'MessagesCtrl',
+        authenticated: true
       });
   });

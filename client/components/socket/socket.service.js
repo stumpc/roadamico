@@ -2,7 +2,7 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .factory('socket', function(socketFactory, Auth) {
+  .factory('socket', function(socketFactory, Auth, $rootScope, $timeout) {
 
     // socket.io now auto-configures its connection when we ommit a connection url
     var ioSocket = io('', {
@@ -13,6 +13,30 @@ angular.module('roadAmicoApp')
 
     var socket = socketFactory({
       ioSocket: ioSocket
+    });
+
+    // Reconnect on login
+    $rootScope.$on('auth::login', function (event, token) {
+      $timeout(function () {
+        console.log(token);
+        if (ioSocket.connected) {
+          return;
+        }
+        ioSocket = io('', {
+          // Send auth token on connection, you will need to DI the Auth service above
+          query: 'token=' + token,
+          path: '/socket.io-client'
+        });
+
+        socket = socketFactory({
+          ioSocket: ioSocket
+        });
+        ioSocket.connect();
+      }, 200);
+    });
+
+    $rootScope.$on('auth::logout', function (event, token) {
+      ioSocket.disconnect();
     });
 
     return {

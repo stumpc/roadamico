@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('BrowseCtrl', function ($scope, $stateParams, categories, Service) {
+  .controller('BrowseCtrl', function ($scope, $stateParams, categories, sessionCache) {
     $scope.categories = categories;
 
     $scope.parent = $stateParams.parent;
@@ -13,5 +13,5 @@ angular.module('roadAmicoApp')
       return (!$scope.parent && !category.parent) || (category.parent && category.parent._id === $scope.parent);
     });
 
-    $scope.services = Service.listByCategory({id: $stateParams.parent});
+    $scope.services = _.filter(sessionCache.services(), {category: {_id: $stateParams.parent}});
   });

@@ -3,31 +3,29 @@
 angular.module('roadAmicoApp')
   .controller('TestCtrl', function ($scope, Message, User, Auth, socket) {
 
-    $scope.things = [
-      'Thing 1',
-      'thing 2',
-      'Three 3',
-      'Happy money!'
-    ];
-
+    //$scope.things = [
+    //  'Thing 1',
+    //  'thing 2',
+    //  'Three 3',
+    //  'Happy money!'
+    //];
+    //
     $scope.sent = Message.sent();
-    $scope.received = Message.received();
-
-    var userId = Auth.getCurrentUser()._id;
+    //$scope.received = Message.received();
+    //
+    //var userId = Auth.getCurrentUser()._id;
     $scope.sent.$promise.then(function () {
-      socket.syncUpdatesIf('message', $scope.sent, function (message) {
-        return message.from._id === userId;
-      });
+      socket.syncUpdates('message', $scope.sent);
     });
-    $scope.received.$promise.then(function () {
-      socket.syncUpdatesIf('message', $scope.received, function (message) {
-        return message.to._id === userId;
-      });
-    });
-
-    $scope.$on('$destroy', function () {
-      socket.unsyncUpdates('message');
-    });
+    //$scope.received.$promise.then(function () {
+    //  socket.syncUpdatesIf('message', $scope.received, function (message) {
+    //    return message.to._id === userId;
+    //  });
+    //});
+    //
+    //$scope.$on('$destroy', function () {
+    //  socket.unsyncUpdates('message');
+    //});
 
     $scope.users = User.profiles();
     $scope.send = function () {

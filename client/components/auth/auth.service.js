@@ -29,6 +29,8 @@ angular.module('roadAmicoApp')
             currentUser = User.get();
             deferred.resolve(data);
 
+            $rootScope.$broadcast('auth::login', data.token);
+
             currentUser.$promise.then(function () {
               if (!currentUser.activated) {
                 $state.go('finalize');
@@ -53,6 +55,7 @@ angular.module('roadAmicoApp')
       logout: function () {
         $cookieStore.remove('token');
         currentUser = {};
+        $rootScope.$broadcast('auth::logout');
       },
 
       /**

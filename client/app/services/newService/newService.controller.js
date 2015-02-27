@@ -1,8 +1,7 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('NewserviceCtrl', function ($scope, $state, Service, Category, Modal) {
-    $scope.categories = Category;
+  .controller('NewserviceCtrl', function ($scope, $state, Service, Modal) {
 
     $scope.create = function () {
       Service.save($scope.service).$promise.then(function (service) {

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('MessagesCtrl', function ($scope, $filter, Message, Auth, socket) {
+  .controller('MessagesCtrl', function ($scope, $filter, Auth, Message, sessionCache, socket) {
     $scope.activeGroup = [];
     $scope.user = Auth.getCurrentUser();
 
@@ -42,7 +42,7 @@ angular.module('roadAmicoApp')
       $scope.activeGroup.active = true;
     }
 
-    var messages = Message.mine();
+    var messages = sessionCache.messages();
     messages.$promise.then(function () {
       process();
       socket.syncUpdates('message', messages, process);

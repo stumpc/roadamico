@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('MainCtrl', function ($scope, $http, $state, config, socket) {
+  .controller('MainCtrl', function ($scope, $http, $state, config) {
 
     if (!config.appLive) {
       $state.go('landing');
@@ -11,7 +11,7 @@ angular.module('roadAmicoApp')
 
     $http.get('/api/things').success(function(awesomeThings) {
       $scope.awesomeThings = awesomeThings;
-      socket.syncUpdates('thing', $scope.awesomeThings);
+      //socket.syncUpdates('thing', $scope.awesomeThings);
     });
 
     $scope.addThing = function() {
@@ -26,9 +26,9 @@ angular.module('roadAmicoApp')
       $http.delete('/api/things/' + thing._id);
     };
 
-    $scope.$on('$destroy', function () {
-      socket.unsyncUpdates('thing');
-    });
+    //$scope.$on('$destroy', function () {
+    //  socket.unsyncUpdates('thing');
+    //});
 
 
 

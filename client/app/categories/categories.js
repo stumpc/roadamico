@@ -8,8 +8,8 @@ angular.module('roadAmicoApp')
         abstract: true,
         template: '<ui-view></ui-view>',
         resolve: {
-          categories: function (Category) {
-            return Category.query().$promise;
+          categories: function (sessionCache) {
+            return sessionCache.categories().$promise;
           }
         }
       })

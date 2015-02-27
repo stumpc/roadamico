@@ -1,0 +1,17 @@
+<div class="service-listing">
+  <div class="name">{{service.name}} <span class="label" ng-hide="removeCategory">{{service.category.name}}</span></div>
+
+  <div ng-hide="removeProvider">
+    <div class="profile-pic-placeholder tiny-pic pull-left">
+      <div class="profile-pic" style="background-image: url({{service.provider.photo | https}})"></div>
+    </div>
+    <div class="provider-name">
+      <em>By <a ui-sref="user({userId: service.provider._id})">{{service.provider.name}}</a></em>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+
+  <div class="description">{{service.description}}</div>
+  <button class="btn btn-ra-red"><i class="fa fa-book"></i> Book Now!</button>
+  <a class="space-left-small" href="/service/view/{{service._id}}">View</a>
+</div>

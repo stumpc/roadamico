@@ -82,12 +82,13 @@
         <h2 class="text-center">Services</h2>
 
         <p ng-hide="services.length">This user isn't offering any services.</p>
-        <div ng-repeat="service in services" class="service">
-          <div class="name">{{service.name}} <span class="label">{{service.category.name}}</span></div>
-          <div class="description">{{service.description}}</div>
-          <button class="btn btn-ra-red"><i class="fa fa-book"></i> Book Now!</button>
-          <a class="space-left-small" href="/service/view/{{service._id}}">View</a>
-        </div>
+        <div ng-repeat="service in services" service-listing="service" remove-provider="true"></div>
+        <!--<div ng-repeat="service in services" class="service">-->
+          <!--<div class="name">{{service.name}} <span class="label">{{service.category.name}}</span></div>-->
+          <!--<div class="description">{{service.description}}</div>-->
+          <!--<button class="btn btn-ra-red"><i class="fa fa-book"></i> Book Now!</button>-->
+          <!--<a class="space-left-small" href="/service/view/{{service._id}}">View</a>-->
+        <!--</div>-->
       </div>
     </div>
   </div>

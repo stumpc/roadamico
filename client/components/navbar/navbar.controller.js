@@ -10,7 +10,11 @@ angular.module('roadAmicoApp')
         link: '/home'
       },
       {
-        title: 'Find Services',
+        title: 'Search',
+        link: '/search'
+      },
+      {
+        title: 'Browse',
         link: '/categories/browse'
       }
     ];

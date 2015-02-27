@@ -46,10 +46,10 @@ describe('Search scoring', function() {
 
   it('should score dissimilar text lowly (< ' + cutoff + ')', function () {
     var search = new Search();
-    var s1 = search.scoreText('hamburger', 'french fries');
+    var s1 = search.scoreText('milkshake', 'french fries');
     var s2 = search.scoreText('yoga', 'pilates');
-    var s3 = search.scoreText('golfing', 'scuba diving');
-    //console.log('low', s1, s2, s3);
+    var s3 = search.scoreText('north carolina', 'mississippi');
+    console.log('low', s1, s2, s3);
     s1.should.be.below(cutoff);
     s2.should.be.below(cutoff);
     s3.should.be.below(cutoff);

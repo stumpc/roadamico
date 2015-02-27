@@ -14,12 +14,7 @@
 
   <div ng-if="services.length">
     <h3>Services</h3>
-    <div ng-repeat="service in services" class="well">
-      <h4>{{service.name}}</h4>
-      <p>By <a ui-sref="user({userId: service.provider._id})">{{service.provider.name}}</a></p>
-      <p ng-if="service.location">Location: {{service.location}}</p>
-      <a class="btn btn-primary" ui-sref="service.view({id: service._id})">View</a>
-    </div>
+    <div ng-repeat="service in services" service-listing="service" remove-category="true"></div>
   </div>
 
 </div>

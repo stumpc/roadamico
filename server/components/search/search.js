@@ -49,7 +49,7 @@ SearchSession.prototype = {
       .map(function (id) {
         return {
           id: id,
-          score: results[id]
+          score: scoreMap[id]
         };
       })
       .filter(function (result) {

@@ -14,22 +14,4 @@
     padding: 15px;
     border-radius: 5px;
   }
-
-  .service {
-    border: 1px solid $mediumgray-dark;
-    padding: 15px 8px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-
-    .name {
-      font-weight: bold;
-      font-size: 16px;
-    }
-
-    .description {
-      color: $darkgray-light;
-      margin: 10px 0 15px 0;
-    }
-
-  }
 }

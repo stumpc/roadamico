@@ -166,28 +166,30 @@ exports.search = function (req, res) {
         }
       }
 
-      services.forEach(function (service) {
-        // Name search first, also looking at aliases
-        if (req.body.name) {
-          saveResult(service._id, search.scoreText(service.name, req.body.name));
-        }
-        if (service.aliases) {
-          service.aliases.forEach(function (alias) {
-            saveResult(service._id, search.scoreText(alias, req.body.name), Math.max);
-          });
-        }
+      if (services && services.length) {
+        services.forEach(function (service) {
+          // Name search first, also looking at aliases
+          if (req.body.name) {
+            saveResult(service._id, search.scoreText(service.name, req.body.name));
+          }
+          if (service.aliases) {
+            service.aliases.forEach(function (alias) {
+              saveResult(service._id, search.scoreText(alias, req.body.name), Math.max);
+            });
+          }
 
-        // Distance search
-        if (req.body.position && service.locationDetails && service.locationDetails.geometry) {
-          var position = [service.locationDetails.geometry.location.k, service.locationDetails.geometry.location.D];
-          saveResult(service._id, search.scoreDist(position, req.body.position));
-        }
+          // Distance search
+          if (req.body.position && service.locationDetails && service.locationDetails.geometry) {
+            var position = [service.locationDetails.geometry.location.k, service.locationDetails.geometry.location.D];
+            saveResult(service._id, search.scoreDist(position, req.body.position));
+          }
 
-        // Location name search (only when position not provided)
-        if (!req.body.position && req.body.location && service.location) {
-          saveResult(service._id, search.scoreText(service.location, req.body.location));
-        }
-      });
+          // Location name search (only when position not provided)
+          if (!req.body.position && req.body.location && service.location) {
+            saveResult(service._id, search.scoreText(service.location, req.body.location));
+          }
+        });
+      }
 
       res.json(200, search.finalize(results));
 

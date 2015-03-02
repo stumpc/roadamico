@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .directive('serviceForm', function (sessionCache) {
+  .directive('serviceForm', function (Category) {
     return {
       scope: {
         service: '=serviceForm',
@@ -14,8 +14,7 @@ angular.module('roadAmicoApp')
         scope.save = attrs.buttontext || 'Save';
         scope.submit = scope.submit || angular.noop();
 
-        scope.categories = sessionCache.categories();
-        scope.categories.$promise.then(function () {
+        Category.query().$promise.then(function () {
           scope.categories = _.sortBy(scope.categories, 'name');
         });
 

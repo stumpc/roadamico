@@ -13,11 +13,11 @@ var emails = {
 };
 
 // Pre-load the email templates
-fs.readdirSync(__dirname + '/emails').forEach(function (file) {
+fs.readdirSync(__dirname + '/email_templates').forEach(function (file) {
   var parts = file.split('.');
   var name = parts[0];
   emails.store[name] = emails.store[name] || {};
-  emails.store[name][parts[1]] = fs.readFileSync(__dirname + '/emails/' + file, {
+  emails.store[name][parts[1]] = fs.readFileSync(__dirname + '/email_templates/' + file, {
     encoding: 'utf8'
   });
 });
@@ -37,7 +37,7 @@ function Email(payload) {
 
     // Only actually send an email if in production mode
     if (process.env.NODE_ENV !== 'production') {
-      return cb(null, {message: '[fake] success'});
+      return cb(null, {message: '[fake email]: "' + payload.text + '"'});
     }
     emails.sendgrid.send(payload, cb);
   };

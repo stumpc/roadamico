@@ -31,8 +31,7 @@ exports.index = function(req, res) {
  * Get list of all users' profile
  */
 exports.profiles = function(req, res) {
-  // TODO: Don't show non-activated accounts
-  User.find({}, function (err, users) {
+  User.find({activated: true}, function (err, users) {
     if(err) return res.send(500, err);
     res.json(200, users.map(function (user) {
       return user.profile;
@@ -63,11 +62,11 @@ exports.create = function (req, res, next) {
  * Get a single user
  */
 exports.show = function (req, res, next) {
-  // TODO: Don't show non-activated accounts
   var userId = req.params.id;
 
   User.findById(userId, function (err, user) {
     if (err) return next(err);
+    if (!user.activated) return res.send(404);
     if (!user) return res.send(401);
     res.json(user.profile);
   });

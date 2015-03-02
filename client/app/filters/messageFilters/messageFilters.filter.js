@@ -8,11 +8,11 @@ angular.module('roadAmicoApp')
       }
 
       if (!(input instanceof Array)) {
-        return !input.read && input.to._id === Auth.getCurrentUser()._id;
+        return !input.notification && !input.read && input.to._id === Auth.getCurrentUser()._id;
       }
 
       var result = input.filter(function (message) {
-        return !message.read && message.to._id === Auth.getCurrentUser()._id;
+        return !message.notification && !message.read && message.to._id === Auth.getCurrentUser()._id;
       });
       if (count === true) {
         return result.length;
@@ -23,7 +23,7 @@ angular.module('roadAmicoApp')
   })
   .filter('messageTarget', function (Auth) {
     return function (message, property) {
-      if (!message) {
+      if (!message || message.notification) {
         return;
       }
 
@@ -31,5 +31,25 @@ angular.module('roadAmicoApp')
         property = '_id';
       }
       return message.to._id === Auth.getCurrentUser()._id ? message.from[property] : message.to[property];
+    };
+  })
+  .filter('notifications', function () {
+    return function (input, count) {
+      if (!input) {
+        return;
+      }
+
+      if (!(input instanceof Array)) {
+        return input.notification && !input.read;
+      }
+
+      var result = input.filter(function (message) {
+        return message.notification && !message.read;
+      });
+      if (count === true) {
+        return result.length;
+      } else {
+        return result;
+      }
     };
   });

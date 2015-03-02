@@ -10,7 +10,7 @@ angular.module('roadAmicoApp')
     $scope.user.$promise.then(function () {
       $scope.services = Service.listByProvider({ id: $scope.user._id });
     }).catch(function () {
-      $state.go('^');
+      $state.go('home');
     });
 
 

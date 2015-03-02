@@ -1,18 +1,15 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('SearchCtrl', function ($scope, $http, sessionCache) {
+  .controller('SearchCtrl', function ($scope, $http, Service) {
     $scope.message = 'Hello';
 
-    //$scope.users = User.profiles();
     var serviceMap = {};
-    var services = sessionCache.services();
-    services.$promise.then(function () {
+    Service.query().$promise.then(function (services) {
       angular.forEach(services, function (service) {
         serviceMap[service._id] = service;
       });
     });
-
 
     $scope.search = function () {
       // Formulate the query

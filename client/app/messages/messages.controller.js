@@ -19,6 +19,9 @@ angular.module('roadAmicoApp')
     // Take the messages and group them by user and sort them
     function process() {
       $scope.messageData = _(messages)
+        .filter(function (message) {                          // Remove notifications
+          return !message.notification;
+        })
         .forEach(function (message) {                         // Add the moment property
           message.moment = moment(message.time);
         })

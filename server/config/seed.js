@@ -110,7 +110,11 @@ function createUsers() {
       name: 'Test User',
       email: 'test@test.com',
       password: 'test',
-      activated: true
+      activated: true,
+      verification: {
+        status: 'pending',
+        idUrl: faker.image.abstract(600, 400)
+      }
     }, {
       provider: 'local',
       role: 'admin',
@@ -150,7 +154,8 @@ function createUsers() {
         verification: {
           status: ['none', 'pending', 'approved', 'denied'][Math.floor(Math.random() * 4)],
           idUrl: faker.image.abstract(600, 400)
-        }
+        },
+        activated: true
       }
     });
     console.log('Creating fake users...');

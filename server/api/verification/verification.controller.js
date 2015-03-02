@@ -2,7 +2,7 @@
 var User = require('../user/user.model');
 var cloudinary = require('cloudinary');
 var fs = require('fs');
-var communication = require('../../components/communication');
+var Message = require('../message/message.model');
 
 exports.getUsersByStatus = function (status) {
   return function (req, res, next) {
@@ -33,10 +33,11 @@ exports.setStatus = function (status) {
       }
       user.save(function (err, result) {
         if (err) return next(err);
-
-        // TODO: Add message here when messages are implemented
-        //communication.notify(user._id, 'Your RoadAmico account verification sumbmission was ' + status);
-
+        Message.create({
+          to: req.params.id,
+          notification: true,
+          message: 'Your RoadAmico account verification submission was ' + status
+        });
         res.send(200);
       });
     })

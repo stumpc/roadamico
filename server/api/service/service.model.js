@@ -15,15 +15,7 @@ var ServiceSchema = new Schema({
     product: String
   }],
 
-  provider: { type: Schema.Types.ObjectId, ref: 'User' },
-  availability: [{
-    datetime: String,
-    duration: String,
-    notes: String,
-    cost: Number,
-    currency: String,
-    booking: { type: Schema.Types.ObjectId, ref: 'Booking' } // Put it in a separate object so people can see details
-  }]
+  provider: { type: Schema.Types.ObjectId, ref: 'User' }
 });
 
 module.exports = mongoose.model('Service', ServiceSchema);

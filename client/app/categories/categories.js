@@ -12,5 +12,5 @@ angular.module('roadAmicoApp')
             return Category.query().$promise;
           }
         }
-      })
+      });
   });

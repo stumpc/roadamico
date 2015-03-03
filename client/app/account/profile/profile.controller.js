@@ -51,7 +51,7 @@ angular.module('roadAmicoApp')
           if (data === 'Forbidden') {
             Modal.prompt.password('Invalid password', sv);
           } else {
-            Modal.info.error('There was an error saving your card. <strong>' + data.reason + '</strong>');
+            Modal.info.error('There was an error saving your card. <strong>' + data.message + '</strong>');
           }
         });
       }

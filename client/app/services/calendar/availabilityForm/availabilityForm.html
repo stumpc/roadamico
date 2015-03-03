@@ -18,25 +18,26 @@
     <p ng-show="form.duration.$error.unit && !form.name.$pristine" class="help-block">Time unit is required.</p>
   </div>
 
-  <button class="btn" ng-click="b1()" type="button">B1</button>
-
   <!-- Cost -->
   <div class="form-group" ng-class="{ 'has-error' : form.notes.$invalid && !form.notes.$pristine }">
     <label for="cost">Cost*</label>
-    <input type="number" stepper id="cost" name="cost" class="form-control" min="0" step="0.01" ng-model="availability.cost" required />
-    <p ng-show="form.cost.$invalid && !form.cost.$pristine" class="help-block">Cost is required.</p>
+    <!--<input type="number" stepper id="cost" name="cost" class="form-control" min="0" step="0.01" ng-model="availability.cost" required />-->
+    <div class="input-group col-md-2">
+      <span class="input-group-addon">$</span>
+      <input type="text" ng-pattern="/^(\d+\.?\d*)|(\.\d+)$/" name="cost" id="cost" class="form-control" ng-model="availability.cost" required />
+    </div>
+
+    <p ng-show="form.cost.$invalid && !form.cost.$pristine" class="help-block">A valid number is required.</p>
   </div>
 
   <!-- Notes -->
   <div class="form-group" ng-class="{ 'has-error' : form.notes.$invalid && !form.notes.$pristine }">
     <label>Notes</label>
-    <input type="text" name="notes" class="form-control" ng-model="availability.notes">
+    <textarea name="notes" id="notes" placeholder="Enter notes here" ng-model="availability.notes" class="form-control"></textarea>
   </div>
 
   <div class="space-top-large">
     <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid || form.$pristine">{{save}}</button>
     <a class="space-left-small" href="{{cancel}}">Cancel</a>
   </div>
-
-  {{form}}
 </form>

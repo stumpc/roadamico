@@ -1,0 +1,42 @@
+<form name="form" ng-submit="submit()" novalidate>
+
+  <!-- Date and Time -->
+  <div class="form-group" ng-class="{ 'has-error' : form.datetime.$invalid && !form.datetime.$pristine }">
+    <label>Date and Time*</label>
+    <datepicker name="date" ng-model="availability.datetime" min-date="minDate" show-weeks="true"></datepicker>
+    <timepicker ng-model="availability.datetime" hour-step="1" minute-step="1" show-meridian="true"></timepicker>
+
+    <p ng-show="form.name.$invalid && !form.name.$pristine" class="help-block">Date and Time is required.</p>
+  </div>
+
+  <!-- Duration -->
+  <div class="form-group" ng-class="{ 'has-error' : form.duration.$invalid && !form.duration.$pristine }">
+    <label>Duration*</label>
+    <durationpicker name="duration" ng-model="availability.duration" required></durationpicker>
+
+    <p ng-show="form.duration.$error.length && !form.name.$pristine" class="help-block">Time length is required.</p>
+    <p ng-show="form.duration.$error.unit && !form.name.$pristine" class="help-block">Time unit is required.</p>
+  </div>
+
+  <button class="btn" ng-click="b1()" type="button">B1</button>
+
+  <!-- Cost -->
+  <div class="form-group" ng-class="{ 'has-error' : form.notes.$invalid && !form.notes.$pristine }">
+    <label for="cost">Cost*</label>
+    <input type="number" stepper id="cost" name="cost" class="form-control" min="0" step="0.01" ng-model="availability.cost" required />
+    <p ng-show="form.cost.$invalid && !form.cost.$pristine" class="help-block">Cost is required.</p>
+  </div>
+
+  <!-- Notes -->
+  <div class="form-group" ng-class="{ 'has-error' : form.notes.$invalid && !form.notes.$pristine }">
+    <label>Notes</label>
+    <input type="text" name="notes" class="form-control" ng-model="availability.notes">
+  </div>
+
+  <div class="space-top-large">
+    <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid || form.$pristine">{{save}}</button>
+    <a class="space-left-small" href="{{cancel}}">Cancel</a>
+  </div>
+
+  {{form}}
+</form>

@@ -1,0 +1,14 @@
+.durationpicker {
+  .stepper {
+    display: inline-block;
+    width: 100px;
+    margin: 0;
+  }
+
+  .chosen-container.chosen-container-single {
+    min-width: 150px;
+    max-width: 150px;
+    display: inline-block;
+    vertical-align: inherit;
+  }
+}

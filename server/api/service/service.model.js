@@ -21,7 +21,8 @@ var ServiceSchema = new Schema({
     duration: String,
     notes: String,
     cost: Number,
-    booker: { type: Schema.Types.ObjectId, ref: 'User' }
+    currency: String,
+    booking: { type: Schema.Types.ObjectId, ref: 'Booking' } // Put it in a separate object so people can see details
   }]
 });
 

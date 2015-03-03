@@ -44,6 +44,18 @@
               <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Enter a valid email.</p>
             </div>
 
+            <!-- Timezone -->
+            <div class="form-group" ng-class="{ 'has-error' : userForm.timezone.$invalid && !userForm.timezone.$pristine }">
+              <label>Timezone</label>
+              <ui-select ng-model="user.timezone">
+                <ui-select-match>{{$select.selected}}</ui-select-match>
+                <ui-select-choices repeat="timezone as timezone in timezones | filter: $select.search">
+                  <div ng-bind-html="timezone | highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select>
+              <p ng-show="userForm.timezone.$invalid && !userForm.timezone.$pristine" class="help-block">A timezone is required.</p>
+            </div>
+
             <!-- PHONE -->
             <div class="form-group" ng-class="{ 'has-error' : userForm.phone.$invalid && !userForm.phone.$pristine }">
               <label>Phone Number</label>

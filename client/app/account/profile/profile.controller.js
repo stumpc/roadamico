@@ -1,16 +1,14 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('ProfileCtrl', function ($scope, $upload, $http, Auth, Modal, Category) {
+  .controller('ProfileCtrl', function ($scope, $upload, $http, Auth, Modal, Category, timezones) {
     $scope.message = 'Hello';
-
     $scope.user = Auth.getCurrentUser();
-
     $scope.categories = Category;
-
     $scope.years = _.range(11).map(function (i) {
       return moment().year() + i;
     });
+    $scope.timezones = timezones;
 
     // TODO: Add in mongoose errors
     $scope.save = function (form) {

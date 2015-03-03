@@ -17,7 +17,9 @@ var UserSchema = new Schema({
   locationDetails: {},
   bio: String,
   workplace: String,
-  categories: [],
+
+  timezone: String,
+  language: String,
 
   // Privacy
   publicInfo: {

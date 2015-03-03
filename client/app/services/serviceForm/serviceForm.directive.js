@@ -13,9 +13,10 @@ angular.module('roadAmicoApp')
       link: function (scope, elem, attrs) {
         scope.save = attrs.buttontext || 'Save';
         scope.submit = scope.submit || angular.noop();
+        scope.service = scope.service || {};
 
-        Category.query().$promise.then(function () {
-          scope.categories = _.sortBy(scope.categories, 'name');
+        Category.query().$promise.then(function (categories) {
+          scope.categories = _.sortBy(categories, 'name');
         });
 
         scope.add = function () {

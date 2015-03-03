@@ -1,8 +1,11 @@
 <div class="durationpicker">
   <input stepper class="form-control" type="number" step="1" min="1" ng-model="length" placeholder="Length" ng-change="update()"/>
 
+  <ui-select ng-model="$parent.unit" ng-change="update()">
+    <ui-select-match>{{$select.selected.name}}</ui-select-match>
+    <ui-select-choices repeat="unit.id as unit in units | filter: $select.search">
+      <div ng-bind-html="unit.name | highlight: $select.search"></div>
+    </ui-select-choices>
+  </ui-select>
 
-  <select chosen ng-model="unit" ng-options="unit.id as unit.name for unit in units" disable-search="true" data-placeholder="Pick a Unit" ng-change="update()">
-    <option value=""></option>
-  </select>
 </div>

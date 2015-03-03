@@ -5,10 +5,9 @@
     margin: 0;
   }
 
-  .chosen-container.chosen-container-single {
-    min-width: 150px;
-    max-width: 150px;
+  .ui-select-container {
     display: inline-block;
-    vertical-align: inherit;
+    width: 150px;
+    vertical-align: top;
   }
 }

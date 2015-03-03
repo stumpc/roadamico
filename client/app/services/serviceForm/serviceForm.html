@@ -24,9 +24,14 @@
   <!-- Category -->
   <div class="form-group" ng-class="{ 'has-error' : form.category.$invalid && !form.category.$pristine }">
     <label>Category</label>
-    <select name="category" chosen class="form-control" ng-options="category._id as category.name for category in categories" ng-model="service.category._id" required>
-      <option value=""></option>
-    </select>
+
+    <ui-select ng-model="service.category._id" id="category">
+      <ui-select-match>{{$select.selected.name}}</ui-select-match>
+      <ui-select-choices repeat="category._id as category in categories | filter: $select.search">
+        <div ng-bind-html="category.name | highlight: $select.search"></div>
+      </ui-select-choices>
+    </ui-select>
+
     <p ng-show="form.category.$invalid && !form.category.$pristine" class="help-block">Service category is required.</p>
   </div>
 

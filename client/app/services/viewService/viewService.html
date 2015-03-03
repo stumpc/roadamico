@@ -9,13 +9,9 @@
   <p>
     By <a href="/user/{{service.provider._id}}">{{service.provider.name}}</a>
   </p>
-  <div>
-    <a href="#" class="btn btn-ra-red"><i class="fa fa-book"></i> Book Now</a>
-
-  </div>
   <div ng-if="service.provider._id == user._id">
     <a class="space-left-small" ui-sref="service.edit({id: service._id})"><i class="fa fa-pencil"></i> Edit</a>
-    <a class="space-left-small" ui-sref="service.calendar.new({id: service._id})"><i class="fa fa-pencil"></i> New Availability</a>
+    <a class="space-left-small" ui-sref="service.calendar.new({id: service._id})"><i class="fa fa-plus"></i> New Availability</a>
   </div>
 
   <hr/>
@@ -43,11 +39,8 @@
     </div>
   </div>
 
-  <div>
-    <h2>Calendar</h2>
-
-    {{availabilities}}
-  </div>
+  <h2>Calendar</h2>
+  <div calendar="service"></div>
 
 
 

@@ -1,0 +1,87 @@
+<div class="calendar-directive">
+  <div class="btn-group space-bottom-medium" role="group" aria-label="Calendar view">
+    <button type="button" class="btn btn-default" ng-click="setView('list')" ng-class="{active: view == 'list'}"><i class="fa fa-list"></i></button>
+    <button type="button" class="btn btn-default" ng-click="setView('cal')" ng-class="{active: view == 'cal'}"><i class="fa fa-calendar"></i></button>
+  </div>
+
+  <div ng-show="view == 'list'" class="list-view">
+
+    <!-- Sorting buttons -->
+    <div>
+      Sort:
+      <button class="btn" ng-class="{'btn-primary': sortField == 'moment'}"     ng-click="sort('moment')">
+        Time
+        <span ng-show="sortField == 'moment'">
+          <i class="fa fa-sort-asc" ng-show="sortAsc"></i>
+          <i class="fa fa-sort-desc" ng-hide="sortAsc"></i>
+        </span>
+      </button>
+      <button class="btn" ng-class="{'btn-primary': sortField == '_duration'}"  ng-click="sort('_duration')">
+        Duration
+        <span ng-show="sortField == '_duration'">
+          <i class="fa fa-sort-asc" ng-show="sortAsc"></i>
+          <i class="fa fa-sort-desc" ng-hide="sortAsc"></i>
+        </span>
+      </button>
+      <button class="btn" ng-class="{'btn-primary': sortField == 'cost'}"       ng-click="sort('cost')">
+        Cost
+        <span ng-show="sortField == 'cost'">
+          <i class="fa fa-sort-asc" ng-show="sortAsc"></i>
+          <i class="fa fa-sort-desc" ng-hide="sortAsc"></i>
+        </span>
+      </button>
+    </div>
+
+    <div ng-repeat="availability in availabilities" class="availability">
+      <div><strong>When:</strong> {{availability.datetime | date:'medium'}}</div>
+      <div><strong>Duration:</strong> {{availability._duration.humanize()}}</div>
+      <div><strong>Cost:</strong> {{availability.cost | currency}}</div>
+      <div class="space-top-small" ng-show="availability.notes"><strong>Notes:</strong> {{availability.notes}}</div>
+
+      <div ng-show="availability.booking">
+        <span class="badge badge-danger">Booked</span>
+      </div>
+      <div ng-hide="availability.booking">
+        <span class="badge badge-success">Available</span>
+        <br/>
+        <button class="btn btn-sm btn-ra-red space-top-small"><i class="fa fa-book"></i> Book</button>
+      </div>
+    </div>
+  </div>
+
+  <div ng-show="view == 'cal'" class="cal-view">
+
+    <div class="text-center">
+      <button class="btn btn-sm pull-left" ng-click="prevDay()"><i class="fa fa-arrow-left"></i></button>
+      {{day.format('dddd, MMMM Do YYYY')}}
+      <button class="btn btn-sm pull-right" ng-click="nextDay()"><i class="fa fa-arrow-right"></i></button>
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="text-center">
+      <strong>{{availabilities.length}}</strong> availabilities on this day.
+    </div>
+    <div class="hour" ng-repeat="hour in hours">
+      <div class="hour-label">{{formatHour(hour)}}</div>
+      <div class="hour-content">
+
+        <div ng-repeat="content in hourContents[hour]" class="availability"
+             ng-class="{booked: !!content.booking}"
+             style="top: {{content.top}}; height: {{content.height}}px;"
+             popover-trigger="mouseenter"
+             popover="{{content.description}}">
+
+          <div ng-hide="content.booking">
+            <button class="btn btn-sm btn-ra-red"><i class="fa fa-book"></i> Book Now</button>
+            for {{content.cost | currency}}
+          </div>
+          <div ng-show="content.booking">Booked</div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+</div>

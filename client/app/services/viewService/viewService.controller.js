@@ -5,10 +5,6 @@ angular.module('roadAmicoApp')
     $scope.service = Service.get({id: $stateParams.id});
     $scope.user = Auth.getCurrentUser();
 
-    $scope.service.$promise.then(function () {
-      $scope.availabilities = Availability.getUpcoming({serviceId: $scope.service._id});
-    });
-
     // Map async loader
     var mapLoader = (function () {
       var deferred = $q.defer();

@@ -1,0 +1,78 @@
+.calendar-directive {
+  .list-view {
+    .availability {
+      background: $lightgray-dark;
+      margin: 8px 0;
+      padding: 8px;
+      border-radius: 4px;
+      box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  .cal-view {
+    border-radius: 4px;
+    overflow: hidden;
+
+    .hour {
+      height: 50px;
+      position: relative;
+
+      .hour-label {
+        z-index: 10;
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        color: $mediumgray-dark;
+      }
+
+      .hour-content {
+        height: 100%;
+        width: 100%;
+        border-bottom: 1px solid #ccc;
+        position: relative;
+      }
+      &:nth-child(odd) .hour-content {
+        background: $lightgray-light;
+      }
+      &:nth-child(even) .hour-content {
+        background: white;
+      }
+      &:last-child .hour-content {
+        border-bottom: none;
+      }
+
+      .availability {
+        position: absolute;
+        z-index: 9;
+        left: 50px;
+        width: 300px;
+        padding: 3px;
+        color: white;
+        border-radius: 4px;
+        background-color: $grass-light;
+        box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        min-height: 10px;
+        transition: min-height 0.5s, opacity 0.5s;
+        opacity: 0.75;
+
+        button {
+          opacity: 0.75;
+        }
+
+        &:hover {
+          min-height: 50px;
+          opacity: 1;
+
+          button {
+            opacity: 1;
+          }
+        }
+
+        &.booked {
+          background-color: $ra-red-light;
+        }
+      }
+    }
+  }
+}

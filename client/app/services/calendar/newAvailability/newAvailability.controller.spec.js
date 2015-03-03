@@ -8,14 +8,14 @@ describe('Controller: NewavailabilityCtrl', function () {
   var NewavailabilityCtrl, scope;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope) {
-    scope = $rootScope.$new();
-    NewavailabilityCtrl = $controller('NewavailabilityCtrl', {
-      $scope: scope
-    });
-  }));
-
-  it('should ...', function () {
-    expect(1).toEqual(1);
-  });
+  //beforeEach(inject(function ($controller, $rootScope) {
+  //  scope = $rootScope.$new();
+  //  NewavailabilityCtrl = $controller('NewavailabilityCtrl', {
+  //    $scope: scope
+  //  });
+  //}));
+  //
+  //it('should ...', function () {
+  //  expect(1).toEqual(1);
+  //});
 });

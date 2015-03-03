@@ -3,7 +3,6 @@
 var User = require('./user.model');
 var passport = require('passport');
 var config = require('../../config/environment');
-//var jwt = require('jsonwebtoken');
 var _ = require('lodash');
 var cloudinary = require('cloudinary');
 var fs = require('fs');
@@ -119,7 +118,11 @@ exports.update = function(req, res, next) {
   delete req.body.role;
 
   var updated = _.merge(req.user, req.body);
-  updated.categories = req.body.categories;
+  if (req.body.languages) {
+    updated.languages = req.body.languages;
+    updated.markModified('languages');
+  }
+
   updated.save(function (err, user) {
     if (err) return validationError(res, err);
 

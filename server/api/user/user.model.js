@@ -19,7 +19,7 @@ var UserSchema = new Schema({
   workplace: String,
 
   timezone: String,
-  language: String,
+  languages: [],
 
   // Privacy
   publicInfo: {
@@ -85,13 +85,15 @@ UserSchema
   .virtual('profile')
   .get(function () {
     var profile = {
-      _id: this._id,
-      name: this.name,
-      joined: this.joined,
-      photo: this.photo,
-      categories: this.categories,
+      _id:          this._id,
+      name:         this.name,
+      joined:       this.joined,
+      photo:        this.photo,
+      categories:   this.categories,
       verification: this.verification,
-      activated: this.activated
+      activated:    this.activated,
+      timezone:     this.timezone,
+      languages:    this.languages
     };
 
     // Add in public information

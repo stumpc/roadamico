@@ -32,28 +32,41 @@
 
             <!-- NAME -->
             <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
-              <label>Name</label>
+              <label>Name*</label>
               <input type="text" name="name" class="form-control" ng-model="user.name" required>
               <p ng-show="userForm.name.$invalid && !userForm.name.$pristine" class="help-block">Your name is required.</p>
             </div>
 
             <!-- EMAIL -->
             <div class="form-group" ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }">
-              <label>Email</label>
+              <label>Email*</label>
               <input type="email" name="email" class="form-control" ng-model="user.email" required>
               <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Enter a valid email.</p>
             </div>
 
             <!-- Timezone -->
             <div class="form-group" ng-class="{ 'has-error' : userForm.timezone.$invalid && !userForm.timezone.$pristine }">
-              <label>Timezone</label>
-              <ui-select ng-model="user.timezone">
+              <label>Timezone*</label>
+              <ui-select ng-model="user.timezone" required>
                 <ui-select-match>{{$select.selected}}</ui-select-match>
                 <ui-select-choices repeat="timezone as timezone in timezones | filter: $select.search">
                   <div ng-bind-html="timezone | highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
               <p ng-show="userForm.timezone.$invalid && !userForm.timezone.$pristine" class="help-block">A timezone is required.</p>
+            </div>
+
+            <!-- Languages -->
+            <div class="form-group" ng-class="{ 'has-error' : userForm.languages.$invalid && !userForm.languages.$pristine }">
+              <label>Languages</label>
+              <ui-select multiple ng-model="user.languages" close-on-select="false" ui-select-required>
+                <ui-select-match>{{$item.name}}</ui-select-match>
+                <ui-select-choices repeat="language.code as language in languages | filter: $select.search">
+                  <div ng-bind-html="language.name | highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select>
+              <!-- TODO: Get validation to work -->
+              <!--<p ng-show="userForm.languages.$invalid && !userForm.languages.$pristine" class="help-block">You must have at least one language.</p>-->
             </div>
 
             <!-- PHONE -->
@@ -79,13 +92,6 @@
               <label>Bio</label>
               <textarea ng-model="user.bio" class="form-control" name="bio"></textarea>
             </div>
-
-            <!-- CATEGORIES -->
-            <!-- TODO: Use a nicer multi-select plugin -->
-            <!--<div class="form-group">-->
-            <!--<label>Categories</label>-->
-            <!--<select multiple name="categories" class="form-control" ng-model="user.categories" ng-options="category for category in categories"></select>-->
-            <!--</div>-->
 
             <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid || userForm.$pristine">Save</button>
           </form>

@@ -1,7 +1,12 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('FinalizeCtrl', function ($scope, $state, $location, Auth, Modal) {
+  .controller('FinalizeCtrl', function ($scope, $state, $location, Auth, Modal, timezones, languages) {
+
+    $scope.timezones = timezones;
+    $scope.languages = _.map(languages, function (name, code) {
+      return {name: name, code: code};
+    });
 
     // Check for user id in query string to load the user
     var code = $location.search().code;

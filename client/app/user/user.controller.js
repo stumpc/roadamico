@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('UserCtrl', function ($scope, $stateParams, $state, $q, User, Google, Geolocator, Service, MessageModal) {
+  .controller('UserCtrl', function ($scope, $stateParams, $state, $q, User, Google, Geolocator, Service, MessageModal, languages) {
 
+    $scope.languages = languages;
     $scope.user = User.get({id: $stateParams.userId});
     $scope.joined = $scope.user.joined || moment('02-14-2015').toISOString();
 

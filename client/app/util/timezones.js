@@ -1,3 +1,4 @@
+// From: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 angular.module('roadAmicoApp')
   .value('timezones', [
     'Africa/Abidjan',

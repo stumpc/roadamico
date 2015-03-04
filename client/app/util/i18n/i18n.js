@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .run(function ($rootScope, Auth, $window, $translate) {
+  .run(function ($rootScope, Auth, $window, $translate, config) {
 
     // Determine language. From https://github.com/angular-translate/angular-translate/blob/master/src/service/translate.js
     function detectLanguage() {
@@ -33,10 +33,15 @@ angular.module('roadAmicoApp')
         if (user.languages && user.languages.length) {
           var lang = user.languages[0].substr(0,2).toLowerCase();
           $translate.use(lang);
-          $translate.fallbackLanguage('en');
+
+          if (config.translate.useFallback) {
+            $translate.fallbackLanguage(config.translate.fallback);
+          }
         } else {
           $translate.use(detectLanguage());
-          $translate.fallbackLanguage('en');
+          if (config.translate.useFallback) {
+            $translate.fallbackLanguage(config.translate.fallback);
+          }
         }
       });
     }
@@ -47,6 +52,8 @@ angular.module('roadAmicoApp')
     $rootScope.$on('auth::login', useUsersLang);
     $rootScope.$on('auth::logoff', function () {
       $translate.use(detectLanguage());
-      $translate.fallbackLanguage('en');
+      if (config.translate.useFallback) {
+        $translate.fallbackLanguage(config.translate.fallback);
+      }
     });
   });

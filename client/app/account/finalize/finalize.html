@@ -8,16 +8,16 @@
 
     <!-- NAME -->
     <div class="form-group" ng-class="{ 'has-error' : userForm1.name.$invalid && !userForm1.name.$pristine }">
-      <label>Name</label>
+      <label translate>Name</label>
       <input type="text" name="name" class="form-control" ng-model="user.name" required>
-      <p ng-show="userForm1.name.$invalid && !userForm1.name.$pristine" class="help-block">Your name is required.</p>
+      <p ng-show="userForm1.name.$invalid && !userForm1.name.$pristine" class="help-block" translate>name-required</p>
     </div>
 
     <!-- EMAIL -->
     <div class="form-group" ng-class="{ 'has-error' : userForm1.email.$invalid && !userForm1.email.$pristine }">
-      <label>Email</label>
+      <label translate>Email</label>
       <input type="email" name="email" class="form-control" ng-model="user.email" required>
-      <p ng-show="userForm1.email.$invalid && !userForm1.email.$pristine" class="help-block">Enter a valid email.</p>
+      <p ng-show="userForm1.email.$invalid && !userForm1.email.$pristine" class="help-block" translate>email-required</p>
       <p class="help-block" ng-show="userForm1.email.$error.mongoose">
         {{ errors.email }}
       </p>
@@ -25,19 +25,20 @@
 
     <!-- Timezone -->
     <div class="form-group" ng-class="{ 'has-error' : userForm.timezone.$invalid && !userForm.timezone.$pristine }">
-      <label>Timezone</label>
+      <label translate>Timezone</label>
       <ui-select ng-model="user.timezone" required>
         <ui-select-match>{{$select.selected}}</ui-select-match>
         <ui-select-choices repeat="timezone as timezone in timezones | filter: $select.search">
           <div ng-bind-html="timezone | highlight: $select.search"></div>
         </ui-select-choices>
       </ui-select>
-      <p ng-show="userForm.timezone.$invalid && !userForm.timezone.$pristine" class="help-block">A timezone is required.</p>
+      <!-- TODO: Get validation to work -->
+      <p ng-show="userForm.timezone.$invalid && !userForm.timezone.$pristine" class="help-block" translate>timezone-required</p>
     </div>
 
     <!-- Languages -->
     <div class="form-group" ng-class="{ 'has-error' : userForm.languages.$invalid && !userForm.languages.$pristine }">
-      <label>Languages</label>
+      <label translate>Languages</label>
       <ui-select multiple ng-model="user.languages" close-on-select="false" ui-select-required>
         <ui-select-match>{{$item.name}}</ui-select-match>
         <ui-select-choices repeat="language.code as language in languages | filter: $select.search">
@@ -59,16 +60,16 @@
 
       <!-- PASSWORD 1 -->
       <div class="form-group" ng-class="{ 'has-error' : userForm2.password1.$invalid && !userForm2.password1.$pristine }">
-        <label>Password</label>
+        <label translate>Password</label>
         <input type="password" name="password1" class="form-control" ng-model="password1" required minlength="8">
-        <p ng-show="userForm2.password1.$error.minlength" class="help-block">Password must be at least 8 characters long.</p>
+        <p ng-show="userForm2.password1.$error.minlength" class="help-block" translate>password-length</p>
       </div>
 
       <!-- PASSWORD 2 -->
       <div class="form-group" ng-class="{ 'has-error' : userForm2.password2.$invalid && !userForm2.password2.$pristine }">
         <label>Re-enter Password</label>
         <input type="password" name="password2" class="form-control" ng-model="password2" pw-check="password1" required>
-        <p ng-show="userForm2.password2.$error.pwMismatch" class="help-block">Passwords must match.</p>
+        <p ng-show="userForm2.password2.$error.pwMismatch" class="help-block" translate>password-match</p>
       </div>
 
       <button type="submit" class="btn btn-primary" ng-disabled="userForm2.$invalid || userForm2.$pristine" translate>Save</button>

@@ -7,11 +7,21 @@ angular.module('roadAmicoApp')
     $translateProvider.translations('en', {
       Save: 'Save',
       Cancel: 'Cancel',
-      Password: 'Password'
+      Password: 'Password',
+      Name: 'Name',
+      Email: 'Email',
+      Timezone: 'Timezone',
+      Languages: 'Languages'
+
     });
     $translateProvider.translations('fr', {
       Save: 'Enregistrer',
       Cancel: 'Annuler',
-      Password: 'Mot de Passe'
+      Password: 'Mot de Passe',
+      Name: 'Nom',
+      Email: 'Email',
+      Timezone: 'Fuseau Horaire',
+      Languages: 'Langues'
+
     });
   });

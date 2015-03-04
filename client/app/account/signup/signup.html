@@ -3,34 +3,34 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-12">
-      <h1>Sign up</h1>
+      <h1 translate>sign-up</h1>
     </div>
     <div class="col-sm-12">
       <form class="form" name="form" ng-submit="register(form)" novalidate>
 
         <div class="form-group" ng-class="{ 'has-success': form.name.$valid && submitted,
                                             'has-error': form.name.$invalid && submitted }">
-          <label>Name</label>
+          <label translate>Name</label>
 
           <input type="text" name="name" class="form-control" ng-model="user.name"
                  required/>
-          <p class="help-block" ng-show="form.name.$error.required && submitted">
-            A name is required
+          <p class="help-block" ng-show="form.name.$error.required && submitted" translate>
+            name-required
           </p>
         </div>
 
         <div class="form-group" ng-class="{ 'has-success': form.email.$valid && submitted,
                                             'has-error': form.email.$invalid && submitted }">
-          <label>Email</label>
+          <label translate>Email</label>
 
           <input type="email" name="email" class="form-control" ng-model="user.email"
                  required
                  mongoose-error/>
-          <p class="help-block" ng-show="form.email.$error.email && submitted">
-            Doesn't look like a valid email.
+          <p class="help-block" ng-show="form.email.$error.email && submitted" translate>
+            valid-email
           </p>
-          <p class="help-block" ng-show="form.email.$error.required && submitted">
-            What's your email address?
+          <p class="help-block" ng-show="form.email.$error.required && submitted" translate>
+            what-email
           </p>
           <p class="help-block" ng-show="form.email.$error.mongoose">
             {{ errors.email }}
@@ -39,15 +39,15 @@
 
         <div class="form-group" ng-class="{ 'has-success': form.password.$valid && submitted,
                                             'has-error': form.password.$invalid && submitted }">
-          <label>Password</label>
+          <label translate>Password</label>
 
           <input type="password" name="password" class="form-control" ng-model="user.password"
-                 ng-minlength="3"
+                 ng-minlength="8"
                  required
                  mongoose-error/>
           <p class="help-block"
-             ng-show="(form.password.$error.minlength || form.password.$error.required) && submitted">
-            Password must be at least 3 characters.
+             ng-show="(form.password.$error.minlength || form.password.$error.required) && submitted" translate>
+            password-length
           </p>
           <p class="help-block" ng-show="form.password.$error.mongoose">
             {{ errors.password }}
@@ -55,10 +55,10 @@
         </div>
 
         <div>
-          <button class="btn btn-success btn-login" type="submit">
-            Sign up
+          <button class="btn btn-success btn-login" type="submit" translate>
+            sign-up
           </button>
-          <a class="btn btn-default btn-register" href="/login">
+          <a class="btn btn-default btn-register" href="/login" translate>
             Login
           </a>
         </div>
@@ -66,16 +66,16 @@
         <hr>
         <div>
           <a class="btn btn-facebook" href="" ng-click="loginOauth('facebook')">
-            <i class="fa fa-facebook"></i> Connect with Facebook
+            <i class="fa fa-facebook"></i> <translate>connect-facebook</translate>
           </a>
           <a class="btn btn-google-plus" href="" ng-click="loginOauth('google')">
-            <i class="fa fa-google-plus"></i> Connect with Google+
+            <i class="fa fa-google-plus"></i> <translate>connect-google</translate>
           </a>
           <a class="btn btn-twitter" href="" ng-click="loginOauth('twitter')">
-            <i class="fa fa-twitter"></i> Connect with Twitter
+            <i class="fa fa-twitter"></i> <translate>connect-twitter</translate>
           </a>
           <a class="btn btn-linkedin" href="" ng-click="loginOauth('linkedin')">
-            <i class="fa fa-linkedin"></i> Connect with LinkedIn
+            <i class="fa fa-linkedin"></i> <translate>connect-linkedin</translate>
           </a>
         </div>
       </form>

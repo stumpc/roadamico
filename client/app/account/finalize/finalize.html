@@ -1,10 +1,10 @@
 <div class="container finalize">
 
-  <h1 translate>finalize-title</h1>
+  <h1 translate>finalize.title</h1>
 
   <form name="userForm1" ng-submit="save1()" novalidate>
 
-    <h2><i class="fa fa-info-circle"></i> <translate>finalize-account-information</translate></h2>
+    <h2><i class="fa fa-info-circle"></i> <translate>finalize.account-information</translate></h2>
 
     <!-- NAME -->
     <div class="form-group" ng-class="{ 'has-error' : userForm1.name.$invalid && !userForm1.name.$pristine }">
@@ -67,7 +67,7 @@
 
       <!-- PASSWORD 2 -->
       <div class="form-group" ng-class="{ 'has-error' : userForm2.password2.$invalid && !userForm2.password2.$pristine }">
-        <label>Re-enter Password</label>
+        <label translate>password-again</label>
         <input type="password" name="password2" class="form-control" ng-model="password2" pw-check="password1" required>
         <p ng-show="userForm2.password2.$error.pwMismatch" class="help-block" translate>password-match</p>
       </div>

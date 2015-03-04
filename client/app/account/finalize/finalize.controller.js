@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('FinalizeCtrl', function ($scope, $state, $location, Auth, Modal, timezones, languages) {
+  .controller('FinalizeCtrl', function ($scope, $state, $location, Auth, Modal, timezones, languages, $translate) {
 
     $scope.timezones = timezones;
     $scope.languages = _.map(languages, function (name, code) {
@@ -17,8 +17,8 @@ angular.module('roadAmicoApp')
           password: code
         }).then(function () {
           $scope.user = Auth.getCurrentUser();
-        }, function () {
-          Modal.info.error('Invalid user ID');
+        }).catch(function () {
+          $translate('finalize.invalid-user-id').then(Modal.info.error);
         });
       } else {
         $state.go('main');
@@ -53,7 +53,7 @@ angular.module('roadAmicoApp')
       Auth.changePassword(code, $scope.password1).then(function () {
         $state.go('home');
       }, function () {
-        Modal.info.error('Error changing password');
+        $translate('finalize.error-change-pw').then(Modal.info.error);
       });
     };
   });

@@ -9,6 +9,7 @@ angular.module('roadAmicoApp')
       Save: 'Save',
       Cancel: 'Cancel',
       Password: 'Password',
+      'password-again': 'Re-enter Password',
       Name: 'Name',
       Email: 'Email',
       Timezone: 'Timezone',
@@ -21,6 +22,12 @@ angular.module('roadAmicoApp')
       Bio: 'Bio',
       Verified: 'Verified',
 
+      // Social login
+      'connect-facebook': 'Connect with Facebook',
+      'connect-google': 'Connect with Google+',
+      'connect-twitter': 'Connect with Twitter',
+      'connect-linkedin': 'Connect with LinkedIn',
+
       // Help messages
       'name-required': 'Your name is required.',
       'timezone-required': 'A timezone is required.',
@@ -28,6 +35,7 @@ angular.module('roadAmicoApp')
       'password-match': 'Passwords must match.',
       'email-and-password': 'Please enter your email and password.',
       'valid-email': 'Please enter a valid email.',
+      'what-email': 'What\'s your email address?',
 
       // Months
       January: 'January',

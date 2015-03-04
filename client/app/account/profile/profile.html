@@ -8,7 +8,7 @@
         <div class="text-center">
           <div class="profile-pic-placeholder">
             <div class="profile-pic" style="background-image: url({{user.photo | https}})">
-              <button class="btn btn-ra-red-hollow" ng-file-select="onFileSelect($files)" ng-multiple="false"><i class="fa fa-upload"></i> <translate>change-picture</translate></button>
+              <button class="btn btn-ra-red-hollow" ng-file-select="onFileSelect($files)" ng-multiple="false"><i class="fa fa-upload"></i> <translate>profile.change-picture</translate></button>
             </div>
           </div>
         </div>
@@ -17,7 +17,7 @@
       <div class="col-md-6">
         <h1>{{user.name}}</h1>
 
-        <a class="btn btn-ra-red" href="/user/{{user._id}}"><i class="fa fa-user"></i> <translate>view-profile</translate></a>
+        <a class="btn btn-ra-red" href="/user/{{user._id}}"><i class="fa fa-user"></i> <translate>profile.view-profile</translate></a>
       </div>
     </div>
 
@@ -27,7 +27,7 @@
         <div class="card">
           <form name="userForm" ng-submit="save(userForm)" novalidate>
 
-            <h2><i class="fa fa-info-circle"></i> <translate>personal-info</translate></h2>
+            <h2><i class="fa fa-info-circle"></i> <translate>profile.personal-info</translate></h2>
 
             <!-- NAME -->
             <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
@@ -98,9 +98,9 @@
 
         <div class="card">
           <form name="userPrivacyForm" ng-submit="save(userPrivacyForm)" novalidate>
-            <h2><i class="fa fa-eye"></i> <translate>Privacy</translate></h2>
+            <h2><i class="fa fa-eye"></i> <translate>profile.Privacy</translate></h2>
 
-            <p translate>privacy-instructions</p>
+            <p translate>profile.privacy-instructions</p>
 
             <div class="form-group">
               <label class="toggle" for="emailPublic">
@@ -146,39 +146,39 @@
         <div class="card">
 
           <div ng-switch="user.verification.status" class="pull-right">
-            <translate>account-status</translate>
+            <translate>profile.account-status</translate>
             <span ng-switch-when="approved" class="label label-success"><i class="fa fa-check"></i> <translate>Verified</translate></span>
-            <span ng-switch-when="denied" class="label label-danger"><i class="fa fa-ban"></i> <translate>verification-denied</translate></span>
-            <span ng-switch-when="pending" class="label label-warning"><i class="fa fa-clock-o"></i> <translate>verification-pending</translate></span>
-            <span ng-switch-default class="label label-warning"><i class="fa fa-times"></i> <translate>not-verified</translate></span>
+            <span ng-switch-when="denied" class="label label-danger"><i class="fa fa-ban"></i> <translate>profile.verification-denied</translate></span>
+            <span ng-switch-when="pending" class="label label-warning"><i class="fa fa-clock-o"></i> <translate>profile.verification-pending</translate></span>
+            <span ng-switch-default class="label label-warning"><i class="fa fa-times"></i> <translate>profile.not-verified</translate></span>
           </div>
 
           <div>
-            <h2><i class="fa fa-certificate"></i> <translate>account-verification</translate></h2>
+            <h2><i class="fa fa-certificate"></i> <translate>profile.account-verification</translate></h2>
           </div>
 
           <div ng-switch="user.verification.status">
             <div ng-switch-when="approved" translate>
-              account-is-verified
+              profile.account-is-verified
             </div>
 
             <div ng-switch-when="denied" translate>
-              account-is-denied
+              profile.account-is-denied
             </div>
 
             <div ng-switch-when="pending" translate>
-              account-is-pending
+              profile.account-is-pending
             </div>
 
             <div ng-switch-default>
               <p translate>
-                verification-overview
+                profile.verification-overview
               </p>
               <hr/>
               <p translate>
-                verification-process
+                profile.verification-process
               </p>
-              <button class="btn btn-ra-red-hollow" ng-file-select="idSelect($files)" ng-multiple="false"><i class="fa fa-upload"></i> <translate>choose-file</translate></button>
+              <button class="btn btn-ra-red-hollow" ng-file-select="idSelect($files)" ng-multiple="false"><i class="fa fa-upload"></i> <translate>profile.choose-file</translate></button>
             </div>
           </div>
 
@@ -186,39 +186,39 @@
         </div>
 
         <div class="card">
-          <h2><i class="fa fa-credit-card"></i> <translate>financial-information</translate></h2>
+          <h2><i class="fa fa-credit-card"></i> <translate>profile.financial-information</translate></h2>
 
           <div ng-show="user.financial.cards.length">
-            <strong translate>saved-cards</strong>
+            <strong translate>profile.saved-cards</strong>
             <table class="table table-striped table-bordered">
               <tr ng-repeat="card in user.financial.cards">
                 <td>{{card.display}}</td>
-                <td><translate>card-expiration-short</translate> {{card.exp.month}} / {{card.exp.year}}</td>
+                <td><translate>profile.card-expiration-short</translate> {{card.exp.month}} / {{card.exp.year}}</td>
                 <td><button class="btn btn-ra-red" ng-click="deleteCard(card.display, card._id)"><i class="fa fa-trash"></i></button></td>
               </tr>
             </table>
           </div>
           <div ng-hide="user.financial.cards.length" translate>
-            no-cards
+            profile.no-cards
           </div>
 
           <hr/>
-          <button class="btn btn-ra-red-hollow" ng-click="addCard = true" ng-hide="addCard"><i class="fa fa-plus"></i> <translate>add-card</translate></button>
+          <button class="btn btn-ra-red-hollow" ng-click="addCard = true" ng-hide="addCard"><i class="fa fa-plus"></i> <translate>profile.add-card</translate></button>
 
           <form name="newCardForm" ng-submit="saveCard()" ng-show="addCard" novalidate>
 
             <!-- NUMBER -->
             <div class="form-group" ng-class="{ 'has-error' : newCardForm.number.$invalid && !newCardForm.number.$pristine }">
-              <label translate>card-number</label>
+              <label translate>profile.card-number</label>
               <input type="text" name="number" class="form-control" ng-model="newCard.number" required>
-              <p ng-show="newCardForm.number.$invalid && !newCardForm.number.$pristine" class="help-block" transalte>card-number-required</p>
+              <p ng-show="newCardForm.number.$invalid && !newCardForm.number.$pristine" class="help-block" translate>profile.card-number-required</p>
             </div>
 
             <div class="row">
               <div class="col-xs-5">
                 <!-- Expiration Month -->
                 <div class="form-group" ng-class="{ 'has-error' : newCardForm.expMonth.$invalid && !newCardForm.expMonth.$pristine }">
-                  <label translate>Expiration</label>
+                  <label translate>profile.Expiration</label>
                   <select name="expMonth" ng-model="newCard.exp.month" class="form-control" required>
                     <option value="1">01 - {{'January' | translate}}</option>
                     <option value="2">02 - {{'February' | translate}}</option>
@@ -233,7 +233,7 @@
                     <option value="11">11 - {{'November' | translate}}</option>
                     <option value="12">12 - {{'December' | translate}}</option>
                   </select>
-                  <p ng-show="newCardForm.expMonth.$invalid && !newCardForm.expMonth.$pristine" class="help-block" translate>card-exp-required</p>
+                  <p ng-show="newCardForm.expMonth.$invalid && !newCardForm.expMonth.$pristine" class="help-block" translate>profile.card-exp-required</p>
                 </div>
               </div>
 
@@ -242,23 +242,23 @@
                 <label>&nbsp;</label>
                 <div class="form-group" ng-class="{ 'has-error' : newCardForm.expYear.$invalid && !newCardForm.expYear.$pristine }">
                   <select name="expYear" class="form-control" ng-model="newCard.exp.year" ng-options="year for year in years" required></select>
-                  <p ng-show="newCardForm.expYear.$invalid && !newCardForm.expYear.$pristine" class="help-block">Card expiration year is required.</p>
+                  <p ng-show="newCardForm.expYear.$invalid && !newCardForm.expYear.$pristine" class="help-block">profile.exp-year-required</p>
                 </div>
               </div>
 
               <!-- CVC -->
               <div class="col-xs-3 col-xs-offset-1">
                 <div class="form-group" ng-class="{ 'has-error' : newCardForm.cvc.$invalid && !newCardForm.cvc.$pristine }">
-                  <label translate>CVC</label>
+                  <label translate>profile.CVC</label>
                   <input type="text" name="cvc" class="form-control" ng-model="newCard.cvc" required>
-                  <p ng-show="newCardForm.cvc.$invalid && !newCardForm.cvc.$pristine" class="help-block" translate>cvc-required</p>
+                  <p ng-show="newCardForm.cvc.$invalid && !newCardForm.cvc.$pristine" class="help-block" translate>profile.cvc-required</p>
                 </div>
               </div>
             </div>
 
             <button type="submit" class="btn btn-primary" ng-disabled="newCardForm.$invalid || newCardForm.$pristine"><i class="fa fa-lock"></i> <translate>Save</translate></button>
 
-            <p class="note" translate>card-security-note</p>
+            <p class="note" translate>profile.card-security-note</p>
 
           </form>
 

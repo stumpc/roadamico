@@ -1,11 +1,31 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('UserCtrl', function ($scope, $stateParams, $state, $q, User, Google, Geolocator, Service, MessageModal, languages) {
+  .controller('UserCtrl', function ($scope, $stateParams, $state, $q, User, Google, Geolocator, Service, Auth, MessageModal, languages) {
+
+    $scope.isLoggedIn = Auth.isLoggedIn;
+    $scope.authUser = Auth.getCurrentUser();
 
     $scope.languages = languages;
     $scope.user = User.get({id: $stateParams.userId});
-    $scope.joined = $scope.user.joined || moment('02-14-2015').toISOString();
+    $scope.joined = $scope.user.joined || moment('2015-02-14T05:00:00.000Z').toISOString();
+    $scope.message = MessageModal;
+
+    $scope.isFollowing = function () {
+      return $scope.authUser.following && !!_.find($scope.authUser.following, function (f) {
+          return f.provider === $scope.user._id;
+        });
+    };
+
+    $scope.follow = function (id, add) {
+      var method = add ? 'follow' : 'unfollow';
+      User[method]({id: id}).$promise.then(function (user) {
+        // Make sure we update the original user object
+        $scope.authUser.following = user.following;
+      });
+    };
+
+
 
     // Leave this page if given an invalid user ID
     $scope.user.$promise.then(function () {
@@ -14,8 +34,6 @@ angular.module('roadAmicoApp')
       $state.go('home');
     });
 
-
-    $scope.message = MessageModal;
 
 
     $scope.map = {

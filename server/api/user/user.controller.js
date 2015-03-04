@@ -117,6 +117,7 @@ exports.update = function(req, res, next) {
   delete req.body.verification;
   delete req.body.activated;
   delete req.body.role;
+  delete req.body.following;
 
   var updated = _.merge(req.user, req.body);
   if (req.body.languages) {
@@ -131,6 +132,34 @@ exports.update = function(req, res, next) {
     delete updated.hashedPassword;
     res.json(user);
   });
+};
+
+exports.follow = function(req, res, next) {
+  var index = _.findIndex(req.user.following, function (f) { return f.provider.equals(req.body.id); });
+  if (index > -1) {
+    return req.json(req.user);
+  }
+  req.user.following.push({
+    provider: req.body.id,
+    datetime: moment().toISOString()
+  });
+  req.user.save(function (err, user) {
+    if (err) return next(err);
+    res.json(user);
+  });
+};
+
+exports.unfollow = function(req, res, next) {
+  var index = _.findIndex(req.user.following, function (f) { return f.provider.equals(req.body.id); });
+  if (index > -1) {
+    req.user.following.splice(index, 1);
+    req.user.save(function (err, user) {
+      if (err) return next(err);
+      res.json(user);
+    });
+  } else {
+    res.json(403, { message: translate(req, 'invalid-provider') })
+  }
 };
 
 /**

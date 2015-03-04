@@ -17,9 +17,14 @@ var UserSchema = new Schema({
   locationDetails: {},
   bio: String,
   workplace: String,
-
   timezone: String,
   languages: [],
+
+  // Following
+  following: [{
+    provider: { type: Schema.Types.ObjectId, ref: 'Category' },
+    datetime: String
+  }],
 
   // Privacy
   publicInfo: {

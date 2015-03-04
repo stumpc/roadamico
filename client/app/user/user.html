@@ -12,9 +12,11 @@
       <div ng-if="user.verification.status == 'approved'" class="space-bottom-small">
         <span class="label label-success"><i class="fa fa-check"></i> Verified Account</span>
       </div>
-      <div>
-        <button class="btn btn-primary"><i class="fa fa-plus"></i> Add to List</button>
+      <div ng-show="isLoggedIn()">
+        <button class="btn btn-primary" ng-hide="isFollowing()" ng-click="follow(user._id, true)"><i class="fa fa-user-plus"></i> Follow</button>
+        <button class="btn btn-primary" ng-show="isFollowing()" ng-click="follow(user._id, false)"><i class="fa fa-user-times"></i> Unfollow</button>
         <button class="btn btn-primary" ng-click="message(user)"><i class="fa fa-comment"></i> Message</button>
+        {{authUser.following}}
       </div>
       <div>
         <span class="badge" ng-repeat="language in user.languages">{{languages[language]}}</span>

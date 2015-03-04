@@ -11,6 +11,11 @@
 
 var _ = require('lodash');
 var Thing = require('./thing.model');
+var translate = require('../../components/translate');
+
+exports.test = function (req, res) {
+  res.send(200, translate(req, 'test'));
+};
 
 // Get list of things
 exports.index = function(req, res) {

@@ -56,7 +56,7 @@ exports.grant = function (req, res) {
       joined: moment().toISOString()
     }, function (err, user) {
       if (err) { return handleError(res, err); }
-      if (!user) return res.json(404, { message: 'No user created.'});
+      if (!user) return res.json(404, { message: translate(req, 'no-user-created') });
 
       emails.create('grantAccess', {
         to: signup.email,
@@ -66,7 +66,7 @@ exports.grant = function (req, res) {
         modCode: user.modCode
       }).send();
 
-      return res.json(200, { message: 'Access granted and email sent.' });
+      return res.json(200, { message: translate(req, 'access-granted') });
     });
   });
 };

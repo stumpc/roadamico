@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var Service = require('./service.model');
 var Search = require('../../components/search/search');
+var translate = require('../../components/translate');
 
 // Get list of services
 exports.index = function (req, res) {
@@ -88,7 +89,7 @@ exports.update = function (req, res) {
 
     // Check that the provider matches the user
     if (!req.user._id.equals(service.provider)) {
-      return res.json(403, {message: 'Unauthorized to modify. Not your service!'});
+      return res.json(403, {message: translate(req, 'service-unauthorized') });
     }
 
     var updated = _.merge(service, req.body);
@@ -126,7 +127,7 @@ exports.destroy = function (req, res) {
 
     // Check that the provider matches the user
     if (!req.user._id.equals(service.provider)) {
-      return res.json(403, {message: 'Unauthorized to modify. Not your service!'});
+      return res.json(403, {message: translate(req, 'service-unauthorized') });
     }
 
     service.remove(function (err) {

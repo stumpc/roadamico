@@ -10,6 +10,7 @@ var moment = require('moment');
 var auth = require('../../auth/auth.service');
 var genCode = require('../../components/genCode');
 var emails = require('../../components/emails');
+var translate = require('../../components/translate');
 
 var validationError = function(res, err) {
   return res.json(422, err);
@@ -42,7 +43,7 @@ exports.profiles = function(req, res) {
  * Creates a new user
  */
 exports.create = function (req, res, next) {
-  if (!config.appLive) return res.json(403, { message: "RoadAmico isn't allowing open registration yet." });
+  if (!config.appLive) return res.json(403, { message: translate(req, 'no-open-registration') });
 
   var newUser = new User(req.body);
   newUser.joined = moment().toISOString();
@@ -179,7 +180,7 @@ exports.saveCard = function (req, res, next) {
     var card = req.body.card;
     if (!card || !card.number || !card.cvc || !card.exp.month || !card.exp.year || card.exp.month < 1 ||
         card.exp.month > 12) {
-      return validationError(res, {message: 'Invalid card data'});
+      return validationError(res, {message: translate(req, 'invalid-card-data') });
     }
 
     req.user.addCard(card, req.body.password);
@@ -213,7 +214,7 @@ exports.resetPassword = function (req, res, next) {
 
   User.findOne({email: req.body.email.toLowerCase()}, function (err, user) {
     if (err) return res.json(500, err);
-    if (!user) return res.json(404, { message: 'No user found' });
+    if (!user) return res.json(404, { message: translate(req, 'no-user-found') });
 
     user.modCode = genCode();
     user.pwResetBy = moment().add(2, 'days').toISOString();

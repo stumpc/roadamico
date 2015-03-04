@@ -135,7 +135,7 @@ UserSchema
   .validate(function (email) {
     if (authTypes.indexOf(this.provider) !== -1) return true;
     return email.length;
-  }, 'Email cannot be blank');
+  }, 'Email cannot be blank'); // TODO: Figure out how to translate these...
 
 // Validate empty password
 UserSchema

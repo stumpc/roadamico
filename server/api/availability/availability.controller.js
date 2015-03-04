@@ -4,6 +4,7 @@ var _ = require('lodash');
 var moment = require('moment');
 var Availability = require('./availability.model');
 var Service = require('../service/service.model');
+var translate = require('../../components/translate');
 
 // Get list of availabilities
 //exports.index = function(req, res) {
@@ -59,7 +60,7 @@ exports.create = function(req, res) {
         return res.json(201, availability);
       });
     } else {
-      return res.json(403, { message: 'Unauthorized. Not your service.' });
+      return res.json(403, { message: translate(req, 'service-unauthorized') });
     }
   });
 };
@@ -92,7 +93,7 @@ exports.update = function(req, res) {
       });
 
     } else {
-      return res.json(403, { message: 'Unauthorized. Not your service.' });
+      return res.json(403, { message: translate(req, 'service-unauthorized') });
     }
   });
 };

@@ -47,7 +47,14 @@ angular.module('roadAmicoApp')
     }
 
     Auth.isLoggedInAsync(function (val) {
-      val && useUsersLang();
+      if (val) {
+        useUsersLang();
+      } else {
+        $translate.use(detectLanguage());
+        if (config.translate.useFallback) {
+          $translate.fallbackLanguage(config.translate.fallback);
+        }
+      }
     });
     $rootScope.$on('auth::login', useUsersLang);
     $rootScope.$on('auth::logoff', function () {

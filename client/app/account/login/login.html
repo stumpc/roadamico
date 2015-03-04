@@ -3,60 +3,60 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-12">
-      <h1>Login</h1>
+      <h1 translate>Login</h1>
     </div>
     <div class="col-sm-12">
       <form class="form" name="form" ng-submit="login(form)" novalidate>
 
         <div class="form-group">
-          <label>{{'login-email' | translate}}</label>
+          <label translate>Email</label>
 
           <input type="email" name="email" class="form-control" ng-model="user.email" required>
         </div>
 
         <div class="form-group">
-          <label translate>login-password</label>
+          <label translate>Password</label>
 
           <input type="password" name="password" class="form-control" ng-model="user.password" required>
         </div>
 
         <div class="form-group has-error">
-          <p class="help-block" ng-show="form.email.$error.required && form.password.$error.required && submitted">
-             Please enter your email and password.
+          <p class="help-block" ng-show="form.email.$error.required && form.password.$error.required && submitted" translate>
+             email-and-password
           </p>
-          <p class="help-block" ng-show="form.email.$error.email && submitted">
-             Please enter a valid email.
+          <p class="help-block" ng-show="form.email.$error.email && submitted" translate>
+             valid-email
           </p>
 
           <p class="help-block">{{ errors.other }}</p>
         </div>
 
         <div>
-          <button type="button" class="btn btn-link" ng-click="forgot()">Forgot your password?</button>
+          <button type="button" class="btn btn-link" ng-click="forgot()" translate>forgot-password</button>
         </div>
 
         <div class="space-top-medium">
-          <button class="btn btn-success btn-login" type="submit">
+          <button class="btn btn-success btn-login" type="submit" translate>
             Login
           </button>
-          <a class="btn btn-default btn-register" href="/signup" ng-if="config.appLive">
+          <a class="btn btn-default btn-register" href="/signup" ng-if="config.appLive" translate>
             Register
           </a>
         </div>
 
         <hr>
         <div ng-if="config.appLive">
-          <a class="btn btn-facebook" href="" ng-click="loginOauth('facebook')">
-            <i class="fa fa-facebook"></i> Connect with Facebook
+          <a class="btn btn-facebook" href="" ng-click="loginOauth('facebook')" >
+            <i class="fa fa-facebook"></i> <translate>connect-facebook</translate>
           </a>
-          <a class="btn btn-google-plus" href="" ng-click="loginOauth('google')">
-            <i class="fa fa-google-plus"></i> Connect with Google+
+          <a class="btn btn-google-plus" href="" ng-click="loginOauth('google')" >
+            <i class="fa fa-google-plus"></i> <translate>connect-google</translate>
           </a>
           <a class="btn btn-twitter" href="" ng-click="loginOauth('twitter')">
-            <i class="fa fa-twitter"></i> Connect with Twitter
+            <i class="fa fa-twitter"></i> <translate>connect-twitter</translate>
           </a>
           <a class="btn btn-linkedin" href="" ng-click="loginOauth('linkedin')">
-            <i class="fa fa-linkedin"></i> Connect with LinkedIn
+            <i class="fa fa-linkedin"></i> <translate>connect-linkedin</translate>
           </a>
         </div>
       </form>

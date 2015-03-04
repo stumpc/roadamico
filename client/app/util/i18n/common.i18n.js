@@ -1,18 +1,47 @@
 'use strict';
 
+// Put shared translations here
 angular.module('roadAmicoApp')
-  .config(function ($windowProvider, $translateProvider) {
+  .config(function ($translateProvider) {
 
-    // Put common translations here
     $translateProvider.translations('en', {
+      // Common form elements
       Save: 'Save',
       Cancel: 'Cancel',
       Password: 'Password',
       Name: 'Name',
       Email: 'Email',
       Timezone: 'Timezone',
-      Languages: 'Languages'
+      Languages: 'Languages',
+      Login: 'Login',
+      Register: 'Register',
+      'phone-number': 'Phone Number',
+      Location: 'Location',
+      Workplace: 'Workplace',
+      Bio: 'Bio',
+      Verified: 'Verified',
 
+      // Help messages
+      'name-required': 'Your name is required.',
+      'timezone-required': 'A timezone is required.',
+      'password-length': 'Password must be at least 8 characters long.',
+      'password-match': 'Passwords must match.',
+      'email-and-password': 'Please enter your email and password.',
+      'valid-email': 'Please enter a valid email.',
+
+      // Months
+      January: 'January',
+      February: 'February',
+      March: 'March',
+      April: 'April',
+      May: 'May',
+      June: 'June',
+      July: 'July',
+      August: 'August',
+      September: 'September',
+      October: 'October',
+      November: 'November',
+      December: 'December'
     });
     $translateProvider.translations('fr', {
       Save: 'Enregistrer',

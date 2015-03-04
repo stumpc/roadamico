@@ -3,11 +3,10 @@
 angular.module('roadAmicoApp')
   .config(function ($translateProvider) {
     $translateProvider.translations('en', {
-      'login-email': 'Email',
-      'login-password': 'Password'
-    });
-    $translateProvider.translations('fr', {
-      'login-email': 'Email',
-      'login-password': 'Mot de Passe'
+      'forgot-password': 'Forgot your password?',
+      'connect-facebook': 'Connect with Facebook',
+      'connect-google': 'Connect with Google+',
+      'connect-twitter': 'Connect with Twitter',
+      'connect-linkedin': 'Connect with LinkedIn'
     });
   });

@@ -4,7 +4,7 @@
 
   <form name="userForm1" ng-submit="save1()" novalidate>
 
-    <h2 translate><i class="fa fa-info-circle"></i> finalize-account-information</h2>
+    <h2><i class="fa fa-info-circle"></i> <translate>finalize-account-information</translate></h2>
 
     <!-- NAME -->
     <div class="form-group" ng-class="{ 'has-error' : userForm1.name.$invalid && !userForm1.name.$pristine }">
@@ -17,7 +17,7 @@
     <div class="form-group" ng-class="{ 'has-error' : userForm1.email.$invalid && !userForm1.email.$pristine }">
       <label translate>Email</label>
       <input type="email" name="email" class="form-control" ng-model="user.email" required>
-      <p ng-show="userForm1.email.$invalid && !userForm1.email.$pristine" class="help-block" translate>email-required</p>
+      <p ng-show="userForm1.email.$invalid && !userForm1.email.$pristine" class="help-block" translate>valid-email</p>
       <p class="help-block" ng-show="userForm1.email.$error.mongoose">
         {{ errors.email }}
       </p>
@@ -56,7 +56,7 @@
     <div class="cover" ng-hide="step >= 2"></div>
     <form name="userForm2" ng-submit="save2()" novalidate>
 
-      <h2 translate><i class="fa fa-key"></i> Password</h2>
+      <h2><i class="fa fa-key"></i> <translate>Password</translate></h2>
 
       <!-- PASSWORD 1 -->
       <div class="form-group" ng-class="{ 'has-error' : userForm2.password1.$invalid && !userForm2.password1.$pristine }">

@@ -68,7 +68,7 @@
         <div ng-repeat="content in hourContents[hour]" class="availability"
              ng-class="{booked: !!content.booking}"
              style="top: {{content.top}}; height: {{content.height}}px;"
-             popover-trigger="mouseenter"
+             popover-trigger="mouseenter" popover-append-to-body="true"
              popover="{{content.description}}">
 
           <div ng-hide="content.booking">

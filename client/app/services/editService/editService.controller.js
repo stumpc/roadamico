@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('EditserviceCtrl', function ($scope, $stateParams, $state, Service) {
-    $scope.service = Service.get({id: $stateParams.id});
+  .controller('EditserviceCtrl', function ($scope, $state, service) {
+    $scope.service = service;//Service.get({id: $stateParams.id});
 
     $scope.save = function () {
       $scope.service.$update(function () {

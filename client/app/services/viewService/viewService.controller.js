@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('ViewserviceCtrl', function ($scope, $stateParams, $q, Auth, Service, Google, Geolocator, Availability) {
-    $scope.service = Service.get({id: $stateParams.id});
+  .controller('ViewserviceCtrl', function ($scope, $q, Auth, service, Google, Geolocator) {
+    $scope.service = service;//Service.get({id: $stateParams.id});
     $scope.user = Auth.getCurrentUser();
 
     // Map async loader

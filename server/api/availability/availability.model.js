@@ -19,7 +19,13 @@ var AvailabilitySchema = new Schema({
   cost: Number,
   currency: String,
   service: { type: Schema.Types.ObjectId, ref: 'Service' },
-  booking: { type: Schema.Types.ObjectId, ref: 'Booking' }  // Put it in a separate object so people can't see details
+  booking: {
+    booker: { type: Schema.Types.ObjectId, ref: 'User' },
+    updates: [{
+      time: String,
+      status: String
+    }]
+  }
 });
 
 module.exports = mongoose.model('Availability', AvailabilitySchema);

@@ -11,6 +11,7 @@ module.exports = {
     'email-in-use': 'The specified email address is already in use.',
     'invalid-password': 'Invalid password',
     'invalid-provider': 'Cannot follow. Invalid user id provided.',
+    'already-booked': 'Cannot book. The time slot has been booked previously.',
 
     'test': 'Hello world'
   },

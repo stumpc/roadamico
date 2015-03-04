@@ -9,21 +9,21 @@
     <!-- Sorting buttons -->
     <div>
       Sort:
-      <button class="btn" ng-class="{'btn-primary': sortField == 'moment'}"     ng-click="sort('moment')">
+      <button class="btn" ng-class="{'btn-primary': sortField == 'moment'}" ng-click="sort('moment')">
         Time
         <span ng-show="sortField == 'moment'">
           <i class="fa fa-sort-asc" ng-show="sortAsc"></i>
           <i class="fa fa-sort-desc" ng-hide="sortAsc"></i>
         </span>
       </button>
-      <button class="btn" ng-class="{'btn-primary': sortField == '_duration'}"  ng-click="sort('_duration')">
+      <button class="btn" ng-class="{'btn-primary': sortField == '_duration'}" ng-click="sort('_duration')">
         Duration
         <span ng-show="sortField == '_duration'">
           <i class="fa fa-sort-asc" ng-show="sortAsc"></i>
           <i class="fa fa-sort-desc" ng-hide="sortAsc"></i>
         </span>
       </button>
-      <button class="btn" ng-class="{'btn-primary': sortField == 'cost'}"       ng-click="sort('cost')">
+      <button class="btn" ng-class="{'btn-primary': sortField == 'cost'}" ng-click="sort('cost')">
         Cost
         <span ng-show="sortField == 'cost'">
           <i class="fa fa-sort-asc" ng-show="sortAsc"></i>
@@ -38,13 +38,13 @@
       <div><strong>Cost:</strong> {{availability.cost | currency}}</div>
       <div class="space-top-small" ng-show="availability.notes"><strong>Notes:</strong> {{availability.notes}}</div>
 
-      <div ng-show="availability.booking">
+      <div ng-show="availability.booking.booker">
         <span class="badge badge-danger">Booked</span>
       </div>
-      <div ng-hide="availability.booking">
+      <div ng-hide="availability.booking.booker">
         <span class="badge badge-success">Available</span>
         <br/>
-        <button class="btn btn-sm btn-ra-red space-top-small"><i class="fa fa-book"></i> Book</button>
+        <a ui-sref="service.book({id: availability.service, aId: availability._id})" class="btn btn-sm btn-ra-red space-top-small"><i class="fa fa-book"></i> Book</a>
       </div>
     </div>
   </div>
@@ -66,16 +66,16 @@
       <div class="hour-content">
 
         <div ng-repeat="content in hourContents[hour]" class="availability"
-             ng-class="{booked: !!content.booking}"
+             ng-class="{booked: !!content.booking.booker}"
              style="top: {{content.top}}; height: {{content.height}}px;"
              popover-trigger="mouseenter" popover-append-to-body="true"
              popover="{{content.description}}">
 
-          <div ng-hide="content.booking">
-            <button class="btn btn-sm btn-ra-red"><i class="fa fa-book"></i> Book Now</button>
+          <div ng-hide="content.booking.booker">
+            <a ui-sref="service.book({id: content.service, aId: content._id})" class="btn btn-sm btn-ra-red"><i class="fa fa-book"></i> Book Now</a>
             for {{content.cost | currency}}
           </div>
-          <div ng-show="content.booking">Booked</div>
+          <div ng-show="content.booking.booker">Booked</div>
 
         </div>
 

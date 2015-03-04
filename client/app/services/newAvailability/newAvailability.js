@@ -3,9 +3,9 @@
 angular.module('roadAmicoApp')
   .config(function ($stateProvider) {
     $stateProvider
-      .state('service.calendar.new', {
+      .state('service.new-slot', {
         url: '/new-availability',
-        templateUrl: 'app/services/calendar/newAvailability/newAvailability.html',
+        templateUrl: 'app/services/newAvailability/newAvailability.html',
         controller: 'NewavailabilityCtrl'
       });
   });

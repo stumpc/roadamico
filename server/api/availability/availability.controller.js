@@ -45,6 +45,7 @@ exports.show = function(req, res) {
 // Creates a new availability in the DB.
 exports.create = function(req, res) {
 
+  delete req.body.booking;
   req.body.timestamp = moment(req.body.datetime).valueOf();
   if (typeof req.body.service === 'object') {
     req.body.service = req.body.service._id;
@@ -69,6 +70,7 @@ exports.create = function(req, res) {
 exports.update = function(req, res) {
 
   delete req.body._id;
+  delete req.body.booking;
   if (req.body.datetime) {
     req.body.timestamp = moment(req.body.datetime).valueOf();
   }
@@ -100,6 +102,9 @@ exports.update = function(req, res) {
 
 // Deletes a availability from the DB.
 exports.destroy = function(req, res) {
+
+  // TODO: Do something if its already booked
+
   Availability.findById(req.params.id, function (err, availability) {
     if(err) { return handleError(res, err); }
     if(!availability) { return res.send(404); }
@@ -107,6 +112,48 @@ exports.destroy = function(req, res) {
       if(err) { return handleError(res, err); }
       return res.send(204);
     });
+  });
+};
+
+exports.book = function (req, res, next) {
+  Availability.findById(req.body._id, function (err, availability) {
+    if(err) return next(err);
+    if(!availability) return res.send(404);
+    if(availability.booking.booker) return res.json(403, {message: translate(req, 'already-booked')});
+
+    availability.booking = {
+      booker: req.user._id,
+      updates: [{
+        time: moment().toISOString(),
+        status: 'booked'
+      }]
+    };
+    availability.save(function(err, a2) {
+      if(err) return next(err);
+
+      // TODO: Process payment
+      a2.booking.updates.push({
+        time: moment().toISOString(),
+        status: 'paid'
+      });
+      a2.save(function (err, a3) {
+        if(err) return next(err);
+
+        // TODO: Send notifications
+
+        return res.json(200, a3);
+      });
+
+    });
+  });
+};
+
+exports.mine = function (req, res, next) {
+  Availability.find({
+    'booking.booker': req.user._id
+  }).populate('service', 'name').exec(function (err, availabilities) {
+    if (err) return next(err);
+    return res.json(availabilities);
   });
 };
 

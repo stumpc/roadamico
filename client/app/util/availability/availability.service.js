@@ -15,6 +15,15 @@ angular.module('roadAmicoApp')
         url: '/api/availabilities/all/:serviceId',
         method: 'GET',
         isArray: true
+      },
+      book: {
+        url: '/api/availabilities/:id/book',
+        method: 'PUT'
+      },
+      mine: {
+        url: '/api/availabilities/mine',
+        method: 'GET',
+        isArray: true
       }
     })
   });

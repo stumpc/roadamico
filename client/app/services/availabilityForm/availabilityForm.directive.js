@@ -8,7 +8,7 @@ angular.module('roadAmicoApp')
         submit: '&',
         cancel: '@'
       },
-      templateUrl: 'app/services/calendar/availabilityForm/availabilityForm.html',
+      templateUrl: 'app/services/availabilityForm/availabilityForm.html',
       link: function (scope, elem, attrs) {
         scope.save = attrs.buttontext || 'Save';
         scope.submit = scope.submit || angular.noop();

@@ -2,21 +2,43 @@
 
 <div class="container home-page page">
   <h1>RoadAmico Home</h1>
-  <div>
-    <a ui-sref="service.new" class="btn">Offer a Service</a>
-  </div>
+
+  <!-- My services section -->
   <div ng-if="services.length">
     <h2>My Services</h2>
+
+    <a ui-sref="service.new" class="btn">Offer a Service</a>
+
     <div ng-repeat="service in services" class="well bg-bluejeans-light">
       <strong>{{service.name}}</strong>
 
       <div class="space-top-small">
         <div class="btn-group" role="group" aria-label="Service actions">
-          <a href="/service/view/{{service._id}}" class="btn btn-default"><i class="fa fa-eye"></i> View</a>
-          <a href="/service/edit/{{service._id}}" class="btn btn-default"><i class="fa fa-pencil"></i> Edit</a>
+          <a ui-sref="service.view({id: service._id})" class="btn btn-default"><i class="fa fa-eye"></i> View</a>
+          <a ui-sref="service.edit({id: service._id})" class="btn btn-default"><i class="fa fa-pencil"></i> Edit</a>
           <a href="#" class="btn btn-default"><i class="fa fa-trash"></i> Delete</a>
         </div>
       </div>
     </div>
+  </div>
+
+  <div>
+    <h2>My Bookings</h2>
+
+    <ul>
+      <li ng-repeat="booking in bookings">
+        <a ui-sref="service.book({id: booking.service._id, aId: booking._id})"><strong>{{booking.service.name}}</strong> for {{booking.datetime | date:'MMM d, yyyy'}} at {{booking.datetime | date:'h:mm a'}}</a>
+      </li>
+    </ul>
+
+  </div>
+
+  <!-- Following feed -->
+  <div ng-if="feed.length">
+    <h2>Follow Feed</h2>
+
+    <strong>This isn't implemented yet...</strong>
+
+    <pre>{{feed|json}}</pre>
   </div>
 </div>

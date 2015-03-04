@@ -1,16 +1,16 @@
 'use strict';
 
-describe('Controller: ViewserviceCtrl', function () {
+describe('Controller: BookCtrl', function () {
 
   // load the controller's module
   beforeEach(module('roadAmicoApp'));
 
-  var ViewserviceCtrl, scope;
+  var BookCtrl, scope;
 
   // Initialize the controller and a mock scope
   //beforeEach(inject(function ($controller, $rootScope) {
   //  scope = $rootScope.$new();
-  //  ViewserviceCtrl = $controller('ViewserviceCtrl', {
+  //  BookCtrl = $controller('BookCtrl', {
   //    $scope: scope
   //  });
   //}));

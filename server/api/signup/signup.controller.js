@@ -3,7 +3,7 @@
 var _ = require('lodash');
 var Signup = require('./signup.model');
 var User = require('../user/user.model');
-var emails = require('../../components/emails');
+var communication = require('../../components/communication');
 var moment = require('moment');
 var genCode = require('../../components/genCode');
 
@@ -24,18 +24,19 @@ exports.create = function(req, res) {
     if(err) { return handleError(res, err); }
 
     // Send an email
-    emails({
+    communication.email('signup', {
       req: req,
-      email: signup.email,
-      name: 'signup'
+      email: signup.email
     });
 
     // If there is a referral, send them an email too (#88557886)
     if (signup.refer) {
-      emails({
+      communication.email('referral', {
         req: req,
         email: signup.refer,
-        name: 'referral'
+        view: {
+          referrer: signup.email
+        }
       });
     }
 
@@ -58,9 +59,13 @@ exports.grant = function (req, res) {
       if (err) { return handleError(res, err); }
       if (!user) return res.json(404, { message: translate(req, 'no-user-created') });
 
-      emails(signup.email, 'grantAccess', {
-        id: user._id,
-        modCode: user.modCode
+      communication.email('grantAccess', {
+        email: signup.email,
+        user: user,
+        view: {
+          id: user._id,
+          modCode: user.modCode
+        }
       });
 
       return res.json(200, { message: translate(req, 'access-granted') });

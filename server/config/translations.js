@@ -23,11 +23,21 @@ module.exports = {
     'email.grantAccess':    'Welcome to RoadAmico!',
     'email.resetPassword':  'RoadAmico Password Reset',
 
+    // Notifications
+    'notify.booked-booker': 'You have successfully booked {{service}} with {{provider}} at {{time}}.',
+    'notify.booked-provider': 'You have been booked for {{service}} at {{time}} by {{booker}}.',
+
     'test': 'Hello world'
+  },
+  en_pirate: {
+    'test': 'Arrg! Hello world mateys'
   },
   fr: {
     'service-unauthorized': 'Non autorisée. Ce n\'nest pas votre service.',
 
     test: 'Bonjour monde'
+  },
+  de: {
+    test: 'Hallo welt'
   }
 };

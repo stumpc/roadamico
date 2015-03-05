@@ -49,7 +49,7 @@ describe('Search scoring', function() {
     var s1 = search.scoreText('milkshake', 'french fries');
     var s2 = search.scoreText('yoga', 'pilates');
     var s3 = search.scoreText('north carolina', 'mississippi');
-    console.log('low', s1, s2, s3);
+    //console.log('low', s1, s2, s3);
     s1.should.be.below(cutoff);
     s2.should.be.below(cutoff);
     s3.should.be.below(cutoff);

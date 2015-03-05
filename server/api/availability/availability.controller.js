@@ -2,9 +2,13 @@
 
 var _ = require('lodash');
 var moment = require('moment');
+var mustache = require('mustache');
 var Availability = require('./availability.model');
 var Service = require('../service/service.model');
 var translate = require('../../components/translate');
+var communication = require('../../components/communication');
+var payments = require('../../components/payments');
+var mp = require('../../components/mongoosePromise');
 
 // Get list of availabilities
 //exports.index = function(req, res) {
@@ -115,37 +119,81 @@ exports.destroy = function(req, res) {
   });
 };
 
+
+/**
+ * Books an availability, processes the payment, and notifies both parties.
+ * @param req
+ * @param res
+ * @param next
+ */
 exports.book = function (req, res, next) {
-  Availability.findById(req.body._id, function (err, availability) {
-    if(err) return next(err);
-    if(!availability) return res.send(404);
-    if(availability.booking.booker) return res.json(403, {message: translate(req, 'already-booked')});
 
-    availability.booking = {
-      booker: req.user._id,
-      updates: [{
-        time: moment().toISOString(),
-        status: 'booked'
-      }]
-    };
-    availability.save(function(err, a2) {
-      if(err) return next(err);
+  var availability;
+  mp.wrap(Availability.findById(req.body._id))
 
-      // TODO: Process payment
-      a2.booking.updates.push({
+    // Mark it as booked
+    .then(function (availability) {
+      availability.booking = {
+        booker: req.user._id,
+        updates: [{
+          time: moment().toISOString(),
+          status: 'booked'
+        }]
+      };
+      return mp.wrap(availability, 'save');
+    })
+
+    // Make a payment
+    .then(function (_availability) {
+      availability = _availability;
+      return payments.create({
+        amount: _availability.cost,
+        data: _availability // Pass this data to the next handler
+      });
+    })
+
+    // Mark it as paid
+    .then(function (confirmation) {
+      availability.booking.updates.push({
         time: moment().toISOString(),
         status: 'paid'
       });
-      a2.save(function (err, a3) {
-        if(err) return next(err);
+      return mp.wrap(availability, 'save');
+    })
 
-        // TODO: Send notifications
+    // Get the associated service
+    .then(function (_availability) {
+      availability = _availability;
+      return mp.wrap(Service.findById(availability.service).populate('provider', 'name email languages'));
+    })
 
-        return res.json(200, a3);
+    // Send out notifications
+    .then(function (service) {
+      // Notify the booker
+      communication.soft({
+        to: req.user,
+        message: mustache.render(translate(req, 'notify.booked-booker'), {
+          service: service.name,
+          provider: service.provider.name,
+          time: moment(availability.datetime).format('LLLL') // Localized format
+        })
       });
 
+      // Notify the provider
+      communication.hard({
+        to: service.provider,
+        message: mustache.render(translate(service.provider, 'notify.booked-provider'), {
+          service: service.name,
+          booker: req.user.name,
+          time: moment(availability.datetime).format('LLLL') // Localized format
+        })
+      });
+
+      res.json(availability);
+    })
+    .catch(function (err) {
+      next(err);
     });
-  });
 };
 
 exports.mine = function (req, res, next) {

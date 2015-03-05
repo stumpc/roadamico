@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var Message = require('./message.model');
 var moment = require('moment');
+var communication = require('../../components/communication');
 
 // Get list of messages
 exports.index = function (req, res) {
@@ -72,24 +73,35 @@ exports.create = function (req, res) {
   req.body.from = req.user._id;
   req.body.time = moment().toISOString();
   if (!req.body.to) {
-    return res.json(403, {message: 'Missing "to" user'});
+    return res.json(403, {message: 'Missing "to" user'}); // TODO: Translate this message
   }
-  Message.create(req.body, function (err, message) {
-    if (err) {
-      return handleError(res, err);
-    }
 
-    // Populate the fields
-    Message.populate(message, [{path: 'to', select: 'name photo'}, {
-      path: 'from',
-      select: 'name photo'
-    }], function (err, m2) {
-      if (err) {
-        return handleError(res, err);
-      }
-      return res.json(201, m2);
-    });
+  communication.message({
+    req:      req,
+    to:       req.body.to,
+    message:  req.body.message
+  }).then(function (message) {
+    res.json(201, message);
+  }).catch(function (err) {
+    handleError(res, err);
   });
+
+  //Message.create(req.body, function (err, message) {
+  //  if (err) {
+  //    return handleError(res, err);
+  //  }
+  //
+  //  // Populate the fields
+  //  Message.populate(message, [{path: 'to', select: 'name photo'}, {
+  //    path: 'from',
+  //    select: 'name photo'
+  //  }], function (err, m2) {
+  //    if (err) {
+  //      return handleError(res, err);
+  //    }
+  //    return res.json(201, m2);
+  //  });
+  //});
 };
 
 // Marks a message as read or unread

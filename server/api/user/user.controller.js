@@ -9,7 +9,7 @@ var fs = require('fs');
 var moment = require('moment');
 var auth = require('../../auth/auth.service');
 var genCode = require('../../components/genCode');
-var emails = require('../../components/emails');
+var communication = require('../../components/communication');
 var translate = require('../../components/translate');
 
 var validationError = function(res, err) {
@@ -250,10 +250,9 @@ exports.resetPassword = function (req, res, next) {
     user.save(function (err) {
       if (err) return res.json(500, err);
 
-      emails({
-        req: req,
+      communication.email('resetPassword', {
         user: user,
-        name: 'resetPassword',
+        req: req,
         view: {
           email: user.email,
           id: user._id,

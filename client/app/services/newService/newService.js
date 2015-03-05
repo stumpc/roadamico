@@ -3,8 +3,8 @@
 angular.module('roadAmicoApp')
   .config(function ($stateProvider) {
     $stateProvider
-      .state('service.new', {
-        url: '/new',
+      .state('newService', {
+        url: '/service/new',
         templateUrl: 'app/services/newService/newService.html',
         controller: 'NewserviceCtrl'
       });

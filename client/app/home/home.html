@@ -3,11 +3,11 @@
 <div class="container home-page page">
   <h1>RoadAmico Home</h1>
 
+  <a ui-sref="newService" class="btn">Offer a Service</a>
+
   <!-- My services section -->
   <div ng-if="services.length">
     <h2>My Services</h2>
-
-    <a ui-sref="service.new" class="btn">Offer a Service</a>
 
     <div ng-repeat="service in services" class="well bg-bluejeans-light">
       <strong>{{service.name}}</strong>
@@ -25,8 +25,25 @@
   <div>
     <h2>My Bookings</h2>
 
+    <h3>Upcoming</h3>
     <ul>
-      <li ng-repeat="booking in bookings">
+      <li ng-repeat="booking in upcomingBookings">
+        <a ui-sref="service.book({id: booking.service._id, aId: booking._id})"><strong>{{booking.service.name}}</strong> for {{booking.datetime | date:'MMM d, yyyy'}} at {{booking.datetime | date:'h:mm a'}}</a>
+        <button class="space-left-medium btn btn-xs btn-ra-red-hollow" ng-click="cancel('cancel ' + booking.service.name, booking)"><i class="fa fa-times"></i> Cancel</button>
+        {{booking.booking.updates}}
+      </li>
+    </ul>
+
+    <h3>Past</h3>
+    <ul>
+      <li ng-repeat="booking in pastBookings">
+        <a ui-sref="service.book({id: booking.service._id, aId: booking._id})"><strong>{{booking.service.name}}</strong> for {{booking.datetime | date:'MMM d, yyyy'}} at {{booking.datetime | date:'h:mm a'}}</a>
+      </li>
+    </ul>
+
+    <h3>Canceled</h3>
+    <ul>
+      <li ng-repeat="booking in canceledBookings">
         <a ui-sref="service.book({id: booking.service._id, aId: booking._id})"><strong>{{booking.service.name}}</strong> for {{booking.datetime | date:'MMM d, yyyy'}} at {{booking.datetime | date:'h:mm a'}}</a>
       </li>
     </ul>
@@ -35,10 +52,11 @@
 
   <!-- Following feed -->
   <div ng-if="feed.length">
-    <h2>Follow Feed</h2>
+    <h2>Following</h2>
 
-    <strong>This isn't implemented yet...</strong>
 
-    <pre>{{feed|json}}</pre>
+    <ul>
+      <li ng-repeat="provider in feed"><a ui-sref="user({userId: provider.profile._id})">{{provider.profile.name}}</a></li>
+    </ul>
   </div>
 </div>

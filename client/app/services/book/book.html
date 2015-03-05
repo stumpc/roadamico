@@ -36,8 +36,23 @@
     <div class="well text-center bg-ra-red" ng-hide="availability.booking.booker == user._id">
       <strong>This time slot has already been booked.</strong>
     </div>
-    <div class="well text-center bg-grass-light" ng-show="availability.booking.booker == user._id">
-      <strong>You have already booked this time slot.</strong>
+    <div ng-show="availability.booking.booker == user._id">
+      <div class="well text-center bg-grass-light" ng-show="availability.booking.booker == user._id">
+        <strong>You have already booked this time slot.</strong>
+      </div>
+
+      <h2>Status</h2>
+
+      <table class="table">
+        <tr>
+          <th>Time</th>
+          <th>Update</th>
+        </tr>
+        <tr ng-repeat="update in availability.booking.updates">
+          <td>{{update.time | date:'medium'}}</td>
+          <td>{{update.status}}</td>
+        </tr>
+      </table>
     </div>
 
 

@@ -20,6 +20,10 @@ angular.module('roadAmicoApp')
         url: '/api/availabilities/:id/book',
         method: 'PUT'
       },
+      cancel: {
+        url: '/api/availabilities/:id/cancel',
+        method: 'PUT'
+      },
       mine: {
         url: '/api/availabilities/mine',
         method: 'GET',

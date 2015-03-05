@@ -146,10 +146,7 @@ exports.book = function (req, res, next) {
     // Make a payment
     .then(function (_availability) {
       availability = _availability;
-      return payments.create({
-        amount: _availability.cost,
-        data: _availability // Pass this data to the next handler
-      });
+      return payments.create({ amount: _availability.cost });
     })
 
     // Mark it as paid
@@ -193,6 +190,74 @@ exports.book = function (req, res, next) {
     })
     .catch(function (err) {
       next(err);
+    });
+};
+
+
+/**
+ * Cancels a booking
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.cancel = function (req, res, next) {
+
+  var availability;
+  mp.wrap(Availability.findById(req.body._id))
+
+    // Make sure that the user is the booker and mark it as canceled
+    .then(function (availability) {
+      if (!availability.booking.booker.equals(req.user._id)) {
+        throw { code: 403, message: translate(req, 'avail-unauthorized') };
+      }
+      availability.booking.updates.push({
+        time: moment().toISOString(),
+        status: 'canceled'
+      });
+      return mp.wrap(availability, 'save');
+    })
+
+    // Cancel payment
+    .then(function (_availability) {
+      availability = _availability;
+      return payments.cancel({ amount: _availability.cost });
+    })
+
+    // Get the associated service
+    .then(function (confirmation) {
+      return mp.wrap(Service.findById(availability.service).populate('provider', 'name email languages'));
+    })
+
+    // Send out notifications
+    .then(function (service) {
+      // Notify the booker
+      communication.soft({
+        to: req.user,
+        message: mustache.render(translate(req, 'notify.canceled-booker'), {
+          service: service.name,
+          provider: service.provider.name,
+          time: moment(availability.datetime).format('LLLL') // Localized format
+        })
+      });
+
+      // Notify the provider
+      communication.hard({
+        to: service.provider,
+        message: mustache.render(translate(service.provider, 'notify.canceled-provider'), {
+          service: service.name,
+          booker: req.user.name,
+          time: moment(availability.datetime).format('LLLL') // Localized format
+        })
+      });
+
+      res.json(availability);
+    })
+    .catch(function (err) {
+      if (err.code) {
+        res.json(err.code, err);
+      } else {
+        next(err);
+      }
     });
 };
 

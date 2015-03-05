@@ -12,7 +12,7 @@ module.exports = {
     'invalid-password': 'Invalid password',
     'invalid-provider': 'Cannot follow. Invalid user id provided.',
     'already-booked': 'Cannot book. The time slot has been booked previously.',
-
+    'avail-unauthorized': 'Unauthorized. You are not the booker of the time slot.',
 
     // Email subjects
     'email.test':           'This is a test',
@@ -25,7 +25,9 @@ module.exports = {
 
     // Notifications
     'notify.booked-booker': 'You have successfully booked {{service}} with {{provider}} at {{time}}.',
-    'notify.booked-provider': 'You have been booked for {{service}} at {{time}} by {{booker}}.',
+    'notify.booked-provider': 'You have been booked for {{service}} at {{time}} with {{booker}}.',
+    'notify.canceled-booker': 'You have canceled {{service}} with {{provider}} at {{time}}.',
+    'notify.canceled-provider': 'Your appointment for {{service}} at {{time}} with {{booker}} has been canceled.',
 
     'test': 'Hello world'
   },

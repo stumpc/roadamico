@@ -250,14 +250,16 @@ exports.resetPassword = function (req, res, next) {
     user.save(function (err) {
       if (err) return res.json(500, err);
 
-      emails.create('resetPassword', {
-        to: user.email,
-        subject: 'RoadAmico Password Reset'
-      }, {
-        email: user.email,
-        id: user._id,
-        modCode: user.modCode
-      }).send();
+      emails({
+        req: req,
+        user: user,
+        name: 'resetPassword',
+        view: {
+          email: user.email,
+          id: user._id,
+          modCode: user.modCode
+        }
+      });
 
       res.send(200);
     });

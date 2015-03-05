@@ -43,21 +43,22 @@ var model = mongoose.model('Message', MessageSchema);
 model.on('afterInsert', function (doc) {
   doc.getUsers(function (err, users) {
     if (doc.notification) {
-      emails.create('notification', {
-        to: users.to.email,
-        subject: 'RoadAmico Update'
-      }, {
-        message: doc.message
-      }).send();
-
+      emails({
+        user: users.to,
+        name: 'notification',
+        view: {
+          message: doc.message
+        }
+      });
     } else {
-      emails.create('message', {
-        to: users.to.email,
-        subject: 'RoadAmico: A message from ' + users.from.name
-      }, {
-        message: doc.message,
-        name: users.from.name
-      }).send();
+      emails({
+        user: users.to,
+        name: 'message',
+        view:{
+          message: doc.message,
+          name: users.from.name
+        }
+      });
     }
   });
 });

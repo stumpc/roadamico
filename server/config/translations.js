@@ -13,6 +13,16 @@ module.exports = {
     'invalid-provider': 'Cannot follow. Invalid user id provided.',
     'already-booked': 'Cannot book. The time slot has been booked previously.',
 
+
+    // Email subjects
+    'email.test':           'This is a test',
+    'email.notification':   'RoadAmico Update',
+    'email.message':        'RoadAmico: A message from {{name}}',
+    'email.signup':         'Thank you for signing up with RoadAmico',
+    'email.referral':       'Join your friends on RoadAmico',
+    'email.grantAccess':    'Welcome to RoadAmico!',
+    'email.resetPassword':  'RoadAmico Password Reset',
+
     'test': 'Hello world'
   },
   fr: {

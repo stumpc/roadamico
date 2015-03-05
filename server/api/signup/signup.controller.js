@@ -24,19 +24,19 @@ exports.create = function(req, res) {
     if(err) { return handleError(res, err); }
 
     // Send an email
-    emails.create('signup', {
-      to: signup.email,
-      subject: 'Thank you for signing up with RoadAmico'
-    }).send();
+    emails({
+      req: req,
+      email: signup.email,
+      name: 'signup'
+    });
 
     // If there is a referral, send them an email too (#88557886)
     if (signup.refer) {
-      emails.create('referral', {
-        to: signup.refer,
-        subject: 'Join your friends on RoadAmico'
-      }, {
-        referrer: signup.email
-      }).send();
+      emails({
+        req: req,
+        email: signup.refer,
+        name: 'referral'
+      });
     }
 
     return res.json(201, signup);
@@ -58,13 +58,10 @@ exports.grant = function (req, res) {
       if (err) { return handleError(res, err); }
       if (!user) return res.json(404, { message: translate(req, 'no-user-created') });
 
-      emails.create('grantAccess', {
-        to: signup.email,
-        subject: 'Welcome to RoadAmico!'
-      }, {
+      emails(signup.email, 'grantAccess', {
         id: user._id,
         modCode: user.modCode
-      }).send();
+      });
 
       return res.json(200, { message: translate(req, 'access-granted') });
     });

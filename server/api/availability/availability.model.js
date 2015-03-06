@@ -19,6 +19,17 @@ var AvailabilitySchema = new Schema({
   cost: Number,
   currency: String,
   service: { type: Schema.Types.ObjectId, ref: 'Service' },
+
+  // Repeat information
+  repeat: {
+    first: { type: Schema.Types.ObjectId, ref: 'Availability' },
+    period: String,
+    end: String,
+    days: {
+      sun: Boolean, mon: Boolean, tue: Boolean, wed: Boolean, thu: Boolean, fri: Boolean, sat: Boolean
+    }
+  },
+
   booking: {
     booker: { type: Schema.Types.ObjectId, ref: 'User' },
     updates: [{

@@ -9,6 +9,7 @@ var translate = require('../../components/translate');
 var communication = require('../../components/communication');
 var payments = require('../../components/payments');
 var mp = require('../../components/mongoosePromise');
+var Q = require('q');
 
 // Get list of availabilities
 //exports.index = function(req, res) {
@@ -46,8 +47,31 @@ exports.show = function(req, res) {
   });
 };
 
-// Creates a new availability in the DB.
-exports.create = function(req, res) {
+
+
+/*
+  ====================================================================================
+
+    Creation
+
+    There are two different ways to create availabilities.
+    1. A single availability
+    2. A repeating availability
+
+    A repeating availability actually creates each repeated availability as its own
+    instance. However, they are linked back to the first instance. In order to
+    modify all the instances or all the instances after a certain time, then we
+    just make a query looking for a particular value in the link.
+
+    However, we will have two different actions and endpoints for creating due to
+    the fact that one will return an object and the other will return an array. It
+    make more semantic sense, and works better with Angular's $resource.
+
+  ====================================================================================
+ */
+
+function createAvailability(req) {
+  var deferred = Q.defer();
 
   delete req.body.booking;
   req.body.timestamp = moment(req.body.datetime).valueOf();
@@ -55,23 +79,71 @@ exports.create = function(req, res) {
     req.body.service = req.body.service._id;
   }
 
-  Service.findById(req.body.service).exec(function (err, service) {
-    if (err) { return handleError(res, err); }
+  mp.wrap(Service.findById(req.body.service))
 
-    // Check the service
-    if (service.provider.equals(req.user._id)) {
-      Availability.create(req.body, function(err, availability) {
-        if(err) { return handleError(res, err); }
-        return res.json(201, availability);
-      });
-    } else {
-      return res.json(403, { message: translate(req, 'service-unauthorized') });
-    }
-  });
+    // Check that the user owns the service and create the availability
+    .then(function (service) {
+      if (!service.provider.equals(req.user._id)) throw { code: 403, message: translate(req, 'service-unauthorized') };
+      req.body.repeat = _.omit(req.body.repeat, 'first');
+      return mp.wrapCall(function (cb) { Availability.create(req.body, cb); });
+    })
+    .then(function (availability) {
+      deferred.resolve(availability);
+    });
+
+  return deferred.promise;
+}
+
+
+// Creates a new availability in the DB.
+exports.create = function(req, res, next) {
+  delete req.body.repeat;
+  createAvailability(req)
+    .then(function (availability) {
+      res.json(201, availability);
+    })
+    .catch(handlePromiseError(res, next));
+};
+
+exports.createRepeat = function (req, res, next) {
+
+  var availability;
+  createAvailability(req)
+    .then(function (_availability) {
+      availability = _availability;
+
+      // Repeats
+      var repeats = [];
+      var end = moment(availability.repeat.end);
+      var next = moment(availability.datetime).add(1, availability.repeat.period);
+
+      // Keep creating repeats until we hit the end date
+      // TODO: Determine a safeguard so we don't create too many. For now limiting to 200
+      while (next <= end && repeats.length < 200) {
+        var repeat = _.extend({}, req.body);
+        repeat.repeat.first = availability._id;
+        repeat.datetime = next.toISOString();
+        repeat.timestamp = next.valueOf();
+        repeats.push(repeat);
+        next = next.add(1, availability.repeat.period);
+      }
+
+      return mp.wrapCall(function (cb) { Availability.create(repeats, cb); });
+    })
+
+    // Return the results
+    .then(function (availabilities) {
+      availabilities.unshift(availability);
+      res.json(201, availabilities);
+    })
+    .catch(handlePromiseError(res, next));
 };
 
 // Updates an existing availability in the DB.
 exports.update = function(req, res) {
+
+  // TODO: Do something if its a repeated one
+  delete req.body.repeat;
 
   delete req.body._id;
   delete req.body.booking;
@@ -81,6 +153,7 @@ exports.update = function(req, res) {
   if (typeof req.body.service === 'object') {
     req.body.service = req.body.service._id;
   }
+
 
   Service.findById(req.body.service).exec(function (err, service) {
     if (err) { return handleError(res, err); }
@@ -108,6 +181,8 @@ exports.update = function(req, res) {
 exports.destroy = function(req, res) {
 
   // TODO: Do something if its already booked
+
+  // TODO: Do something if its a repeated one
 
   Availability.findById(req.params.id, function (err, availability) {
     if(err) { return handleError(res, err); }
@@ -252,16 +327,11 @@ exports.cancel = function (req, res, next) {
 
       res.json(availability);
     })
-    .catch(function (err) {
-      if (err.code) {
-        res.json(err.code, err);
-      } else {
-        next(err);
-      }
-    });
+    .catch(handlePromiseError(res, next));
 };
 
 exports.mine = function (req, res, next) {
+  console.log('*** got here');
   Availability.find({
     'booking.booker': req.user._id
   }).populate('service', 'name').exec(function (err, availabilities) {
@@ -272,4 +342,14 @@ exports.mine = function (req, res, next) {
 
 function handleError(res, err) {
   return res.send(500, err);
+}
+
+function handlePromiseError(res, next) {
+  return function (err) {
+    if (err.code) {
+      res.json(err.code, err);
+    } else {
+      next(err);
+    }
+  };
 }

@@ -6,7 +6,7 @@
     <datepicker name="date" ng-model="availability.datetime" min-date="minDate" show-weeks="true"></datepicker>
     <timepicker ng-model="availability.datetime" hour-step="1" minute-step="1" show-meridian="true"></timepicker>
 
-    <p ng-show="form.name.$invalid && !form.name.$pristine" class="help-block">Date and Time is required.</p>
+    <p ng-show="form.datetime.$invalid && !form.datetime.$pristine" class="help-block">Date and Time is required.</p>
   </div>
 
   <!-- Duration -->
@@ -14,8 +14,30 @@
     <label>Duration*</label>
     <durationpicker name="duration" ng-model="availability.duration" required></durationpicker>
 
-    <p ng-show="form.duration.$error.length && !form.name.$pristine" class="help-block">Time length is required.</p>
-    <p ng-show="form.duration.$error.unit && !form.name.$pristine" class="help-block">Time unit is required.</p>
+    <p ng-show="form.duration.$error.length && !form.duration.$pristine" class="help-block">Time length is required.</p>
+    <p ng-show="form.duration.$error.unit && !form.duration.$pristine" class="help-block">Time unit is required.</p>
+  </div>
+
+  <!-- Repeat -->
+  <div class="form-group" ng-class="{ 'has-error' : form.repeat.$invalid && !form.repeat.$pristine }">
+    <label>Repeat*</label>
+
+    <select name="repeat" id="repeat" ng-model="availability.repeat.period" class="form-control" ng-update="repeatUpdate()">
+      <option value="">None</option>
+      <option value="day">Every day</option>
+      <option value="week">Every week</option>
+      <option value="month">Every month</option>
+    </select>
+
+    <p ng-show="form.repeat.$error.length && !form.repeat.$pristine" class="help-block">Repeat is required.</p>
+  </div>
+
+  <!-- End repeat -->
+  <div class="form-group" ng-class="{ 'has-error' : form.end.$invalid && !form.end.$pristine }" ng-if="availability.repeat.period">
+    <label>Repeat until*</label>
+    <datepicker name="end" ng-model="availability.repeat.end" min-date="minDate" show-weeks="true" date-disabled="disabled(date, mode)"></datepicker>
+
+    <p ng-show="form.end.$invalid && !form.end.$pristine" class="help-block">Repeat end date is required.</p>
   </div>
 
   <!-- Cost -->

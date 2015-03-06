@@ -6,6 +6,8 @@ var User = require('../user/user.model');
 var communication = require('../../components/communication');
 var moment = require('moment');
 var genCode = require('../../components/genCode');
+var translate = require('../../components/translate');
+var config = require('../../config/environment');
 
 // Get list of signups
 exports.index = function(req, res) {
@@ -54,7 +56,8 @@ exports.grant = function (req, res) {
       email: signup.email,
       modCode: genCode(),
       password: genCode(),
-      joined: moment().toISOString()
+      joined: moment().toISOString(),
+      emailPrefs: config.userSettings.emailPrefs
     }, function (err, user) {
       if (err) { return handleError(res, err); }
       if (!user) return res.json(404, { message: translate(req, 'no-user-created') });

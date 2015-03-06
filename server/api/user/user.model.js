@@ -28,10 +28,16 @@ var UserSchema = new Schema({
 
   // Privacy
   publicInfo: {
-    phone: Boolean,
-    location: Boolean,
-    workplace: Boolean,
-    email: Boolean
+    phone:      Boolean,
+    location:   Boolean,
+    workplace:  Boolean,
+    email:      Boolean
+  },
+
+
+  emailPrefs: {
+    messages: Boolean,
+    soft:     Boolean
   },
 
   // Financial information

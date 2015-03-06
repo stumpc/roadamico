@@ -27,7 +27,8 @@ exports.setup = function (User, config) {
           provider: 'twitter',
           twitter: profile._json,
           joined: moment().toISOString(),
-          modCode: genCode()
+          modCode: genCode(),
+          emailPrefs: config.userSettings.emailPrefs
         });
         user.save(function(err) {
           if (err) return done(err);

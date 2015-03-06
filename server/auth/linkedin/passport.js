@@ -28,7 +28,8 @@ exports.setup = function (User, config) {
               provider: 'linkedin',
               linkedin: profile._json,
               joined: moment().toISOString(),
-              modCode: genCode()
+              modCode: genCode(),
+              emailPrefs: config.userSettings.emailPrefs
             });
             user.save(function(err) {
               if (err) done(err);

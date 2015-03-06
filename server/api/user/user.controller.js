@@ -50,6 +50,7 @@ exports.create = function (req, res, next) {
   newUser.provider = 'local';
   newUser.role = 'user';
   newUser.finished = true;
+  newUser.emailPrefs = config.userSettings.emailPrefs;
 
   newUser.save(function (err, user) {
     if (err) return validationError(res, err);

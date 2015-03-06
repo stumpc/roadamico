@@ -3,6 +3,11 @@
 angular.module('roadAmicoApp')
   .factory('Availability', function ($resource) {
     return $resource('/api/availabilities/:id', {id: '@_id'}, {
+      saveRepeat: {
+        method: 'POST',
+        url: '/api/availabilities/repeat',
+        isArray: true
+      },
       update: {
         method: 'PUT'
       },

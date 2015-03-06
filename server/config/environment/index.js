@@ -51,6 +51,14 @@ var all = {
     adminName: 'RoadAmico Admin'
   },
 
+  // Default user settings
+  userSettings: {
+    emailPrefs: {
+      message: true,
+      soft:    true
+    }
+  },
+
   facebook: {
     clientID:     process.env.FACEBOOK_ID || 'id',
     clientSecret: process.env.FACEBOOK_SECRET || 'secret',

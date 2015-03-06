@@ -10,7 +10,13 @@ angular.module('roadAmicoApp')
     };
 
     $scope.save = function () {
-      Availability.save($scope.availability).$promise.then(function () {
+      var promise;
+      if ($scope.availability.repeat && $scope.availability.repeat.period) {
+        promise = Availability.saveRepeat($scope.availability).$promise;
+      } else {
+        promise = Availability.save($scope.availability).$promise;
+      }
+      promise.then(function () {
         $state.go('service.view', {id: service._id});
       }).catch(function (err) {
         Modal.info.error(err.message, 'Error creating calendar entry');

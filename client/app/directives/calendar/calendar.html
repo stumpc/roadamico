@@ -44,7 +44,7 @@
       <div ng-hide="availability.booking.booker">
         <span class="badge badge-success">Available</span>
         <br/>
-        <a ui-sref="service.book({id: availability.service, aId: availability._id})" class="btn btn-sm btn-ra-red space-top-small"><i class="fa fa-book"></i> Book</a>
+        <a ng-show="isLoggedIn() && service.provider._id != authUser._id" ui-sref="service.book({id: service._id, aId: availability._id})" class="btn btn-sm btn-ra-red space-top-small"><i class="fa fa-book"></i> Book</a>
       </div>
     </div>
   </div>
@@ -72,7 +72,7 @@
              popover="{{content.description}}">
 
           <div ng-hide="content.booking.booker">
-            <a ui-sref="service.book({id: content.service, aId: content._id})" class="btn btn-sm btn-ra-red"><i class="fa fa-book"></i> Book Now</a>
+            <a ng-show="isLoggedIn() && service.provider._id != authUser._id" ui-sref="service.book({id: service._id, aId: content._id})" class="btn btn-sm btn-ra-red"><i class="fa fa-book"></i> Book Now</a>
             for {{content.cost | currency}}
           </div>
           <div ng-show="content.booking.booker">Booked</div>

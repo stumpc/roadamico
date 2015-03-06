@@ -8,6 +8,7 @@ angular.module('roadAmicoApp')
       // Common form elements
       Save: 'Save',
       Cancel: 'Cancel',
+      Change: 'Change',
       Password: 'Password',
       'password-again': 'Re-enter Password',
       Name: 'Name',
@@ -33,6 +34,7 @@ angular.module('roadAmicoApp')
       'timezone-required': 'A timezone is required.',
       'password-length': 'Password must be at least 8 characters long.',
       'password-match': 'Passwords must match.',
+      'password-required': 'Password is required.',
       'email-and-password': 'Please enter your email and password.',
       'valid-email': 'Please enter a valid email.',
       'what-email': 'What\'s your email address?',

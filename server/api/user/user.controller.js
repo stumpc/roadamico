@@ -104,7 +104,7 @@ exports.changePassword = function(req, res, next) {
         res.send(200);
       });
     } else {
-      res.send(403);
+      res.send(403, {message: translate(req, 'invalid-password')});
     }
   });
 };

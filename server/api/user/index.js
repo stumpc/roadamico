@@ -12,7 +12,7 @@ router.get('/',             auth.hasRole('admin'), controller.index);
 router.delete('/:id',       auth.hasRole('admin'), controller.destroy);
 
 // User routes
-router.put('/password',     auth.isAuthenticated(), controller.changePassword);
+router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
 router.put('/follow',       auth.isAuthenticated(), controller.follow);
 router.put('/unfollow',     auth.isAuthenticated(), controller.unfollow);
 router.put('/',             auth.isAuthenticated(), controller.update);

@@ -17,31 +17,21 @@ api = {
    */
   soft: function (data) {
 
-    var to = data.to._id || data.to;
-    if (!to) {
-      console.error('Cannot soft notify. No \'to\' field');
-    } else {
+    if (!data.to._id) {
+      console.error('User not provided')
+    }
+    // Create a notification
+    Message.create({
+      to: data.to._id,
+      notification: true,
+      message: data.message
+    });
 
-      // Create a notification
-      Message.create({
-        to: to,
-        notification: true,
-        message: data.message
-      });
-
-      // Send an email
-      // TODO: Check preferences
-      data.view = data.view || { message: data.message };
-      if (data.to.email) {
-        data.user = data.to;
-        api.email(data.name || 'notification', data)
-      } else {
-        User.findById(data.to, function (err, user) {
-          if (err) return;
-          data.user = user;
-          api.email(data.name || 'notification', data)
-        });
-      }
+    // Send an email checking preferences
+    if (user.emailPrefs.soft) {
+      data.view = data.view || {message: data.message};
+      data.user = data.to;
+      api.email(data.name || 'notification', data)
     }
   },
 
@@ -87,30 +77,43 @@ api = {
 
     var deferred = Q.defer();
 
-    var to = data.to._id || data.to;
-    var from = (data.from && data.from._id) || data.from || (data.req && data.req.user && data.req.user._id);
+    //var to = data.to._id || data.to;
+    //var from = (data.from && data.from._id) || data.from || (data.req && data.req.user && data.req.user._id);
 
-    if (!to || !from) {
-      deferred.reject({message: 'Invalid message'}); // TODO: Translate this
-    } else {
+    //if (!to || !from) {
+    //  deferred.reject({message: 'Invalid message'}); // TODO: Translate this
+    //} else {
 
-      Message.create({
-        to: to,
-        from: from,
-        message: data.message
-      }).exec(function (err, data) {
+    Message.create({
+      to: data.to,
+      from: data.from._id,
+      message: data.message
+    }, function (err, data) {
+      if (err) return deferred.reject(err);
 
+      Message.populate(data, [
+        {path: 'to', select: 'name photo'},
+        {path: 'from', select: 'name photo'}
+      ], function (err, message) {
         if (err) return deferred.reject(err);
-        Message.populate(data, [
-          {path: 'to', select: 'name photo'},
-          {path: 'from', select: 'name photo'}
-        ], function (err, message) {
 
+        User.findById(data.to, function (err, user) {
           if (err) return deferred.reject(err);
+
+          if (user.emailPrefs.messages) {
+            data.user = user;
+            data.view = {
+              name: data.from.name,
+              message: data.message
+            };
+            api.email('message', data);
+          }
+
           deferred.resolve(message);
         });
       });
-    }
+    });
+    //}
 
     return deferred.promise;
   },

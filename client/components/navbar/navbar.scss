@@ -43,4 +43,11 @@
   .tooltip {
     width: 350px;
   }
+
+  .logout {
+    opacity: 0.5;
+    &:hover {
+      opacity: 1;
+    }
+  }
 }

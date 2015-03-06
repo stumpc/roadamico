@@ -36,7 +36,7 @@ exports.setStatus = function (status) {
 
         communication.soft({
           req: req,
-          to: req.params.id,
+          to: result,
           message: 'Your RoadAmico account verification submission was ' + status // TODO: Translate this
         });
         res.send(200);

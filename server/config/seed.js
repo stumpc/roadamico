@@ -125,7 +125,7 @@ function createUsers() {
     }, {
       provider: 'local',
       name: 'Joe',
-      email: 'asdfasdf',
+      email: 'joe@joe.com',
       password: 'joe',
       activated: false,
       modCode: '1234'

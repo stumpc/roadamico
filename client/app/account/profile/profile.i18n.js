@@ -9,6 +9,15 @@ angular.module('roadAmicoApp')
         'personal-info': 'Personal Information',
         'Privacy': 'Privacy',
         'privacy-instructions': 'Select which pieces of information you would like to make public:',
+        'email-pref': 'Email Preferences',
+        'email-instructions': 'For which events would you like to receive emails?',
+        'email-messages': 'Receiving messages from other users',
+        'email-soft': 'Updates and notices',
+        'email-offers': 'Offers from RoadAmico',
+        'email-hard': 'You will always receive emails for important time-crucial events, such as somebody booking one of your services.',
+
+        'change-password': 'Change Password',
+        'old-password': 'Old Password',
 
         // Verification
         'account-status': 'Account status:',

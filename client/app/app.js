@@ -10,7 +10,6 @@ angular.module('roadAmicoApp', [
   'angularFileUpload',
   'ngAutocomplete',
   'ngMap',
-  //'localytics.directives', // TODO: Take this out
   'pascalprecht.translate',
   'ui.select'
 ])
@@ -54,6 +53,13 @@ angular.module('roadAmicoApp', [
     // Check authentication when moving between pages (states)
     $rootScope.$on('$stateChangeStart', function (event, next) {
       Auth.isLoggedInAsync(function(loggedIn) {
+        if (loggedIn && !Auth.getCurrentUser().activated) {
+          if ($location.path() == '/home') {
+            $location.path('/finalize');
+          } else if ($location.path() !== '/finalize') {
+            Auth.logout();
+          }
+        }
         if ((next.authenticate || next.admin) && !loggedIn) {
 
           // Redirect to login if route requires auth and you're not logged in

@@ -37,7 +37,8 @@ var UserSchema = new Schema({
 
   emailPrefs: {
     messages: Boolean,
-    soft:     Boolean
+    soft:     Boolean,
+    offers:   Boolean
   },
 
   // Financial information

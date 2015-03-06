@@ -55,7 +55,8 @@ var all = {
   userSettings: {
     emailPrefs: {
       message: true,
-      soft:    true
+      soft:    true,
+      offers:  true
     }
   },
 

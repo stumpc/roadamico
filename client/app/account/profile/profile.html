@@ -144,6 +144,74 @@
       <div class="col-md-6">
 
         <div class="card">
+          <form name="emailPrefForm" ng-submit="save(emailPrefForm)" novalidate>
+            <h2><i class="fa fa-envelope"></i> <translate>profile.email-pref</translate></h2>
+
+            <p translate>profile.email-instructions</p>
+
+            <div class="form-group">
+              <label class="toggle" for="messages">
+                <span>
+                  <input type="checkbox" ng-model="user.emailPrefs.messages" id="messages"> <span class="handle"></span>
+                </span>
+                <translate>profile.email-messages</translate>
+              </label>
+            </div>
+            <div class="form-group">
+              <label class="toggle" for="soft">
+                <span>
+                  <input type="checkbox" ng-model="user.emailPrefs.soft" id="soft"> <span class="handle"></span>
+                </span>
+                <translate>profile.email-soft</translate>
+              </label>
+            </div>
+            <div class="form-group">
+              <label class="toggle" for="offers">
+                <span>
+                  <input type="checkbox" ng-model="user.emailPrefs.offers" id="offers"> <span class="handle"></span>
+                </span>
+                <translate>profile.email-offers</translate>
+              </label>
+            </div>
+
+            <p translate>profile.email-hard</p>
+
+            <button type="submit" class="btn btn-primary" ng-disabled="emailPrefForm.$invalid || emailPrefForm.$pristine" translate>Save</button>
+          </form>
+        </div>
+
+        <div class="card">
+          <h2><i class="fa fa-key"></i> <translate>profile.change-password</translate></h2>
+
+          <form name="pwForm" ng-submit="changePassword(pwForm)" novalidate>
+
+            <!-- Old Password -->
+            <div class="form-group" ng-class="{ 'has-error' : pwForm.oldPassword.$invalid && !pwForm.oldPassword.$pristine }">
+              <label translate>profile.old-password</label>
+              <input type="password" name="oldPassword" class="form-control" ng-model="user.oldPassword" required mongoose-error />
+              <p ng-show="!user.oldPassword && !pwForm.oldPassword.$pristine" class="help-block" translate>password-required</p>
+              <p class="help-block" ng-show="pwForm.password.$error.mongoose">{{ pwErrors.other }}</p>
+            </div>
+
+            <!-- PASSWORD 1 -->
+            <div class="form-group" ng-class="{ 'has-error' : pwForm.password1.$invalid && !pwForm.password1.$pristine }">
+              <label translate>Password</label>
+              <input type="password" name="password1" class="form-control" ng-model="user.newPassword" required minlength="8">
+              <p ng-show="pwForm.password1.$error.minlength" class="help-block" translate>password-length</p>
+            </div>
+
+            <!-- PASSWORD 2 -->
+            <div class="form-group" ng-class="{ 'has-error' : pwForm.password2.$invalid && !pwForm.password2.$pristine }">
+              <label translate>password-again</label>
+              <input type="password" name="password2" class="form-control" ng-model="user.newPassword2" pw-check="user.newPassword" required>
+              <p ng-show="pwForm.password2.$error.pwMismatch" class="help-block" translate>password-match</p>
+            </div>
+
+            <button type="submit" class="btn btn-primary" ng-disabled="pwForm.$invalid || pwForm.$pristine" translate>Change</button>
+          </form>
+        </div>
+
+        <div class="card">
 
           <div ng-switch="user.verification.status" class="pull-right">
             <translate>profile.account-status</translate>

@@ -19,6 +19,26 @@ angular.module('roadAmicoApp')
       form.$setPristine();
     };
 
+    $scope.pwErrors = {};
+
+    $scope.changePassword = function(form) {
+      $scope.submitted = true;
+      if(form.$valid) {
+        Auth.changePassword($scope.user.oldPassword, $scope.user.newPassword)
+          .then( function() {
+            Modal.info.message('Password successfully changed.');
+            $scope.user.oldPassword = '';
+            $scope.user.newPassword = '';
+            $scope.user.newPassword2 = '';
+            form.$setPristine();
+          })
+          .catch(function (response) {
+            form.oldPassword.$setValidity('mongoose', false);
+            $scope.pwErrors.other = response.data.message;
+          });
+      }
+    };
+
     $scope.onFileSelect = function (image) {
       $upload.upload({
         url: 'api/users/pic',

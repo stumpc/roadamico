@@ -77,7 +77,8 @@ exports.create = function (req, res) {
   }
 
   communication.message({
-    req:      req,
+    //req:      req,
+    from:     req.user,
     to:       req.body.to,
     message:  req.body.message
   }).then(function (message) {

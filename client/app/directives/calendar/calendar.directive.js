@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .directive('calendar', function (Availability, $filter) {
+  .directive('calendar', function (Availability, $filter, Auth) {
     return {
       templateUrl: 'app/directives/calendar/calendar.html',
       restrict: 'EA',
@@ -9,6 +9,10 @@ angular.module('roadAmicoApp')
         service: '=calendar'
       },
       link: function (scope, element, attrs) {
+
+        scope.isLoggedIn = Auth.isLoggedIn;
+        scope.authUser = Auth.getCurrentUser();
+
 
         var hourHeight = Number(attrs.hourHeight || 50);
         var startHour = Number(attrs.start || 8);

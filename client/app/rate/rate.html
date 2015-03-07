@@ -1,0 +1,49 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container page rating-page">
+  <h1 translate>Rate</h1>
+  <p translate>rate.instructions</p>
+
+  <table class="table">
+    <tr>
+      <td><strong>Service</strong></td>
+      <td>{{service.name}}</td>
+    </tr>
+    <tr>
+      <td><strong>Provider</strong></td>
+      <td>{{service.provider.name}}</td>
+    </tr>
+    <tr>
+      <td><strong>Location</strong></td>
+      <td>{{service.location}}</td>
+    </tr>
+    <tr>
+      <td><strong>Time</strong></td>
+      <td>{{availability.datetime | date:'medium'}}</td>
+    </tr>
+    <tr>
+      <td><strong>Duration</strong></td>
+      <td>{{availability._duration.humanize()}}</td>
+    </tr>
+    <tr>
+      <td><strong>Cost</strong></td>
+      <td>{{availability.cost | currency}}</td>
+    </tr>
+  </table>
+
+  <label translate>
+    rate.Stars
+  </label>
+  <div class="rating">
+    <div rating ng-model="rating.stars" state-on="['fa', 'fa-star']" state-off="['fa', 'fa-star-o']"></div>
+  </div>
+
+  <div class="form-group">
+    <label for="notes" translate>rate.Notes</label>
+    <textarea class="form-control" id="notes" ng-model="rating.notes" placeholder="{{'rate.enter-notes' | translate}}"></textarea>
+  </div>
+
+  <button ng-click="save()" class="btn btn-ra-red" ng-disabled="!rating.stars" translate>Save</button>
+</div>
+
+<div ng-include="'components/footer/footer.html'"></div>

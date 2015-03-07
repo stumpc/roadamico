@@ -30,7 +30,6 @@
       <li ng-repeat="booking in upcomingBookings">
         <a ui-sref="service.book({id: booking.service._id, aId: booking._id})"><strong>{{booking.service.name}}</strong> for {{booking.datetime | date:'MMM d, yyyy'}} at {{booking.datetime | date:'h:mm a'}}</a>
         <button class="space-left-medium btn btn-xs btn-ra-red-hollow" ng-click="cancel('cancel ' + booking.service.name, booking)"><i class="fa fa-times"></i> Cancel</button>
-        {{booking.booking.updates}}
       </li>
     </ul>
 

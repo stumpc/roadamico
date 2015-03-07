@@ -12,7 +12,7 @@
   <!-- Duration -->
   <div class="form-group" ng-class="{ 'has-error' : form.duration.$invalid && !form.duration.$pristine }">
     <label>Duration*</label>
-    <durationpicker name="duration" ng-model="availability.duration" required></durationpicker>
+    <durationpicker name="duration" ng-model="availability.duration" required min-unit="minute" max-unit="hour"></durationpicker>
 
     <p ng-show="form.duration.$error.length && !form.duration.$pristine" class="help-block">Time length is required.</p>
     <p ng-show="form.duration.$error.unit && !form.duration.$pristine" class="help-block">Time unit is required.</p>

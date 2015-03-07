@@ -10,6 +10,8 @@ var User = require('../api/user/user.model');
 var Signup = require('../api/signup/signup.model');
 var Service = require('../api/service/service.model');
 var Category = require('../api/category/category.model');
+var Rating = require('../api/rating/rating.model');
+var Availability = require('../api/availability/availability.model');
 var faker = require('faker');
 var _ = require('lodash');
 
@@ -186,3 +188,8 @@ function createUsers() {
     });
   });
 }
+
+
+Availability.find({}).remove().exec();
+
+Rating.find({}).remove().exec();

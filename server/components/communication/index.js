@@ -28,7 +28,7 @@ api = {
     });
 
     // Send an email checking preferences
-    if (user.emailPrefs.soft) {
+    if (data.to.emailPrefs.soft) {
       data.view = data.view || {message: data.message};
       data.user = data.to;
       api.email(data.name || 'notification', data)

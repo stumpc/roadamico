@@ -22,6 +22,7 @@ angular.module('roadAmicoApp')
       Workplace: 'Workplace',
       Bio: 'Bio',
       Verified: 'Verified',
+      Rate: 'Rate',
 
       // Social login
       'connect-facebook': 'Connect with Facebook',

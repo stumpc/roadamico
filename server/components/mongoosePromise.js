@@ -6,7 +6,9 @@ function handleResponse(deferred) {
     // Turn spread results into an array. Using a loop instead of slice. See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments
     var args = [];
     for (var i = 1; i < arguments.length; i++) {
-      args.push(arguments[i]);
+      if (typeof arguments[i] === 'object') {
+        args.push(arguments[i]);
+      }
     }
 
     if (err) {

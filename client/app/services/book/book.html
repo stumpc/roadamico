@@ -41,6 +41,10 @@
         <strong>You have already booked this time slot.</strong>
       </div>
 
+      <div ng-show="canRate">
+        <a ui-sref="rate({id: availability._id})" class="btn btn-primary">Rate</a>
+      </div>
+
       <h2>Status</h2>
 
       <table class="table">

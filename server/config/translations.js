@@ -13,6 +13,7 @@ module.exports = {
     'invalid-provider': 'Cannot follow. Invalid user id provided.',
     'already-booked': 'Cannot book. The time slot has been booked previously.',
     'avail-unauthorized': 'Unauthorized. You are not the booker of the time slot.',
+    'rating-unauthorized': 'You are unauthorized to rate that booking.',
 
     // Email subjects
     'email.test':           'This is a test',

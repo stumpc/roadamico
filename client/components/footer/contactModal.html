@@ -1,0 +1,26 @@
+<div class="modal-header">
+  <button type="button" ng-click="$dismiss()" class="close">&times;</button>
+  <h4 class="modal-title">Contact Us</h4>
+</div>
+<form name="form" ng-submit="$close(contactData)" novalidate>
+  <div class="modal-body">
+    <p>Please enter your email and message in the form below. We appreciate your feedback!</p>
+
+    <div class="form-group" ng-class="{ 'has-error' : form.email.$invalid && !form.email.$pristine }">
+      <label for="email">Your Email</label>
+      <input type="email" class="form-control" id="email" name="email" placeholder="Your email" ng-model="contactData.email" required>
+      <p ng-show="form.email.$invalid && !form.email.$pristine" class="help-block">A valid email is required.</p>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error' : form.message.$invalid && !form.message.$pristine }">
+      <label for="message">Message</label>
+      <textarea class="form-control" id="message" name="message" placeholder="Enter message here..." ng-model="contactData.message" required>
+      </textarea>
+      <p ng-show="form.message.$invalid && !form.message.$pristine" class="help-block">A message is required.</p>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" ng-click="$dismiss()" class="btn btn-default">Close</button>
+    <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid || form.$pristine">Save</button>
+  </div>
+</form>

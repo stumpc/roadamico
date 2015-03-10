@@ -128,7 +128,7 @@ api = {
       return;
     }
 
-    var lang = language.detect(data.user || data.req).code;
+    var lang = language.detect(data.user || data.req || {}).code;
     var emailPayload = {
       from:     config.email.adminEmail,
       fromName: config.email.adminName,

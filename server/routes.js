@@ -19,6 +19,7 @@ module.exports = function(app) {
   app.use('/api/users', require('./api/user'));
   app.use('/api/verification', require('./api/verification'));
   app.use('/api/feed', require('./api/feed'));
+  app.use('/api/contact', require('./api/contact'));
 
   app.use('/auth', require('./auth'));
 

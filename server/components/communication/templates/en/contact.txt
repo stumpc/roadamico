@@ -1,0 +1,17 @@
+Hello,
+
+A user has submitted a message via the contact form.
+
+User ID (if applicable):
+-------------
+{{id}}
+
+
+Email:
+-------------
+{{email}}
+
+
+Message:
+-------------
+{{message}}

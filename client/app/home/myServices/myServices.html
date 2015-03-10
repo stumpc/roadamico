@@ -1,0 +1,17 @@
+<h3>My Services</h3>
+
+<p ng-hide="services.length">
+  You are not offering any services yet.
+</p>
+
+<div ng-repeat="service in services" class="well bg-lightgray-light">
+  <strong>{{service.name}}</strong>
+
+  <div class="space-top-small">
+    <div class="btn-group" role="group" aria-label="Service actions">
+      <a ui-sref="service.view({id: service._id})" class="btn btn-default"><i class="fa fa-eye"></i> View</a>
+      <a ui-sref="service.edit({id: service._id})" class="btn btn-default"><i class="fa fa-pencil"></i> Edit</a>
+      <a href="#" class="btn btn-default"><i class="fa fa-trash"></i> Delete</a>
+    </div>
+  </div>
+</div>

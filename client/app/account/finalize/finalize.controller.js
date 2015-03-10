@@ -51,7 +51,7 @@ angular.module('roadAmicoApp')
 
     $scope.save2 = function () {
       Auth.changePassword(code, $scope.password1).then(function () {
-        $state.go('home');
+        $state.go('profile');
       }, function () {
         $translate('finalize.error-change-pw').then(Modal.info.error);
       });

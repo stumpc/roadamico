@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('ResetpasswordCtrl', function ($scope, $stateParams, $state, User, Auth, Modal) {
+  .controller('ResetpasswordCtrl', function ($scope, $stateParams, $state, $translate, User, Auth, Modal) {
 
     // Get the user
     $scope.user = User.get({id: $stateParams.id});
@@ -16,16 +16,16 @@ angular.module('roadAmicoApp')
 
         // Change the password
         Auth.changePassword($stateParams.code, $scope.password1).then(function () {
-          Modal.info.message('Password changed.');
-          $state.go('home');
+          $translate('password-changed').then(Modal.info.message);
+          $state.go('profile');
         }).catch(function (err) {
-          Modal.info.error('Couldn\'t change password', err.message);
+          $translate('reset-password.cant-change').then(Modal.info.error);
           Auth.logout();
           $state.go('main');
         });
 
       }).catch(function () {
-        Modal.info.error('Invalid password reset URL');
+        $translate('reset-password.bad-url').then(Modal.info.error);
         $state.go('main');
       });
 

@@ -45,7 +45,9 @@ angular.module('roadAmicoApp')
         'exp-year-required': 'Card expiration year is required.',
         CVC: 'CVC',
         'cvc-required': 'CVC is required.',
-        'card-security-note': 'Your privacy is important to us. Your financial information is saved using industrial-strength encryption. That means that only you can view it. Nobody else—not even us.'
+        'card-security-note': 'Your privacy is important to us. Your financial information is saved using industrial-strength encryption. That means that only you can view it. Nobody else—not even us.',
+        'card-save-error': 'There was an error saving your card.',
+        'cant-delete-card': 'Could not delete card'
       }
     });
   });

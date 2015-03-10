@@ -14,41 +14,45 @@ var Rating = require('../api/rating/rating.model');
 var Availability = require('../api/availability/availability.model');
 var faker = require('faker');
 var _ = require('lodash');
+var Q = require('q');
+var mp = require('../components/mongoosePromise');
+var moment = require('moment');
 
-// Remove all signups
-Signup.find({}).remove();
+// Utility
 
+function randomLocation() {
+  return faker.address.streetAddress() + ' ' + faker.address.streetName() + ', ' +
+    faker.address.city() + ', ' + faker.address.state() + ' ' + faker.address.zipCode();
+}
 
-// Random service creator
-//var categories = [
-//  'Amusement Park',
-//  'Badminton',
-//  'Baseball',
-//  'Basketball',
-//  'Billiards',
-//  'Board Games',
-//  'Boating',
-//  'Bowling',
-//  'Bungee Jumping',
-//  'Cycling',
-//  'Fishing',
-//  'Golf',
-//  'Hiking',
-//  'Horse Riding',
-//  'Lawn Tennis',
-//  'Museum Visit',
-//  'Nature Walk',
-//  'Painting',
-//  'River Rafting',
-//  'Scuba Diving',
-//  'Surfing',
-//  'Swimming',
-//  'Table Tennis',
-//  'Team Games',
-//  'Volleyball'
-//];
+function randomLocationDetails() {
+  return {
+    geometry: {
+      location: {
+        k: faker.address.latitude(),
+        D: faker.address.longitude()
+      }
+    }
+  };
+}
 
-// Remove all categories
+function randomDuration() {
+  var unit = ['minute', 'hour'][Math.round(Math.random())];
+  var time;
+  if (unit === 'minute') {
+    time = (Math.floor(Math.random() * 6) + 1) * 15
+  } else {
+    time = Math.floor(Math.random() * 3) + 1;
+  }
+  return time + ' ' + unit;
+}
+
+// ------------------------
+//          Data
+// ------------------------
+
+// Category data
+
 var categories = [
   {
     name: 'Outdoor sports',
@@ -81,115 +85,196 @@ var categories = [
   }
 ];
 
-Category.find({}).remove(function () {
-  var seen = 0;
-  var created = 0;
-  function createCategory(categories, parent) {
-    seen += categories.length;
-    categories.forEach(function (category) {
-      category.parent = parent;
-      Category.create(category, function (err, c) {
-        if (category.children && category.children.length) {
-          createCategory(category.children, c._id);
-        }
+// User data
 
-        created++;
-        if (created === seen) {
-          createUsers();
-        }
-      });
-    });
+var users = [
+  {
+    provider: 'local',
+    name: 'Test User',
+    email: 'test@test.com',
+    password: 'test',
+    activated: true,
+    verification: {
+      status: 'pending',
+      idUrl: faker.image.abstract(600, 400)
+    }
+  },
+  {
+    provider: 'local',
+    role: 'admin',
+    name: 'Admin',
+    email: 'admin@admin.com',
+    password: 'admin',
+    activated: true
+  },
+  {
+    provider: 'local',
+    name: 'Joe',
+    email: 'joe@joe.com',
+    password: 'joe',
+    activated: false,
+    modCode: '1234'
   }
+];
 
-  console.log('Creating categories');
-  createCategory(categories);
+_.times(25, function () {
+  users.push({
+    provider: 'local',
+    name: faker.name.findName(),
+    email: faker.internet.email(),
+    emailPublic: true,
+    password: 'test',
+    phone: faker.phone.phoneNumber(),
+    location: randomLocation(),
+    locationDetails: randomLocationDetails(),
+    workplace: faker.company.companyName(),
+    bio: faker.lorem.paragraph(),
+    photo: faker.image.avatar(400, 400),
+    publicInfo: {
+      phone: Math.random() < 0.5,
+      location: Math.random() < 0.5,
+      workplace: Math.random() < 0.5
+    },
+    verification: {
+      status: ['none', 'pending', 'approved', 'denied'][Math.floor(Math.random() * 4)],
+      idUrl: faker.image.abstract(600, 400)
+    },
+    activated: true
+  });
 });
 
-function createUsers() {
-  User.find({}).remove(function () {
-    User.create({
-      provider: 'local',
-      name: 'Test User',
-      email: 'test@test.com',
-      password: 'test',
-      activated: true,
-      verification: {
-        status: 'pending',
-        idUrl: faker.image.abstract(600, 400)
-      }
-    }, {
-      provider: 'local',
-      role: 'admin',
-      name: 'Admin',
-      email: 'admin@admin.com',
-      password: 'admin',
-      activated: true
-    }, {
-      provider: 'local',
-      name: 'Joe',
-      email: 'joe@joe.com',
-      password: 'joe',
-      activated: false,
-      modCode: '1234'
-    });
+// Service data
 
-    // Create a bunch of fake guys
-    var guys = _.times(25, function (n) {
-      return {
-        provider: 'local',
-        name: faker.name.findName(),
-        email: faker.internet.email(),
-        emailPublic: true,
-        password: 'test',
-        phone: faker.phone.phoneNumber(),
-        location: [faker.address.city(), faker.address.state(), faker.address.zipCode()][Math.floor(Math.random * 3)],
-        workplace: faker.company.companyName(),
-        bio: faker.lorem.paragraph(),
-        photo: faker.image.avatar(400, 400),
+var services = [];
+_.times(25, function () {
+  // Provider and category will be assigned randomly later
+  services.push({
+    name: faker.hacker.ingverb(),
+    description: faker.hacker.phrase(),
+    location: randomLocation(),
+    locationDetails: randomLocationDetails()
+  });
+});
 
-        publicInfo: {
-          phone: Math.random() < 0.5,
-          location: Math.random() < 0.5,
-          workplace: Math.random() < 0.5
-        },
+// Availability data
 
-        verification: {
-          status: ['none', 'pending', 'approved', 'denied'][Math.floor(Math.random() * 4)],
-          idUrl: faker.image.abstract(600, 400)
-        },
-        activated: true
-      }
-    });
-    console.log('Creating fake users...');
-    User.create(guys, function () {
-      User.find({}, function (err, users) {
+// These availabilities will be created for each service
+var availabilities = [];
+_.times(3, function () {
+  var time = moment().add(Math.floor(Math.random() * 5) + 1, 'day');
+  time = time.add(Math.floor(Math.random() * 8) - 4, 'hours');
+  availabilities.push({
+    datetime: time.toISOString(),
+    timestamp: time.valueOf(),
+    duration: randomDuration(),
+    cost: Math.floor(Math.random() * 10000) / 100
+  });
+});
 
-        Category.find({}, function (err, categories) {
+// ------------------------
+//   Data seeding process
+// ------------------------
 
-          // Now have each user offer a service
-          console.log('Creating services...');
-          Service.find({}).remove(function () {
-            console.log('Creating fake services');
-            _.times(2, function () {
-              users.forEach(function (user) {
-                var category = categories[Math.floor(Math.random()*categories.length)];
-                Service.create({
-                  name: category.name + ' with ' + user.name,
-                  description: faker.hacker.phrase(),
-                  category: category._id,
-                  location: user.location,
-                  provider: user
-                });
-              });
-            });
-          });
-        });
-      });
-    });
+
+var data = {
+  users: {},
+  categories: {},
+  services: {}
+};
+
+function randomObject(collection) {
+  var ids = Object.keys(collection);
+  var id = ids[Math.floor(Math.random() * ids.length)];
+  return collection[id];
+}
+
+function allObjects(collection) {
+  return Object.keys(collection).map(function (id) {
+    return collection[id];
   });
 }
 
 
-Availability.find({}).remove().exec();
 
-Rating.find({}).remove().exec();
+
+function createCategory(category, parent) {
+  category.parent = parent;
+  return mp.wrapCall(function (cb) { Category.create(category, cb); })
+    .then(function (newCategory) {
+      data.categories[newCategory._id] = newCategory;
+      Q.all(category.children.map(function (child) {
+        return createCategory(child, newCategory._id);
+      }));
+    });
+}
+
+function createUser(user) {
+  return mp.wrapCall(function (cb) { User.create(user, cb); })
+    .then(function (user) {
+      data.users[user._id] = user;
+    });
+}
+
+function createService(service) {
+  var category = randomObject(data.categories);
+  var provider = randomObject(data.users);
+  service.category = category._id;
+  service.provider = provider._id;
+  return mp.wrapCall(function (cb) { Service.create(service, cb)})
+    .then(function (service) {
+      data.services[service._id] = service;
+    });
+}
+
+function createAvailabilities(service) {
+  return Q.all(availabilities.map(function (availability) {
+    availability.service = service._id;
+    return mp.wrapCall(function (cb) { Availability.create(availability, cb); });
+  }));
+}
+
+
+
+
+
+console.log('Removing all data...');
+Q.all([
+  mp.wrap(User.find({}).remove()),
+  mp.wrap(Signup.find({}).remove()),
+  mp.wrap(Service.find({}).remove()),
+  mp.wrap(Category.find({}).remove()),
+  mp.wrap(Rating.find({}).remove()),
+  mp.wrap(Availability.find({}).remove())
+])
+
+  // Create Categories
+  .then(function () {
+    console.log('Done removing data.');
+    console.log('Creating categories...');
+    return Q.all(categories.map(function (category) {
+      return createCategory(category);
+    }));
+  })
+
+  // Create Users
+  .then(function () {
+    console.log('Done creating categories.');
+    console.log('Creating users...');
+    return Q.all(users.map(createUser));
+  })
+
+  // Create Services
+  .then(function () {
+    console.log('Done creating users.');
+    console.log('Creating services...');
+    return Q.all(services.map(createService));
+  })
+
+  // Create availabilities
+  .then(function () {
+    console.log('Done creating services.');
+    console.log('Creating availabilities...');
+    return Q.all(allObjects(data.services).map(function (service) {
+      return createAvailabilities(service);
+    }));
+  });

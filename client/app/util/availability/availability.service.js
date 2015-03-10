@@ -33,6 +33,11 @@ angular.module('roadAmicoApp')
         url: '/api/availabilities/mine',
         method: 'GET',
         isArray: true
+      },
+      offering: {
+        url: '/api/availabilities/offering',
+        method: 'GET',
+        isArray: true
       }
     })
   });

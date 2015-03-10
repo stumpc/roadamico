@@ -5,6 +5,7 @@ var moment = require('moment');
 var mustache = require('mustache');
 var Availability = require('./availability.model');
 var Service = require('../service/service.model');
+var User = require('../user/user.model');
 var translate = require('../../components/translate');
 var communication = require('../../components/communication');
 var payments = require('../../components/payments');
@@ -331,13 +332,59 @@ exports.cancel = function (req, res, next) {
 };
 
 exports.mine = function (req, res, next) {
-  console.log('*** got here');
-  Availability.find({
-    'booking.booker': req.user._id
-  }).populate('service', 'name').exec(function (err, availabilities) {
-    if (err) return next(err);
-    return res.json(availabilities);
-  });
+  var availabilities;
+  var users;
+  mp.wrap(Availability.find({'booking.booker': req.user._id}).populate('service', 'name provider'))
+
+    // Load the providers associated with the availabilities
+    .then(function (_availabilities) {
+      availabilities = _availabilities;
+      users = {};
+      availabilities.map(function (a) { users[a.service.provider] = true; }); // Remove duplicate IDs
+      return mp.wrap(User.find({_id: {$in: Object.keys(users)}}));
+    })
+    .then(function (_users) {
+      _users.forEach(function (u) { users[u._id] = u; });
+      availabilities = availabilities.map(function (availability) {
+        var obj = availability.toObject();
+        obj.service.provider = users[obj.service.provider].profile;
+        return obj;
+      });
+      res.json(availabilities);
+    })
+    .catch(handlePromiseError(res, next));
+};
+
+/**
+ * Returns the availabilities that the current user is offering
+ */
+exports.offering = function (req, res, next) {
+
+  var services;
+
+  // Get the services offered by the user
+  mp.wrap(Service.find({provider: req.user._id}))
+
+    // Then get the availabilities for those services
+    .then(function (_services) {
+      services = _services;
+      var ids = _.pluck(services, '_id');
+      return mp.wrap(Availability.find({service: {$in: ids}}).populate('booking.booker', 'name photo'));
+    })
+
+    // Attach the services to the availabilities (saves us doing a populate) and return
+    .then(function (availabilities) {
+      var serviceMap = {};
+      services.forEach(function (s) { serviceMap[s._id] = s; });
+      availabilities = availabilities.map(function (availability) {
+        var obj = availability.toObject();
+        obj.service = serviceMap[obj.service];
+        return obj;
+      });
+      res.json(availabilities)
+    })
+    .catch(handlePromiseError(res, next));
+
 };
 
 function handleError(res, err) {

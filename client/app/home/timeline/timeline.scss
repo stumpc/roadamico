@@ -1,0 +1,19 @@
+.timeline {
+  dl dd .events {
+    background-color: $lightgray-dark;
+  }
+
+  dl dd.pos-right .events:before {
+    left: -12px;
+    border-color: transparent $lightgray-dark transparent transparent;
+  }
+
+  dl dd.pos-left .events:before {
+    right: -12px;
+    border-color: transparent transparent transparent $lightgray-dark;
+  }
+
+  .profile-pic-placeholder {
+    margin: 0 10px 10px 0;
+  }
+}

@@ -112,3 +112,8 @@ $colors:
     color: white;
   }
 }
+
+// Correct the color of the lightgray
+.bg-lightgray-light, .bg-lightgray-dark {
+  color: black;
+}

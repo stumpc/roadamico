@@ -1,0 +1,67 @@
+<h3>History</h3>
+
+<p ng-hide="months.length">You have no history yet.</p>
+<div class="timeline" ng-show="months.length">
+  <dl>
+    <!--{{bookings}}-->
+
+    <dt ng-repeat-start="month in months">{{month}}</dt>
+
+    <dd class="clearfix" ng-repeat="booking in monthData[month]" ng-class="{'pos-right': $even, 'pos-left': $odd}">
+      <div class="circ"></div>
+      <div class="time">{{booking.moment.format('MMM DD')}}</div>
+      <div class="events">
+        <div class="profile-pic-placeholder tiny-pic pull-left">
+          <div class="profile-pic" style="background-image: url({{booking.service.provider.photo | https}})"></div>
+        </div>
+        <div class="events-body">
+          <h4 class="events-heading">{{booking.service.name}} with <a ui-sref="user({userId: booking.service.provider._id})">{{booking.service.provider.name}}</a></h4>
+          <span class="label label-danger pull-right" ng-show="booking.canceled">Canceled</span>
+          <p>
+            <a class="btn btn-xs btn-ra-red-hollow" ui-sref="service.book({id: booking.service._id, aId: booking._id})">Details</a>
+            <a class="btn btn-xs btn-warning" ng-show="booking.canRate" ui-sref="rate({id: booking._id})"><i class="fa fa-star"></i> Rate</a>
+          </p>
+        </div>
+      </div>
+    </dd>
+
+    <dd ng-repeat-end></dd>
+
+    <!--<dt>Apr 2014</dt>-->
+
+    <!--<dd class="pos-left clearfix">-->
+      <!--<div class="circ"></div>-->
+      <!--<div class="time">Apr 10</div>-->
+      <!--<div class="events">-->
+        <!--<div class="pull-left"><img class="events-object img-rounded" src="img/photo-2.jpg"></div>-->
+        <!--<div class="events-body"><h4 class="events-heading">Bootflat</h4>-->
+
+          <!--<p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro-->
+            <!--synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica.</p></div>-->
+      <!--</div>-->
+    <!--</dd>-->
+    <!--<dt>Mar 2014</dt>-->
+    <!--<dd class="pos-right clearfix">-->
+      <!--<div class="circ"></div>-->
+      <!--<div class="time">Mar 15</div>-->
+      <!--<div class="events">-->
+        <!--<div class="pull-left"><img class="events-object img-rounded" src="img/photo-3.jpg"></div>-->
+        <!--<div class="events-body"><h4 class="events-heading">Flat UI</h4>-->
+
+          <!--<p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro-->
+            <!--synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica.</p></div>-->
+      <!--</div>-->
+    <!--</dd>-->
+    <!--<dd class="pos-left clearfix">-->
+      <!--<div class="circ"></div>-->
+      <!--<div class="time">Mar 8</div>-->
+      <!--<div class="events">-->
+        <!--<div class="pull-left"><img class="events-object img-rounded" src="img/photo-4.jpg"></div>-->
+        <!--<div class="events-body"><h4 class="events-heading">UI design</h4>-->
+
+          <!--<p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro-->
+            <!--synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica.</p></div>-->
+      <!--</div>-->
+    <!--</dd>-->
+  </dl>
+</div>

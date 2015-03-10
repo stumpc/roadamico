@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('ProfileCtrl', function ($scope, $upload, $http, Auth, Modal, Category, timezones, languages) {
+  .controller('ProfileCtrl', function ($scope, $upload, $http, $translate, Auth, Modal, Category, timezones, languages) {
     $scope.message = 'Hello';
     $scope.user = Auth.getCurrentUser();
     $scope.categories = Category;
@@ -13,7 +13,6 @@ angular.module('roadAmicoApp')
       return {name: name, code: code};
     });
 
-    // TODO: Add in mongoose errors
     $scope.save = function (form) {
       $scope.user.$update();
       form.$setPristine();
@@ -25,8 +24,11 @@ angular.module('roadAmicoApp')
       $scope.submitted = true;
       if(form.$valid) {
         Auth.changePassword($scope.user.oldPassword, $scope.user.newPassword)
-          .then( function() {
-            Modal.info.message('Password successfully changed.');
+          .then(function () {
+            return $translate('password-changed');
+          })
+          .then(function(translation) {
+            Modal.info.message(translation);
             $scope.user.oldPassword = '';
             $scope.user.newPassword = '';
             $scope.user.newPassword2 = '';
@@ -70,9 +72,13 @@ angular.module('roadAmicoApp')
           $scope.newCardForm.$setPristine();
         }).error(function (data) {
           if (data === 'Forbidden') {
-            Modal.prompt.password('Invalid password', sv);
+            $translate('invalid-password').then(function (translation) {
+              Modal.prompt.password(translation, sv);
+            });
           } else {
-            Modal.info.error('There was an error saving your card. <strong>' + data.message + '</strong>');
+            $translate('profile.card-save-error').then(function (translation) {
+              Modal.info.error(translation + ' <strong>' + data.message + '</strong>');
+            });
           }
         });
       }
@@ -83,7 +89,7 @@ angular.module('roadAmicoApp')
       $http.delete('/api/users/card/'+id).success(function (data) {
         $scope.user.financial = data;
       }).error(function () {
-        Modal.info.error('Could not delete card');
+        $translate('cant-delete-card').then(Modal.info.error);
       });
     });
   });

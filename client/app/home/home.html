@@ -3,60 +3,24 @@
 <div class="container home-page page">
   <h1>RoadAmico Home</h1>
 
-  <a ui-sref="newService" class="btn">Offer a Service</a>
+  <div class="row">
+    <div class="col-md-8">
 
-  <!-- My services section -->
-  <div ng-if="services.length">
-    <h2>My Services</h2>
-
-    <div ng-repeat="service in services" class="well bg-bluejeans-light">
-      <strong>{{service.name}}</strong>
-
-      <div class="space-top-small">
-        <div class="btn-group" role="group" aria-label="Service actions">
-          <a ui-sref="service.view({id: service._id})" class="btn btn-default"><i class="fa fa-eye"></i> View</a>
-          <a ui-sref="service.edit({id: service._id})" class="btn btn-default"><i class="fa fa-pencil"></i> Edit</a>
-          <a href="#" class="btn btn-default"><i class="fa fa-trash"></i> Delete</a>
+      <div>
+        <div class="btn-group">
+          <a class="btn" ui-sref="home.upcoming" ui-sref-active="btn-primary">Upcoming</a>
+          <a class="btn" ui-sref="home.timeline" ui-sref-active="btn-primary">History</a>
+          <a class="btn" ui-sref="home.myServices" ui-sref-active="btn-primary">My Services</a>
         </div>
+        <a ui-sref="newService" class="btn pull-right">Offer a Service</a>
       </div>
+
+      <div ui-view></div>
     </div>
-  </div>
 
-  <div>
-    <h2>My Bookings</h2>
-
-    <h3>Upcoming</h3>
-    <ul>
-      <li ng-repeat="booking in upcomingBookings">
-        <a ui-sref="service.book({id: booking.service._id, aId: booking._id})"><strong>{{booking.service.name}}</strong> for {{booking.datetime | date:'MMM d, yyyy'}} at {{booking.datetime | date:'h:mm a'}}</a>
-        <button class="space-left-medium btn btn-xs btn-ra-red-hollow" ng-click="cancel('cancel ' + booking.service.name, booking)"><i class="fa fa-times"></i> Cancel</button>
-      </li>
-    </ul>
-
-    <h3>Past</h3>
-    <ul>
-      <li ng-repeat="booking in pastBookings">
-        <a ui-sref="service.book({id: booking.service._id, aId: booking._id})"><strong>{{booking.service.name}}</strong> for {{booking.datetime | date:'MMM d, yyyy'}} at {{booking.datetime | date:'h:mm a'}}</a>
-      </li>
-    </ul>
-
-    <h3>Canceled</h3>
-    <ul>
-      <li ng-repeat="booking in canceledBookings">
-        <a ui-sref="service.book({id: booking.service._id, aId: booking._id})"><strong>{{booking.service.name}}</strong> for {{booking.datetime | date:'MMM d, yyyy'}} at {{booking.datetime | date:'h:mm a'}}</a>
-      </li>
-    </ul>
-
-  </div>
-
-  <!-- Following feed -->
-  <div ng-if="feed.length">
-    <h2>Following</h2>
-
-
-    <ul>
-      <li ng-repeat="provider in feed"><a ui-sref="user({userId: provider.profile._id})">{{provider.profile.name}}</a></li>
-    </ul>
+    <div class="col-md-4">
+      <div ng-include="'app/home/feed/feed.html'"></div>
+    </div>
   </div>
 </div>
 

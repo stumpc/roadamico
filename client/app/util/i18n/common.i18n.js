@@ -23,6 +23,7 @@ angular.module('roadAmicoApp')
       Bio: 'Bio',
       Verified: 'Verified',
       Rate: 'Rate',
+      Services: 'Services',
 
       // Social login
       'connect-facebook': 'Connect with Facebook',
@@ -39,6 +40,8 @@ angular.module('roadAmicoApp')
       'email-and-password': 'Please enter your email and password.',
       'valid-email': 'Please enter a valid email.',
       'what-email': 'What\'s your email address?',
+      'invalid-password': 'Invalid Password',
+      'password-changed': 'Password successfully changed.',
 
       // Months
       January: 'January',

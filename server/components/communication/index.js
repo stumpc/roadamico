@@ -1,6 +1,7 @@
 
 var mustache = require('mustache');
 var Q = require('q');
+var moment = require('moment');
 var config = require('../../config/environment');
 var translate = require('../translate');
 var templateLoader = require('./templateLoader');
@@ -24,6 +25,7 @@ api = {
     Message.create({
       to: data.to._id,
       notification: true,
+      time: moment().toISOString(),
       message: data.message
     });
 
@@ -50,6 +52,7 @@ api = {
       Message.create({
         to: to,
         notification: true,
+        time: moment().toISOString(),
         message: data.message
       });
 
@@ -87,6 +90,7 @@ api = {
     Message.create({
       to: data.to,
       from: data.from._id,
+      time: moment().toISOString(),
       message: data.message
     }, function (err, data) {
       if (err) return deferred.reject(err);

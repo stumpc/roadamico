@@ -17,7 +17,7 @@
           </div>
           <div class="name">
             {{messageGroup[0] | messageTarget:'name'}}
-            <span ng-show="messageGroup | unread:true" class="badge badge-primary pull-right">{{messageGroup | unread:true}}</span>
+            <span ng-show="messageGroup | unread | toMe | count" class="badge badge-primary pull-right">{{messageGroup | unread | toMe | count}}</span>
           </div>
         </div>
       </a>

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('NavbarCtrl', function ($scope, $location, Auth, config, sessionCache, Message) {
+  .controller('NavbarCtrl', function ($scope, $location, Auth, config, sessionCache, filterChain, Message) {
     $scope.config = config;
 
     $scope.menu = [
@@ -26,18 +26,18 @@ angular.module('roadAmicoApp')
 
     // Received Messages
     $scope.messages = sessionCache.messages();
-    $scope.messages.$promise && $scope.messages.$promise.then(function (messages) {
-      $scope.notifications = _(messages)
-        .filter({notification: true})
-        .forEach(function (message) {
-          message.moment = moment(message.time);
-        })
-        .sortBy('moment')
-        .map(function (message) {
-          return message.moment.calendar() + ': ' + message.message;
-        })
-        .value().reverse().join('<hr>');
-    });
+    //$scope.messages.$promise && $scope.messages.$promise.then(function (messages) {
+    //  $scope.notifications = _(messages)
+    //    .filter({notification: true})
+    //    .forEach(function (message) {
+    //      message.moment = moment(message.time);
+    //    })
+    //    .sortBy('moment')
+    //    .map(function (message) {
+    //      return message.moment.calendar() + ': ' + message.message;
+    //    })
+    //    .value().reverse().join('<hr>');
+    //});
 
     $scope.logout = function() {
       Auth.logout();
@@ -50,14 +50,17 @@ angular.module('roadAmicoApp')
     };
 
     // Notifications
-    $scope.viewNotifications = function () {
-      console.log('mark as read');
-      _($scope.messages).filter(function (message) {
-        return message.notification && !message.read;
-      }).forEach(function (message) {
-        message.read = true;
-        Message.mark(message);
-      });
+    $scope.notificationsVisible = false;
+    $scope.toggleNotifications = function () {
+      $scope.notificationsVisible = !$scope.notificationsVisible;
+
+      // Mark notifications as read if opening
+      if ($scope.notificationsVisible) {
+        _.forEach(filterChain('notifications', 'unread')($scope.messages), function (notification) {
+          notification.read = true;
+          Message.mark(notification);
+        });
+      }
     };
 
   });

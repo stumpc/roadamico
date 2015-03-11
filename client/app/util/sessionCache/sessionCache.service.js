@@ -30,13 +30,11 @@ angular.module('roadAmicoApp')
           $log.log('Caching messages');
           cache.messages = Message.mine();
 
-          // Sync data if logged in
-          if (Auth.isLoggedIn()) {
-            cache.messages.$promise.then(function () {
-              var socket = $injector.get('socket');
-              socket.syncUpdates('message', cache.messages);
-            });
-          }
+          // Sync data
+          cache.messages.$promise.then(function () {
+            var socket = $injector.get('socket');
+            socket.syncUpdates('message', cache.messages);
+          });
         }
         if (returnPromise) {
           return function () { return cache.messages.$promise; };

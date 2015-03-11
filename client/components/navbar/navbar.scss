@@ -50,4 +50,44 @@
       opacity: 1;
     }
   }
+
+
+  .notificationIcon {
+    position: relative;
+
+    .notificationPopup {
+      &:before {
+        position: absolute;
+        top: -20px;
+        left: 50%;
+        margin-left: -10px;
+        width: 0;
+        height: 0;
+        content: '';
+        border: solid 10px;
+        border-color: transparent transparent $darkgray-light transparent;
+      }
+
+      position: absolute;
+      top: 51px;
+      left: 50%;
+      margin-left: -125px;
+      width: 250px;
+      background: $darkgray-light;
+      min-height: 50px;
+      border-radius: 0 0 4px 4px;
+      box-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+    }
+
+    .notification {
+      background: lighten($darkgray-light, 10%);
+      margin: 10px 0;
+      padding: 10px;
+
+      small {
+        color: $mediumgray-light;
+      }
+    }
+  }
+
 }

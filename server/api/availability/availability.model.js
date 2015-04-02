@@ -12,6 +12,7 @@ var mongoose = require('mongoose'),
   we wouldn't be able to populate the booking's fields.
  */
 var AvailabilitySchema = new Schema({
+  created: String,
   datetime: String,
   timestamp: Number,
   duration: String,

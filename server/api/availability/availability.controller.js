@@ -86,6 +86,7 @@ function createAvailability(req) {
     .then(function (service) {
       if (!service.provider.equals(req.user._id)) throw { code: 403, message: translate(req, 'service-unauthorized') };
       req.body.repeat = _.omit(req.body.repeat, 'first');
+      req.body.created = moment().toISOString();
       return mp.wrapCall(function (cb) { Availability.create(req.body, cb); });
     })
     .then(function (availability) {

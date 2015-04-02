@@ -4,6 +4,7 @@ var _ = require('lodash');
 var Service = require('./service.model');
 var Search = require('../../components/search/search');
 var translate = require('../../components/translate');
+var moment = require('moment');
 
 // Get list of services
 exports.index = function (req, res) {
@@ -61,6 +62,7 @@ exports.create = function (req, res) {
     req.body.category = req.body.category._id || req.body.category.id;
   }
 
+  req.body.created = moment().toISOString();
   Service.create(req.body, function (err, service) {
     if (err) {
       return handleError(res, err);

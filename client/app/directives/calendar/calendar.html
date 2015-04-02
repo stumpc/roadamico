@@ -8,23 +8,23 @@
 
     <!-- Sorting buttons -->
     <div>
-      Sort:
+      <translate>Sort</translate>:
       <button class="btn" ng-class="{'btn-primary': sortField == 'moment'}" ng-click="sort('moment')">
-        Time
+        <translate>Time</translate>
         <span ng-show="sortField == 'moment'">
           <i class="fa fa-sort-asc" ng-show="sortAsc"></i>
           <i class="fa fa-sort-desc" ng-hide="sortAsc"></i>
         </span>
       </button>
       <button class="btn" ng-class="{'btn-primary': sortField == '_duration'}" ng-click="sort('_duration')">
-        Duration
+        <translate>Duration</translate>
         <span ng-show="sortField == '_duration'">
           <i class="fa fa-sort-asc" ng-show="sortAsc"></i>
           <i class="fa fa-sort-desc" ng-hide="sortAsc"></i>
         </span>
       </button>
       <button class="btn" ng-class="{'btn-primary': sortField == 'cost'}" ng-click="sort('cost')">
-        Cost
+        <translate>Cost</translate>
         <span ng-show="sortField == 'cost'">
           <i class="fa fa-sort-asc" ng-show="sortAsc"></i>
           <i class="fa fa-sort-desc" ng-hide="sortAsc"></i>
@@ -33,18 +33,18 @@
     </div>
 
     <div ng-repeat="availability in availabilities" class="availability">
-      <div><strong>When:</strong> {{availability.datetime | date:'medium'}}</div>
-      <div><strong>Duration:</strong> {{availability._duration.humanize()}}</div>
-      <div><strong>Cost:</strong> {{availability.cost | currency}}</div>
-      <div class="space-top-small" ng-show="availability.notes"><strong>Notes:</strong> {{availability.notes}}</div>
+      <div><strong translate>Time</strong>: {{availability.datetime | date:'medium'}}</div>
+      <div><strong translate>Duration</strong>: {{availability._duration.humanize()}}</div>
+      <div><strong translate>Cost</strong>: {{availability.cost | currency}}</div>
+      <div class="space-top-small" ng-show="availability.notes"><strong translate>Notes</strong>: {{availability.notes}}</div>
 
       <div ng-show="availability.booking.booker">
-        <span class="badge badge-danger">Booked</span>
+        <span class="badge badge-danger" translate>Booked</span>
       </div>
       <div ng-hide="availability.booking.booker">
-        <span class="badge badge-success">Available</span>
+        <span class="badge badge-success" translate>Available</span>
         <br/>
-        <a ng-show="isLoggedIn() && service.provider._id != authUser._id" ui-sref="service.book({id: service._id, aId: availability._id})" class="btn btn-sm btn-ra-red space-top-small"><i class="fa fa-book"></i> Book</a>
+        <a ng-show="isLoggedIn() && service.provider._id != authUser._id" ui-sref="service.book({id: service._id, aId: availability._id})" class="btn btn-sm btn-ra-red space-top-small"><i class="fa fa-book"></i> <translate>Book</translate></a>
       </div>
     </div>
   </div>
@@ -59,7 +59,7 @@
     </div>
 
     <div class="text-center">
-      <strong>{{availabilities.length}}</strong> availabilities on this day.
+      <translate>calendar.num-availabilities</translate> <strong>{{availabilities.length}}</strong>
     </div>
     <div class="hour" ng-repeat="hour in hours">
       <div class="hour-label">{{formatHour(hour)}}</div>
@@ -72,10 +72,10 @@
              popover="{{content.description}}">
 
           <div ng-hide="content.booking.booker">
-            <a ng-show="isLoggedIn() && service.provider._id != authUser._id" ui-sref="service.book({id: service._id, aId: content._id})" class="btn btn-sm btn-ra-red"><i class="fa fa-book"></i> Book Now</a>
-            for {{content.cost | currency}}
+            <a ng-show="isLoggedIn() && service.provider._id != authUser._id" ui-sref="service.book({id: service._id, aId: content._id})" class="btn btn-sm btn-ra-red"><i class="fa fa-book"></i> <translate>calendar.book-now</translate></a>
+            <translate>calendar.book-cost</translate> {{content.cost | currency}}
           </div>
-          <div ng-show="content.booking.booker">Booked</div>
+          <div ng-show="content.booking.booker" translate>Booked</div>
 
         </div>
 

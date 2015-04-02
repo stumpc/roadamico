@@ -1,3 +1,10 @@
+/*
+  Mongoose promise
+  By Joshua Monson
+  --- --- --- ---
+
+  Allows us to wrap all mongoose calls in a standard promise.
+ */
 
 var Q = require('q');
 
@@ -35,6 +42,15 @@ exports.wrap = function wrap(query, action) {
   return deferred.promise;
 };
 
+/**
+ * Wraps a immediately invoked call in a promise by providing the callback function.
+ *
+ * Example:
+ * mp.wrapCall(function (cb) { MyModel.create(data, cb); })
+ *
+ * @param f
+ * @returns {Promise.promise|*}
+ */
 exports.wrapCall = function (f) {
   var deferred = Q.defer();
   f(handleResponse(deferred));

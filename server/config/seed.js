@@ -149,6 +149,7 @@ var services = [];
 _.times(25, function () {
   // Provider and category will be assigned randomly later
   services.push({
+    created: moment().toISOString(),
     name: faker.hacker.ingverb(),
     description: faker.hacker.phrase(),
     location: randomLocation(),
@@ -164,6 +165,7 @@ _.times(3, function () {
   var time = moment().add(Math.floor(Math.random() * 5) + 1, 'day');
   time = time.add(Math.floor(Math.random() * 8) - 4, 'hours');
   availabilities.push({
+    created: moment().toISOString(),
     datetime: time.toISOString(),
     timestamp: time.valueOf(),
     duration: randomDuration(),

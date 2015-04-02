@@ -3,28 +3,35 @@ var _ = require('lodash');
 var User = require('../user/user.model');
 var Service = require('../service/service.model');
 var Availability = require('../availability/availability.model');
+var Rating = require('../rating/rating.model');
 var moment = require('moment');
+var mp = require('../../components/mongoosePromise');
 
 
 function getFeed(user) {
   var deferred = Q.defer();
 
-  Service.find({provider: user._id}, function (err, services) {
-    if (err) return deferred.reject(err);
-    if (!services.length) return deferred.resolve([]);
-
-    // Get the availabilities
-    var ids = _.map(services, '_id');
-    Availability.find({service: {$in: ids}, timestamp: { $gte: moment().valueOf() }}, function (err, availabilities) {
-      if (err) return deferred.reject(err);
-
-      var m = _.groupBy(availabilities, 'service');
-      services.forEach(function (service) {
-        service._doc.availabilities = m[service._id];
+  var services;
+  var availabilities;
+  mp.wrap(Service.find({provider: user._id}))
+    .then(function (_services) {
+      services = _services;
+      var ids = _.map(services, '_id');
+      return mp.wrap(Availability.find({service: {$in: ids}, timestamp: { $gte: moment().valueOf() }}));
+    })
+    .then(function (_availabilities) {
+      availabilities = _.filter(_availabilities, function (availability) {
+        return !(availability.booking && availability.booking.booker);
       });
-      deferred.resolve(services);
+      return mp.wrap(Rating.find({provider: user._id}));
+    })
+    .then(function (ratings) {
+      deferred.resolve({
+        services: services,
+        availabilities: availabilities,
+        ratings: ratings
+      });
     });
-  });
 
   return deferred.promise;
 }

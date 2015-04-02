@@ -4,6 +4,7 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var ServiceSchema = new Schema({
+  created: String,
   name: String,
   description: String,
   location: String,

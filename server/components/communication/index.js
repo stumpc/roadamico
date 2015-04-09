@@ -6,7 +6,7 @@ var config = require('../../config/environment');
 var translate = require('../translate');
 var templateLoader = require('./templateLoader');
 var language = require('../translate/language');
-var Message = require('../../api/message/message.model');
+var Message = require('../../api/old/message/message.model');
 var User = require('../../api/user/user.model');
 
 var api;

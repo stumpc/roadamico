@@ -47,6 +47,9 @@ describe('The Groups API', function () {
 
   before(function (done) {
     User.create(user, user2, user3, admin, function () {
+      user = arguments[1];
+      user2 = arguments[2];
+      user3 = arguments[3];
       group1.administrator = user._id;
       Group.create(group1, group2, function () {
         group1 = arguments[1];

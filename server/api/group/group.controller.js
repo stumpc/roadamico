@@ -10,9 +10,9 @@ exports.index = function(req, res) {
   Group.find({approved: true}, function (err, groups) {
     if(err) { return handleError(res, err); }
 
-    // Don't give out the emails
     groups.forEach(function (group) {
       delete group._doc.emails;
+      delete group._doc.requests;
     });
     return res.json(200, groups);
   });
@@ -28,10 +28,10 @@ exports.unapproved = function(req, res) {
 
 // Get a single group
 exports.show = function(req, res) {
-  Group.findOne({_id: req.params.id, administrator: req.user._id}, function (err, group) {
-    console.log(err);
+  Group.findById(req.params.id, function (err, group) {
     if(err) { return handleError(res, err); }
     if(!group) { return res.send(404); }
+    if(req.user.role !== 'admin' && !req.user._id.equals(group.administrator)) { return res.send(404); }
     return res.json(group);
   });
 };
@@ -59,9 +59,10 @@ exports.create = function(req, res) {
 // Updates an existing group in the DB.
 exports.update = function(req, res) {
   delete req.body._id;
-  Group.findOne({_id: req.params.id, administrator: req.user._id}, function (err, group) {
+  Group.findById(req.params.id, function (err, group) {
     if (err) { return handleError(res, err); }
     if(!group) { return res.send(404); }
+    if(req.user.role !== 'admin' && !req.user._id.equals(group.administrator)) { return res.send(404); }
     var updated = _.merge(group, req.body);
     updated.save(function (err) {
       if (err) { return handleError(res, err); }
@@ -72,12 +73,100 @@ exports.update = function(req, res) {
 
 // Deletes a group from the DB.
 exports.destroy = function(req, res) {
-  Group.findOne({_id: req.params.id, administrator: req.user._id}, function (err, group) {
+  Group.findById(req.params.id, function (err, group) {
     if(err) { return handleError(res, err); }
     if(!group) { return res.send(404); }
+    if(req.user.role !== 'admin' && !req.user._id.equals(group.administrator)) { return res.send(404); }
     group.remove(function(err) {
       if(err) { return handleError(res, err); }
       return res.send(204);
+    });
+  });
+};
+
+// Approves a group
+exports.approve = function (req, res) {
+  Group.findById(req.params.id, function (err, group) {
+    if(err) { return handleError(res, err); }
+    if(!group) { return res.send(404); }
+    group.approved = true;
+    group.save(function (err, group) {
+      res.json(group);
+    });
+  });
+};
+
+// Request for access to a group
+exports.requestAccess = function (req, res) {
+  req.body.email = req.body.email.toLowerCase();
+  Group.findById(req.params.id, function (err, group) {
+    if(err) { return handleError(res, err); }
+    if(!group) { return res.send(404); }
+    group.requests.push(req.body);
+    group.save(function (err, group) {
+      delete group._doc.emails;
+      delete group._doc.requests;
+      res.json(group);
+    });
+  });
+};
+
+exports.invite = function (req, res) {
+  req.body.email = req.body.email.toLowerCase();
+  Group.findOne(req.params.id, function (err, group) {
+    if(err) { return handleError(res, err); }
+    if(!group) { return res.send(404); }
+
+    // Check if allowed
+    var approved = req.user.role === 'admin' ||   // Admins can invite
+      req.user._id.equals(group.administrator) || // Group owners can invite
+      _.contains(group.emails, req.user.email);   // Group members can invite
+    if (!approved) return res.send(403);
+
+    group.emails.push(req.body.email);
+    group.save(function (err, group) {
+      delete group._doc.emails;
+      delete group._doc.requests;
+      res.json(group);
+    });
+  });
+};
+
+exports.grantAccess = function (req, res) {
+  Group.findById(req.params.id, function (err, group) {
+    if (err) { return handleError(res, err); }
+    if(!group) { return res.send(404); }
+    if(req.user.role !== 'admin' && !req.user._id.equals(group.administrator)) { return res.send(404); }
+
+    // Find and update the request
+    var requestIndex = _.findIndex(group.requests, function (r) {
+      return r._id.equals(req.params.rid);
+    });
+    if (requestIndex === -1) { return res.send(404); }
+    var request = group._doc.requests.splice(requestIndex, 1)[0];
+    group.emails.push(request.email);
+    group.save(function (err, group) {
+      if (err) { return handleError(res, err); }
+      return res.json(200, group);
+    });
+  });
+};
+
+exports.denyAccess = function (req, res) {
+  Group.findById(req.params.id, function (err, group) {
+    if (err) { return handleError(res, err); }
+    if(!group) { return res.send(404); }
+    if(req.user.role !== 'admin' && !req.user._id.equals(group.administrator)) { return res.send(404); }
+
+    // Find and update the request
+    var requestIndex = _.findIndex(group.requests, function (r) {
+      return r._id.equals(req.params.rid);
+    });
+    if (requestIndex === -1) { return res.send(404); }
+    group._doc.requests.splice(requestIndex, 1);
+    group.save(function (err, group) {
+      if (err) { return handleError(res, err); }
+      return res.json(200, group);
     });
   });
 };

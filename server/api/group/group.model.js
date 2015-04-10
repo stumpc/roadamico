@@ -11,7 +11,12 @@ var GroupSchema = new Schema({
   emails: [{type: String, lowercase: true}],
   administrator: { type: Schema.Types.ObjectId, ref: 'User' },
   userVerificationUrl: String,
-  approved: Boolean
+  approved: Boolean,
+  requests: [{
+    name: String,
+    email: String,
+    message: String
+  }]
 });
 
 module.exports = mongoose.model('Group', GroupSchema);

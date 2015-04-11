@@ -1,0 +1,8 @@
+Hello {{user.name}},
+
+Great news! You have been granted access to the group "{{data.group.name}}". You can view the group at:
+
+http://www.roadamico.com/groups/{{data.group.id}}
+
+Cheers,
+RoadAmico Admin

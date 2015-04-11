@@ -9,10 +9,11 @@ var config = require('../../config/environment/index');
 function loadEmails(lang) {
   var store = {};
   fs.readdirSync(__dirname + '/templates/' + lang).forEach(function (file) {
-    var parts = file.split('.');
-    var name = parts[0];
+    //var parts = file.split('.');
+    var name = file.replace(/\.\w+$/g,'');
+    var extension = /\.(\w+)$/g.exec(file)[1];
     store[name] = store[name] || {};
-    store[name][parts[1]] = fs.readFileSync(__dirname + '/templates/' + lang + '/' + file, {
+    store[name][extension] = fs.readFileSync(__dirname + '/templates/' + lang + '/' + file, {
       encoding: 'utf8'
     });
   });

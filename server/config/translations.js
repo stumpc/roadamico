@@ -23,6 +23,7 @@ module.exports = {
     'email.referral':       'Join your friends on RoadAmico',
     'email.grantAccess':    'Welcome to RoadAmico!',
     'email.resetPassword':  'RoadAmico Password Reset',
+    'email.group.create':   'RoadAmico: A new group needs to be reviewed',
 
     // Notifications
     'notify.booked-booker': 'You have successfully booked {{service}} with {{provider}} at {{time}}.',

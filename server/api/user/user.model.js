@@ -11,13 +11,13 @@ var UserSchema = new Schema({
   name: String,
   email: {type: String, lowercase: true},
   joined: String,
-  phone: String,
+  //phone: String,
   photo: String,
   location: String,
   locationDetails: {},
-  bio: String,
-  workplace: String,
-  timezone: String,
+  //bio: String,
+  //workplace: String,
+  //timezone: String,
   languages: [],
 
   // Following

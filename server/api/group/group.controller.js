@@ -2,8 +2,11 @@
 
 var _ = require('lodash');
 var Group = require('./group.model');
+var User = require('../user/user.model');
+var Notification = require('../notification/notification.model');
 var upload = require('../../components/upload');
 var mp = require('../../components/mongoosePromise');
+var moment = require('moment');
 
 // Get list of approved groups
 exports.index = function(req, res) {
@@ -43,13 +46,33 @@ exports.create = function(req, res) {
   req.body.emails = JSON.parse(req.body.emails).map(function (s) { return s.toLowerCase(); });
 
   // Upload the verification document
+  var group;
   upload.image(req.files.file)
     .then(function (url) {
       req.body.userVerificationUrl = url;
       return mp.wrapCall(function (f) { Group.create(req.body, f); });
     })
-    .then(function (group) {
-      res.json(201, group);
+    .then(function (_group) {
+      group = _group;
+      return mp.wrap(User.find({role: 'admin'}));
+    })
+    .then(function (admins) {
+      // Notify the admins
+      Notification.create(admins.map(function(admin) {
+        return {
+          datetime: moment().toISOString(),
+          user: admin._id,
+          data: {
+            name: 'group.create',
+            group: {
+              id: '' + group._id,
+              name: group.name
+            }
+          }
+        };
+      }));
+
+      res.send(201, group);
     })
     .catch(function (err) {
       handleError(res, err);

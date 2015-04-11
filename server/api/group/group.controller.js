@@ -7,6 +7,7 @@ var Notification = require('../notification/notification.model');
 var upload = require('../../components/upload');
 var mp = require('../../components/mongoosePromise');
 var moment = require('moment');
+var email = require('../../components/communication/email');
 
 // Get list of approved groups
 exports.index = function(req, res) {
@@ -60,7 +61,6 @@ exports.create = function(req, res) {
       // Notify the admins
       Notification.create(admins.map(function(admin) {
         return {
-          datetime: moment().toISOString(),
           user: admin._id,
           data: {
             name: 'group.create',
@@ -114,6 +114,20 @@ exports.approve = function (req, res) {
     if(!group) { return res.send(404); }
     group.approved = true;
     group.save(function (err, group) {
+      if (err) { return handleError(res, err); }
+
+      // Notify the group owner
+      Notification.create({
+        user: group.administrator,
+        data: {
+          name: 'group.approve',
+          group: {
+            id: '' + group._id,
+            name: group.name
+          }
+        }
+      });
+
       res.json(group);
     });
   });
@@ -127,6 +141,25 @@ exports.requestAccess = function (req, res) {
     if(!group) { return res.send(404); }
     group.requests.push(req.body);
     group.save(function (err, group) {
+      if (err) { return handleError(res, err); }
+
+      // Notify the group owner
+      Notification.create({
+        user: group.administrator,
+        data: {
+          name: 'group.request',
+          group: {
+            id: '' + group._id,
+            name: group.name
+          },
+          request: {
+            name: req.body.name,
+            email: req.body.email,
+            message: req.body.message
+          }
+        }
+      });
+
       delete group._doc.emails;
       delete group._doc.requests;
       res.json(group);
@@ -148,6 +181,37 @@ exports.invite = function (req, res) {
 
     group.emails.push(req.body.email);
     group.save(function (err, group) {
+      if (err) { return handleError(res, err); }
+
+      // If the user w/ that email exists, then send a notification, otherwise send an email
+      User.findOne({email: req.body.email}, function (err, user) {
+        if (err) return;
+        if (!user) {
+          email('invite', {
+            email: req.body.email,
+            view: {
+              inviter: req.user.name,
+              group: {
+                id: '' + group._id,
+                name: group.name
+              }
+            }
+          });
+        } else {
+          Notification.create({
+            user: user._id,
+            data: {
+              inviter: req.user.name,
+              name: 'group.invite',
+              group: {
+                id: '' + group._id,
+                name: group.name
+              }
+            }
+          });
+        }
+      });
+
       delete group._doc.emails;
       delete group._doc.requests;
       res.json(group);
@@ -170,7 +234,26 @@ exports.grantAccess = function (req, res) {
     group.emails.push(request.email);
     group.save(function (err, group) {
       if (err) { return handleError(res, err); }
-      return res.json(200, group);
+
+      // Update requester's membership and notify
+      User.findOne({email: request.email}, function (err, user) {
+        if (err || !user) return res.json(200, group);
+        Notification.create({
+          user: user._id,
+          data: {
+            name: 'group.grant',
+            group: {
+              id: '' + group._id,
+              name: group.name
+            }
+          }
+        });
+
+        user.groups.push(group._id);
+        user.save(function (err) {
+          return res.json(200, group);
+        });
+      });
     });
   });
 };
@@ -186,9 +269,25 @@ exports.denyAccess = function (req, res) {
       return r._id.equals(req.params.rid);
     });
     if (requestIndex === -1) { return res.send(404); }
-    group._doc.requests.splice(requestIndex, 1);
+    var request = group._doc.requests.splice(requestIndex, 1)[0];
     group.save(function (err, group) {
       if (err) { return handleError(res, err); }
+
+      // Notify the requester
+      User.findOne({email: request.email}, function (err, user) {
+        if (err || !user) return;
+        Notification.create({
+          user: user._id,
+          data: {
+            name: 'group.deny',
+            group: {
+              id: '' + group._id,
+              name: group.name
+            }
+          }
+        });
+      });
+
       return res.json(200, group);
     });
   });

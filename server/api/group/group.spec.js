@@ -51,6 +51,7 @@ describe('The Groups API', function () {
       user2 = arguments[2];
       user3 = arguments[3];
       group1.administrator = user._id;
+      group2.administrator = user3._id;
       Group.create(group1, group2, function () {
         group1 = arguments[1];
         group2 = arguments[2];
@@ -295,7 +296,8 @@ describe('The Groups API', function () {
 
     var group = {
       name: 'ugroup',
-      approved: false
+      approved: false,
+      administrator: user._id
     };
     before(function (done) {
       Group.create(group, function (err, doc) {
@@ -328,15 +330,40 @@ describe('The Groups API', function () {
     });
   });
 
+  describe('PUT /api/groups/:id/request', function () {
+
+    it('should save the request to the group', function (done) {
+      request(app)
+        .put('/api/groups/' + group2._id + '/request')
+        .send({
+          name: 'requester',
+          email: 'requ@EST.er',
+          message: 'a message'
+        })
+        .expect(200)
+        .end(function(err, res) {
+          if (err) return done(err);
+          Group.findById(group2._id, function (err, group) {
+            group.requests[0].name.should.equal('requester');
+            group.requests[0].email.should.equal('requ@est.er');
+            group.requests[0].message.should.equal('a message');
+            done();
+          });
+        });
+    });
+  });
+
   describe('PUT /api/groups/:id/grant/:rid', function () {
 
     var group = {
       name: 'ugroup',
       approved: false,
       requests: [{
-        email: 'foo1@bar.com'
+        name: 'group test user2',
+        email: 'gtu2@roadamico.com'
       }, {
-        email: 'foo2@bar.com'
+        name: 'group test user3',
+        email: 'gtu3@roadamico.com'
       }],
       administrator: user._id
     };
@@ -369,7 +396,7 @@ describe('The Groups API', function () {
         });
     });
 
-    it('should add the request email to the email whitelist', function (done) {
+    it('should add the request email to the email whitelist and join the user to the group', function (done) {
       request(app)
         .put('/api/groups/' + group._id + '/grant/' + group.requests[0]._id)
         .set('Authorization', 'Bearer ' + auth.signToken(user))
@@ -378,7 +405,10 @@ describe('The Groups API', function () {
           if (err) return done(err);
           res.body.emails.should.containEql(group.requests[0].email);
           should(_.find(res.body.requests, {email: group.requests[0].email})).not.be.ok;
-          done();
+          User.findById(user2._id, function (err, u) {
+            u.groups.should.containEql(group._id);
+            done();
+          });
         });
     });
 
@@ -402,9 +432,11 @@ describe('The Groups API', function () {
       name: 'ugroup',
       approved: false,
       requests: [{
-        email: 'foo1@bar.com'
+        name: 'group test user2',
+        email: 'gtu2@roadamico.com'
       }, {
-        email: 'foo2@bar.com'
+        name: 'group test user3',
+        email: 'gtu3@roadamico.com'
       }],
       administrator: user._id
     };
@@ -479,13 +511,13 @@ describe('The Groups API', function () {
     it('should allow members', function (done) {
       request(app)
         .put('/api/groups/' + group1._id + '/invite')
-        .send({email: 'invite2@me.com'})
+        .send({email: 'gtu3@roadamico.com'})
         .set('Authorization', 'Bearer ' + auth.signToken(user2))
         .expect(200)
         .end(function(err, res) {
           if (err) return done(err);
           Group.findById(group1._id, function (err, g) {
-            g.emails.should.containEql('invite2@me.com');
+            g.emails.should.containEql('gtu3@roadamico.com');
             done();
           });
         });

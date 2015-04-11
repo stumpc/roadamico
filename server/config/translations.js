@@ -24,6 +24,10 @@ module.exports = {
     'email.grantAccess':    'Welcome to RoadAmico!',
     'email.resetPassword':  'RoadAmico Password Reset',
     'email.group.create':   'RoadAmico: A new group needs to be reviewed',
+    'email.group.approve':  'RoadAmico: Your group has been approved',
+    'email.group.request':  'RoadAmico: Someone has requested access to your group',
+    'email.group.grant':    'RoadAmico: Your request for access to a group was granted',
+    'email.group.deny':     'RoadAmico: Your request for access to a group was denied',
 
     // Notifications
     'notify.booked-booker': 'You have successfully booked {{service}} with {{provider}} at {{time}}.',

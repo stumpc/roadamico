@@ -1,0 +1,6 @@
+Hello {{user.name}},
+
+Unfortunately your request for access to the group "{{data.group.name}}" was denied.
+
+All the Best,
+RoadAmico Admin

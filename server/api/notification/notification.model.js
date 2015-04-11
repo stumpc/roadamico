@@ -7,7 +7,11 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var NotificationSchema = new Schema({
-  datetime: String,
+  datetime: {
+    type: String, default: function() {
+      return moment().toISOString()
+    }
+  },
   user: { type: Schema.Types.ObjectId, ref: 'User' },
   read: Boolean,
   data: {}

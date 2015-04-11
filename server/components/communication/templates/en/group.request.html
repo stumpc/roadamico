@@ -1,0 +1,19 @@
+<p>Hello {{user.name}},</p>
+
+<p>Somebody has requested access to your group "{{data.group.name}}". Here are the details:</p>
+
+<p>
+  <strong>Name:</strong> {{data.request.name}}<br/>
+  <strong>Email:</strong> {{data.request.email}}<br/>
+  <strong>Message:</strong> {{data.request.message}}
+</p>
+
+<p>
+  You can grant or deny this request at:
+  <a href="http://www.roadamico.com/groups/{{data.group.id}}">http://www.roadamico.com/groups/{{data.group.id}}</a>
+</p>
+
+<p>
+  Thanks,<br/>
+  RoadAmico Admin
+</p>

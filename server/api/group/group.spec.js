@@ -7,6 +7,8 @@ var request = require('supertest');
 var User = require('../user/user.model');
 var Group = require('./group.model');
 var auth = require('../../auth/auth.service');
+var mp = require('../../components/mongoosePromise');
+var Q = require('q');
 
 describe('The Groups API', function () {
 
@@ -46,7 +48,8 @@ describe('The Groups API', function () {
   };
 
   before(function (done) {
-    User.create(user, user2, user3, admin, function () {
+    User.create(user, user2, user3, admin, function (err) {
+      if (err) console.error(err);
       user = arguments[1];
       user2 = arguments[2];
       user3 = arguments[3];
@@ -61,12 +64,10 @@ describe('The Groups API', function () {
   });
 
   after(function (done) {
-    user.remove(function () {
-      admin.remove(function () {
-        Group.find({}).remove(function () {
-          done();
-        });
-      });
+    Q.all([user, user2, user3, admin, group1, group2].map(function (m) {
+      return mp.wrap(m, 'remove');
+    })).then(function () {
+      done();
     });
   });
 

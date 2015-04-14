@@ -5,18 +5,101 @@
 
 'use strict';
 
-//var Thing = require('../api/thing/thing.model');
 var User = require('../api/user/user.model');
+var Place = require('../api/place/place.model');
 //var Signup = require('../api/signup/signup.model');
 //var Service = require('../api/service/service.model');
 //var Category = require('../api/category/category.model');
 //var Rating = require('../api/rating/rating.model');
 //var Availability = require('../api/availability/availability.model');
-//var faker = require('faker');
-//var _ = require('lodash');
-//var Q = require('q');
-//var mp = require('../components/mongoosePromise');
-//var moment = require('moment');
+var faker = require('faker');
+var _ = require('lodash');
+var Q = require('q');
+var mp = require('../components/mongoosePromise');
+var moment = require('moment');
+
+function placeInRome() {
+  return [
+    Math.random() * 0.085596 + 41.949884, // 41.949884 - 41.864288
+    Math.random() * 0.198097 + 12.400131  // 12.400131 - 12.598228
+  ];
+}
+
+function randInt(upto) {
+  return Math.floor(Math.random() * upto);
+}
+
+
+var users = [new User({
+  email: 'admin@admin.com',
+  name: 'admin',
+  password: 'admin',
+  activated: true,
+  role: 'admin'
+})];
+_.times(10, function (i) {
+  users.push({
+    email: 'testuser' + i + '@roadamico.com',
+    name: 'test user ' + i,
+    password: 'password',
+    activated: true,
+    role: 'user'
+  })
+});
+
+var places = [];
+function generatePlaces() {
+  places = _.times(10, function () {
+    var pos = placeInRome();
+    return {
+      name: 'Place de ' + faker.name.lastName(),
+      location: faker.address.streetAddress() + ' ' + faker.address.streetName() + ', Rome, Italy',
+      locationDetails: {geometry: {location: {k: pos[0], D: pos[1]}}},
+      description: faker.lorem.paragraphs(randInt(4) + 2),
+      photos: _.times(7, function () {
+        return {
+          datetime: moment().subtract(randInt(50), 'days').toISOString(),
+          url: faker.image.city(),
+          poster: users[randInt(users.length)]._id
+        };
+      })
+    };
+  });
+}
+
+
+function createUsers() {
+  var deferred = Q.defer();
+  User.remove({}, function () {
+    User.create(users, function () {
+      deferred.resolve();
+    })
+  });
+  return deferred.promise;
+}
+
+function createPlaces() {
+  generatePlaces();
+  var deferred = Q.defer();
+  Place.remove({}, function () {
+    Place.create(places, function () {
+      deferred.resolve();
+    })
+  });
+  return deferred.promise;
+}
+
+
+console.log('Seeding DB');
+createUsers()
+  .then(function () {
+    console.log('Users created');
+    return createPlaces();
+  })
+  .then(function () {
+    console.log('Places created');
+  });
+
 
 
 

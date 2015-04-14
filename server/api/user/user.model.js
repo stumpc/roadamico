@@ -83,7 +83,7 @@ var UserSchema = new Schema({
   //  idUrl: String,
   //  status: String // none, pending, denied, approved
   //},
-  //activated: Boolean,
+  activated: Boolean,
   modCode: String,
   role: {
     type: String,

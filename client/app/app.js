@@ -53,17 +53,10 @@ angular.module('roadAmicoApp', [
     // Check authentication when moving between pages (states)
     $rootScope.$on('$stateChangeStart', function (event, next) {
       Auth.isLoggedInAsync(function(loggedIn) {
-        if (loggedIn && !Auth.getCurrentUser().activated) {
-          if ($location.path() == '/home') {
-            $location.path('/finalize');
-          } else if ($location.path() !== '/finalize') {
-            Auth.logout();
-          }
-        }
         if ((next.authenticate || next.admin) && !loggedIn) {
 
           // Redirect to login if route requires auth and you're not logged in
-          $location.path('/');
+          $location.path('/login');
         } else if (next.admin && !Auth.isAdmin()) {
 
           // If route requires admin and you are not one then go home

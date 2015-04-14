@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .config(function ($stateProvider, config) {
+  .config(function ($stateProvider) {
     $stateProvider
       .state('landing', {
-        url: config.appLive ? '/landing' : '/',
+        url: '/',
         templateUrl: 'app/landing/landing.html',
         controller: 'LandingCtrl'
       });

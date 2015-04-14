@@ -6,7 +6,7 @@ var mongoose = require('mongoose'),
 var PlaceSchema = new Schema({
   name: String,
   location: String,
-  locationDetails: String,
+  locationDetails: {},
   description: String,
   photos: [{
     datetime: String,

@@ -9,17 +9,17 @@ angular.module('roadAmicoApp')
       return new Google.maps.LatLng(lat, lng);
     }
 
-    return function (user) {
+    return function (object) {
       var deferred = $q.defer();
 
       // First check for location details
-      if (user.locationDetails && user.locationDetails.geometry) {
-        deferred.resolve(getLatLng(user.locationDetails.geometry));
-      } else if (user.location) {
+      if (object.locationDetails && object.locationDetails.geometry) {
+        deferred.resolve(getLatLng(object.locationDetails.geometry));
+      } else if (object.location) {
 
         // Begin geocoding the address
         var geocoder = new Google.maps.Geocoder();
-        geocoder.geocode({address: user.location}, function (results, status) {
+        geocoder.geocode({address: object.location}, function (results, status) {
           if (status === Google.maps.GeocoderStatus.OK && results.length) {
             deferred.resolve(getLatLng(results[0].geometry));
           } else {

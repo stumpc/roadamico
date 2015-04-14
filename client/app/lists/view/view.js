@@ -3,9 +3,14 @@
 angular.module('roadAmicoApp')
   .config(function ($stateProvider) {
     $stateProvider
-      .state('view', {
+      .state('viewList', {
         url: '/lists/:id',
         templateUrl: 'app/lists/view/view.html',
-        controller: 'ViewCtrl'
+        controller: 'ViewListCtrl',
+        resolve: {
+          list: function ($stateParams, List) {
+            return List.get({id: $stateParams.id}).$promise;
+          }
+        }
       });
   });

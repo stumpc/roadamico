@@ -4,7 +4,7 @@
   <h1>Places</h1>
 
   <ul>
-    <li ng-repeat="place in places"><a ui-sref="viewPlace({id: place._id})">{{place.name}}</a></li>
+    <li ng-repeat="place in places"><a ui-sref="place.view({id: place._id})">{{place.name}}</a></li>
   </ul>
 
 </div>

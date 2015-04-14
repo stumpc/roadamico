@@ -269,7 +269,7 @@ angular.module('roadAmicoApp')
                 }
               }]
             }
-          }, 'modal-info', 'lg');
+          }, name ? 'modal-info' : 'modal-default', 'lg');
         }
       }
     };

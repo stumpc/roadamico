@@ -119,3 +119,25 @@ body.roadAmico {
   background-color: #fff;
   border: 1px solid rgba(0, 0, 0, 0.15);
 }
+
+// Carousel
+
+.carousel-holder {
+  background: #333;
+  padding: 20px 0;
+}
+
+ul[rn-carousel] {
+  height: 300px;
+  text-align: center;
+  user-select: none;
+
+  img {
+    max-height: 300px;
+    -webkit-user-drag: none;
+  }
+
+  .rn-carousel-control {
+    color: white;
+  }
+}

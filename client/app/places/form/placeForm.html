@@ -1,0 +1,27 @@
+<div>this is the placeForm directive</div>
+
+<form name="form" ng-submit="save(place)" novalidate>
+
+  <!-- Name -->
+  <div class="form-group" ng-class="{ 'has-error' : form.name.$invalid && !form.name.$pristine }">
+    <label>Name</label>
+    <input type="text" name="name" class="form-control" ng-model="place.name" required>
+    <p ng-show="form.name.$invalid && !form.name.$pristine" class="help-block">Name is required</p>
+  </div>
+
+  <!-- Location -->
+  <div class="form-group" ng-class="{ 'has-error' : form.location.$invalid && !form.location.$pristine }">
+    <label>Location</label>
+    <input type="text" name="location" id='location' ng-autocomplete class="form-control" ng-model="place.location" details="place.locationDetails">
+  </div>
+
+  <!-- Description -->
+  <div class="form-group" ng-class="{ 'has-error' : form.location.$invalid && !form.location.$pristine }">
+    <label>Description</label>
+    <textarea class="form-control" name="description" id="description" ng-model="place.description"></textarea>
+  </div>
+
+
+
+  <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid || form.$pristine" translate>Save</button>
+</form>

@@ -11,7 +11,8 @@ angular.module('roadAmicoApp', [
   'ngAutocomplete',
   'ngMap',
   'pascalprecht.translate',
-  'ui.select'
+  'ui.select',
+  'angular-carousel'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider

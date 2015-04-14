@@ -1,6 +1,6 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('ViewCtrl', function ($scope) {
-    $scope.message = 'Hello';
+  .controller('ViewListCtrl', function ($scope, list) {
+    $scope.list = list;
   });

@@ -2,10 +2,40 @@
 
 <div class="container home-page page">
   <h1>{{place.name}}</h1>
+  <a ui-sref="place.edit({id: place._id})">Edit</a>
 
-  <div ng-repeat="photo in place.photos">
-    <img src="{{photo.url}}"/>
+  <!--<div ng-repeat="photo in place.photos">-->
+    <!--<img src="{{photo.url}}"/>-->
+  <!--</div>-->
+
+  <div class="row">
+    <div class="col-md-6">
+      Info goes here
+    </div>
+    <div class="col-md-6">
+
+      <!-- Photo Carousel -->
+      <div class="carousel-holder">
+        <ul rn-carousel rn-carousel-controls rn-carousel-auto-slide="7" class="image">
+          <li ng-repeat="photo in place.photos">
+            <a href="#" ng-click="viewPhoto(photo)">
+              <img src="{{photo.url}}" />
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Map -->
+      <div ng-if="place.locationDetails">
+        <map zoom="12" center="[35.910419, -79.049592]" scrollwheel="false"></map>
+      </div>
+
+      <!-- Comments -->
+      <div id="disqus_thread"></div>
+    </div>
   </div>
+
+
 
 </div>
 

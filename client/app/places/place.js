@@ -3,13 +3,11 @@
 angular.module('roadAmicoApp')
   .config(function ($stateProvider) {
     $stateProvider
-      .state('viewPlace', {
-        url: '/places/:id',
-        templateUrl: 'app/places/view/view.html',
-        controller: 'ViewPlaceCtrl',
+      .state('place', {
+        url: '/place/:id',
+        template: '<ui-view></ui-view>',
         resolve: {
           place: function ($stateParams, Place) {
-            console.log($stateParams.id);
             return Place.get({id: $stateParams.id}).$promise;
           }
         }

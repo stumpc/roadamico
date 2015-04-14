@@ -1,11 +1,9 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <div class="container home-page page">
-  <h1>Lists</h1>
+  <h1>Edit Place</h1>
 
-  <ul>
-    <li ng-repeat="list in lists"><a ui-sref="viewList({id:list._id})">{{list.name}}</a></li>
-  </ul>
+  <div place-form place="place" on-save="save(updated)"></div>
 
 </div>
 

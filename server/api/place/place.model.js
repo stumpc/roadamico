@@ -20,7 +20,7 @@ var PlaceSchema = new Schema({
     text: String,
     embed: {}
   }],
-  reviews: [{
+  ratings: [{
     datetime: String,
     poster: { type: Schema.Types.ObjectId, ref: 'User' },
     score: Number

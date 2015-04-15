@@ -15,5 +15,6 @@ router.delete('/:id', controller.destroy);
 
 router.post('/:id/photo',             auth.isAuthenticated(), controller.addPhoto);
 router.delete('/:id/photo/:photoId',  auth.isAuthenticated(), controller.removePhoto);
+router.post('/:id/rate',              auth.isAuthenticated(), controller.rate);
 
 module.exports = router;

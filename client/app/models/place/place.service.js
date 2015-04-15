@@ -5,6 +5,10 @@ angular.module('roadAmicoApp')
     return $resource('/api/places/:id', {id: '@_id'}, {
       update: {
         method: 'PUT'
+      },
+      rate: {
+        method: 'POST',
+        url: '/api/places/:id/rate'
       }
     });
   });

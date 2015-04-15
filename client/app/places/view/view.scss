@@ -1,17 +1,23 @@
 .place-page {
-  .name {
-    position: relative;
-
-    a {
-      position: absolute;
-      top: 0;
-      right: 0;
-      display: none;
+  .place-info {
+    hr {
+      border-top: 1px solid $mediumgray-dark;
     }
-  }
 
-  .place-info:hover .name a {
-    display: block;
+    .name {
+      position: relative;
+
+      a {
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: none;
+      }
+    }
+
+    &:hover .name a {
+      display: block;
+    }
   }
 
 
@@ -44,4 +50,9 @@
       box-shadow: 1px 1px 2px rgba(0,0,0,0.1);
     }
   }
+}
+
+.rate {
+  color: $sunflower-dark;
+  font-size: 20px;
 }

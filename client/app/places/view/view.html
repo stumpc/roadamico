@@ -31,11 +31,25 @@
 
           </div>
           <div class="col-md-6">
-            Follow
+            <div>
+              <button class="btn btn-sm btn-ra-red"><i class="fa fa-plus"></i> Follow</button>
+              <br/>
+              <small><em>23 followers</em></small>
+            </div>
+
+            <div class="space-top-small">
+              <div rating ng-model="rating" state-on="['fa', 'fa-star']" state-off="['fa', 'fa-star-o']" readonly="true"></div>
+              <br/>
+              <small><em>Based on {{place.ratings.length}} ratings</em></small>
+              <br/>
+              <button class="btn btn-sm btn-ra-red" ng-click="viewRatings()"><i class="fa fa-comment"></i> Join the discussion</button>
+            </div>
+
           </div>
         </div>
 
         <!-- Description -->
+        <hr/>
         <div>{{place.description}}</div>
       </div>
       <div class="col-md-5">
@@ -151,38 +165,6 @@
     </div>
   </div>
 
-
-
-
-
-
-
-
-
-    <!--<div ng-repeat="photo in place.photos">-->
-      <!--<img src="{{photo.url}}"/>-->
-    <!--</div>-->
-
-
-        <!-- Photo Carousel -->
-        <!--<div class="carousel-holder">-->
-          <!--<ul rn-carousel rn-carousel-controls rn-carousel-auto-slide="7" class="image">-->
-            <!--<li ng-repeat="photo in place.photos">-->
-              <!--<a href="#" ng-click="viewPhoto(photo)">-->
-                <!--<img src="{{photo.url}}" />-->
-              <!--</a>-->
-            <!--</li>-->
-          <!--</ul>-->
-        <!--</div>-->
-
-
-
-        <!-- Comments -->
-        <!--<dir-disqus disqus-shortname="roadamico"-->
-                    <!--disqus-title="{{disqus.title}}"-->
-                    <!--disqus-identifier="{{disqus.id}}"-->
-                    <!--disqus-url="{{disqus.url}}">-->
-        <!--</dir-disqus>-->
 
 
 </div>

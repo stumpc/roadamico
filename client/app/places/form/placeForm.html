@@ -1,5 +1,3 @@
-<div>this is the placeForm directive</div>
-
 <form name="form" ng-submit="save(place)" novalidate>
 
   <!-- Name -->
@@ -13,6 +11,12 @@
   <div class="form-group" ng-class="{ 'has-error' : form.location.$invalid && !form.location.$pristine }">
     <label>Location</label>
     <input type="text" name="location" id='location' ng-autocomplete class="form-control" ng-model="place.location" details="place.locationDetails">
+  </div>
+
+  <!-- Phone -->
+  <div class="form-group" ng-class="{ 'has-error' : form.phone.$invalid && !form.phone.$pristine }">
+    <label>Phone</label>
+    <input type="text" name="name" class="form-control" ng-model="place.phone">
   </div>
 
   <!-- Description -->

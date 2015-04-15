@@ -59,6 +59,13 @@ function generatePlaces() {
           url: faker.image.city(),
           poster: users[randInt(users.length)]._id
         };
+      }),
+      ratings: _.times(2, function () {
+        return {
+          datetime: moment().subtract(randInt(50), 'days').toISOString(),
+          poster: users[randInt(7)+1]._id,
+          score: randInt(5) + 1
+        };
       })
     });
   });
@@ -86,6 +93,9 @@ function createUsers() {
   var deferred = Q.defer();
   User.remove({}, function () {
     User.create(users, function () {
+      for (var i = 0; i < users.length; i++) {
+        users[i] = arguments[1 + i];
+      }
       deferred.resolve();
     })
   });
@@ -97,6 +107,9 @@ function createPlaces() {
   var deferred = Q.defer();
   Place.remove({}, function () {
     Place.create(places, function () {
+      for (var i = 0; i < places.length; i++) {
+        places[i] = arguments[1 + i];
+      }
       deferred.resolve();
     })
   });
@@ -108,6 +121,9 @@ function createLists() {
   var deferred = Q.defer();
   List.remove({}, function () {
     List.create(lists, function () {
+      for (var i = 0; i < lists.length; i++) {
+        lists[i] = arguments[1 + i];
+      }
       deferred.resolve();
     })
   });

@@ -35,7 +35,7 @@ exports.update = function(req, res) {
   delete req.body._id;
   delete req.body.photos;
   delete req.body.updates;
-  delete req.body.reviews;
+  delete req.body.ratings;
   delete req.body.promoted;
 
   Place.findById(req.params.id, function (err, place) {
@@ -98,8 +98,31 @@ exports.destroy = function(req, res) {
   });
 };
 
-exports.follow = function (req, res) {
+exports.rate = function (req, res) {
+  Place.findById(req.params.id, function (err, place) {
+    if(err) { return handleError(res, err); }
+    if(!place) { return res.send(404); }
 
+    // See if this user has already rated
+    var rating = _.find(place.ratings, function (rating) {
+      return req.user._id.equals(rating.poster);
+    });
+    if (rating) {
+      rating.datetime = moment().toISOString();
+      rating.score = req.body.score;
+    } else {
+      place.ratings.push({
+        datetime: moment().toISOString(),
+        poster: req.user._id,
+        score: req.body.score
+      });
+    }
+
+    place.save(function(err, place) {
+      if(err) { return handleError(res, err); }
+      return res.send(200, place);
+    });
+  });
 };
 
 function handleError(res, err) {

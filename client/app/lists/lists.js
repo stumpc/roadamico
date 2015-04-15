@@ -6,6 +6,7 @@ angular.module('roadAmicoApp')
       .state('lists', {
         url: '/lists',
         templateUrl: 'app/lists/lists.html',
-        controller: 'ListsCtrl'
+        controller: 'ListsCtrl',
+        title: 'RoadAmico - Explore lists'
       });
   });

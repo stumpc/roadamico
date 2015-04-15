@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('ViewPlaceCtrl', function ($scope, $q, $window, $location, place, Modal, Google, Geolocator) {
+  .controller('ViewPlaceCtrl', function ($scope, $q, $window, $location, $document, place, Modal, Google, Geolocator) {
+    $document[0].title = 'RoadAmico - ' + place.name;
+
     $scope.place = place;
 
     $scope.viewPhoto = function (photo) {
@@ -34,19 +36,10 @@ angular.module('roadAmicoApp')
     });
 
 
-    // Code for loading the Disqus comments
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    $window.disqus_shortname = 'roadamico'; // Required - Replace '<example>' with your forum shortname
-    $window.disqus_identifier = 'place:' + place._id;
-    $window.disqus_title = 'RoadAmico: ' + place.name;
-    $window.disqus_url = 'http://www.roadamico.com' + $location.absUrl();
-    console.log($location.absUrl());
-
-      /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
+    // Disqus data
+    $scope.disqus = {
+      id: 'place:' + place._id,
+      url: $location.absUrl()
+    };
 
   });

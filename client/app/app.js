@@ -12,7 +12,8 @@ angular.module('roadAmicoApp', [
   'ngMap',
   'pascalprecht.translate',
   'ui.select',
-  'angular-carousel'
+  'angular-carousel',
+  'angularUtils.directives.dirDisqus'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
@@ -50,7 +51,7 @@ angular.module('roadAmicoApp', [
     };
   })
 
-  .run(function ($rootScope, $location, Auth) {
+  .run(function ($rootScope, $location, $document, Auth) {
     // Check authentication when moving between pages (states)
     $rootScope.$on('$stateChangeStart', function (event, next) {
       Auth.isLoggedInAsync(function(loggedIn) {
@@ -62,6 +63,14 @@ angular.module('roadAmicoApp', [
 
           // If route requires admin and you are not one then go home
           $location.path('/home');
+        } else {
+
+          // Set the title
+          if (next.title) {
+            $document[0].title = next.title;
+          } else {
+            $document[0].title = 'RoadAmico';
+          }
         }
       });
     });

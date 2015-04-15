@@ -7,7 +7,8 @@ angular.module('roadAmicoApp')
         url: '/home',
         templateUrl: 'app/home/home.html',
         controller: 'HomeCtrl',
-        authenticate: true
+        authenticate: true,
+        title: 'RoadAmico - Home'
       });
     //$urlRouterProvider.when('/home', '/home/upcoming');
   });

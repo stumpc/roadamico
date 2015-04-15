@@ -6,6 +6,7 @@ angular.module('roadAmicoApp')
       .state('places', {
         url: '/places',
         templateUrl: 'app/places/places.html',
-        controller: 'PlacesCtrl'
+        controller: 'PlacesCtrl',
+        title: 'RoadAmico - Explore places'
       });
   });

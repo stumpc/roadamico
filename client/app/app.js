@@ -12,7 +12,6 @@ angular.module('roadAmicoApp', [
   'ngMap',
   'pascalprecht.translate',
   'ui.select',
-  'angular-carousel',
   'angularUtils.directives.dirDisqus'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {

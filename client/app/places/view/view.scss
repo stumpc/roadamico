@@ -1,0 +1,47 @@
+.place-page {
+  .name {
+    position: relative;
+
+    a {
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: none;
+    }
+  }
+
+  .place-info:hover .name a {
+    display: block;
+  }
+
+
+  .photo-viewer {
+    background: $darkgray-dark;
+    color: white;
+
+    .photo-holder {
+      white-space: nowrap;
+      height: 240px;
+      width: 100%;
+      overflow-x: auto;
+
+      .photo {
+        height: 200px;
+        margin: 20px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      }
+    }
+  }
+
+  .event-viewer {
+    background: url(/assets/images/patterns/symphony-green.png) repeat;
+    border-bottom: 2px solid $mediumgray-dark;
+
+    .event {
+      padding: 10px;
+      background: white;
+      border-radius: 4px;
+      box-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+  }
+}

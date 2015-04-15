@@ -51,6 +51,7 @@ function generatePlaces() {
       name: 'Place de ' + faker.name.lastName(),
       location: faker.address.streetAddress() + ' ' + faker.address.streetName() + ', Rome, Italy',
       locationDetails: {geometry: {location: {k: pos[0], D: pos[1]}}},
+      phone: faker.phone.phoneNumber(),
       description: faker.lorem.paragraphs(randInt(4) + 2),
       photos: _.times(7, function () {
         return {

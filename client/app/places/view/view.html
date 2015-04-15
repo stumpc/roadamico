@@ -1,44 +1,188 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<div class="container home-page page">
-  <h1>{{place.name}}</h1>
-  <a ui-sref="place.edit({id: place._id})">Edit</a>
+<div class="place-page">
 
-  <!--<div ng-repeat="photo in place.photos">-->
-    <!--<img src="{{photo.url}}"/>-->
-  <!--</div>-->
+  <!-- Information -->
+  <div class="container place-info">
+    <div class="row">
+      <div class="col-md-7">
+        <!-- Name -->
+        <div class="name">
+          <h1>{{place.name}}</h1>
 
-  <div class="row">
-    <div class="col-md-6">
-      Info goes here
-    </div>
-    <div class="col-md-6">
+          <a class="btn btn-sm" ui-sref="place.edit({id: place._id})"><i class="fa fa-pencil"></i> Edit</a>
+        </div>
 
-      <!-- Photo Carousel -->
-      <div class="carousel-holder">
-        <ul rn-carousel rn-carousel-controls rn-carousel-auto-slide="7" class="image">
-          <li ng-repeat="photo in place.photos">
-            <a href="#" ng-click="viewPhoto(photo)">
-              <img src="{{photo.url}}" />
-            </a>
-          </li>
-        </ul>
+
+        <div class="row space-top-small space-bottom-small">
+          <div class="col-md-6">
+
+            <!-- Location -->
+            <div class="row space-bottom-small" ng-show="place.location">
+              <div class="col-xs-1"><i class="fa fa-lg fa-map-marker"></i></div>
+              <div class="col-xs-10">{{place.location}}</div>
+            </div>
+
+            <!-- Location -->
+            <div class="row space-bottom-small" ng-show="place.phone">
+              <div class="col-xs-1"><i class="fa fa-lg fa-phone"></i></div>
+              <div class="col-xs-10">{{place.phone}}</div>
+            </div>
+
+          </div>
+          <div class="col-md-6">
+            Follow
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div>{{place.description}}</div>
       </div>
+      <div class="col-md-5">
 
-      <!-- Map -->
-      <div ng-if="place.locationDetails">
-        <map zoom="12" center="[35.910419, -79.049592]" scrollwheel="false"></map>
+        <!-- Map -->
+        <div ng-if="place.locationDetails">
+          <map zoom="12" center="[35.910419, -79.049592]" scrollwheel="false"></map>
+        </div>
+
       </div>
-
-      <!-- Comments -->
-      <dir-disqus disqus-shortname="roadamico"
-                  disqus-title="{{disqus.title}}"
-                  disqus-identifier="{{disqus.id}}"
-                  disqus-url="{{disqus.url}}">
-      </dir-disqus>
     </div>
   </div>
 
+  <!-- Photos -->
+  <div class="photo-viewer space-top-medium">
+    <div class="photo-holder">
+      <img ng-repeat="photo in place.photos" ng-src="{{photo.url}}" class="photo img-rounded"/>
+    </div>
+  </div>
+
+  <!-- Events -->
+  <div class="event-viewer">
+    <div class="container">
+      <h2>Upcoming Events</h2>
+
+      <div class="row space-bottom-medium">
+
+        <!-- Event card -->
+        <div class="col-md-4">
+          <div class="event space-top-small">
+            <div class="space-bottom-small">We're going here after our evening class is over.</div>
+
+            <!-- Date and Time -->
+            <div class="row space-bottom-small">
+              <div class="col-xs-1"><i class="fa fa-lg fa-calendar"></i></div>
+              <div class="col-xs-10">This Friday, June 10 at 6:00 PM</div>
+            </div>
+
+            <!-- Group -->
+            <div class="row space-bottom-small">
+              <div class="col-xs-1"><i class="fa fa-lg fa-group"></i></div>
+              <div class="col-xs-10">6 People going</div>
+            </div>
+
+            <!-- Meetup -->
+            <div class="row">
+              <div class="col-xs-1"><i class="fa fa-lg fa-map-marker"></i></div>
+              <div class="col-xs-10">Meeting up at Metro Stop J</div>
+            </div>
+
+            <button class="btn btn-block btn-ra-green space-top-medium"><i class="fa fa-thumbs-up"></i> Count me in!</button>
+          </div>
+        </div>
+
+        <!-- Event card -->
+        <div class="col-md-4">
+          <div class="event space-top-small">
+            <div class="space-bottom-small">We're going here after our evening class is over.</div>
+
+            <!-- Date and Time -->
+            <div class="row space-bottom-small">
+              <div class="col-xs-1"><i class="fa fa-lg fa-calendar"></i></div>
+              <div class="col-xs-10">This Friday, June 10 at 6:00 PM</div>
+            </div>
+
+            <!-- Group -->
+            <div class="row space-bottom-small">
+              <div class="col-xs-1"><i class="fa fa-lg fa-group"></i></div>
+              <div class="col-xs-10">6 People going</div>
+            </div>
+
+            <!-- Meetup -->
+            <div class="row">
+              <div class="col-xs-1"><i class="fa fa-lg fa-map-marker"></i></div>
+              <div class="col-xs-10">Meeting up at Metro Stop J</div>
+            </div>
+
+            <button class="btn btn-block btn-ra-green space-top-medium"><i class="fa fa-thumbs-up"></i> Count me in!</button>
+          </div>
+        </div>
+
+        <!-- Event card -->
+        <div class="col-md-4">
+          <div class="event space-top-small">
+            <div class="space-bottom-small">We're going here after our evening class is over.</div>
+
+            <!-- Date and Time -->
+            <div class="row space-bottom-small">
+              <div class="col-xs-1"><i class="fa fa-lg fa-calendar"></i></div>
+              <div class="col-xs-10">This Friday, June 10 at 6:00 PM</div>
+            </div>
+
+            <!-- Group -->
+            <div class="row space-bottom-small">
+              <div class="col-xs-1"><i class="fa fa-lg fa-group"></i></div>
+              <div class="col-xs-10">6 People going</div>
+            </div>
+
+            <!-- Meetup -->
+            <div class="row">
+              <div class="col-xs-1"><i class="fa fa-lg fa-map-marker"></i></div>
+              <div class="col-xs-10">Meeting up at Metro Stop J</div>
+            </div>
+
+            <button class="btn btn-block btn-ra-green space-top-medium"><i class="fa fa-thumbs-up"></i> Count me in!</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center space-bottom-medium">
+        <button class="btn btn-sm btn-ra-green">See more...</button>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+    <!--<div ng-repeat="photo in place.photos">-->
+      <!--<img src="{{photo.url}}"/>-->
+    <!--</div>-->
+
+
+        <!-- Photo Carousel -->
+        <!--<div class="carousel-holder">-->
+          <!--<ul rn-carousel rn-carousel-controls rn-carousel-auto-slide="7" class="image">-->
+            <!--<li ng-repeat="photo in place.photos">-->
+              <!--<a href="#" ng-click="viewPhoto(photo)">-->
+                <!--<img src="{{photo.url}}" />-->
+              <!--</a>-->
+            <!--</li>-->
+          <!--</ul>-->
+        <!--</div>-->
+
+
+
+        <!-- Comments -->
+        <!--<dir-disqus disqus-shortname="roadamico"-->
+                    <!--disqus-title="{{disqus.title}}"-->
+                    <!--disqus-identifier="{{disqus.id}}"-->
+                    <!--disqus-url="{{disqus.url}}">-->
+        <!--</dir-disqus>-->
 
 
 </div>

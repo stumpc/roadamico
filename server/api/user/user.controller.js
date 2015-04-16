@@ -259,3 +259,36 @@ exports.resetPassword = function (req, res, next) {
     });
   });
 };
+
+exports.followPlace = function (req, res) {
+  var place = _.find(req.user.followingPlaces, function (f) {
+    return f.place.equals(req.params.id);
+  });
+  if (place) {
+    res.send(200);
+  } else {
+    req.user.followingPlaces.push({
+      place: req.params.id,
+      datetime: moment().toISOString()
+    });
+    req.user.save(function (err, user) {
+      if (err) return res.json(500, err);
+      res.json(user);
+    });
+  }
+};
+
+exports.unfollowPlace = function (req, res) {
+  var placeIdx = _.findIndex(req.user.followingPlaces, function (f) {
+    return f.place.equals(req.params.id);
+  });
+  if (placeIdx === -1) {
+    res.send(200);
+  } else {
+    req.user.followingPlaces.splice(placeIdx, 1);
+    req.user.save(function (err, user) {
+      if (err) return res.json(500, err);
+      res.json(user);
+    });
+  }
+};

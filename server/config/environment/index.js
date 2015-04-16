@@ -95,6 +95,10 @@ var all = {
   sendgrid: {
     username: process.env.SENDGRID_USERNAME,
     password: process.env.SENDGRID_PASSWORD
+  },
+
+  embedly: {
+    key: process.env.EMBEDLY_KEY
   }
 };
 

@@ -9,6 +9,14 @@ angular.module('roadAmicoApp')
       rate: {
         method: 'POST',
         url: '/api/places/:id/rate'
+      },
+      addPost: {
+        method: 'POST',
+        url: '/api/places/:id/feed'
+      },
+      removePost: {
+        method: 'DELETE',
+        url: '/api/places/:id/feed/:fid'
       }
     });
   });

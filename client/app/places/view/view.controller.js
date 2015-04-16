@@ -1,21 +1,33 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('ViewPlaceCtrl', function ($scope, $q, $window, $location, $document, $modal, Auth, place, Place, Modal, Google, Geolocator) {
+  .controller('ViewPlaceCtrl', function ($scope, $q, $location, $document, $modal, $sce, Auth, $upload, place, Place, Google, Geolocator) {
     $document[0].title = 'RoadAmico - ' + place.name;
 
     $scope.place = place;
-    window.place = place;
 
     $scope.user = Auth.getCurrentUser();
 
-    $scope.viewPhoto = function (photo) {
-      Modal.info.image('', photo.url, '');
+
+    // --- Following ---
+
+    $scope.userFollowing = _.find($scope.user.followingPlaces, {place: place._id});
+
+    $scope.follow = function () {
+      $scope.user.$follow({target: 'place', tid: place._id}).then(function () {
+        $scope.userFollowing = _.find($scope.user.followingPlaces, {place: place._id});
+      });
+    };
+
+    $scope.unfollow = function () {
+      $scope.user.$unfollow({target: 'place', tid: place._id}).then(function () {
+        $scope.userFollowing = null;
+      });
     };
 
 
 
-    // --- Code related to rating and comments ---
+    // --- Rating and comments ---
 
     // Info for disqus comments
     $scope.disqus = {
@@ -55,8 +67,7 @@ angular.module('roadAmicoApp')
 
 
 
-
-    // --- Code for loading the map location ---
+    // --- Setting the map location ---
 
     // Map async loader
     var mapLoader = (function () {
@@ -79,5 +90,24 @@ angular.module('roadAmicoApp')
       });
     });
 
+
+
+    // --- Feed ---
+
+    $scope.newPost = {};
+    $scope.addPost = function () {
+      Place.addPost({id: place._id}, $scope.newPost).$promise.then(function (_place) {
+        angular.copy(_place, place);
+      });
+    };
+
+    $scope.addPhoto = function (image) {
+      $upload.upload({
+        url: '/api/places/' + place._id + '/feed',
+        photo: image
+      }).success(function (_place) {
+        angular.copy(_place, place);
+      });
+    };
 
   });

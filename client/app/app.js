@@ -12,7 +12,8 @@ angular.module('roadAmicoApp', [
   'ngMap',
   'pascalprecht.translate',
   'ui.select',
-  'angularUtils.directives.dirDisqus'
+  'angularUtils.directives.dirDisqus',
+  'akoenig.deckgrid'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider

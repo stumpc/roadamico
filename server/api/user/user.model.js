@@ -29,7 +29,7 @@ var UserSchema = new Schema({
 
   // Following
   followingPlaces: [{
-    provider: { type: Schema.Types.ObjectId, ref: 'Place' },
+    place: { type: Schema.Types.ObjectId, ref: 'Place' },
     datetime: {
       type: String, default: function() {
         return moment().toISOString()
@@ -37,7 +37,7 @@ var UserSchema = new Schema({
     }
   }],
   followingLists: [{
-    provider: { type: Schema.Types.ObjectId, ref: 'List' },
+    list: { type: Schema.Types.ObjectId, ref: 'List' },
     datetime: {
       type: String, default: function() {
         return moment().toISOString()

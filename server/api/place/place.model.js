@@ -9,16 +9,12 @@ var PlaceSchema = new Schema({
   locationDetails: {},
   phone: String,
   description: String,
-  photos: [{
-    datetime: String,
-    url: String,
-    poster: { type: Schema.Types.ObjectId, ref: 'User' }
-  }],
-  updates: [{
+  feed: [{
     datetime: String,
     poster: { type: Schema.Types.ObjectId, ref: 'User' },
     text: String,
-    embed: {}
+    embed: {},
+    photo: String
   }],
   ratings: [{
     datetime: String,

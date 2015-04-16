@@ -26,13 +26,14 @@ angular.module('roadAmicoApp')
         url: '/api/users/profiles',
         isArray: true
       },
+
       follow: {
         method: 'PUT',
-        url: '/api/users/follow'
+        url: '/api/users/follow/:target/:tid'
       },
       unfollow: {
         method: 'PUT',
-        url: '/api/users/unfollow'
+        url: '/api/users/unfollow/:target/:tid'
       }
 	  });
   });

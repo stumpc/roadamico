@@ -2,8 +2,10 @@
 
 var _ = require('lodash');
 var Place = require('./place.model');
-var cloudinary = require('cloudinary');
 var moment = require('moment');
+var upload = require('../../components/upload');
+var embedder = require('../../components/embedder');
+var Q = require('q');
 
 // Get list of places
 exports.index = function(req, res) {
@@ -49,18 +51,31 @@ exports.update = function(req, res) {
   });
 };
 
-// Adds a photo to the place
-exports.addPhoto = function (req, res) {
+
+exports.addPost = function (req, res) {
   Place.findById(req.params.id, function (err, place) {
     if (err) { return handleError(res, err); }
     if(!place) { return res.send(404); }
 
-    var img = req.files.file;
-    cloudinary.uploader.upload(img.path, function(result) {
-      fs.unlinkSync(img.path); // Delete the file
-      place.photos.push({
+    var data = {};
+    var toProcess = [];
+    if (req.files && req.files.file) {
+      toProcess.push(upload.image(req.files.file).then(function (photo) {
+        data.photo = photo;
+      }));
+    }
+    if (req.body.url) {
+      toProcess.push(embedder(req.body.url).then(function (embed) {
+        data.embed = embed;
+      }));
+    }
+
+    Q.all(toProcess).then(function () {
+      place.feed.push({
         datetime: moment().toISOString(),
-        url: result.url,
+        photo: data.photo,
+        text: req.body.text,
+        embed: data.embed,
         poster: req.user._id
       });
       place.save(function (err, place) {
@@ -71,14 +86,20 @@ exports.addPhoto = function (req, res) {
   });
 };
 
-// Removes the photo from the place
-exports.removePhoto = function (req, res) {
+exports.removePost = function (req, res) {
   Place.findById(req.params.id, function (err, place) {
     if (err) { return handleError(res, err); }
     if(!place) { return res.send(404); }
-    place.photos = _.filter(place.photos, function (photo) {
-      return ('' + photo._id) !== req.params.photoId;
+
+    var postIdx = _.findIndex(place.feed, function (update) {
+      return update._id.equals(req.params.fid);
     });
+    if (postIdx === -1) return res.send(404);
+    var post = place.feed[postIdx];
+
+    if (!post.poster.equals(req.user._id) && req.user.role !== 'admin') return res.send(403);
+
+    place.feed.splice(postIdx, 1);
     place.save(function (err, place) {
       if (err) return next(err);
       res.send(place);

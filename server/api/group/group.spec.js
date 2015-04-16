@@ -12,30 +12,30 @@ var Q = require('q');
 
 describe('The Groups API', function () {
 
-  var user = new User({
+  var user = {
     name: 'group test user',
     email: 'gtu@roadamico.com',
     password: 'asdf',
     role: 'user'
-  });
-  var user2 = new User({
+  };
+  var user2 = {
     name: 'group test user2',
     email: 'gtu2@roadamico.com',
     password: 'asdf',
     role: 'user'
-  });
-  var user3 = new User({
+  };
+  var user3 = {
     name: 'group test user3',
     email: 'gtu3@roadamico.com',
     password: 'asdf',
     role: 'user'
-  });
-  var admin = new User({
+  };
+  var admin = {
     name: 'group admin user',
     email: 'gau@roadamico.com',
     password: 'asdf',
     role: 'admin'
-  });
+  };
   var group1 = {
     name: 'g1',
     approved: true,
@@ -46,6 +46,38 @@ describe('The Groups API', function () {
     approved: false,
     emails: ['a@b.com']
   };
+  var group3 = {
+    name: 'ugroup',
+    approved: false,
+    requests: [{
+      name: 'group test user2',
+      email: 'gtu2@roadamico.com'
+    }, {
+      name: 'group test user3',
+      email: 'gtu3@roadamico.com'
+    }]
+  };
+  var group4 = {
+    name: 'g3',
+    approved: true,
+    administrator: user._id
+  };
+  var group5 = {
+    name: 'g4',
+    approved: true,
+    administrator: user._id
+  };
+  var group6 = {
+    name: 'ugroup',
+    approved: false,
+    requests: [{
+      name: 'group test user2',
+      email: 'gtu2@roadamico.com'
+    }, {
+      name: 'group test user3',
+      email: 'gtu3@roadamico.com'
+    }]
+  };
 
   before(function (done) {
     User.create(user, user2, user3, admin, function (err) {
@@ -53,21 +85,30 @@ describe('The Groups API', function () {
       user = arguments[1];
       user2 = arguments[2];
       user3 = arguments[3];
+      admin = arguments[4];
       group1.administrator = user._id;
       group2.administrator = user3._id;
-      Group.create(group1, group2, function () {
+      group3.administrator = user._id;
+      group4.administrator = user._id;
+      group5.administrator = user._id;
+      group6.administrator = user._id;
+      Group.create(group1, group2, group3, group4, group5, group6, function () {
         group1 = arguments[1];
         group2 = arguments[2];
+        group3 = arguments[3];
+        group4 = arguments[4];
+        group5 = arguments[5];
+        group6 = arguments[6];
         done();
       });
     });
   });
 
   after(function (done) {
-    Q.all([user, user2, user3, admin, group1, group2].map(function (m) {
-      return mp.wrap(m, 'remove');
-    })).then(function () {
-      done();
+    User.remove({}, function () {
+      Group.remove({}, function () {
+        done();
+      });
     });
   });
 
@@ -235,27 +276,9 @@ describe('The Groups API', function () {
 
   describe('DELETE /api/groups/:id', function () {
 
-    var group3 = {
-      name: 'g3',
-      approved: true,
-      administrator: user._id
-    };
-    var group4 = {
-      name: 'g4',
-      approved: true,
-      administrator: user._id
-    };
-    before(function (done) {
-      Group.create(group3, group4, function () {
-        group3 = arguments[1];
-        group4 = arguments[2];
-        done();
-      })
-    });
-
     it('shouldn\'t find groups that the requesting user doesn\'t own', function (done) {
       request(app)
-        .delete('/api/groups/' + group3._id)
+        .delete('/api/groups/' + group4._id)
         .set('Authorization', 'Bearer ' + auth.signToken(user2))
         .expect(404)
         .end(function(err, res) {
@@ -266,12 +289,12 @@ describe('The Groups API', function () {
 
     it('should delete groups that the requesting user owns', function (done) {
       request(app)
-        .delete('/api/groups/' + group3._id)
+        .delete('/api/groups/' + group4._id)
         .set('Authorization', 'Bearer ' + auth.signToken(user))
         .expect(204)
         .end(function(err, res) {
           if (err) return done(err);
-          Group.findById(group3._id, function (err, doc) {
+          Group.findById(group4._id, function (err, doc) {
             should.not.exist(doc);
             done();
           });
@@ -280,12 +303,12 @@ describe('The Groups API', function () {
 
     it('should delete groups for admins', function (done) {
       request(app)
-        .delete('/api/groups/' + group4._id)
+        .delete('/api/groups/' + group5._id)
         .set('Authorization', 'Bearer ' + auth.signToken(admin))
         .expect(204)
         .end(function(err, res) {
           if (err) return done(err);
-          Group.findById(group4._id, function (err, doc) {
+          Group.findById(group5._id, function (err, doc) {
             should.not.exist(doc);
             done();
           });
@@ -356,28 +379,9 @@ describe('The Groups API', function () {
 
   describe('PUT /api/groups/:id/grant/:rid', function () {
 
-    var group = {
-      name: 'ugroup',
-      approved: false,
-      requests: [{
-        name: 'group test user2',
-        email: 'gtu2@roadamico.com'
-      }, {
-        name: 'group test user3',
-        email: 'gtu3@roadamico.com'
-      }],
-      administrator: user._id
-    };
-    before(function (done) {
-      Group.create(group, function (err, doc) {
-        group = doc;
-        done();
-      });
-    });
-
     it('shouldn\'t find groups that the requesting user doesn\'t own', function (done) {
       request(app)
-        .put('/api/groups/' + group._id + '/grant/' + group.requests[0]._id)
+        .put('/api/groups/' + group6._id + '/grant/' + group6.requests[0]._id)
         .set('Authorization', 'Bearer ' + auth.signToken(user2))
         .expect(404)
         .end(function(err, res) {
@@ -388,7 +392,7 @@ describe('The Groups API', function () {
 
     it('shouldn\'t find groups with invalid request ids', function (done) {
       request(app)
-        .put('/api/groups/' + group._id + '/grant/000000000000000000000000')
+        .put('/api/groups/' + group6._id + '/grant/000000000000000000000000')
         .set('Authorization', 'Bearer ' + auth.signToken(user))
         .expect(404)
         .end(function(err, res) {
@@ -399,15 +403,15 @@ describe('The Groups API', function () {
 
     it('should add the request email to the email whitelist and join the user to the group', function (done) {
       request(app)
-        .put('/api/groups/' + group._id + '/grant/' + group.requests[0]._id)
+        .put('/api/groups/' + group6._id + '/grant/' + group6.requests[0]._id)
         .set('Authorization', 'Bearer ' + auth.signToken(user))
         .expect(200)
         .end(function(err, res) {
           if (err) return done(err);
-          res.body.emails.should.containEql(group.requests[0].email);
-          should(_.find(res.body.requests, {email: group.requests[0].email})).not.be.ok;
+          res.body.emails.should.containEql(group6.requests[0].email);
+          should(_.find(res.body.requests, {email: group6.requests[0].email})).not.be.ok;
           User.findById(user2._id, function (err, u) {
-            u.groups.should.containEql(group._id);
+            u.groups.should.containEql(group6._id);
             done();
           });
         });
@@ -415,13 +419,13 @@ describe('The Groups API', function () {
 
     it('should work for admins', function (done) {
       request(app)
-        .put('/api/groups/' + group._id + '/grant/' + group.requests[1]._id)
+        .put('/api/groups/' + group6._id + '/grant/' + group6.requests[1]._id)
         .set('Authorization', 'Bearer ' + auth.signToken(admin))
         .expect(200)
         .end(function(err, res) {
           if (err) return done(err);
-          res.body.emails.should.containEql(group.requests[1].email);
-          should(_.find(res.body.requests, {email: group.requests[1].email})).not.be.ok;
+          res.body.emails.should.containEql(group6.requests[1].email);
+          should(_.find(res.body.requests, {email: group6.requests[1].email})).not.be.ok;
           done();
         });
     });
@@ -429,28 +433,9 @@ describe('The Groups API', function () {
 
   describe('PUT /api/groups/:id/deny/:rid', function () {
 
-    var group = {
-      name: 'ugroup',
-      approved: false,
-      requests: [{
-        name: 'group test user2',
-        email: 'gtu2@roadamico.com'
-      }, {
-        name: 'group test user3',
-        email: 'gtu3@roadamico.com'
-      }],
-      administrator: user._id
-    };
-    before(function (done) {
-      Group.create(group, function (err, doc) {
-        group = doc;
-        done();
-      });
-    });
-
     it('shouldn\'t find groups that the requesting user doesn\'t own', function (done) {
       request(app)
-        .put('/api/groups/' + group._id + '/deny/' + group.requests[0]._id)
+        .put('/api/groups/' + group3._id + '/deny/' + group3.requests[0]._id)
         .set('Authorization', 'Bearer ' + auth.signToken(user2))
         .expect(404)
         .end(function(err, res) {
@@ -461,7 +446,7 @@ describe('The Groups API', function () {
 
     it('shouldn\'t find groups with invalid request ids', function (done) {
       request(app)
-        .put('/api/groups/' + group._id + '/deny/000000000000000000000000')
+        .put('/api/groups/' + group3._id + '/deny/000000000000000000000000')
         .set('Authorization', 'Bearer ' + auth.signToken(user))
         .expect(404)
         .end(function(err, res) {
@@ -472,24 +457,24 @@ describe('The Groups API', function () {
 
     it('should remove the request', function (done) {
       request(app)
-        .put('/api/groups/' + group._id + '/deny/' + group.requests[0]._id)
+        .put('/api/groups/' + group3._id + '/deny/' + group3.requests[0]._id)
         .set('Authorization', 'Bearer ' + auth.signToken(user))
         .expect(200)
         .end(function(err, res) {
           if (err) return done(err);
-          should(_.find(res.body.requests, {email: group.requests[0].email})).not.be.ok;
+          should(_.find(res.body.requests, {email: group3.requests[0].email})).not.be.ok;
           done();
         });
     });
 
     it('should work for admins', function (done) {
       request(app)
-        .put('/api/groups/' + group._id + '/deny/' + group.requests[1]._id)
+        .put('/api/groups/' + group3._id + '/deny/' + group3.requests[1]._id)
         .set('Authorization', 'Bearer ' + auth.signToken(admin))
         .expect(200)
         .end(function(err, res) {
           if (err) return done(err);
-          should(_.find(res.body.requests, {email: group.requests[1].email})).not.be.ok;
+          should(_.find(res.body.requests, {email: group3.requests[1].email})).not.be.ok;
           done();
         });
     });

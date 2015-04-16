@@ -13,8 +13,8 @@ router.put('/:id',    controller.update);
 router.patch('/:id',  controller.update);
 router.delete('/:id', controller.destroy);
 
-router.post('/:id/photo',             auth.isAuthenticated(), controller.addPhoto);
-router.delete('/:id/photo/:photoId',  auth.isAuthenticated(), controller.removePhoto);
-router.post('/:id/rate',              auth.isAuthenticated(), controller.rate);
+router.post('/:id/feed',        auth.isAuthenticated(), controller.addPost);
+router.delete('/:id/feed/:fid', auth.isAuthenticated(), controller.removePost);
+router.post('/:id/rate',        auth.isAuthenticated(), controller.rate);
 
 module.exports = router;

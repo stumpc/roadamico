@@ -43,6 +43,24 @@ _.times(10, function (i) {
   })
 });
 
+
+function feedPost() {
+  var base = {
+    datetime: moment().subtract(randInt(50), 'days').toISOString(),
+    poster: users[randInt(users.length)]._id
+  };
+  return _.merge(base, [{
+    photo: faker.image.city()
+  }, {
+    text: faker.lorem.sentences(3)
+  }, {
+    embed: [{
+      thumbnail_url: faker.image.nightlife(),
+      title: faker.company.catchPhrase()
+    }]
+  }][randInt(3)]);
+}
+
 var places = [];
 function generatePlaces() {
   places = _.times(10, function () {
@@ -53,13 +71,7 @@ function generatePlaces() {
       locationDetails: {geometry: {location: {k: pos[0], D: pos[1]}}},
       phone: faker.phone.phoneNumber(),
       description: faker.lorem.paragraphs(randInt(4) + 2),
-      photos: _.times(7, function () {
-        return {
-          datetime: moment().subtract(randInt(50), 'days').toISOString(),
-          url: faker.image.city(),
-          poster: users[randInt(users.length)]._id
-        };
-      }),
+      feed: _.times(8, feedPost),
       ratings: _.times(2, function () {
         return {
           datetime: moment().subtract(randInt(50), 'days').toISOString(),

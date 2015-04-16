@@ -31,10 +31,9 @@
 
           </div>
           <div class="col-md-6">
-            <div>
-              <button class="btn btn-sm btn-ra-red"><i class="fa fa-plus"></i> Follow</button>
-              <br/>
-              <small><em>23 followers</em></small>
+            <div ng-show="user._id">
+              <button class="btn btn-sm btn-ra-red" ng-click="follow()" ng-hide="userFollowing"><i class="fa fa-plus"></i> Follow</button>
+              <button class="btn btn-sm btn-ra-red-hollow" ng-click="unfollow()" ng-show="userFollowing"><i class="fa fa-minus"></i> Unfollow</button>
             </div>
 
             <div class="space-top-small">
@@ -64,14 +63,15 @@
   </div>
 
   <!-- Photos -->
-  <div class="photo-viewer space-top-medium">
-    <div class="photo-holder">
-      <img ng-repeat="photo in place.photos" ng-src="{{photo.url}}" class="photo img-rounded"/>
-    </div>
-  </div>
+  <!--<div class="photo-viewer space-top-medium">-->
+    <!--<div class="photo-holder">-->
+
+      <!--<img ng-repeat="photo in place.photos" ng-src="{{photo.url}}" class="photo img-rounded"/>-->
+    <!--</div>-->
+  <!--</div>-->
 
   <!-- Events -->
-  <div class="event-viewer">
+  <div class="event-viewer space-top-large">
     <div class="container">
       <h2>Upcoming Events</h2>
 
@@ -165,7 +165,42 @@
     </div>
   </div>
 
+  <!-- Share -->
+  <div class="share">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="text-center">
+          <h2>Share Something</h2>
+        </div>
 
+        <p>
+          Share a photo!
+        </p>
+
+        <button class="btn btn-ra-red" ng-file-select="addPhoto($files)" ng-multiple="false"><i class="fa fa-photo"></i> Photo</button>
+
+        <p>
+          Share something about <strong>{{place.name}}</strong> for others to learn and enjoy.
+        </p>
+
+        <form name="form" ng-submit="addPost()">
+          <div class="row">
+            <div class="col-sm-9">
+              <input type="text" ng-model="newPost.content" class="form-control"/>
+            </div>
+            <div class="col-sm-3">
+              <button type="submit" class="btn btn-block btn-ra-red">Share</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Feed -->
+  <div deckgrid source="place.feed" cardTemplate="app/feed/card.html" class="deckgrid"></div>
+  <div class="clearfix"></div>
 
 </div>
 

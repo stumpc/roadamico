@@ -5,7 +5,7 @@ angular.module('roadAmicoApp')
     $stateProvider
       .state('place', {
         url: '/place/:id',
-        template: '<ui-view></ui-view>',
+        template: '<ui-view autoscroll="true"></ui-view>',
         resolve: {
           place: function ($stateParams, Place) {
             return Place.get({id: $stateParams.id}).$promise;

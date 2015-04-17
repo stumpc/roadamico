@@ -1,0 +1,7 @@
+A new message was posted for the event "{{data.event.name}}" by {{data.poster.name}}:
+
+{{data.text}}
+
+
+To view messages for this event, go to:
+http://www.roadamico.com/event/{{data.event._id}}

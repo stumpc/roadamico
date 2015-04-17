@@ -62,6 +62,18 @@ body.roadAmico {
   box-shadow: 1px 1px 2px rgba(0,0,0,0.1);
 }
 
+.filler {
+  min-height: 100vh;
+  position: relative;
+}
+
+.sticky-bottom {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
 // Toggle button
 
 .toggle {
@@ -78,4 +90,27 @@ body.roadAmico {
 .ui-select-bootstrap .dropdown-menu {
   background-color: #fff;
   border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+// Breadcrumb
+
+.breadcrumb {
+  background-color: $ra-teal-lighter;
+
+  li > a {
+    color: $ra-teal-darker;
+
+    &:hover, &:active {
+      color: $ra-teal-dark;
+    }
+  }
+
+  li.active {
+    color: $darkgray-dark;
+    font-weight: bold;
+  }
+
+  &> li + li:before {
+    color: $darkgray-light;
+  }
 }

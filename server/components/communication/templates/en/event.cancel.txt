@@ -1,0 +1,3 @@
+Update from RoadAmico:
+
+The event "{{data.event.name}}", which was scheduled to take place {{data.when}}, was canceled.

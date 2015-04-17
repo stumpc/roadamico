@@ -8,6 +8,7 @@
 var User = require('../api/user/user.model');
 var Place = require('../api/place/place.model');
 var List = require('../api/list/list.model');
+var Event = require('../api/event/event.model');
 var faker = require('faker');
 var _ = require('lodash');
 var Q = require('q');
@@ -100,6 +101,29 @@ function generateLists() {
   });
 }
 
+var events = [];
+function generateEvents() {
+  places.forEach(function (place) {
+    _.times(10, function (i) {
+      events.push({
+        name: 'Event ' + i + ' at ' + place.name,
+        place: place._id,
+        datetime: moment().add(randInt(15) - 7, 'days').toISOString(),
+        meetupTime: (randInt(7)+1) + ':00 PM',
+        meetupPlace: faker.address.streetAddress(),
+        canceled: false,
+        participants: _.times(randInt(7)+1, function (i) {
+          return {
+            participant: users[i]._id,
+            datetime:moment().subtract(randInt(7) + 3, 'days').toISOString()
+          }
+        }),
+        creator: users[randInt(7)+1]._id
+      });
+    });
+  });
+}
+
 
 function createUsers() {
   var deferred = Q.defer();
@@ -109,7 +133,7 @@ function createUsers() {
         users[i] = arguments[1 + i];
       }
       deferred.resolve();
-    })
+    });
   });
   return deferred.promise;
 }
@@ -123,7 +147,7 @@ function createPlaces() {
         places[i] = arguments[1 + i];
       }
       deferred.resolve();
-    })
+    });
   });
   return deferred.promise;
 }
@@ -137,9 +161,22 @@ function createLists() {
         lists[i] = arguments[1 + i];
       }
       deferred.resolve();
-    })
+    });
   });
   return deferred.promise;
+}
+
+function createEvents() {
+  generateEvents();
+  var deferred = Q.defer();
+  Event.remove({}, function () {
+    Event.create(events, function () {
+      for (var i = 0; i < events.length; i++) {
+        events[i] = arguments[1 + i];
+      }
+      deferred.resolve();
+    });
+  });
 }
 
 
@@ -155,6 +192,10 @@ createUsers()
   })
   .then(function () {
     console.log('Lists created');
+    return createEvents();
+  })
+  .then(function () {
+    console.log('Events created');
   });
 
 

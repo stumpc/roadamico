@@ -1,0 +1,40 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container events-page">
+  <ol class="breadcrumb">
+    <li><a ui-sref="places">Places</a></li>
+    <li><a ui-sref="^.view">{{place.name}}</a></li>
+    <li class="active">Events</li>
+  </ol>
+
+  <h1>Events for {{place.name}}</h1>
+
+  <div ng-repeat="event in events" class="event">
+    <h2>{{event.name}}</h2>
+    <div>
+
+      <!-- Date and Time -->
+      <div class="row space-bottom-small">
+        <div class="col-xs-1 text-center"><i class="fa fa-lg fa-calendar"></i></div>
+        <div class="col-xs-10">{{event.when}}</div>
+      </div>
+
+      <!-- Group -->
+      <div class="row space-bottom-small">
+        <div class="col-xs-1 text-center"><i class="fa fa-lg fa-group"></i></div>
+        <div class="col-xs-10" ng-pluralize count="event.participants.length"
+             when="{one: '1 person going', other: '{} people going'}"></div>
+      </div>
+
+      <!-- Meetup -->
+      <div class="row">
+        <div class="col-xs-1 text-center"><i class="fa fa-lg fa-map-marker"></i></div>
+        <div class="col-xs-10">Meeting up at {{event.meetupPlace}} at {{event.meetupTime}}</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div ng-include="'components/footer/footer.html'"></div>

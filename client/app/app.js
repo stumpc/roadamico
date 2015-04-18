@@ -9,6 +9,7 @@ angular.module('roadAmicoApp', [
   'ui.bootstrap',
   'angularFileUpload',
   'ngAutocomplete',
+  'google.places',
   'ngMap',
   'pascalprecht.translate',
   'ui.select',

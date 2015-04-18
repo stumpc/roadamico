@@ -6,13 +6,13 @@ describe('Service: list', function () {
   beforeEach(module('roadAmicoApp'));
 
   // instantiate service
-  var list;
-  beforeEach(inject(function (_list_) {
-    list = _list_;
-  }));
-
-  it('should do something', function () {
-    expect(!!list).toBe(true);
-  });
+  //var list;
+  //beforeEach(inject(function (_list_) {
+  //  list = _list_;
+  //}));
+  //
+  //it('should do something', function () {
+  //  expect(!!list).toBe(true);
+  //});
 
 });

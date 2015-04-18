@@ -3,10 +3,13 @@
 <div class="container page">
   <h1>Places</h1>
 
+  <a class="btn" ui-sref="createPlace">Create a new place</a>
+
+  <hr/>
   <ul>
     <li ng-repeat="place in places"><a ui-sref="place.view({id: place._id})">{{place.name}}</a></li>
   </ul>
 
 </div>
 
-<div ng-include="'components/footer/footer.html'" class="sticky-bottom"></div>
+<div ng-include="'components/footer/footer.html'"></div>

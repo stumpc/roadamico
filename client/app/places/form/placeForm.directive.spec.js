@@ -12,10 +12,10 @@ describe('Directive: placeForm', function () {
     scope = $rootScope.$new();
   }));
 
-  it('should make hidden element visible', inject(function ($compile) {
-    element = angular.element('<place-form></place-form>');
-    element = $compile(element)(scope);
-    scope.$apply();
-    expect(element.text()).toBe('this is the placeForm directive');
-  }));
+  //it('should make hidden element visible', inject(function ($compile) {
+  //  element = angular.element('<place-form></place-form>');
+  //  element = $compile(element)(scope);
+  //  scope.$apply();
+  //  expect(element.text()).toBe('this is the placeForm directive');
+  //}));
 });

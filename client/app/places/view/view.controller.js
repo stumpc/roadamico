@@ -19,7 +19,7 @@ angular.module('roadAmicoApp')
     });
 
     $scope.user = Auth.getCurrentUser();
-
+    console.log(place.locationDetails);
 
     // --- Following ---
 
@@ -48,7 +48,7 @@ angular.module('roadAmicoApp')
     };
 
     function average (nums) {
-      return Math.round(nums.reduce(function (a, b) { return a + b; }) / nums.length);
+      return Math.round(nums.reduce(function (a, b) { return a + b; }, 0) / nums.length);
     }
 
     $scope.rating = average(_.pluck(place.ratings, 'score'));

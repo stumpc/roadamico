@@ -1,31 +1,31 @@
+
 <form name="form" ng-submit="save(place)" novalidate>
 
   <!-- Name -->
   <div class="form-group" ng-class="{ 'has-error' : form.name.$invalid && !form.name.$pristine }">
-    <label>Name</label>
-    <input type="text" name="name" class="form-control" ng-model="place.name" required>
+    <label for="name">Name *</label>
+    <input type="text" id="name" name="name" class="form-control" ng-model="place.name" required>
     <p ng-show="form.name.$invalid && !form.name.$pristine" class="help-block">Name is required</p>
   </div>
 
   <!-- Location -->
   <div class="form-group" ng-class="{ 'has-error' : form.location.$invalid && !form.location.$pristine }">
-    <label>Location</label>
-    <input type="text" name="location" id='location' ng-autocomplete class="form-control" ng-model="place.location" details="place.locationDetails">
+    <label for="location">Location *</label>
+    <input type="text" name="location" id="location" class="form-control" g-places-autocomplete ng-model="place.locationDetails" required />
+    <p ng-show="form.location.$invalid && !form.location.$pristine" class="help-block">Location is required</p>
   </div>
 
   <!-- Phone -->
-  <div class="form-group" ng-class="{ 'has-error' : form.phone.$invalid && !form.phone.$pristine }">
-    <label>Phone</label>
-    <input type="text" name="name" class="form-control" ng-model="place.phone">
+  <div class="form-group">
+    <label for="phone">Phone</label>
+    <input type="text" id="phone" name="phone" class="form-control" ng-model="place.phone">
   </div>
 
   <!-- Description -->
-  <div class="form-group" ng-class="{ 'has-error' : form.location.$invalid && !form.location.$pristine }">
-    <label>Description</label>
-    <textarea class="form-control" name="description" id="description" ng-model="place.description"></textarea>
+  <div class="form-group">
+    <label for="description">Description</label>
+    <textarea name="description" id="description" class="form-control" ng-model="place.description"></textarea>
   </div>
 
-
-
-  <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid || form.$pristine" translate>Save</button>
+  <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid || form.$pristine">Save</button>
 </form>

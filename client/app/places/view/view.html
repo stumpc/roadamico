@@ -13,7 +13,7 @@
       <div class="col-md-7">
         <!-- Name -->
         <div class="name">
-          <h1>{{place.name}}</h1>
+          <h1>{{place.locationDetails.name}}</h1>
 
           <a class="btn btn-sm" ui-sref="place.edit({id: place._id})"><i class="fa fa-pencil"></i> Edit</a>
         </div>
@@ -23,15 +23,27 @@
           <div class="col-md-6">
 
             <!-- Location -->
-            <div class="row space-bottom-small" ng-show="place.location">
+            <div class="row space-bottom-small" ng-show="place.locationDetails.formatted_address">
               <div class="col-xs-1"><i class="fa fa-lg fa-map-marker"></i></div>
-              <div class="col-xs-10">{{place.location}}</div>
+              <div class="col-xs-10">{{place.locationDetails.formatted_address}}</div>
             </div>
 
-            <!-- Location -->
-            <div class="row space-bottom-small" ng-show="place.phone">
+            <!-- Phone -->
+            <div class="row space-bottom-small" ng-show="place.locationDetails.formatted_phone_number">
               <div class="col-xs-1"><i class="fa fa-lg fa-phone"></i></div>
-              <div class="col-xs-10">{{place.phone}}</div>
+              <div class="col-xs-10">{{place.locationDetails.formatted_phone_number}}</div>
+            </div>
+
+            <!-- Website -->
+            <div class="row space-bottom-small" ng-show="place.locationDetails.website">
+              <div class="col-xs-1"><i class="fa fa-lg fa-globe"></i></div>
+              <div class="col-xs-10"><a href="{{place.locationDetails.website}}">Website</a></div>
+            </div>
+
+            <!-- Google+ -->
+            <div class="row space-bottom-small" ng-show="place.locationDetails.url">
+              <div class="col-xs-1"><i class="fa fa-lg fa-google-plus"></i></div>
+              <div class="col-xs-10"><a href="{{place.locationDetails.url}}">Google+ Page</a></div>
             </div>
 
           </div>

@@ -1,3 +1,81 @@
-<div class="col-md-12">
-This is the create view.
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container home-page page">
+  <h1>Create a new Place</h1>
+
+  <form name="form" ng-submit="create()" novalidate>
+
+    <!-- Location -->
+    <div class="form-group" ng-class="{ 'has-error' : form.location.$invalid && !form.location.$pristine }">
+      <label for="location">Enter the Name or Address of the Place</label>
+      <input type="text" name="location" id="location" class="form-control" g-places-autocomplete ng-model="place.locationDetails" required />
+      <p ng-show="form.location.$invalid && !form.location.$pristine" class="help-block">This is required</p>
+    </div>
+
+    <div class="name">
+      <h1>{{place.locationDetails.name}}</h1>
+    </div>
+
+    <div class="row space-top-small space-bottom-small">
+      <div class="col-md-12">
+
+        <!-- Location -->
+        <div class="row space-bottom-small" ng-show="place.locationDetails.formatted_address">
+          <div class="col-xs-1"><i class="fa fa-lg fa-map-marker"></i></div>
+          <div class="col-xs-10">{{place.locationDetails.formatted_address}}</div>
+        </div>
+
+        <!-- Phone -->
+        <div class="row space-bottom-small" ng-show="place.locationDetails.formatted_phone_number">
+          <div class="col-xs-1"><i class="fa fa-lg fa-phone"></i></div>
+          <div class="col-xs-10">{{place.locationDetails.formatted_phone_number}}</div>
+        </div>
+
+        <!-- Website -->
+        <div class="row space-bottom-small" ng-show="place.locationDetails.website">
+          <div class="col-xs-1"><i class="fa fa-lg fa-globe"></i></div>
+          <div class="col-xs-10"><a href="{{place.locationDetails.website}}">Website</a></div>
+        </div>
+
+        <!-- Google+ -->
+        <div class="row space-bottom-small" ng-show="place.locationDetails.url">
+          <div class="col-xs-1"><i class="fa fa-lg fa-google-plus"></i></div>
+          <div class="col-xs-10"><a href="{{place.locationDetails.url}}">Google+ Page</a></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!--<div class="row">-->
+      <!--<div>{{place.locationDetails.name}}</div>-->
+      <!--<div>{{place.locationDetails.formatted_address}}</div>-->
+      <!--<div>{{place.locationDetails.formatted_phone_number}}</div>-->
+      <!--<img ng-src="{{place.locationDetails.icon}}" alt=""/>-->
+      <!--&lt;!&ndash;<div>{{place.locationDetails.formatted_phone_number}}</div>&ndash;&gt;-->
+      <!--<a href="{{place.locationDetails.website}}">Website</a>-->
+      <!--<a href="{{place.locationDetails.url}}">Google+</a>-->
+      <!--{{place.photos}}-->
+    <!--</div>-->
+
+
+
+    <!--{{place}}-->
+
+    <!--&lt;!&ndash; Phone &ndash;&gt;-->
+    <!--<div class="form-group">-->
+      <!--<label for="phone">Phone</label>-->
+      <!--<input type="text" id="phone" name="phone" class="form-control" ng-model="place.phone">-->
+    <!--</div>-->
+
+    <!--&lt;!&ndash; Description &ndash;&gt;-->
+    <!--<div class="form-group">-->
+      <!--<label for="description">Description</label>-->
+      <!--<textarea name="description" id="description" class="form-control" ng-model="place.description"></textarea>-->
+    <!--</div>-->
+
+    <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid || form.$pristine">Save</button>
+  </form>
+
 </div>
+
+<div ng-include="'components/footer/footer.html'"></div>

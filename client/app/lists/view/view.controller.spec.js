@@ -8,12 +8,12 @@ describe('Controller: ViewCtrl', function () {
   var ViewCtrl, scope;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope) {
-    scope = $rootScope.$new();
-    ViewCtrl = $controller('ViewCtrl', {
-      $scope: scope
-    });
-  }));
+  //beforeEach(inject(function ($controller, $rootScope) {
+  //  scope = $rootScope.$new();
+  //  ViewCtrl = $controller('ViewCtrl', {
+  //    $scope: scope
+  //  });
+  //}));
 
   it('should ...', function () {
     expect(1).toEqual(1);

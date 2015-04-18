@@ -3,7 +3,7 @@
 angular.module('roadAmicoApp')
   .config(function ($stateProvider) {
     $stateProvider
-      .state('create', {
+      .state('createPlace', {
         url: '/places/create',
         templateUrl: 'app/places/create/create.html',
         controller: 'CreateCtrl'

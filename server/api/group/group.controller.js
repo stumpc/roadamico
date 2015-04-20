@@ -179,9 +179,12 @@ exports.invite = function (req, res) {
       _.contains(group.emails, req.user.email);   // Group members can invite
     if (!approved) return res.send(403);
 
-    group.emails.push(req.body.email);
+    //console.log('Before:',group);
+    //console.log('After:',group);
+    group._doc.emails.push(req.body.email);
     group.save(function (err, group) {
       if (err) { return handleError(res, err); }
+      //console.log('Saved:',group);
 
       // If the user w/ that email exists, then send a notification, otherwise send an email
       User.findOne({email: req.body.email}, function (err, user) {

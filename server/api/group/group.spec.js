@@ -510,7 +510,7 @@ describe('The Groups API', function () {
         .end(function(err, res) {
           if (err) return done(err);
           should.not.exist(res.body.emails);
-          Group.findById(group1._id, function (err, g) {
+          Group.findById(res.body._id, function (err, g) {
             g.emails.should.containEql('gtu3@roadamico.com');
             done();
           });
@@ -526,7 +526,9 @@ describe('The Groups API', function () {
         .end(function(err, res) {
           if (err) return done(err);
           should.not.exist(res.body.emails);
-          Group.findById(group1._id, function (err, g) {
+          //console.log('Got here');
+          Group.findById(res.body._id, function (err, g) {
+            //console.log('Check:',g);
             g.emails.should.containEql('invite3@me.com');
             done();
           });
@@ -542,7 +544,9 @@ describe('The Groups API', function () {
         .end(function(err, res) {
           if (err) return done(err);
           should.not.exist(res.body.emails);
-          Group.findById(group1._id, function (err, g) {
+          //console.log('Got here');
+          Group.findById(res.body._id, function (err, g) {
+            //console.log('Check:',g);
             g.emails.should.containEql('invite4@me.com');
             done();
           });

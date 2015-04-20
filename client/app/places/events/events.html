@@ -9,6 +9,9 @@
 
   <h1>Events for {{place.locationDetails.name}}</h1>
 
+  <a class="btn btn-sm btn-ra-red" ui-sref="^.createEvent"><i class="fa fa-plus"></i> Create an Event</a>
+
+
   <div ng-repeat="event in events" class="event">
     <h2>{{event.name}}</h2>
     <div>
@@ -27,9 +30,26 @@
       </div>
 
       <!-- Meetup -->
-      <div class="row">
+      <div class="row" ng-show="event.meetupPlace || event.meetupTime">
         <div class="col-xs-1 text-center"><i class="fa fa-lg fa-map-marker"></i></div>
-        <div class="col-xs-10">Meeting up at {{event.meetupPlace}} at {{event.meetupTime}}</div>
+        <div class="col-xs-10">
+          Meeting up
+          <span ng-show="event.meetupPlace">at {{event.meetupPlace}}</span>
+          <span ng-show="event.meetupTime">at {{event.meetupTime}}</span>
+        </div>
+      </div>
+
+      <div class="space-top-small text-center">
+        <a ui-sref="^.event.view({eid: event._id})" class="btn btn-ra-green-hollow"><i class="fa fa-info-circle"></i> Details</a>
+      </div>
+
+      <div ng-show="isLoggedIn() && !event.userGoing" class="space-top-medium">
+        <button ng-click="joinEvent(event)" class="btn btn-block btn-ra-green"><i class="fa fa-thumbs-up"></i> Count me in!</button>
+      </div>
+
+      <div ng-show="isLoggedIn() && event.userGoing" class="text-center">
+        <hr/>
+        <div class="going-message cursive"><i class="fa fa-check"></i> You're Going!</div>
       </div>
 
     </div>

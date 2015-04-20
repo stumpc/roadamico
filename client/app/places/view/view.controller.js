@@ -95,7 +95,7 @@ angular.module('roadAmicoApp')
 
     var allEvents = Event.list({id: place._id});
     allEvents.$promise.then(function (events) {
-      $scope.events = _(events)
+      $scope.allEvents = _(events)
         .forEach(function (event) { // Add workable and displayable time data
           event.moment = moment(event.datetime);
           event.when = event.moment.format('llll');
@@ -104,7 +104,11 @@ angular.module('roadAmicoApp')
         .filter(function (event) { // Take out past events
           return event.moment >= moment();
         })
-        .sortBy('moment').take(3).value(); // Only display the three closest events
+        .filter(function (event) { // Take out canceled events
+          return !event.canceled;
+        })
+        .sortBy('moment').value(); // Sort by closest
+      $scope.events = _.take($scope.allEvents, 3);  // We will only display three
     });
 
     $scope.joinEvent = function (event) {
@@ -112,7 +116,7 @@ angular.module('roadAmicoApp')
         console.log('Joined!');
         event.moment = moment(event.datetime);
         event.when = event.moment.format('llll');
-        event.userGoing = _.contains(_.pluck(event.participants, 'participant'), $scope.user._id);
+        event.userGoing = true;
       });
     };
 

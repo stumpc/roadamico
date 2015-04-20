@@ -1,0 +1,50 @@
+
+<form name="form" ng-submit="save(event)" novalidate>
+
+  <!-- Name -->
+  <div class="form-group" ng-class="{ 'has-error' : form.name.$invalid && !form.name.$pristine }">
+    <label for="name">Name *</label>
+    <input type="text" id="name" name="name" class="form-control" ng-model="event.name" required>
+    <p ng-show="form.name.$invalid && !form.name.$pristine" class="help-block">Name is required</p>
+  </div>
+
+  <!-- Date and Time -->
+  <div class="form-group" ng-class="{ 'has-error' : form.datetime.$invalid && !form.datetime.$pristine, 'has-warning': inPast(event.datetime) }">
+    <label>Date and Time*</label>
+    <datepicker name="date" ng-model="event.datetime" show-weeks="true"></datepicker>
+    <timepicker ng-model="event.datetime" hour-step="1" minute-step="1" show-meridian="true"></timepicker>
+
+    <p ng-show="form.datetime.$invalid && !form.datetime.$pristine" class="help-block">Date and Time is required.</p>
+    <p ng-show="inPast(event.datetime)" class="help-block">This event is set in the past.</p>
+  </div>
+
+  <div class="form-group">
+    <label class="toggle" for="meetup">
+      <span>
+        <input type="checkbox" ng-model="event.meetup" id="meetup"> <span class="handle"></span>
+      </span>
+      Meet up beforehand?
+    </label>
+  </div>
+
+  <div ng-show="event.meetup" class="well bg-lightgray-dark">
+    <h2>Meet up information</h2>
+
+    <!-- Time -->
+    <div class="form-group" ng-class="{ 'has-error' : form.meetupTime.$invalid && !form.meetupPlace.$pristine }">
+      <label for="meetupTime">When?</label>
+      <input type="text" id="meetupTime" name="meetupTime" class="form-control" ng-model="event.meetupTime">
+    </div>
+
+    <!-- Place -->
+    <div class="form-group" ng-class="{ 'has-error' : form.meetupTime.$invalid && !form.meetupPlace.$pristine }">
+      <label for="meetupPlace">Where?</label>
+      <input type="text" id="meetupPlace" name="meetupPlace" class="form-control" ng-model="event.meetupPlace">
+      <p ng-show="form.meetupPlace.$invalid && !form.meetupPlace.$pristine" class="help-block">Name is required</p>
+    </div>
+  </div>
+
+
+
+  <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid || form.$pristine">Save</button>
+</form>

@@ -15,11 +15,14 @@ exports.index = function(req, res) {
 
 // Get a single event
 exports.show = function(req, res) {
-  Event.findById(req.params.id, function (err, event) {
-    if(err) { return handleError(res, err); }
-    if(!event) { return res.send(404); }
-    return res.json(event);
-  });
+  Event.findById(req.params.id)
+    .populate('participants.participant', 'name')
+    .populate('messages.poster', 'name')
+    .exec(function (err, event) {
+      if(err) { return handleError(res, err); }
+      if(!event) { return res.send(404); }
+      return res.json(event);
+    });
 };
 
 // Creates a new event in the DB.
@@ -29,7 +32,7 @@ exports.create = function(req, res) {
   delete req.body.messages;
   if (!req.body.place) { return res.json(403, {message: 'An event must have an associated place.'}); }
   req.body.creator = req.user._id;
-
+  req.body.participants = [{participant: req.user._id, datetime: moment().toISOString()}];
   Event.create(req.body, function(err, event) {
     if(err) { return handleError(res, err); }
     return res.json(201, event);
@@ -50,7 +53,14 @@ exports.update = function(req, res) {
     var updated = _.merge(event, req.body);
     updated.save(function (err) {
       if (err) { return handleError(res, err); }
-      return res.json(200, event);
+      var populateOpts = [
+        { path: 'participants.participant', select: 'name' },
+        { path: 'messages.poster', select: 'name' }
+      ];
+      event.populate(populateOpts, function (err, event) {
+        if(err) { return handleError(res, err); }
+        return res.json(event);
+      });
     });
   });
 };
@@ -105,7 +115,15 @@ exports.join = function (req, res) {
     });
     event.save(function (err, event) {
       if(err) { return handleError(res, err); }
-      return res.json(event);
+
+      var populateOpts = [
+        { path: 'participants.participant', select: 'name' },
+        { path: 'messages.poster', select: 'name' }
+      ];
+      event.populate(populateOpts, function (err, event) {
+        if(err) { return handleError(res, err); }
+        return res.json(event);
+      });
     });
   });
 };
@@ -144,7 +162,14 @@ exports.message = function (req, res) {
         }).value();
       Notification.create(notifications);
 
-      return res.json(event);
+      var populateOpts = [
+        { path: 'participants.participant', select: 'name' },
+        { path: 'messages.poster', select: 'name' }
+      ];
+      event.populate(populateOpts, function (err, event) {
+        if(err) { return handleError(res, err); }
+        return res.json(event);
+      });
     });
   });
 };

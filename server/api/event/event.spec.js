@@ -48,6 +48,8 @@ describe('GET /api/events', function() {
     name: 'Event 3 (to cancel)'
   }, {
     name: 'Event 4 (to cancel)'
+  }, {
+    name: 'Event 5'
   }];
 
   before(function (done) {
@@ -59,10 +61,13 @@ describe('GET /api/events', function() {
         events[1].creator = users[2]._id;
         events[2].creator = users[0]._id;
         events[3].creator = users[0]._id;
+        events[4].creator = users[0]._id;
         events[0].place = places[0]._id;
         events[1].place = places[0]._id;
         events[0].participants = [{participant: users[0]._id}, {participant: users[1]._id}];
         events[2].participants = [{participant: users[0]._id}];
+        events[4].participants = [{participant: users[0]._id}, {participant: users[1]._id}];
+        events[4].messages = [{poster: users[0]._id, text: 'a test message'}];
         Event.create(events, function () {
           for (var i = 0; i < events.length; i++) { events[i] = arguments[i+1]; }
           done();
@@ -78,6 +83,43 @@ describe('GET /api/events', function() {
           done();
         });
       });
+    });
+  });
+
+
+  describe('GET /api/events/:id', function () {
+    it('should respond w/ a 404 for an invalid place', function (done) {
+      request(app)
+        .get('/api/events/000000000000000000000000')
+        .expect(404)
+        .end(function (err, res) {
+          if (err) return done(err);
+          done();
+        });
+    });
+
+    it('should contain the names of the participants', function (done) {
+      request(app)
+        .get('/api/events/' + events[0]._id)
+        .expect(200)
+        .end(function (err, res) {
+          if (err) return done(err);
+          res.body.participants.should.have.length(2);
+          res.body.participants.should.containDeep([{participant: {name: 'user 1'}}]);
+          res.body.participants.should.containDeep([{participant: {name: 'user 2'}}]);
+          done();
+        });
+    });
+
+    it('should contain the names of message posters', function (done) {
+      request(app)
+        .get('/api/events/' + events[4]._id)
+        .expect(200)
+        .end(function (err, res) {
+          if (err) return done(err);
+          res.body.messages[0].poster.name.should.equal('user 1');
+          done();
+        });
     });
   });
 
@@ -134,7 +176,7 @@ describe('GET /api/events', function() {
         });
     });
 
-    it('should create the event without participants and messages', function (done) {
+    it('should create the event without messages and w/ the creator as the only participant', function (done) {
       request(app)
         .post('/api/events')
         .set('Authorization', 'Bearer ' + auth.signToken(users[0]))
@@ -142,7 +184,7 @@ describe('GET /api/events', function() {
           name: 'new event 3',
           place: places[0]._id,
           participants: [{
-            participant: users[0]._id, datetime: moment().toISOString()
+            participant: users[1]._id, datetime: moment().toISOString()
           }],
           messages: [{
             text: 'test', poster: users[0]._id, datetime: moment().toISOString()
@@ -152,7 +194,8 @@ describe('GET /api/events', function() {
         .end(function (err, res) {
           if (err) return done(err);
           res.body.name.should.equal('new event 3');
-          res.body.participants.should.have.length(0);
+          res.body.participants.should.have.length(1);
+          res.body.participants[0].participant.should.equal('' + users[0]._id);
           res.body.messages.should.have.length(0);
           done();
         });
@@ -281,7 +324,7 @@ describe('GET /api/events', function() {
         .end(function (err, res) {
           if (err) return done(err);
           res.body.participants.should.have.length(1);
-          res.body.participants.should.containDeep([{participant: '' + users[0]._id}]);
+          res.body.participants.should.containDeep([{participant: {_id: '' + users[0]._id}}]);
           should.exist(res.body.participants[0].datetime);
           done();
         });

@@ -44,6 +44,20 @@
     border-top: 2px solid $mediumgray-dark;
     //border-bottom: 2px solid $mediumgray-dark;
 
+    .event-header {
+      position: relative;
+
+      a {
+        display: none;
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+    }
+    &:hover .event-header a {
+      display: block;
+    }
+
     .event {
       padding: 10px;
       background: white;

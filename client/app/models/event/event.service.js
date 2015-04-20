@@ -12,12 +12,16 @@ angular.module('roadAmicoApp')
         method: 'PUT'
       },
       join: {
-        url: 'api/events/:id/join',
+        url: '/api/events/:id/join',
         method: 'PUT'
       },
       message: {
-        url: 'api/events/:id/message',
+        url: '/api/events/:id/message',
         method: 'POST'
+      },
+      cancel: {
+        url: '/api/events/:id/cancel',
+        method: 'PUT'
       }
     });
   });

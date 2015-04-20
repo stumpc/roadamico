@@ -1,0 +1,57 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container home-page page">
+
+  <ol class="breadcrumb">
+    <li><a ui-sref="places">Places</a></li>
+    <li><a ui-sref="^.^.view">{{place.locationDetails.name}}</a></li>
+    <li><a ui-sref="^.^.events">Events</a></li>
+    <li class="active">{{event.name}}</li>
+  </ol>
+
+  <h1>{{event.name}}</h1>
+
+  <div ng-show="event.creator == user._id" class="space-bottom-medium">
+    <button class="btn btn-ra-teal-hollow"><i class="fa fa-pencil"></i> Edit</button>
+    <button class="btn btn-ra-red-hollow" ng-click="cancel('cancel: ' + event.name)"><i class="fa fa-times"></i> Cancel Event</button>
+  </div>
+
+  <!-- Date and Time -->
+  <div class="row space-bottom-small">
+    <div class="col-xs-1 text-center"><i class="fa fa-lg fa-calendar"></i></div>
+    <div class="col-xs-10">{{event.when}}</div>
+  </div>
+
+  <!-- Meetup -->
+  <div class="row space-bottom-small" ng-show="event.meetupPlace || event.meetupTime">
+    <div class="col-xs-1 text-center"><i class="fa fa-lg fa-map-marker"></i></div>
+    <div class="col-xs-10">
+      Meeting up
+      <span ng-show="event.meetupPlace">at {{event.meetupPlace}}</span>
+      <span ng-show="event.meetupTime">at {{event.meetupTime}}</span>
+    </div>
+  </div>
+
+  <!-- Group -->
+  <div class="row">
+    <div class="col-xs-1 text-center"><i class="fa fa-lg fa-group"></i></div>
+    <div class="col-xs-10">
+      Attendees:
+      <ul>
+        <li ng-repeat="participation in event.participants">{{participation.participant.name}}</li>
+      </ul>
+    </div>
+  </div>
+
+  <div ng-show="isLoggedIn() && !event.userGoing" class="space-top-medium">
+    <button ng-click="join()" class="btn btn-block btn-ra-green"><i class="fa fa-thumbs-up"></i> Count me in!</button>
+  </div>
+
+  <div ng-show="isLoggedIn() && event.userGoing" class="text-center">
+    <hr/>
+    <div class="going-message cursive"><i class="fa fa-check"></i> You're Going!</div>
+  </div>
+
+</div>
+
+<div ng-include="'components/footer/footer.html'"></div>

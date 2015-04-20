@@ -1,0 +1,14 @@
+Hello {{user.name}},
+
+Somebody has requested access to your group "{{data.group.name}}". Here are the details:
+
+Name:    {{data.request.name}}
+Email:   {{data.request.email}}
+Message: {{data.request.message}}
+
+You can grant or deny this request at:
+
+http://www.roadamico.com/groups/{{data.group.id}}
+
+Thanks,
+RoadAmico Admin

@@ -1,0 +1,17 @@
+<div class="card">
+  <div class="inner-card" ng-controller="CardCtrl">
+
+    <div ng-if="card.embed[0]">
+      <img ng-src="{{card.embed[0].thumbnail_url}}" ng-click="viewCard(card)" />
+      <div class="title">{{card.embed[0].title}}</div>
+    </div>
+
+    <div ng-if="card.photo">
+      <img ng-src="{{card.photo}}" ng-click="viewCard(card)"/>
+    </div>
+
+    <div ng-if="card.text" class="text">
+      {{card.text}}
+    </div>
+  </div>
+</div>

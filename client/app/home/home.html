@@ -1,27 +1,9 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <div class="container home-page page">
-  <h1>RoadAmico Home</h1>
+  <h1>Home</h1>
 
-  <div class="row">
-    <div class="col-md-8">
 
-      <div>
-        <div class="btn-group">
-          <a class="btn" ui-sref="home.upcoming" ui-sref-active="btn-primary">Upcoming</a>
-          <a class="btn" ui-sref="home.timeline" ui-sref-active="btn-primary">History</a>
-          <a class="btn" ui-sref="home.myServices" ui-sref-active="btn-primary">My Services</a>
-        </div>
-        <a ui-sref="newService" class="btn pull-right">Offer a Service</a>
-      </div>
-
-      <div ui-view></div>
-    </div>
-
-    <div class="col-md-4">
-      <div ng-include="'app/home/feed/feed.html'"></div>
-    </div>
-  </div>
 </div>
 
 <div ng-include="'components/footer/footer.html'"></div>

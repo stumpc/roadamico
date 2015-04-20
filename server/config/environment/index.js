@@ -43,7 +43,7 @@ var all = {
 
   // There are two behaviors: Live (anyone can join) and limited (approved emails)
   // Also change the client-side config in client/app/config/config.js
-  appLive: false,
+  appLive: true,
 
   // Email settings
   email: {
@@ -95,6 +95,10 @@ var all = {
   sendgrid: {
     username: process.env.SENDGRID_USERNAME,
     password: process.env.SENDGRID_PASSWORD
+  },
+
+  embedly: {
+    key: process.env.EMBEDLY_KEY
   }
 };
 

@@ -24,25 +24,25 @@
         <li ng-hide="!config.appLive || isLoggedIn()" ng-class="{active: isActive('/signup')}"><a href="/signup">Sign up</a></li>
         <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/login')}"><a href="/login">Login</a></li>
         <!--<li ng-show="isLoggedIn()"><p class="navbar-text">Hello {{ getCurrentUser().name }}</p> </li>-->
-        <li ng-show="isLoggedIn()" ng-class="{active: isActive('/messages')}">
-          <a ui-sref="messages">
-            <i class="fa fa-comment"></i>
-            <span class="badge badge-light" ng-show="messages | unread | toMe | count">{{messages | unread | toMe | count}}</span></a>
-        </li>
-        <li ng-show="isLoggedIn()" class="notificationIcon">
-          <a href="#" ng-click="toggleNotifications()">
-            <i class="fa fa-flag"></i>
-            <span class="badge badge-light" ng-show="messages | notifications | unread | count">{{messages | notifications | unread | count}}</span>
-          </a>
+        <!--<li ng-show="isLoggedIn()" ng-class="{active: isActive('/messages')}">-->
+          <!--<a ui-sref="messages">-->
+            <!--<i class="fa fa-comment"></i>-->
+            <!--<span class="badge badge-light" ng-show="messages | unread | toMe | count">{{messages | unread | toMe | count}}</span></a>-->
+        <!--</li>-->
+        <!--<li ng-show="isLoggedIn()" class="notificationIcon">-->
+          <!--<a href="#" ng-click="toggleNotifications()">-->
+            <!--<i class="fa fa-flag"></i>-->
+            <!--<span class="badge badge-light" ng-show="messages | notifications | unread | count">{{messages | notifications | unread | count}}</span>-->
+          <!--</a>-->
 
-          <div class="notificationPopup" ng-show="notificationsVisible">
-            <div ng-repeat="notification in (messages | notifications)" class="notification">
-              <p>{{notification.message}}</p>
-              <small>{{notification.time | date:'medium'}}</small>
-            </div>
+          <!--<div class="notificationPopup" ng-show="notificationsVisible">-->
+            <!--<div ng-repeat="notification in (messages | notifications)" class="notification">-->
+              <!--<p>{{notification.message}}</p>-->
+              <!--<small>{{notification.time | date:'medium'}}</small>-->
+            <!--</div>-->
 
-          </div>
-        </li>
+          <!--</div>-->
+        <!--</li>-->
         <li ng-show="isLoggedIn()" ng-class="{active: isActive('/profile')}"><a href="/profile"><i class="fa fa-user"></i></a></li>
         <li ng-show="isLoggedIn()" ng-class="{active: isActive('/logout')}" class="logout"><a href="" ng-click="logout()"><i class="fa fa-sign-out"></i></a></li>
       </ul>

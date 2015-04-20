@@ -24,6 +24,14 @@ angular.module('roadAmicoApp')
       Verified: 'Verified',
       Rate: 'Rate',
       Services: 'Services',
+      Sort: 'Sort',
+      Time: 'Time',
+      Duration: 'Duration',
+      Cost: 'Cost',
+      Notes: 'Notes',
+      Booked: 'Booked',
+      Available: 'Available',
+      Book: 'Book',
 
       // Social login
       'connect-facebook': 'Connect with Facebook',

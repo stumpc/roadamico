@@ -18,13 +18,11 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
-  require('../api/rating/rating.socket').register(socket);
-  require('../api/availability/availability.socket').register(socket);
-  require('../api/category/category.socket').register(socket);
-  require('../api/message/message.socket').register(socket);
-  require('../api/signup/signup.socket').register(socket);
-  require('../api/service/service.socket').register(socket);
-  require('../api/thing/thing.socket').register(socket);
+  require('../api/notification/notification.socket').register(socket);
+  require('../api/group/group.socket').register(socket);
+  require('../api/list/list.socket').register(socket);
+  require('../api/event/event.socket').register(socket);
+  require('../api/place/place.socket').register(socket);
 }
 
 module.exports = function (socketio) {

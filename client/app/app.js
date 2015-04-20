@@ -9,9 +9,12 @@ angular.module('roadAmicoApp', [
   'ui.bootstrap',
   'angularFileUpload',
   'ngAutocomplete',
+  'google.places',
   'ngMap',
   'pascalprecht.translate',
-  'ui.select'
+  'ui.select',
+  'angularUtils.directives.dirDisqus',
+  'akoenig.deckgrid'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
@@ -49,25 +52,26 @@ angular.module('roadAmicoApp', [
     };
   })
 
-  .run(function ($rootScope, $location, Auth) {
+  .run(function ($rootScope, $location, $document, Auth) {
     // Check authentication when moving between pages (states)
     $rootScope.$on('$stateChangeStart', function (event, next) {
       Auth.isLoggedInAsync(function(loggedIn) {
-        if (loggedIn && !Auth.getCurrentUser().activated) {
-          if ($location.path() == '/home') {
-            $location.path('/finalize');
-          } else if ($location.path() !== '/finalize') {
-            Auth.logout();
-          }
-        }
         if ((next.authenticate || next.admin) && !loggedIn) {
 
           // Redirect to login if route requires auth and you're not logged in
-          $location.path('/');
+          $location.path('/login');
         } else if (next.admin && !Auth.isAdmin()) {
 
           // If route requires admin and you are not one then go home
           $location.path('/home');
+        } else {
+
+          // Set the title
+          if (next.title) {
+            $document[0].title = next.title;
+          } else {
+            $document[0].title = 'RoadAmico';
+          }
         }
       });
     });

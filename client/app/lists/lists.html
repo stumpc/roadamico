@@ -1,0 +1,12 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container home-page page">
+  <h1>Lists</h1>
+
+  <ul>
+    <li ng-repeat="list in lists"><a ui-sref="viewList({id:list._id})">{{list.name}}</a></li>
+  </ul>
+
+</div>
+
+<div ng-include="'components/footer/footer.html'"></div>

@@ -1,0 +1,31 @@
+
+<form name="form" ng-submit="save(place)" novalidate>
+
+  <!-- Name -->
+  <div class="form-group" ng-class="{ 'has-error' : form.name.$invalid && !form.name.$pristine }">
+    <label for="name">Name *</label>
+    <input type="text" id="name" name="name" class="form-control" ng-model="place.locationDetails.name" required>
+    <p ng-show="form.name.$invalid && !form.name.$pristine" class="help-block">Name is required</p>
+  </div>
+
+  <!-- Location -->
+  <div class="form-group" ng-class="{ 'has-error' : form.location.$invalid && !form.location.$pristine }">
+    <label for="location">Location *</label>
+    <input type="text" name="location" id="location" class="form-control" g-places-autocomplete ng-model="place.locationDetails" required />
+    <p ng-show="form.location.$invalid && !form.location.$pristine" class="help-block">Location is required</p>
+  </div>
+
+  <!-- Phone -->
+  <div class="form-group">
+    <label for="phone">Phone</label>
+    <input type="text" id="phone" name="phone" class="form-control" ng-model="place.locationDetails.formatted_phone_number">
+  </div>
+
+  <!-- Description -->
+  <div class="form-group">
+    <label for="description">Description</label>
+    <textarea name="description" id="description" class="form-control" ng-model="place.description"></textarea>
+  </div>
+
+  <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid || form.$pristine">Save</button>
+</form>

@@ -61,6 +61,7 @@ angular.module('roadAmicoApp')
               a.moment = moment(a.datetime);
               var parts = a.duration.split(' ');
               a._duration = moment.duration(Number(parts[0]), parts[1]);
+              // TODO: Translate this
               a.description = a._duration.humanize() + ' session at ' + a.moment.format('h:mm a') + ' for ' +
                 $filter('currency')(a.cost) + (a.notes ? '. Specifics: "' + a.notes + '"' : '');
             });

@@ -1,0 +1,9 @@
+Hello {{user.name}},
+
+You have been invited by {{data.inviter}} to join the group "{{data.group.name}}".
+You can manage your group memberships and your other account settings at:
+
+http://www.roadamico.com/profile
+
+Cheers,
+RoadAmico Admin

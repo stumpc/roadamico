@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('NavbarCtrl', function ($scope, $location, Auth, config, sessionCache, filterChain, Message) {
+  .controller('NavbarCtrl', function ($scope, $location, Auth, config, filterChain) {
     $scope.config = config;
 
     $scope.menu = [
@@ -14,8 +14,8 @@ angular.module('roadAmicoApp')
         link: '/search'
       },
       {
-        title: 'Browse',
-        link: '/categories/browse'
+        title: 'Places',
+        link: '/places'
       }
     ];
 
@@ -25,7 +25,7 @@ angular.module('roadAmicoApp')
     $scope.getCurrentUser = Auth.getCurrentUser;
 
     // Received Messages
-    $scope.messages = sessionCache.messages();
+    //$scope.messages = sessionCache.messages();
     //$scope.messages.$promise && $scope.messages.$promise.then(function (messages) {
     //  $scope.notifications = _(messages)
     //    .filter({notification: true})
@@ -50,17 +50,17 @@ angular.module('roadAmicoApp')
     };
 
     // Notifications
-    $scope.notificationsVisible = false;
-    $scope.toggleNotifications = function () {
-      $scope.notificationsVisible = !$scope.notificationsVisible;
-
-      // Mark notifications as read if opening
-      if ($scope.notificationsVisible) {
-        _.forEach(filterChain('notifications', 'unread')($scope.messages), function (notification) {
-          notification.read = true;
-          Message.mark(notification);
-        });
-      }
-    };
+    //$scope.notificationsVisible = false;
+    //$scope.toggleNotifications = function () {
+    //  $scope.notificationsVisible = !$scope.notificationsVisible;
+    //
+    //  // Mark notifications as read if opening
+    //  if ($scope.notificationsVisible) {
+    //    _.forEach(filterChain('notifications', 'unread')($scope.messages), function (notification) {
+    //      notification.read = true;
+    //      Message.mark(notification);
+    //    });
+    //  }
+    //};
 
   });

@@ -1,14 +1,14 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .config(function ($stateProvider, $urlRouterProvider) {
+  .config(function ($stateProvider) {
     $stateProvider
       .state('home', {
         url: '/home',
         templateUrl: 'app/home/home.html',
         controller: 'HomeCtrl',
-        abstract: true,
-        authenticate: true
+        authenticate: true,
+        title: 'RoadAmico - Home'
       });
-    $urlRouterProvider.when('/home', '/home/upcoming');
+    //$urlRouterProvider.when('/home', '/home/upcoming');
   });

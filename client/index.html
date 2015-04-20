@@ -21,6 +21,8 @@
       <!-- bower:css -->
       <link rel="stylesheet" href="bower_components/Stepper/jquery.fs.stepper.css" />
       <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css" />
+      <link rel="stylesheet" href="bower_components/angular-google-places-autocomplete/src/autocomplete.css" />
+      <link rel="stylesheet" href="bower_components/angular-google-places-autocomplete/dist/autocomplete.min.css" />
       <!-- endbower -->
     <!-- endbuild -->
 
@@ -77,6 +79,10 @@
       <script src="bower_components/angular-translate/angular-translate.js"></script>
       <script src="bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js"></script>
       <script src="bower_components/angular-ui-select/dist/select.js"></script>
+      <script src="bower_components/angular-utils-disqus/dirDisqus.js"></script>
+      <script src="bower_components/angular-deckgrid/angular-deckgrid.js"></script>
+      <script src="bower_components/angular-google-places-autocomplete/src/autocomplete.js"></script>
+      <script src="bower_components/angular-google-places-autocomplete/dist/autocomplete.min.js"></script>
       <!-- endbower -->
       <script src="socket.io-client/socket.io.js"></script>
     <!-- endbuild -->
@@ -118,6 +124,7 @@
           <script src="app/categories/browse/browse.js"></script>
           <script src="app/categories/categories.js"></script>
           <script src="app/directives/calendar/calendar.directive.js"></script>
+          <script src="app/directives/calendar/calendar.i18n.js"></script>
           <script src="app/directives/colorpicker/colorpicker.directive.js"></script>
           <script src="app/directives/durationpicker/durationpicker.directive.js"></script>
           <script src="app/directives/icheck/icheck.directive.js"></script>
@@ -126,48 +133,37 @@
           <script src="app/directives/serviceListing/serviceListing.directive.js"></script>
           <script src="app/directives/stepper/stepper.directive.js"></script>
           <script src="app/directives/uiSelectRequired.directive.js"></script>
+          <script src="app/events/event.js"></script>
+          <script src="app/events/view/view.controller.js"></script>
+          <script src="app/events/view/view.js"></script>
+          <script src="app/feed/card.controller.js"></script>
           <script src="app/filters/capitalize.filter.js"></script>
           <script src="app/filters/https/https.filter.js"></script>
           <script src="app/filters/messageFilters/messageFilters.filter.js"></script>
-          <script src="app/home/feed/feed.controller.js"></script>
           <script src="app/home/home.controller.js"></script>
           <script src="app/home/home.js"></script>
-          <script src="app/home/myServices/myServices.controller.js"></script>
-          <script src="app/home/myServices/myServices.js"></script>
-          <script src="app/home/timeline/timeline.controller.js"></script>
-          <script src="app/home/timeline/timeline.js"></script>
-          <script src="app/home/upcoming/upcoming.controller.js"></script>
-          <script src="app/home/upcoming/upcoming.js"></script>
           <script src="app/landing/landing.controller.js"></script>
           <script src="app/landing/landing.i18n.js"></script>
           <script src="app/landing/landing.js"></script>
-          <script src="app/main/main.controller.js"></script>
-          <script src="app/main/main.js"></script>
-          <script src="app/messages/messageModal/messageModal.service.js"></script>
-          <script src="app/messages/messages.controller.js"></script>
-          <script src="app/messages/messages.js"></script>
-          <script src="app/rate/rate.controller.js"></script>
-          <script src="app/rate/rate.i18n.js"></script>
-          <script src="app/rate/rate.js"></script>
-          <script src="app/search/search.controller.js"></script>
-          <script src="app/search/search.js"></script>
-          <script src="app/services/availabilityForm/availabilityForm.directive.js"></script>
-          <script src="app/services/book/book.controller.js"></script>
-          <script src="app/services/book/book.js"></script>
-          <script src="app/services/editService/editService.controller.js"></script>
-          <script src="app/services/editService/editService.js"></script>
-          <script src="app/services/newAvailability/newAvailability.controller.js"></script>
-          <script src="app/services/newAvailability/newAvailability.js"></script>
-          <script src="app/services/newService/newService.controller.js"></script>
-          <script src="app/services/newService/newService.js"></script>
-          <script src="app/services/service.js"></script>
-          <script src="app/services/serviceForm/serviceForm.directive.js"></script>
-          <script src="app/services/viewService/viewService.controller.js"></script>
-          <script src="app/services/viewService/viewService.js"></script>
-          <script src="app/user/user.controller.js"></script>
-          <script src="app/user/user.js"></script>
-          <script src="app/util/availability/availability.service.js"></script>
-          <script src="app/util/category/category.service.js"></script>
+          <script src="app/lists/lists.controller.js"></script>
+          <script src="app/lists/lists.js"></script>
+          <script src="app/lists/view/view.controller.js"></script>
+          <script src="app/lists/view/view.js"></script>
+          <script src="app/models/event/event.service.js"></script>
+          <script src="app/models/list/list.service.js"></script>
+          <script src="app/models/place/place.service.js"></script>
+          <script src="app/places/create/create.controller.js"></script>
+          <script src="app/places/create/create.js"></script>
+          <script src="app/places/edit/edit.controller.js"></script>
+          <script src="app/places/edit/edit.js"></script>
+          <script src="app/places/events/events.controller.js"></script>
+          <script src="app/places/events/events.js"></script>
+          <script src="app/places/form/placeForm.directive.js"></script>
+          <script src="app/places/place.js"></script>
+          <script src="app/places/places.controller.js"></script>
+          <script src="app/places/places.js"></script>
+          <script src="app/places/view/view.controller.js"></script>
+          <script src="app/places/view/view.js"></script>
           <script src="app/util/config.js"></script>
           <script src="app/util/filterChain.js"></script>
           <script src="app/util/geolocator/geolocator.service.js"></script>
@@ -175,10 +171,6 @@
           <script src="app/util/i18n/common.i18n.js"></script>
           <script src="app/util/i18n/i18n.js"></script>
           <script src="app/util/languages.js"></script>
-          <script src="app/util/message/message.service.js"></script>
-          <script src="app/util/rating/rating.service.js"></script>
-          <script src="app/util/service/service.service.js"></script>
-          <script src="app/util/sessionCache/sessionCache.service.js"></script>
           <script src="app/util/test/test.controller.js"></script>
           <script src="app/util/test/test.js"></script>
           <script src="app/util/timezones.js"></script>

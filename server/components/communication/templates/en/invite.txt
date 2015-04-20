@@ -1,0 +1,9 @@
+Hello,
+
+You have been invited by "{{inviter}}" to join fellow travelers on RoadAmico!
+They suggested that you join the group "{{group.name}}".
+
+To get started, visit http://www.roadamico.com to create an account.
+
+Cheers,
+RoadAmico Admin

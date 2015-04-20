@@ -1,0 +1,41 @@
+<div class="modal-header">
+  <button type="button" ng-click="$dismiss()" class="close">&times;</button>
+  <h4 class="modal-title">Ratings and Comments</h4>
+</div>
+<div class="modal-body">
+
+  <div class="row">
+    <div class="col-sm-6">
+      Average rating:<br/>
+      <div rating ng-model="rating" state-on="['fa', 'fa-star']" state-off="['fa', 'fa-star-o']" readonly="true"></div>
+      <br/>
+      <small><em>Based on {{place.ratings.length}} ratings</em></small>
+    </div>
+
+    <div class="col-sm-6">
+      <div ng-show="user._id">
+        <div ng-hide="userRating">Been here? Tell us what you think!</div>
+        <div ng-show="userRating">Thanks for rating!</div>
+        <div class="rate">
+          <div rating ng-model="userRating" state-on="['fa', 'fa-star']" state-off="['fa', 'fa-star-o']" on-hover="hover(value)" on-leave="$parent.message=''" ng-change="rate(userRating)" ></div>
+        </div>
+        <small>{{message}}</small>
+      </div>
+      <div ng-hide="user._id">
+        You must be logged in to rate this place.
+      </div>
+    </div>
+  </div>
+
+  <hr/>
+
+  <dir-disqus disqus-shortname="roadamico"
+              disqus-title="{{disqus.title}}"
+              disqus-identifier="{{disqus.id}}"
+              disqus-url="{{disqus.url}}">
+  </dir-disqus>
+
+</div>
+<div class="modal-footer">
+  <button ng-click="$dismiss()" class="btn">Close</button>
+</div>

@@ -1,0 +1,100 @@
+// Buttons
+
+.btn {
+
+  @at-root &-ra-red {
+    &, &:active, &.active, &.disabled, &[disabled], .open .dropdown-toggle.btn {
+      border-color: $ra-red;
+      background-color: $ra-red;
+    }
+    &:hover, &:focus {
+      border-color: $ra-red-light;
+      background-color: $ra-red-light;
+    }
+  }
+
+  @at-root &-ra-red-hollow {
+    &, &:active, &.active, &.disabled, &[disabled], .open .dropdown-toggle.btn {
+      border-color: $ra-red;
+      background-color: transparent;
+      color: $ra-red;
+    }
+    &:hover, &:focus {
+      border-color: $ra-red;
+      background-color: $ra-red;
+      color: $lightgray-light;
+    }
+  }
+
+  @at-root &-ra-green {
+    &, &:active, &.active, &.disabled, &[disabled], .open .dropdown-toggle.btn {
+      border-color: $ra-green;
+      background-color: $ra-green;
+    }
+    &:hover, &:focus {
+      border-color: $ra-green-light;
+      background-color: $ra-green-light;
+    }
+  }
+
+  @at-root &-ra-green-hollow {
+    &, &:active, &.active, &.disabled, &[disabled], .open .dropdown-toggle.btn {
+      border-color: $ra-green-dark;
+      background-color: transparent;
+      color: $ra-green-dark;
+    }
+    &:hover, &:focus {
+      border-color: $ra-green;
+      background-color: $ra-green;
+      color: $lightgray-light;
+    }
+  }
+
+  @at-root &-ra-teal {
+    &, &:active, &.active, &.disabled, &[disabled], .open .dropdown-toggle.btn {
+      border-color: $ra-teal;
+      background-color: $ra-teal;
+    }
+    &:hover, &:focus {
+      border-color: $ra-teal-light;
+      background-color: $ra-teal-light;
+    }
+  }
+
+  @at-root &-ra-teal-hollow {
+    &, &:active, &.active, &.disabled, &[disabled], .open .dropdown-toggle.btn {
+      border-color: $ra-teal;
+      background-color: transparent;
+      color: $ra-teal;
+    }
+    &:hover, &:focus {
+      border-color: $ra-teal;
+      background-color: $ra-teal;
+      color: $lightgray-light;
+    }
+  }
+
+  @at-root &-hollow {
+    &, &:active, &.active, &.disabled, &[disabled], .open .dropdown-toggle.btn {
+      border-color: $lightgray-light;
+      background-color: transparent;
+    }
+    &:hover, &:focus {
+      border-color: white;
+      background-color: transparent;
+    }
+  }
+
+  @at-root &-white-hollow {
+    &, &:active, &.active, &.disabled, &[disabled], .open .dropdown-toggle.btn {
+      border-color: white;
+      background-color: transparent;
+      color: white;
+    }
+    &:hover, &:focus {
+      border-color: white;
+      background-color: white;
+      color: $darkgray-light;
+    }
+  }
+}

@@ -1,0 +1,183 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="place-page">
+
+  <!-- Information -->
+  <div class="container place-info">
+    <ol class="breadcrumb">
+      <li><a ui-sref="places">Places</a></li>
+      <li class="active">{{place.locationDetails.name}}</li>
+    </ol>
+
+    <div class="row">
+      <div class="col-md-7">
+        <!-- Name -->
+        <div class="name">
+          <h1>{{place.locationDetails.name}}</h1>
+
+          <a class="btn btn-sm" ui-sref="place.edit({id: place._id})"><i class="fa fa-pencil"></i> Edit</a>
+        </div>
+
+
+        <div class="row space-top-small space-bottom-small">
+          <div class="col-md-6">
+
+            <!-- Location -->
+            <div class="row space-bottom-small" ng-show="place.locationDetails.formatted_address">
+              <div class="col-xs-1"><i class="fa fa-lg fa-map-marker"></i></div>
+              <div class="col-xs-10">{{place.locationDetails.formatted_address}}</div>
+            </div>
+
+            <!-- Phone -->
+            <div class="row space-bottom-small" ng-show="place.locationDetails.formatted_phone_number">
+              <div class="col-xs-1"><i class="fa fa-lg fa-phone"></i></div>
+              <div class="col-xs-10">{{place.locationDetails.formatted_phone_number}}</div>
+            </div>
+
+            <!-- Website -->
+            <div class="row space-bottom-small" ng-show="place.locationDetails.website">
+              <div class="col-xs-1"><i class="fa fa-lg fa-globe"></i></div>
+              <div class="col-xs-10"><a href="{{place.locationDetails.website}}">Website</a></div>
+            </div>
+
+            <!-- Google+ -->
+            <div class="row space-bottom-small" ng-show="place.locationDetails.url">
+              <div class="col-xs-1"><i class="fa fa-lg fa-google-plus"></i></div>
+              <div class="col-xs-10"><a href="{{place.locationDetails.url}}">Google+ Page</a></div>
+            </div>
+
+          </div>
+          <div class="col-md-6">
+            <div ng-show="isLoggedIn()">
+              <button class="btn btn-sm btn-ra-red" ng-click="follow()" ng-hide="userFollowing"><i class="fa fa-plus"></i> Follow</button>
+              <button class="btn btn-sm btn-ra-red-hollow" ng-click="unfollow()" ng-show="userFollowing"><i class="fa fa-minus"></i> Unfollow</button>
+            </div>
+
+            <div class="space-top-small">
+              <div rating ng-model="rating" state-on="['fa', 'fa-star']" state-off="['fa', 'fa-star-o']" readonly="true"></div>
+              <br/>
+              <small><em>Based on {{place.ratings.length}} ratings</em></small>
+              <br/>
+              <button class="btn btn-sm btn-ra-red" ng-click="viewRatings()"><i class="fa fa-comment"></i> Join the discussion</button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Description -->
+        <hr/>
+        <div>{{place.description}}</div>
+      </div>
+      <div class="col-md-5">
+
+        <!-- Map -->
+        <div ng-if="place.locationDetails">
+          <map zoom="12" center="[35.910419, -79.049592]" scrollwheel="false"></map>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Photos -->
+  <!--<div class="photo-viewer space-top-medium">-->
+    <!--<div class="photo-holder">-->
+
+      <!--<img ng-repeat="photo in place.photos" ng-src="{{photo.url}}" class="photo img-rounded"/>-->
+    <!--</div>-->
+  <!--</div>-->
+
+  <!-- Events -->
+  <div class="event-viewer space-top-large" ng-if="events.length">
+    <div class="container">
+      <h2>Upcoming Events</h2>
+
+      <div class="row space-bottom-medium">
+
+        <!-- Event card -->
+        <div class="col-md-4" ng-repeat="event in events">
+          <div class="event space-top-small" ng-class="{'event-going': event.userGoing}">
+            <div class="space-bottom-small text-center event-name">{{event.name}}</div>
+
+            <!-- Date and Time -->
+            <div class="row space-bottom-small">
+              <div class="col-xs-1 text-center"><i class="fa fa-lg fa-calendar"></i></div>
+              <div class="col-xs-10">{{event.when}}</div>
+            </div>
+
+            <!-- Group -->
+            <div class="row space-bottom-small">
+              <div class="col-xs-1 text-center"><i class="fa fa-lg fa-group"></i></div>
+              <div class="col-xs-10" ng-pluralize count="event.participants.length"
+                   when="{one: '1 person going', other: '{} people going'}"></div>
+            </div>
+
+            <!-- Meetup -->
+            <div class="row">
+              <div class="col-xs-1 text-center"><i class="fa fa-lg fa-map-marker"></i></div>
+              <div class="col-xs-10">Meeting up at {{event.meetupPlace}} at {{event.meetupTime}}</div>
+            </div>
+
+            <div class="space-top-small text-center">
+              <a ui-sref="event.view({id: event._id})" class="btn" ng-class="{'btn-white-hollow': event.userGoing, 'btn-ra-green-hollow': !event.userGoing}"><i class="fa fa-info-circle"></i> Details</a>
+            </div>
+
+            <div ng-show="isLoggedIn() && !event.userGoing" class="space-top-medium">
+              <button ng-click="joinEvent(event)" class="btn btn-block btn-ra-green"><i class="fa fa-thumbs-up"></i> Count me in!</button>
+            </div>
+
+            <div ng-show="isLoggedIn() && event.userGoing" class="text-center">
+              <hr/>
+              <div class="going-message cursive"><i class="fa fa-check"></i> You're Going!</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="text-center space-bottom-medium">
+        <a ui-sref="^.events" class="btn btn-sm btn-ra-green">See more...</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Share -->
+  <div class="share">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="text-center">
+          <h2>Share Something</h2>
+        </div>
+
+        <p>
+          Share a photo!
+        </p>
+
+        <button class="btn btn-ra-red" ng-file-select="addPhoto($files)" ng-multiple="false"><i class="fa fa-photo"></i> Photo</button>
+
+        {{attachedImage}}
+        <p>
+          Share something about <strong>{{place.locationDetails.name}}</strong> for others to learn and enjoy.
+        </p>
+
+        <form name="form" ng-submit="addPost()">
+          <div class="row">
+            <div class="col-sm-9">
+              <input type="text" ng-model="newPost.text" class="form-control"/>
+            </div>
+            <div class="col-sm-3">
+              <button type="submit" class="btn btn-block btn-ra-red">Share</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Feed -->
+  <div deckgrid source="place.feed" cardTemplate="app/feed/card.html" class="deckgrid"></div>
+  <div class="clearfix"></div>
+
+</div>
+
+<div ng-include="'components/footer/footer.html'"></div>

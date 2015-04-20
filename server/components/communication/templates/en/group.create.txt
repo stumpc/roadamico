@@ -1,0 +1,8 @@
+Hello {{user.name}},
+
+A new group "{{data.group.name}}" was created and needs to be reviewed. You can do so at:
+
+http://www.roadamico.com/admin/review/{{data.group.id}}
+
+Thanks,
+The RoadAmico Brain

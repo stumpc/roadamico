@@ -8,57 +8,81 @@ var moment = require('moment');
 
 var UserSchema = new Schema({
   // Profile
+  joined: {
+    type: String, default: function() {
+      return moment().toISOString()
+    }
+  },
+
   name: String,
   email: {type: String, lowercase: true},
-  joined: String,
-  phone: String,
   photo: String,
   location: String,
   locationDetails: {},
-  bio: String,
-  workplace: String,
-  timezone: String,
+
+  //phone: String,
+  //bio: String,
+  //workplace: String,
+  //timezone: String,
+
   languages: [],
 
   // Following
-  following: [{
-    provider: { type: Schema.Types.ObjectId, ref: 'Category' },
-    datetime: String
+  followingPlaces: [{
+    place: { type: Schema.Types.ObjectId, ref: 'Place' },
+    datetime: {
+      type: String, default: function() {
+        return moment().toISOString()
+      }
+    }
+  }],
+  followingLists: [{
+    list: { type: Schema.Types.ObjectId, ref: 'List' },
+    datetime: {
+      type: String, default: function() {
+        return moment().toISOString()
+      }
+    }
+  }],
+
+  // Groups this user is a member of
+  groups: [{
+    type: Schema.Types.ObjectId, ref: 'Group'
   }],
 
   // Privacy
-  publicInfo: {
-    phone:      Boolean,
-    location:   Boolean,
-    workplace:  Boolean,
-    email:      Boolean
-  },
+  //publicInfo: {
+  //  phone:      Boolean,
+  //  location:   Boolean,
+  //  workplace:  Boolean,
+  //  email:      Boolean
+  //},
 
 
-  emailPrefs: {
-    messages: Boolean,
-    soft:     Boolean,
-    offers:   Boolean
-  },
+  //emailPrefs: {
+  //  messages: Boolean,
+  //  soft:     Boolean,
+  //  offers:   Boolean
+  //},
 
   // Financial information
-  financial: {
-    cards: [{
-      number: String, // Encrypted
-      display: String, // ********1234
-      exp: {
-        month: Number,
-        year: Number
-      },
-      cvc: String // Encrypted
-    }]
-  },
+  //financial: {
+  //  cards: [{
+  //    number: String, // Encrypted
+  //    display: String, // ********1234
+  //    exp: {
+  //      month: Number,
+  //      year: Number
+  //    },
+  //    cvc: String // Encrypted
+  //  }]
+  //},
 
   // Only admin can set. These fields must be deleted in user.controller#update
-  verification: {
-    idUrl: String,
-    status: String // none, pending, denied, approved
-  },
+  //verification: {
+  //  idUrl: String,
+  //  status: String // none, pending, denied, approved
+  //},
   activated: Boolean,
   modCode: String,
   role: {

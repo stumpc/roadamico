@@ -12,15 +12,15 @@ router.get('/',             auth.hasRole('admin'), controller.index);
 router.delete('/:id',       auth.hasRole('admin'), controller.destroy);
 
 // User routes
-router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
-router.put('/follow',       auth.isAuthenticated(), controller.follow);
-router.put('/unfollow',     auth.isAuthenticated(), controller.unfollow);
+router.put('/:id/password',       auth.isAuthenticated(), controller.changePassword);
+router.put('/follow/place/:id',   auth.isAuthenticated(), controller.followPlace);
+router.put('/unfollow/place/:id', auth.isAuthenticated(), controller.unfollowPlace);
 router.put('/',             auth.isAuthenticated(), controller.update);
 router.put('/:id',          auth.isAuthenticated(), controller.update);
 router.get('/me',           auth.isAuthenticated(), controller.me);
 router.post('/pic',         auth.isAuthenticated(), controller.uploadImage);
-router.post('/card',        auth.isAuthenticated(), controller.saveCard);
-router.delete('/card/:id',  auth.isAuthenticated(), controller.deleteCard);
+//router.post('/card',        auth.isAuthenticated(), controller.saveCard);
+//router.delete('/card/:id',  auth.isAuthenticated(), controller.deleteCard);
 
 // Public routes
 router.get('/profiles', controller.profiles);

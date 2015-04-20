@@ -1,0 +1,15 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container page">
+  <h1>Places</h1>
+
+  <a ng-show="isLoggedIn()" class="btn" ui-sref="createPlace">Create a new place</a>
+
+  <hr/>
+  <ul>
+    <li ng-repeat="place in places"><a ui-sref="place.view({id: place._id})">{{place.locationDetails.name}}</a></li>
+  </ul>
+
+</div>
+
+<div ng-include="'components/footer/footer.html'"></div>

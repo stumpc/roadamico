@@ -1,0 +1,8 @@
+Hello {{user.name}},
+
+Great news! Your group "{{data.group.name}}" was reviewed and approved. Students will now be able to see it. You can see and manage your group at:
+
+http://www.roadamico.com/groups/{{data.group.id}}
+
+Thanks,
+RoadAmico Admin

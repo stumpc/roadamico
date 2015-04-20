@@ -4,12 +4,11 @@ var User = require('./user.model');
 var passport = require('passport');
 var config = require('../../config/environment');
 var _ = require('lodash');
-var cloudinary = require('cloudinary');
-var fs = require('fs');
+var upload = require('../../components/upload');
 var moment = require('moment');
 var auth = require('../../auth/auth.service');
 var genCode = require('../../components/genCode');
-var communication = require('../../components/communication');
+var email = require('../../components/communication/email');
 var translate = require('../../components/translate');
 
 var validationError = function(res, err) {
@@ -135,33 +134,33 @@ exports.update = function(req, res, next) {
   });
 };
 
-exports.follow = function(req, res, next) {
-  var index = _.findIndex(req.user.following, function (f) { return f.provider.equals(req.body.id); });
-  if (index > -1) {
-    return req.json(req.user);
-  }
-  req.user.following.push({
-    provider: req.body.id,
-    datetime: moment().toISOString()
-  });
-  req.user.save(function (err, user) {
-    if (err) return next(err);
-    res.json(user);
-  });
-};
-
-exports.unfollow = function(req, res, next) {
-  var index = _.findIndex(req.user.following, function (f) { return f.provider.equals(req.body.id); });
-  if (index > -1) {
-    req.user.following.splice(index, 1);
-    req.user.save(function (err, user) {
-      if (err) return next(err);
-      res.json(user);
-    });
-  } else {
-    res.json(403, { message: translate(req, 'invalid-provider') })
-  }
-};
+//exports.follow = function(req, res, next) {
+//  var index = _.findIndex(req.user.following, function (f) { return f.provider.equals(req.body.id); });
+//  if (index > -1) {
+//    return req.json(req.user);
+//  }
+//  req.user.following.push({
+//    provider: req.body.id,
+//    datetime: moment().toISOString()
+//  });
+//  req.user.save(function (err, user) {
+//    if (err) return next(err);
+//    res.json(user);
+//  });
+//};
+//
+//exports.unfollow = function(req, res, next) {
+//  var index = _.findIndex(req.user.following, function (f) { return f.provider.equals(req.body.id); });
+//  if (index > -1) {
+//    req.user.following.splice(index, 1);
+//    req.user.save(function (err, user) {
+//      if (err) return next(err);
+//      res.json(user);
+//    });
+//  } else {
+//    res.json(403, { message: translate(req, 'invalid-provider') })
+//  }
+//};
 
 /**
  * Get my info
@@ -188,57 +187,52 @@ exports.authCallback = function(req, res, next) {
  * Uploading a profile picture
  */
 exports.uploadImage = function (req, res, next) {
-
-  var img = req.files.file;
-  cloudinary.uploader.upload(img.path, function(result) {
-    fs.unlinkSync(img.path); // Delete the file
-
-    // Save the user
-    req.user.photo = result.url;
-    req.user.save(function (err, user) {
-      if (err) return next(err);
-      res.send(user.photo);
+  upload.image(req.files.file)
+    .then(function (url) {
+      req.user.photo = url;
+      req.user.save(function (err, user) {
+        if (err) return next(err);
+        res.send(user.photo);
+      });
     });
-  });
-
 };
 
-exports.saveCard = function (req, res, next) {
-  if(req.user.authenticate(req.body.password)) {
-
-    // Validate
-    var card = req.body.card;
-    if (!card || !card.number || !card.cvc || !card.exp.month || !card.exp.year || card.exp.month < 1 ||
-        card.exp.month > 12) {
-      return validationError(res, {message: translate(req, 'invalid-card-data') });
-    }
-
-    req.user.addCard(card, req.body.password);
-    req.user.save(function (err, user) {
-      if (err) return next(err);
-      res.json(user.financial);
-    });
-
-  } else {
-    res.send(403);
-  }
-};
-
-exports.deleteCard = function (req, res, next) {
-  var found = false;
-  var index = _.findIndex(req.user.financial.cards, function (card) {
-    return card._id.equals(req.params.id);
-  });
-  if (index >= 0) {
-    req.user.financial.cards.splice(index, 1);
-    req.user.save(function (err, user) {
-      if (err) return next(err);
-      res.json(user.financial);
-    });
-  } else {
-    res.send(404);
-  }
-};
+//exports.saveCard = function (req, res, next) {
+//  if(req.user.authenticate(req.body.password)) {
+//
+//    // Validate
+//    var card = req.body.card;
+//    if (!card || !card.number || !card.cvc || !card.exp.month || !card.exp.year || card.exp.month < 1 ||
+//        card.exp.month > 12) {
+//      return validationError(res, {message: translate(req, 'invalid-card-data') });
+//    }
+//
+//    req.user.addCard(card, req.body.password);
+//    req.user.save(function (err, user) {
+//      if (err) return next(err);
+//      res.json(user.financial);
+//    });
+//
+//  } else {
+//    res.send(403);
+//  }
+//};
+//
+//exports.deleteCard = function (req, res, next) {
+//  var found = false;
+//  var index = _.findIndex(req.user.financial.cards, function (card) {
+//    return card._id.equals(req.params.id);
+//  });
+//  if (index >= 0) {
+//    req.user.financial.cards.splice(index, 1);
+//    req.user.save(function (err, user) {
+//      if (err) return next(err);
+//      res.json(user.financial);
+//    });
+//  } else {
+//    res.send(404);
+//  }
+//};
 
 exports.resetPassword = function (req, res, next) {
 
@@ -251,7 +245,7 @@ exports.resetPassword = function (req, res, next) {
     user.save(function (err) {
       if (err) return res.json(500, err);
 
-      communication.email('resetPassword', {
+      email('resetPassword', {
         user: user,
         req: req,
         view: {
@@ -264,4 +258,37 @@ exports.resetPassword = function (req, res, next) {
       res.send(200);
     });
   });
+};
+
+exports.followPlace = function (req, res) {
+  var place = _.find(req.user.followingPlaces, function (f) {
+    return f.place.equals(req.params.id);
+  });
+  if (place) {
+    res.send(200);
+  } else {
+    req.user.followingPlaces.push({
+      place: req.params.id,
+      datetime: moment().toISOString()
+    });
+    req.user.save(function (err, user) {
+      if (err) return res.json(500, err);
+      res.json(user);
+    });
+  }
+};
+
+exports.unfollowPlace = function (req, res) {
+  var placeIdx = _.findIndex(req.user.followingPlaces, function (f) {
+    return f.place.equals(req.params.id);
+  });
+  if (placeIdx === -1) {
+    res.send(200);
+  } else {
+    req.user.followingPlaces.splice(placeIdx, 1);
+    req.user.save(function (err, user) {
+      if (err) return res.json(500, err);
+      res.json(user);
+    });
+  }
 };

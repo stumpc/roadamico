@@ -1,5 +1,4 @@
 var cloudinary = require('cloudinary');
-var faker = require('faker');
 var fs = require('fs');
 var Q = require('q');
 
@@ -9,7 +8,7 @@ module.exports = {
 
     if (process.env.NODE_ENV === 'test') {
       fs.unlinkSync(img.path);
-      deferred.resolve(faker.image.imageUrl());
+      deferred.resolve(require('faker').image.imageUrl());
     } else {
       cloudinary.uploader.upload(img.path, function(result) {
         fs.unlinkSync(img.path); // Delete the file

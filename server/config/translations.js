@@ -29,7 +29,7 @@ module.exports = {
     'email.group.grant':    'RoadAmico - Your request for access to a group was granted',
     'email.group.deny':     'RoadAmico - Your request for access to a group was denied',
     'email.group.invite':   'Join your friends on RoadAmcio!',
-    'email.event.message':  'RoadAmico - A message from {{user.name}} about: {{data.event.name}}',
+    'email.event.message':  'RoadAmico - A message from {{data.poster.name}} about: {{data.event.name}}',
     'email.event.cancel':   'RoadAmico - The event {{data.event.name}} was canceled',
 
     // Notifications

@@ -4,4 +4,4 @@ A new message was posted for the event "{{data.event.name}}" by {{data.poster.na
 
 
 To view messages for this event, go to:
-http://www.roadamico.com/event/{{data.event._id}}
+http://www.roadamico.com/place/{{data.event.place}}/event/{{data.event._id}}/view

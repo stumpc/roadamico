@@ -1,6 +1,6 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<div class="container home-page page">
+<div class="container event-details page">
 
   <ol class="breadcrumb">
     <li><a ui-sref="places">Places</a></li>
@@ -10,6 +10,7 @@
   </ol>
 
   <h1>{{event.name}}</h1>
+  <div ng-show="isLoggedIn() && event.userGoing" class="well bg-ra-green text-center cursive going-message"><i class="fa fa-check"></i> You're going!</div>
 
   <div ng-show="event.creator == user._id" class="space-bottom-medium">
     <button class="btn btn-ra-teal-hollow"><i class="fa fa-pencil"></i> Edit</button>
@@ -47,9 +48,24 @@
     <button ng-click="join()" class="btn btn-block btn-ra-green"><i class="fa fa-thumbs-up"></i> Count me in!</button>
   </div>
 
-  <div ng-show="isLoggedIn() && event.userGoing" class="text-center">
-    <hr/>
-    <div class="going-message cursive"><i class="fa fa-check"></i> You're Going!</div>
+  <div ng-if="isLoggedIn() && event.userGoing">
+    <h2>Group Messages</h2>
+
+    <div ng-repeat="message in event.messages" class="message">
+      <div class="text">
+        {{message.text}}
+      </div>
+      <div class="info">
+        Posted {{message.datetime | date:'medium'}} by {{message.poster.name}}
+      </div>
+    </div>
+
+    <div class="space-top-medium">
+      <label for="messageText">Say Something:</label>
+      <textarea id="messageText" class="form-control space-bottom-small" ng-model="newMessage.text"></textarea>
+      <button class="btn btn-ra-green" ng-click="sendMessage()"><i class="fa fa-send"></i> Send Message</button>
+    </div>
+
   </div>
 
 </div>

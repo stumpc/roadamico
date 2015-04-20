@@ -59,8 +59,13 @@ function detect(data) {
   return locale;
 }
 
+function normalize(lang) {
+  return lang.substr(0,2);
+}
+
 exports.defaultLocale     = defaultLocale;
 exports.localeMatch       = localeMatch;
 exports.getUserLocale     = getUserLocale;
 exports.getRequestLocale  = getRequestLocale;
 exports.detect            = detect;
+exports.normalize         = normalize;

@@ -78,6 +78,11 @@ describe('The Groups API', function () {
       email: 'gtu3@roadamico.com'
     }]
   };
+  var group7 = {
+    name: 'g7',
+    approved: true,
+    emails: ['gtu2@roadamico.com']
+  };
 
   before(function (done) {
     User.create(user, user2, user3, admin, function (err) {
@@ -92,13 +97,15 @@ describe('The Groups API', function () {
       group4.administrator = user._id;
       group5.administrator = user._id;
       group6.administrator = user._id;
-      Group.create(group1, group2, group3, group4, group5, group6, function () {
+      group7.administrator = user._id;
+      Group.create(group1, group2, group3, group4, group5, group6, group7, function () {
         group1 = arguments[1];
         group2 = arguments[2];
         group3 = arguments[3];
         group4 = arguments[4];
         group5 = arguments[5];
         group6 = arguments[6];
+        group7 = arguments[7];
         done();
       });
     });
@@ -484,7 +491,7 @@ describe('The Groups API', function () {
 
     it('should not allow non-member non-admins', function (done) {
       request(app)
-        .put('/api/groups/' + group1._id + '/invite')
+        .put('/api/groups/' + group7._id + '/invite')
         .send({email: 'invite1@me.com'})
         .set('Authorization', 'Bearer ' + auth.signToken(user3))
         .expect(403)
@@ -496,12 +503,13 @@ describe('The Groups API', function () {
 
     it('should allow members', function (done) {
       request(app)
-        .put('/api/groups/' + group1._id + '/invite')
+        .put('/api/groups/' + group7._id + '/invite')
         .send({email: 'gtu3@roadamico.com'})
         .set('Authorization', 'Bearer ' + auth.signToken(user2))
         .expect(200)
         .end(function(err, res) {
           if (err) return done(err);
+          should.not.exist(res.body.emails);
           Group.findById(group1._id, function (err, g) {
             g.emails.should.containEql('gtu3@roadamico.com');
             done();
@@ -511,12 +519,13 @@ describe('The Groups API', function () {
 
     it('should allow the owner', function (done) {
       request(app)
-        .put('/api/groups/' + group1._id + '/invite')
+        .put('/api/groups/' + group7._id + '/invite')
         .send({email: 'invite3@me.com'})
         .set('Authorization', 'Bearer ' + auth.signToken(user))
         .expect(200)
         .end(function(err, res) {
           if (err) return done(err);
+          should.not.exist(res.body.emails);
           Group.findById(group1._id, function (err, g) {
             g.emails.should.containEql('invite3@me.com');
             done();
@@ -526,12 +535,13 @@ describe('The Groups API', function () {
 
     it('should allow admins', function (done) {
       request(app)
-        .put('/api/groups/' + group1._id + '/invite')
+        .put('/api/groups/' + group7._id + '/invite')
         .send({email: 'invite4@me.com'})
         .set('Authorization', 'Bearer ' + auth.signToken(admin))
         .expect(200)
         .end(function(err, res) {
           if (err) return done(err);
+          should.not.exist(res.body.emails);
           Group.findById(group1._id, function (err, g) {
             g.emails.should.containEql('invite4@me.com');
             done();

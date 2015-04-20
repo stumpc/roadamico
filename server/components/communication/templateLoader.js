@@ -17,7 +17,6 @@ function loadEmails(lang) {
       encoding: 'utf8'
     });
   });
-  console.log(Object.keys(store));
   return store;
 }
 

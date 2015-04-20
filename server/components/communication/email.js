@@ -13,7 +13,7 @@ module.exports = function (name, data) {
     return;
   }
 
-  var lang = language.detect(data.user || data.req || {}).code;
+  var lang = language.normalize(language.detect(data.user || data.req || {}).code);
   var emailPayload = {
     from:     config.email.adminEmail,
     fromName: config.email.adminName,

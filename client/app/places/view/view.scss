@@ -1,4 +1,4 @@
-.place-page {
+  .place-page {
   .place-info {
     hr {
       border-top: 1px solid $mediumgray-dark;
@@ -49,6 +49,23 @@
       background: white;
       border-radius: 4px;
       box-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+
+      &.event-going {
+        background: $ra-green;
+        color: white;
+
+        hr {
+
+        }
+
+        .going-message {
+          font-size: 18px;
+        }
+      }
+
+      .event-name {
+        font-size: 20px;
+      }
     }
   }
 

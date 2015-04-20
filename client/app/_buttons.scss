@@ -39,13 +39,37 @@
 
   @at-root &-ra-green-hollow {
     &, &:active, &.active, &.disabled, &[disabled], .open .dropdown-toggle.btn {
-      border-color: $ra-green;
+      border-color: $ra-green-dark;
       background-color: transparent;
-      color: $ra-green;
+      color: $ra-green-dark;
     }
     &:hover, &:focus {
       border-color: $ra-green;
       background-color: $ra-green;
+      color: $lightgray-light;
+    }
+  }
+
+  @at-root &-ra-teal {
+    &, &:active, &.active, &.disabled, &[disabled], .open .dropdown-toggle.btn {
+      border-color: $ra-teal;
+      background-color: $ra-teal;
+    }
+    &:hover, &:focus {
+      border-color: $ra-teal-light;
+      background-color: $ra-teal-light;
+    }
+  }
+
+  @at-root &-ra-teal-hollow {
+    &, &:active, &.active, &.disabled, &[disabled], .open .dropdown-toggle.btn {
+      border-color: $ra-teal;
+      background-color: transparent;
+      color: $ra-teal;
+    }
+    &:hover, &:focus {
+      border-color: $ra-teal;
+      background-color: $ra-teal;
       color: $lightgray-light;
     }
   }

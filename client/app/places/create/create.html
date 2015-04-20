@@ -46,6 +46,12 @@
       </div>
     </div>
 
+    <!-- Description -->
+    <div class="form-group" ng-show="place.locationDetails">
+      <label for="description">Describe this place a little bit:</label>
+      <textarea name="description" id="description" class="form-control" ng-model="place.description"></textarea>
+    </div>
+
     <!--<div class="row">-->
       <!--<div>{{place.locationDetails.name}}</div>-->
       <!--<div>{{place.locationDetails.formatted_address}}</div>-->

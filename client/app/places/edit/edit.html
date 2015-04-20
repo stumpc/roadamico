@@ -1,6 +1,13 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <div class="container home-page page">
+
+  <ol class="breadcrumb">
+    <li><a ui-sref="places">Places</a></li>
+    <li><a ui-sref="^.view">{{place.locationDetails.name}}</a></li>
+    <li class="active">Edit</li>
+  </ol>
+
   <h1>Edit Place</h1>
 
   <div place-form place="place" on-save="save(updated)"></div>

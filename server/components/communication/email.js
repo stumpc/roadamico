@@ -23,6 +23,10 @@ module.exports = function (name, data) {
 
   // Load the email body
   var template = templateLoader(lang, name) || templateLoader(language.defaultLocale.code, name);
+  if (!template) {
+    console.error('Error: No template found for ' + name + '[' + lang + ']');
+    return;
+  }
   if (template.txt) {
     emailPayload.text = mustache.render(template.txt, data.view);
   }

@@ -10,6 +10,14 @@ angular.module('roadAmicoApp')
       },
       update: {
         method: 'PUT'
+      },
+      join: {
+        url: 'api/events/:id/join',
+        method: 'PUT'
+      },
+      message: {
+        url: 'api/events/:id/message',
+        method: 'POST'
       }
     });
   });

@@ -14,8 +14,8 @@ angular.module('roadAmicoApp')
         link: '/search'
       },
       {
-        title: 'Browse',
-        link: '/categories/browse'
+        title: 'Places',
+        link: '/places'
       }
     ];
 

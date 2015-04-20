@@ -2,24 +2,12 @@
 
 angular.module('roadAmicoApp')
   .controller('ViewPlaceCtrl', function ($scope, $q, $location, $document, $modal, $sce, Auth, $upload, place, Place, Event, Google, Geolocator) {
-    $document[0].title = 'RoadAmico - ' + place.name;
+    $document[0].title = 'RoadAmico - ' + place.locationDetails.name;
 
     $scope.place = place;
-    var allEvents = Event.list({id: place._id});
-    allEvents.$promise.then(function (events) {
-      $scope.events = _(events)
-        .forEach(function (event) { // Add workable and displayable time data
-          event.moment = moment(event.datetime);
-          event.when = event.moment.format('llll');
-        })
-        .filter(function (event) { // Take out past events
-          return event.moment >= moment();
-        })
-        .sortBy('moment').take(3).value(); // Only display the three closest events
-    });
-
     $scope.user = Auth.getCurrentUser();
-    console.log(place.locationDetails);
+    $scope.isLoggedIn = Auth.isLoggedIn;
+    //console.log(place.locationDetails);
 
     // --- Following ---
 
@@ -101,6 +89,32 @@ angular.module('roadAmicoApp')
         });
       });
     });
+
+
+    // --- Events ---
+
+    var allEvents = Event.list({id: place._id});
+    allEvents.$promise.then(function (events) {
+      $scope.events = _(events)
+        .forEach(function (event) { // Add workable and displayable time data
+          event.moment = moment(event.datetime);
+          event.when = event.moment.format('llll');
+          event.userGoing = _.contains(_.pluck(event.participants, 'participant'), $scope.user._id);
+        })
+        .filter(function (event) { // Take out past events
+          return event.moment >= moment();
+        })
+        .sortBy('moment').take(3).value(); // Only display the three closest events
+    });
+
+    $scope.joinEvent = function (event) {
+      event.$join().then(function () {
+        console.log('Joined!');
+        event.moment = moment(event.datetime);
+        event.when = event.moment.format('llll');
+        event.userGoing = _.contains(_.pluck(event.participants, 'participant'), $scope.user._id);
+      });
+    };
 
 
 

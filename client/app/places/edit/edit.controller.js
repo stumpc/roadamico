@@ -2,7 +2,7 @@
 
 angular.module('roadAmicoApp')
   .controller('EditPlaceCtrl', function ($scope, $state, $document, place) {
-    $document[0].title = 'RoadAmico - Editing: ' + place.name;
+    $document[0].title = 'RoadAmico - Editing: ' + place.locationDetails.name;
 
     $scope.place = place;
     $scope.save = function (updated) {

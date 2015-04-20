@@ -6,7 +6,7 @@
   <div class="container place-info">
     <ol class="breadcrumb">
       <li><a ui-sref="places">Places</a></li>
-      <li class="active">{{place.name}}</li>
+      <li class="active">{{place.locationDetails.name}}</li>
     </ol>
 
     <div class="row">
@@ -48,7 +48,7 @@
 
           </div>
           <div class="col-md-6">
-            <div ng-show="user._id">
+            <div ng-show="isLoggedIn()">
               <button class="btn btn-sm btn-ra-red" ng-click="follow()" ng-hide="userFollowing"><i class="fa fa-plus"></i> Follow</button>
               <button class="btn btn-sm btn-ra-red-hollow" ng-click="unfollow()" ng-show="userFollowing"><i class="fa fa-minus"></i> Unfollow</button>
             </div>
@@ -96,8 +96,8 @@
 
         <!-- Event card -->
         <div class="col-md-4" ng-repeat="event in events">
-          <div class="event space-top-small">
-            <div class="space-bottom-small">{{event.name}}</div>
+          <div class="event space-top-small" ng-class="{'event-going': event.userGoing}">
+            <div class="space-bottom-small text-center event-name">{{event.name}}</div>
 
             <!-- Date and Time -->
             <div class="row space-bottom-small">
@@ -118,7 +118,18 @@
               <div class="col-xs-10">Meeting up at {{event.meetupPlace}} at {{event.meetupTime}}</div>
             </div>
 
-            <button ng-show="user._id" class="btn btn-block btn-ra-green space-top-medium"><i class="fa fa-thumbs-up"></i> Count me in!</button>
+            <div class="space-top-small text-center">
+              <a ui-sref="event.view({id: event._id})" class="btn" ng-class="{'btn-white-hollow': event.userGoing, 'btn-ra-green-hollow': !event.userGoing}"><i class="fa fa-info-circle"></i> Details</a>
+            </div>
+
+            <div ng-show="isLoggedIn() && !event.userGoing" class="space-top-medium">
+              <button ng-click="joinEvent(event)" class="btn btn-block btn-ra-green"><i class="fa fa-thumbs-up"></i> Count me in!</button>
+            </div>
+
+            <div ng-show="isLoggedIn() && event.userGoing" class="text-center">
+              <hr/>
+              <div class="going-message cursive"><i class="fa fa-check"></i> You're Going!</div>
+            </div>
           </div>
         </div>
 
@@ -145,7 +156,7 @@
 
         {{attachedImage}}
         <p>
-          Share something about <strong>{{place.name}}</strong> for others to learn and enjoy.
+          Share something about <strong>{{place.locationDetails.name}}</strong> for others to learn and enjoy.
         </p>
 
         <form name="form" ng-submit="addPost()">

@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('EventsCtrl', function ($scope, place, events) {
+  .controller('EventsCtrl', function ($scope, place, events, Auth) {
+    $scope.isLoggedIn = Auth.isLoggedIn;
     $scope.message = 'Hello';
     $scope.place = place;
     $scope.events = _(events)

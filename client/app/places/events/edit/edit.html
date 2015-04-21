@@ -1,0 +1,19 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container home-page page">
+
+  <ol class="breadcrumb">
+    <li><a ui-sref="places">Places</a></li>
+    <li><a ui-sref="^.^.view">{{place.locationDetails.name}}</a></li>
+    <li><a ui-sref="^.^.events">Events</a></li>
+    <li><a ui-sref="^.view">{{event.name}}</a></li>
+    <li class="active">Edit</li>
+  </ol>
+
+  <h1>Edit Event</h1>
+
+  <div event-form event="event" on-save="save(updated)"></div>
+
+</div>
+
+<div ng-include="'components/footer/footer.html'"></div>

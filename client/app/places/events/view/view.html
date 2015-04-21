@@ -10,10 +10,22 @@
   </ol>
 
   <h1>{{event.name}}</h1>
-  <div ng-show="isLoggedIn() && event.userGoing" class="well bg-ra-green text-center cursive going-message"><i class="fa fa-check"></i> You're going!</div>
+
+  <div ng-show="isLoggedIn() && event.userGoing" class="row">
+    <div class="col-md-6">
+      <div class="well bg-ra-green text-center going-message">
+        <span class="cursive">
+          <i class="fa fa-check"></i> You're going!
+        </span>
+
+        <button class="btn btn-sm btn-white-hollow pull-right" ng-click="unjoin('unjoin the event: ' + event.name)">Nevermind, I'm not going</button>
+      </div>
+    </div>
+  </div>
+
 
   <div ng-show="event.creator == user._id" class="space-bottom-medium">
-    <button class="btn btn-ra-teal-hollow"><i class="fa fa-pencil"></i> Edit</button>
+    <a ui-sref="^.edit" class="btn btn-ra-teal-hollow"><i class="fa fa-pencil"></i> Edit</a>
     <button class="btn btn-ra-red-hollow" ng-click="cancel('cancel: ' + event.name)"><i class="fa fa-times"></i> Cancel Event</button>
   </div>
 

@@ -13,6 +13,7 @@ router.put('/:id',        auth.isAuthenticated(), controller.update);
 router.patch('/:id',      auth.isAuthenticated(), controller.update);
 router.put('/:id/cancel', auth.isAuthenticated(), controller.cancel);
 router.put('/:id/join',   auth.isAuthenticated(), controller.join);
+router.put('/:id/unjoin', auth.isAuthenticated(), controller.unjoin);
 router.post('/:id/message', auth.isAuthenticated(), controller.message);
 
 module.exports = router;

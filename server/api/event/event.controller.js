@@ -41,7 +41,9 @@ exports.create = function(req, res) {
 
 // Updates an existing event in the DB.
 exports.update = function(req, res) {
-  if(req.body._id) { delete req.body._id; }
+  delete req.body._id;
+  delete req.body.participants; // Can't change this
+  delete req.body.messages;     // Or this
   Event.findById(req.params.id, function (err, event) {
     if (err) { return handleError(res, err); }
     if(!event) { return res.send(404); }
@@ -113,6 +115,35 @@ exports.join = function (req, res) {
       datetime: moment().toISOString(),
       participant: req.user._id
     });
+    event.save(function (err, event) {
+      if(err) { return handleError(res, err); }
+
+      var populateOpts = [
+        { path: 'participants.participant', select: 'name' },
+        { path: 'messages.poster', select: 'name' }
+      ];
+      event.populate(populateOpts, function (err, event) {
+        if(err) { return handleError(res, err); }
+        return res.json(event);
+      });
+    });
+  });
+};
+
+// user backs out of event
+exports.unjoin = function (req, res) {
+  Event.findById(req.params.id, function (err, event) {
+    if(err) { return handleError(res, err); }
+    if(!event) { return res.send(404); }
+
+    var pIdx = _.findIndex(event.participants, function (p) {
+      return req.user._id.equals(p.participant);
+    });
+    if (pIdx === -1) {
+      return res.json(403, {message: 'You have not joined this event.'});
+    }
+    event.participants.splice(pIdx, 1);
+
     event.save(function (err, event) {
       if(err) { return handleError(res, err); }
 

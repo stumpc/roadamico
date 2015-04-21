@@ -15,6 +15,10 @@ angular.module('roadAmicoApp')
         url: '/api/events/:id/join',
         method: 'PUT'
       },
+      unjoin: {
+        url: '/api/events/:id/unjoin',
+        method: 'PUT'
+      },
       message: {
         url: '/api/events/:id/message',
         method: 'POST'

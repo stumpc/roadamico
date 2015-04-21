@@ -50,6 +50,8 @@ describe('GET /api/events', function() {
     name: 'Event 4 (to cancel)'
   }, {
     name: 'Event 5'
+  }, {
+    name: 'Event 6'
   }];
 
   before(function (done) {
@@ -62,12 +64,14 @@ describe('GET /api/events', function() {
         events[2].creator = users[0]._id;
         events[3].creator = users[0]._id;
         events[4].creator = users[0]._id;
+        events[5].creator = users[0]._id;
         events[0].place = places[0]._id;
         events[1].place = places[0]._id;
         events[0].participants = [{participant: users[0]._id}, {participant: users[1]._id}];
         events[2].participants = [{participant: users[0]._id}];
         events[4].participants = [{participant: users[0]._id}, {participant: users[1]._id}];
         events[4].messages = [{poster: users[0]._id, text: 'a test message'}];
+        events[5].participants = [{participant: users[0]._id}, {participant: users[1]._id}];
         Event.create(events, function () {
           for (var i = 0; i < events.length; i++) { events[i] = arguments[i+1]; }
           done();
@@ -334,6 +338,43 @@ describe('GET /api/events', function() {
       request(app)
         .put('/api/events/' + events[1]._id + '/join')
         .set('Authorization', 'Bearer ' + auth.signToken(users[0]))
+        .expect(403)
+        .end(function (err, res) {
+          if (err) return done(err);
+          should.exist(res.body.message);
+          done();
+        });
+    });
+  });
+
+  describe('PUT /api/events/:id/unjoin', function () {
+    it('should require authorization', function (done) {
+      request(app)
+        .put('/api/events/' + events[5]._id + '/unjoin')
+        .expect(401)
+        .end(function (err, res) {
+          if (err) return done(err);
+          done();
+        });
+    });
+
+    it('should unjoin the user', function (done) {
+      request(app)
+        .put('/api/events/' + events[5]._id + '/unjoin')
+        .set('Authorization', 'Bearer ' + auth.signToken(users[1]))
+        .expect(200)
+        .end(function (err, res) {
+          if (err) return done(err);
+          res.body.participants.should.have.length(1);
+          res.body.participants.should.containDeep([{participant: {_id: '' + users[0]._id}}]);
+          done();
+        });
+    });
+
+    it('should not allow a user to unjoin twice', function (done) {
+      request(app)
+        .put('/api/events/' + events[1]._id + '/unjoin')
+        .set('Authorization', 'Bearer ' + auth.signToken(users[1]))
         .expect(403)
         .end(function (err, res) {
           if (err) return done(err);

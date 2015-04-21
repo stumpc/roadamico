@@ -21,12 +21,19 @@ angular.module('roadAmicoApp')
 
     $scope.join = function () {
       event.$join().then(function () {
-        console.log('Joined!');
         event.moment = moment(event.datetime);
         event.when = event.moment.format('llll');
         event.userGoing = true;
       });
     };
+
+    $scope.unjoin = Modal.confirm.yesno(function () {
+      event.$unjoin().then(function () {
+        event.moment = moment(event.datetime);
+        event.when = event.moment.format('llll');
+        event.userGoing = false;
+      });
+    });
 
     // Messaging
 

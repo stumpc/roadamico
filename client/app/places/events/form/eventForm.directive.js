@@ -6,12 +6,12 @@ angular.module('roadAmicoApp')
       templateUrl: 'app/places/events/form/eventForm.html',
       restrict: 'EA',
       scope: {
-        event: '=',
+        originalEvent: '=event',
         onSave: '&'
       },
       link: function (scope, element, attrs) {
 
-        scope.event = scope.event || {};
+        scope.event = angular.copy(scope.originalEvent) || {};
         scope.event.meetup = !!(scope.event.meetupTime || scope.event.meetupPlace);
 
         scope.inPast = function (datetime) {

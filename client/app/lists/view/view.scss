@@ -1,0 +1,49 @@
+.list-view {
+
+  .text {
+    padding: 20px;
+    margin: 30px 20px;
+  }
+
+  .place {
+    background: url(/assets/images/patterns/dark_embroidery.png) repeat;
+    padding: 20px 20px 0 20px;
+    margin: 10px 0;
+    border-radius: 5px;
+    box-shadow: inset 0px 0px 100px rgba(0,0,0,0.5);
+    color: white;
+  }
+
+  .embed {
+    padding: 20px 20px 0 20px;
+    cursor: pointer;
+    margin: 10px 0;
+    border-radius: 5px;
+    background: white;
+  }
+
+  .thumbnail {
+    width: 100%;
+  }
+
+  .name {
+    font-size: 18px;
+  }
+
+
+  .entry {
+    position: relative;
+
+    .edit-controls {
+      top: 10px;
+      right: 10px;
+      display: inline-block;
+      position: absolute;
+      z-index: 2;
+
+      button {
+        padding: 1px 4px;
+      }
+    }
+  }
+}

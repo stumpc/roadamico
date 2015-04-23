@@ -31,6 +31,8 @@ module.exports = function(config) {
       'client/bower_components/angular-translate/angular-translate.js',
       'client/bower_components/angular-utils-disqus/dirDisqus.js',
       'client/bower_components/angular-deckgrid/angular-deckgrid.js',
+      'client/bower_components/textAngular/dist/textAngular-rangy.min.js',
+      'client/bower_components/textAngular/dist/textAngular.min.js',
       'client/app/app.js',
       'client/app/app.coffee',
       'client/app/**/*.js',

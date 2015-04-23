@@ -12,6 +12,7 @@ var ListSchema = new Schema({
     embed: {},
     place: { type: Schema.Types.ObjectId, ref: 'Place' },
     poster: { type: Schema.Types.ObjectId, ref: 'User' }
+    // Do we want to support photos?
   }]
 });
 

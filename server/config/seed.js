@@ -89,19 +89,26 @@ function generatePlaces() {
   });
 }
 
+function randomListEntry() {
+  var entry = {
+    datetime: moment().toISOString(),
+    poster: users[randInt(users.length)]._id
+  };
+  [ // Place, Rich text, Embed
+    function () { entry.place = places[randInt(places.length)]._id; },
+    function () { entry.text = '<p>' + faker.lorem.paragraphs(2) + '</p>'; },
+    function () { entry.embed = {thumbnail_url: faker.image.nightlife(), title: faker.company.catchPhrase()}; }
+  ][randInt(3)]();
+  return entry;
+}
+
 var lists = [];
 function generateLists() {
   lists = _.times(10, function () {
     return new List({
       name: faker.company.catchPhrase(),
       curated: false,
-      entries: _.times(10, function () {
-        return {
-          datetime: moment().toISOString(),
-          place: places[randInt(places.length)]._id,
-          poster: users[randInt(users.length)]._id
-        };
-      })
+      entries: _.times(10, randomListEntry)
     });
   });
 }

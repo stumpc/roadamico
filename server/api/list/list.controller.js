@@ -13,11 +13,13 @@ exports.index = function(req, res) {
 
 // Get a single list
 exports.show = function(req, res) {
-  List.findById(req.params.id, function (err, list) {
-    if(err) { return handleError(res, err); }
-    if(!list) { return res.send(404); }
-    return res.json(list);
-  });
+  List.findById(req.params.id)
+    .populate('entries.place', 'locationDetails ratings feed')
+    .exec(function (err, list) {
+      if(err) { return handleError(res, err); }
+      if(!list) { return res.send(404); }
+      return res.json(list);
+    });
 };
 
 // Creates a new list in the DB.
@@ -31,13 +33,30 @@ exports.create = function(req, res) {
 // Updates an existing list in the DB.
 exports.update = function(req, res) {
   if(req.body._id) { delete req.body._id; }
+  console.log(req.body);
+
+  // Un-populate
+  req.body.entries.forEach(function (entry) {
+    if (entry.place && entry.place._id) {
+      entry.place = entry.place._id;
+    }
+  });
+
   List.findById(req.params.id, function (err, list) {
     if (err) { return handleError(res, err); }
     if(!list) { return res.send(404); }
-    var updated = _.merge(list, req.body);
-    updated.save(function (err) {
+
+    list.entries = req.body.entries;
+    list.name = req.body.name || list.name;
+
+    list.save(function (err, list) {
       if (err) { return handleError(res, err); }
-      return res.json(200, list);
+
+      var populateOpts = { path: 'entries.place', select: 'locationDetails ratings feed' };
+      list.populate(populateOpts, function (err, list) {
+        if (err) { return handleError(res, err); }
+        return res.json(200, list);
+      });
     });
   });
 };

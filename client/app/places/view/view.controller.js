@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('ViewPlaceCtrl', function ($scope, $q, $location, $document, $modal, $sce, Auth, $upload, place, Place, Event, Google, Geolocator) {
+  .controller('ViewPlaceCtrl', function ($scope, $q, $location, $document, $modal, $sce, Auth, $upload, place, Place,
+                                         Event, Google, Geolocator, placeUtil) {
     $document[0].title = 'RoadAmico - ' + place.locationDetails.name;
 
     $scope.place = place;
@@ -35,20 +36,17 @@ angular.module('roadAmicoApp')
       url: $location.absUrl()
     };
 
-    function average (nums) {
-      return Math.round(nums.reduce(function (a, b) { return a + b; }, 0) / nums.length);
-    }
-
-    $scope.rating = average(_.pluck(place.ratings, 'score'));
+    $scope.rating = placeUtil.getRating(place);
 
     $scope.rate = function (value) {
       console.log(value);
       Place.rate({id: place._id}, {score: value}).$promise.then(function (_place) {
         angular.copy(_place, place);
-        $scope.rating = average(_.pluck(place.ratings, 'score'));
+        $scope.rating = placeUtil.getRating(place);
       });
     };
 
+    // Opens the rating and comment modal
     $scope.viewRatings = function () {
       var modalScope = $scope.$new();
       modalScope.hover = function(value) {

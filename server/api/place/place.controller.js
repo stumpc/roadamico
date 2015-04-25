@@ -4,7 +4,6 @@ var _ = require('lodash');
 var Place = require('./place.model');
 var moment = require('moment');
 var upload = require('../../components/upload');
-var embedder = require('../../components/embedder');
 var Q = require('q');
 
 // Get list of places
@@ -57,25 +56,19 @@ exports.addPost = function (req, res) {
     if (err) { return handleError(res, err); }
     if(!place) { return res.send(404); }
 
-    var data = {};
-    var toProcess = [];
+    var promise;
     if (req.files && req.files.file) {
-      toProcess.push(upload.image(req.files.file).then(function (photo) {
-        data.photo = photo;
-      }));
-    }
-    if (req.body.url) {
-      toProcess.push(embedder(req.body.url).then(function (embed) {
-        data.embed = embed;
-      }));
+      promise = upload.image(req.files.file);
+    } else {
+      promise = Q();
     }
 
-    Q.all(toProcess).then(function () {
+    promise.then(function (photo) {
       place.feed.push({
         datetime: moment().toISOString(),
-        photo: data.photo,
+        photo: photo,
         text: req.body.text,
-        embed: data.embed,
+        embed: req.body.embed,
         poster: req.user._id
       });
       place.save(function (err, place) {

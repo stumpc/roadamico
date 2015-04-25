@@ -117,11 +117,12 @@ describe('The Place API', function () {
     it('should let the user embed a URL', function (done) {
       request(app)
         .post('/api/places/' + place1._id + '/feed')
-        .send({url: 'http://some.url/foo'})
+        .send({embed: {title: 'foo', url: 'http://some.url/foo'}})
         .set('Authorization', 'Bearer ' + auth.signToken(user1))
         .end(function (err, res) {
           if (err) return done(err);
           should.exist(res.body.feed[3].embed);
+          res.body.feed[3].embed.title.should.equal('foo');
           res.body.feed[3].embed.url.should.equal('http://some.url/foo');
           done();
         });

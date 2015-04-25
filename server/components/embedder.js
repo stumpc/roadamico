@@ -10,8 +10,10 @@ module.exports = function (url) {
 
   if (process.env.NODE_ENV === 'test') {
     deferred.resolve({
-      name: 'embedded obj',
-      url: url
+      title: 'embedded obj',
+      type: 'test obj',
+      url: url,
+      thumbnail_url: url
     });
   } else {
     // Embedly API: https://github.com/embedly/embedly-node

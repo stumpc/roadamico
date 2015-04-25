@@ -1,0 +1,22 @@
+<div class="embeddedMedia">
+  <div ng-switch="embed.type">
+
+    <div ng-switch-when="photo">
+      <img ng-src="{{embed.url}}" />
+    </div>
+
+    <div ng-switch-when="link">
+      <a href="{{embed.url}}" target="ra_embed">
+        <img ng-src="{{embed.thumbnail_url}}" />
+        <div class="title">{{embed.title}}</div>
+      </a>
+      <div class="description">{{embed.description}}</div>
+    </div>
+
+    <div ng-switch-default>
+      <img ng-src="{{embed.thumbnail_url}}" ng-click="viewEmbed()" />
+      <div class="title">{{embed.title}}</div>
+      <div class="description">{{embed.description}}</div>
+    </div>
+  </div>
+</div>

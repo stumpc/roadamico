@@ -1,0 +1,22 @@
+<div class="modal-header">
+  <button type="button" ng-click="$dismiss()" class="close">&times;</button>
+  <h4 class="modal-title" ng-bind="embed.title"></h4>
+</div>
+<div class="modal-body">
+
+  <div ng-switch="embed.type">
+    <div ng-switch-when="photo">
+      <img ng-src="{{embed.url}}" />
+    </div>
+
+    <div ng-switch-default>
+      <div ng-bind-html="embedHtml(embed.html)"></div>
+    </div>
+  </div>
+
+  <p>{{embed.description}}</p>
+
+</div>
+<div class="modal-footer">
+  <button ng-click="$dismiss()" class="btn">Close</button>
+</div>

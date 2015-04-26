@@ -3,6 +3,9 @@
 <div class="container home-page page">
   <h1>Lists</h1>
 
+  <a class="btn" href="#">Create a new list</a>
+  <hr/>
+
   <ul>
     <li ng-repeat="list in lists"><a ui-sref="list.view({id:list._id})">{{list.name}}</a></li>
   </ul>

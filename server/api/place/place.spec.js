@@ -89,12 +89,12 @@ describe('The Place API', function () {
     it('should let the user upload an image', function (done) {
       request(app)
         .post('/api/places/' + place1._id + '/feed')
+        .send({photo: 'some url'})
         .set('Authorization', 'Bearer ' + auth.signToken(user1))
-        .attach('file', 'client/favicon-16x16.png')
         .expect(200)
         .end(function (err, res) {
           if (err) return done(err);
-          should.exist(res.body.feed[1].photo);
+          res.body.feed[1].photo.should.equal('some url');
           done();
         });
     });
@@ -102,14 +102,13 @@ describe('The Place API', function () {
     it('should let the user upload an image with text', function (done) {
       request(app)
         .post('/api/places/' + place1._id + '/feed')
+        .send({photo: 'some url 2', text: 'some text'})
         .set('Authorization', 'Bearer ' + auth.signToken(user1))
-        .attach('file', 'client/favicon-16x16.png')
-        .field('text', 'Some other text')
         .expect(200)
         .end(function (err, res) {
           if (err) return done(err);
-          should.exist(res.body.feed[2].photo);
-          res.body.feed[2].text.should.equal('Some other text');
+          res.body.feed[2].photo.should.equal('some url 2');
+          res.body.feed[2].text.should.equal('some text');
           done();
         });
     });

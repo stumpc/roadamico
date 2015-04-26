@@ -8,19 +8,18 @@
         <div class="form-group" ng-hide="data.file || data.embed" ng-class="{ 'has-error' : form.url.$invalid }">
           <label for="url">Enter URL:</label>
           <input id="url" name="url" type="text" class="form-control space-top-small space-bottom-small" placeholder="http://..."
-                 ng-model="url" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"
-                 ng-pattern="urlRegex" />
+                 ng-model="data.url" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"/>
         </div>
 
         <div class="form-group" ng-hide="data.file || data.embed">
           <label for="file">Upload a picture:</label>
           <br/>
-          <button id="file" class="btn btn-ra-red-hollow btn-sm space-right-small"><i class="fa fa-upload"></i> Select file</button>
+          <button id="file" class="btn btn-ra-red-hollow btn-sm space-right-small" ng-file-select="onFileSelect($files)" ng-multiple="false"><i class="fa fa-upload"></i> Select file</button>
           or drag and drop a file.
         </div>
 
-        <div ng-show="data.imageUrl">
-          <img ng-src="{{data.imageUrl}}" />
+        <div ng-show="data.photo">
+          <img ng-src="{{data.photo}}" />
 
           <label for="imgDescription">Say something about this picture:</label>
           <textarea name="imgDescription" id="imgDescription" ng-model="data.text" class="form-control"></textarea>
@@ -32,7 +31,6 @@
 
         <div class="share">
           <button type="button" class="btn btn-ra-red" ng-show="data.file || data.embed" ng-click="cancel()"><i class="fa fa-times"></i> Cancel</button>
-          <button type="submit" class="btn btn-ra-green"><i class="fa fa-share"></i> Share</button>
         </div>
       </form>
 

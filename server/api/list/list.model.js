@@ -5,15 +5,16 @@ var mongoose = require('mongoose'),
 
 var ListSchema = new Schema({
   name: String,
-  curated: Boolean,
+  curated: Boolean, // true means it's curated (admins/curators only can edit)
   entries: [{
     datetime: String,
     text: String,
+    photo: String,
     embed: {},
     place: { type: Schema.Types.ObjectId, ref: 'Place' },
     poster: { type: Schema.Types.ObjectId, ref: 'User' }
-    // Do we want to support photos?
-  }]
+  }],
+  groupRestriction: { type: Schema.Types.ObjectId, ref: 'Group' }
 });
 
 module.exports = mongoose.model('List', ListSchema);

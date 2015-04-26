@@ -13,7 +13,7 @@ router.put('/:id',    controller.update);
 router.patch('/:id',  controller.update);
 router.delete('/:id', controller.destroy);
 
-router.post('/:id/feed',        auth.isAuthenticated(), controller.addPost);
+router.post('/:id/feed',        auth.isAuthenticated(), controller.addEntry);
 router.delete('/:id/feed/:fid', auth.isAuthenticated(), controller.removePost);
 router.post('/:id/rate',        auth.isAuthenticated(), controller.rate);
 

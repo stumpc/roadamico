@@ -6,18 +6,41 @@
     <li class="active">{{list.name}}</li>
   </ol>
 
-  <h1>{{list.name}}</h1>
+  <h1 ng-hide="editing">{{list.name}}</h1>
+  <input type="text" class="form-control space-top-medium space-bottom-medium list-name"
+         ng-model="list.name" ng-show="editing" ng-change="save()"
+         ng-model-options="{ updateOn: 'default blur', debounce: {'default': 1250, 'blur': 0} }" />
 
   <!-- Controls -->
   <div ng-show="canEdit(list)">
     <button ng-click="editing = true" class="btn btn-ra-teal" ng-hide="editing"><i class="fa fa-pencil"></i> Edit</button>
+    <button ng-click="editing = false" class="btn btn-ra-teal" ng-show="editing"><i class="fa fa-save"></i> I'm Done Editing</button>
 
-    <div ng-show="editing">
-      <button class="btn btn-ra-teal" ng-click="save()"><i class="fa fa-save"></i> Save</button>
-    </div>
+    <!--<div ng-show="editing">-->
+      <!--<button class="btn btn-ra-teal" ng-click="save()"><i class="fa fa-save"></i> Save</button>-->
+    <!--</div>-->
   </div>
 
-  <div media-selector ng-model="myObj"></div>
+  <div class="new-entry" ng-show="editing">
+    <h2>Add something to the list:</h2>
+    <div class="tabs">
+      <tabset justified="true">
+        <tab heading="Place">
+          Coming soon...
+        </tab>
+        <tab heading="Writing">
+          <div text-angular ng-model="newEntry.text"></div>
+        </tab>
+        <tab heading="Media">
+          <div media-selector ng-model="newEntry"></div>
+        </tab>
+      </tabset>
+
+      <div class="buttons">
+        <button class="btn btn-ra-teal" ng-click="add()"><i class="fa fa-plus"></i> Add</button>
+      </div>
+    </div>
+  </div>
 
   <div ng-repeat="entry in list.entries" class="entry">
     <div class="edit-controls" ng-show="editing">
@@ -70,35 +93,33 @@
     </div>
 
     <!-- Display rich text -->
-    <div ng-if="entry.text" class="text">
-      <div ng-hide="editing" ng-bind-html="entry.text"></div>
-      <div ng-if="editing" text-angular ng-model="entry.text"></div>
-    </div>
-
-    <!-- Display an embed -->
-    <div ng-if="entry.embed" >
-      <div class="row">
-        <div class="col-sm-8 col-sm-offset-2">
-
-          <div class="row embed well">
-            <div class="col-sm-4">
-              <img ng-src="{{entry.embed.thumbnail_url}}" class="thumbnail" />
-            </div>
-
-            <div class="col-sm-8">
-              <div class="name">
-                {{entry.embed.title}}
-              </div>
-              <p>
-                {{entry.embed.description}}
-              </p>
-            </div>
-          </div>
-
+    <div ng-if="entry.photo" class="row">
+      <div class="col-sm-6 col-sm-offset-3">
+        <div class="embed">
+          <img ng-src="{{entry.photo}}" >
+          <p>{{entry.text}}</p>
         </div>
       </div>
     </div>
 
+    <!-- Display rich text -->
+    <div ng-if="entry.text && !entry.photo" class="text">
+      <div ng-hide="editing" ng-bind-html="entry.text"></div>
+      <div ng-if="editing" text-angular ng-model="entry.text" ng-change="save()" ng-model-options="{ updateOn: 'blur' }"></div>
+    </div>
+
+    <!-- Display an embed -->
+    <div ng-if="entry.embed">
+      <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+          <div embedded-media="entry.embed" class="embed"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div ng-hide="list.entries.length">
+    Nothing has been added to this list yet.
   </div>
 
 </div>

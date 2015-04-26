@@ -35,7 +35,7 @@ exports.create = function(req, res) {
 exports.update = function(req, res) {
   delete req.body._id;
   delete req.body.photos;
-  delete req.body.updates;
+  delete req.body.feed;
   delete req.body.ratings;
   delete req.body.promoted;
 
@@ -51,30 +51,17 @@ exports.update = function(req, res) {
 };
 
 
-exports.addPost = function (req, res) {
+exports.addEntry = function (req, res) {
   Place.findById(req.params.id, function (err, place) {
     if (err) { return handleError(res, err); }
     if(!place) { return res.send(404); }
 
-    var promise;
-    if (req.files && req.files.file) {
-      promise = upload.image(req.files.file);
-    } else {
-      promise = Q();
-    }
-
-    promise.then(function (photo) {
-      place.feed.push({
-        datetime: moment().toISOString(),
-        photo: photo,
-        text: req.body.text,
-        embed: req.body.embed,
-        poster: req.user._id
-      });
-      place.save(function (err, place) {
-        if (err) return next(err);
-        res.send(place);
-      });
+    req.body.datetime = moment().toISOString();
+    req.body.poster = req.user._id;
+    place.feed.push(req.body);
+    place.save(function (err, place) {
+      if (err) return next(err);
+      res.send(place);
     });
   });
 };

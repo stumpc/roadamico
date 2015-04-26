@@ -2,6 +2,9 @@
 
 var _ = require('lodash');
 var List = require('./list.model');
+var moment = require('moment');
+var upload = require('../../components/upload');
+var Q = require('q');
 
 // Get list of lists
 exports.index = function(req, res) {
@@ -9,6 +12,16 @@ exports.index = function(req, res) {
     if(err) { return handleError(res, err); }
     return res.json(200, lists);
   });
+};
+
+exports.groupLists = function (req, res) {
+  console.log(req.user.groups);
+  List.find({groupRestriction: {$in: req.user.groups}})
+    .populate('entries.place', 'locationDetails ratings feed')
+    .exec(function (err, lists) {
+      if(err) { return handleError(res, err); }
+      res.json(lists);
+    });
 };
 
 // Get a single list
@@ -57,6 +70,21 @@ exports.update = function(req, res) {
         if (err) { return handleError(res, err); }
         return res.json(200, list);
       });
+    });
+  });
+};
+
+exports.addEntry = function (req, res) {
+  List.findById(req.params.id, function (err, list) {
+    if (err) { return handleError(res, err); }
+    if(!list) { return res.send(404); }
+
+    req.body.datetime = moment().toISOString();
+    req.body.poster = req.user._id;
+    list.entries.push(req.body);
+    list.save(function (err, list) {
+      if (err) return next(err);
+      res.send(list);
     });
   });
 };

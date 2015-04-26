@@ -122,35 +122,37 @@ angular.module('roadAmicoApp')
 
     // --- Feed ---
 
-    // http://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url
-    var urlRegex = /[-a-zA-Z0-9@:%_\+.~#?&/=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&/=]*)?/gi;
-    $scope.newPost = {};
-    $scope.addPost = function () {
 
-      var results = $scope.newPost.text.match(urlRegex);
-      if (results && results.length) {
-        // For now only use the first URL
-        $scope.newPost.url = results[0];
-        $scope.newPost.text = $scope.newPost.text.replace(results[0], '').trim();
+    $scope.newPost = {};
+
+    $scope.addEntry = function () {
+      var promise;
+      if ($scope.newPost.file) {
+        var deferred = $q.defer();
+        $upload.upload({
+          url: '/api/utils/upload',
+          file: $scope.newPost.file
+        }).success(function (data) {
+          deferred.resolve(data.url);
+        });
+        promise = deferred.promise;
+      } else {
+        promise = $q.when();
       }
 
-      Place.addPost({id: place._id}, $scope.newPost).$promise.then(function (_place) {
-        $scope.newPost = {};
-        angular.copy(_place, place);
+      promise.then(function (url) {
+        var post = {
+          photo: url,
+          text: $scope.newPost.text,
+          embed: $scope.newPost.embed,
+          place: $scope.newPost.place
+        };
+        Place.addEntry({id: place._id}, post).$promise.then(function (_place) {
+          $scope.newPost = {};
+          angular.copy(_place, place);
+        });
       });
     };
 
-    $scope.addPhoto = function (image) {
-      //$scope.attachedImage = image;
-      $scope.attachedImage = image;
-
-
-      //$upload.upload({
-      //  url: '/api/places/' + place._id + '/feed',
-      //  file: image
-      //}).success(function (_place) {
-      //  angular.copy(_place, place);
-      //});
-    };
 
   });

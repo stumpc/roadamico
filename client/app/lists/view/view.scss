@@ -1,5 +1,28 @@
 .list-view {
 
+  .list-name {
+    font-size: 20px;
+  }
+
+  .new-entry {
+    margin: 45px 0;
+
+    .tabs {
+      background: white;
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .buttons {
+      padding: 10px;
+      text-align: right;
+    }
+  }
+
+
+
+
   .text {
     padding: 20px;
     margin: 30px 20px;
@@ -15,11 +38,22 @@
   }
 
   .embed {
-    padding: 20px 20px 0 20px;
-    cursor: pointer;
+    padding: 20px 20px 20px 20px;
     margin: 10px 0;
     border-radius: 5px;
     background: white;
+
+    img {
+      max-width: 100%;
+      max-height: 300px;
+      margin: 0 auto 15px auto;
+      display: block;
+
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+      padding: 4px;
+      background-color: #fff;
+      border-radius: 4px;
+    }
   }
 
   .thumbnail {

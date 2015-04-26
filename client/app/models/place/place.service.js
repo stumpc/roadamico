@@ -10,7 +10,7 @@ angular.module('roadAmicoApp')
         method: 'POST',
         url: '/api/places/:id/rate'
       },
-      addPost: {
+      addEntry: {
         method: 'POST',
         url: '/api/places/:id/feed'
       },

@@ -55,10 +55,12 @@ function feedPost() {
   }, {
     text: faker.lorem.sentences(3)
   }, {
-    embed: [{
+    embed: {
+      type: 'rich',
       thumbnail_url: faker.image.nightlife(),
-      title: faker.company.catchPhrase()
-    }]
+      title: faker.company.catchPhrase(),
+      description: faker.lorem.paragraphs(1)
+    }
   }][randInt(3)]);
 }
 

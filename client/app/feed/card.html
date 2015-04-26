@@ -1,9 +1,10 @@
 <div class="card">
   <div class="inner-card" ng-controller="CardCtrl">
 
-    <div ng-if="card.embed[0]">
-      <img ng-src="{{card.embed[0].thumbnail_url}}" ng-click="viewCard(card)" />
-      <div class="title">{{card.embed[0].title}}</div>
+    <div ng-if="card.embed">
+      <!--<img ng-src="{{card.embed[0].thumbnail_url}}" ng-click="viewCard(card)" />-->
+      <!--<div class="title">{{card.embed[0].title}}</div>-->
+      <div embedded-media="card.embed" class="embed"></div>
     </div>
 
     <div ng-if="card.photo">

@@ -25,7 +25,7 @@ module.exports = function (url) {
         if (err) {
           return deferred.reject(err);
         }
-        deferred.resolve(obj);
+        deferred.resolve(obj[0]);
       });
     });
   }

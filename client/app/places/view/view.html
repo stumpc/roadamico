@@ -153,35 +153,14 @@
   </div>
 
   <!-- Share -->
-  <div class="share">
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3">
-        <div class="text-center">
-          <h2>Share Something</h2>
-        </div>
+  <div class="share-section" ng-show="isLoggedIn()">
+    <div class="text-center">
+      <h2>Share Something</h2>
+    </div>
 
-        <p>
-          Share a photo!
-        </p>
-
-        <button class="btn btn-ra-red" ng-file-select="addPhoto($files)" ng-multiple="false"><i class="fa fa-photo"></i> Photo</button>
-
-        {{attachedImage}}
-        <p>
-          Share something about <strong>{{place.locationDetails.name}}</strong> for others to learn and enjoy.
-        </p>
-
-        <form name="form" ng-submit="addPost()">
-          <div class="row">
-            <div class="col-sm-9">
-              <input type="text" ng-model="newPost.text" class="form-control"/>
-            </div>
-            <div class="col-sm-3">
-              <button type="submit" class="btn btn-block btn-ra-red">Share</button>
-            </div>
-          </div>
-        </form>
-      </div>
+    <div media-selector ng-model="newPost"></div>
+    <div class="text-center space-top-medium">
+      <button class="btn btn-ra-teal" ng-click="addEntry()" ng-disabled="!newPost.photo && !newPost.embed && !newPost.text"><i class="fa fa-share"></i> Share</button>
     </div>
   </div>
 

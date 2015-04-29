@@ -14,7 +14,7 @@ var ListSchema = new Schema({
     place: { type: Schema.Types.ObjectId, ref: 'Place' },
     poster: { type: Schema.Types.ObjectId, ref: 'User' }
   }],
-  groupRestriction: { type: Schema.Types.ObjectId, ref: 'Group' }
+  groupRestriction: [{ type: Schema.Types.ObjectId, ref: 'Group' }]
 });
 
 module.exports = mongoose.model('List', ListSchema);

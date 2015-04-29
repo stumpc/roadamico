@@ -9,6 +9,10 @@ angular.module('roadAmicoApp')
       addEntry: {
         method: 'POST',
         url: '/api/lists/:id/entry'
+      },
+      groupLists: {
+        url: '/api/lists/groups',
+        isArray: true
       }
     });
   });

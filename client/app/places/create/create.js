@@ -6,6 +6,6 @@ angular.module('roadAmicoApp')
       .state('createPlace', {
         url: '/places/create',
         templateUrl: 'app/places/create/create.html',
-        controller: 'CreateCtrl'
+        controller: 'CreatePlaceCtrl'
       });
   });

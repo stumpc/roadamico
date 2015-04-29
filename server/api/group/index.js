@@ -15,6 +15,9 @@ router.get('/unapproved',   auth.hasRole('admin'), controller.unapproved);
 router.put('/:id/approve',  auth.hasRole('admin'), controller.approve);
 
 // Authenticated routes
+router.get('/allowed',        auth.isAuthenticated(), controller.allowed);
+router.get('/mine',           auth.isAuthenticated(), controller.mine);
+router.put('/join',           auth.isAuthenticated(), controller.join);
 router.get('/:id',            auth.isAuthenticated(), controller.show);
 router.post('/',              auth.isAuthenticated(), controller.create);
 router.put('/:id',            auth.isAuthenticated(), controller.update);

@@ -10,6 +10,7 @@ var auth = require('../../auth/auth.service');
 var genCode = require('../../components/genCode');
 var email = require('../../components/communication/email');
 var translate = require('../../components/translate');
+var Group = require('../group/group.model');
 
 var validationError = function(res, err) {
   return res.json(422, err);
@@ -118,6 +119,7 @@ exports.update = function(req, res, next) {
   delete req.body.activated;
   delete req.body.role;
   delete req.body.following;
+  delete req.body.groups;
 
   var updated = _.merge(req.user, req.body);
   if (req.body.languages) {

@@ -30,6 +30,40 @@ exports.unapproved = function(req, res) {
   });
 };
 
+// Returns a list of groups that the user is allowed to join
+exports.allowed = function (req, res) {
+  Group.find({approved: true, emails: req.user.email}, function (err, groups) {
+    if(err) { return handleError(res, err); }
+    return res.json(200, groups);
+  });
+};
+
+// Joins the user to groups
+exports.join = function (req, res) {
+  // Remove groups that the user is already a member of
+  req.body.groups = _.filter(req.body.groups, function (id) {
+    return !_.find(req.user.groups, function (id2) { return id2.equals(id); });
+  });
+  Group.find({approved: true, emails: req.user.email, _id: {$in: req.body.groups}}, function (err, groups) {
+    if(err) { return handleError(res, err); }
+    groups.forEach(function (group) {
+      req.user.groups.push(group);
+    });
+    req.user.save(function (err, user) {
+      if(err) { return handleError(res, err); }
+      return res.send(200, user.groups);
+    });
+  });
+};
+
+// Gets the groups that the user is a member of
+exports.mine = function (req, res) {
+  Group.find({_id: {$in: req.user.groups}}, function (err, groups) {
+    if(err) { return handleError(res, err); }
+    return res.json(200, groups);
+  });
+};
+
 // Get a single group
 exports.show = function(req, res) {
   Group.findById(req.params.id, function (err, group) {

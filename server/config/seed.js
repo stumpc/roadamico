@@ -9,6 +9,7 @@ var User = require('../api/user/user.model');
 var Place = require('../api/place/place.model');
 var List = require('../api/list/list.model');
 var Event = require('../api/event/event.model');
+var Group = require('../api/group/group.model');
 var faker = require('faker');
 var _ = require('lodash');
 var Q = require('q');
@@ -43,6 +44,24 @@ _.times(10, function (i) {
     role: 'user'
   })
 });
+
+
+var groups = [{
+  name: 'Group 1',
+  emails: [users[0].email, users[1].email, users[2].email]
+}, {
+  name: 'Group 2',
+  emails: [users[0].email, users[1].email]
+}, {
+  name: 'Group 3',
+  emails: [users[0].email]
+}];
+
+function assignGroups() {
+  users[0].groups = [groups[0]._id, groups[1]._id, groups[2]._id];
+  users[1].groups = [groups[0]._id, groups[1]._id];
+  users[2].groups = [groups[0]._id];
+}
 
 
 function feedPost() {
@@ -139,7 +158,21 @@ function generateEvents() {
 }
 
 
+function createGroups() {
+  var deferred = Q.defer();
+  Group.remove({}, function () {
+    Group.create(groups, function () {
+      for (var i = 0; i < groups.length; i++) {
+        groups[i] = arguments[1 + i];
+      }
+      deferred.resolve();
+    });
+  });
+  return deferred.promise;
+}
+
 function createUsers() {
+  assignGroups();
   var deferred = Q.defer();
   User.remove({}, function () {
     User.create(users, function () {
@@ -195,7 +228,11 @@ function createEvents() {
 
 
 console.log('Seeding DB');
-createUsers()
+createGroups()
+  .then(function () {
+    console.log('Groups created');
+    return createUsers();
+  })
   .then(function () {
     console.log('Users created');
     return createPlaces();

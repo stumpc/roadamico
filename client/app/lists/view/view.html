@@ -16,30 +16,10 @@
     <button ng-click="editing = true" class="btn btn-ra-teal" ng-hide="editing"><i class="fa fa-pencil"></i> Edit</button>
     <button ng-click="editing = false" class="btn btn-ra-teal" ng-show="editing"><i class="fa fa-save"></i> I'm Done Editing</button>
 
+    <a class="btn btn-ra-teal-hollow" ui-sref="^.edit"><i class="fa fa-cog"></i> Settings</a>
     <!--<div ng-show="editing">-->
       <!--<button class="btn btn-ra-teal" ng-click="save()"><i class="fa fa-save"></i> Save</button>-->
     <!--</div>-->
-  </div>
-
-  <div class="new-entry" ng-show="editing">
-    <h2>Add something to the list:</h2>
-    <div class="tabs">
-      <tabset justified="true">
-        <tab heading="Place">
-          Coming soon...
-        </tab>
-        <tab heading="Writing">
-          <div text-angular ng-model="newEntry.text"></div>
-        </tab>
-        <tab heading="Media">
-          <div media-selector ng-model="newEntry"></div>
-        </tab>
-      </tabset>
-
-      <div class="buttons">
-        <button class="btn btn-ra-teal" ng-click="add()"><i class="fa fa-plus"></i> Add</button>
-      </div>
-    </div>
   </div>
 
   <div ng-repeat="entry in list.entries" class="entry">
@@ -118,6 +98,28 @@
     </div>
 
   </div>
+
+  <div class="new-entry" ng-show="editing">
+    <h2>Add something to the list:</h2>
+    <div class="tabs">
+      <tabset justified="true">
+        <tab heading="Place">
+          Coming soon...
+        </tab>
+        <tab heading="Writing">
+          <div text-angular ng-model="newEntry.text"></div>
+        </tab>
+        <tab heading="Media">
+          <div media-selector ng-model="newEntry"></div>
+        </tab>
+      </tabset>
+
+      <div class="buttons">
+        <button class="btn btn-ra-teal" ng-click="add()"><i class="fa fa-plus"></i> Add</button>
+      </div>
+    </div>
+  </div>
+
   <div ng-hide="list.entries.length">
     Nothing has been added to this list yet.
   </div>

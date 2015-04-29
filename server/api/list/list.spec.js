@@ -74,6 +74,8 @@ describe('GET /api/lists', function() {
         .end(function(err, res) {
           if (err) return done(err);
           res.body.should.have.length(2);
+          res.body.should.containDeep([{name: 'list 2'}]);
+          res.body.should.containDeep([{name: 'list 3'}]);
           done();
         });
     });

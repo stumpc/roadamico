@@ -1,0 +1,35 @@
+
+<form name="form" ng-submit="save(list)" novalidate>
+
+  <!-- Name -->
+  <div class="form-group" ng-class="{ 'has-error' : form.name.$invalid && !form.name.$pristine }">
+    <label for="name">Name *</label>
+    <input type="text" id="name" name="name" class="form-control" ng-model="list.name" required>
+    <p ng-show="form.name.$invalid && !form.name.$pristine" class="help-block">Name is required</p>
+  </div>
+
+  <!-- Curated -->
+  <div class="form-group" ng-show="canCurate()">
+    <label class="toggle" for="curated">
+      <span>
+        <input type="checkbox" ng-model="list.curated" id="curated"> <span class="handle"></span>
+      </span>
+      Is this list curated?
+    </label>
+  </div>
+
+  <!-- Restriction -->
+  <div class="form-group" ng-if="groups.length">
+    <label for="restriction">Restrict to Group(s)</label>
+
+    <ui-select id="restriction" multiple ng-model="list.groupRestriction" close-on-select="false">
+      <ui-select-match>{{$item.name}}</ui-select-match>
+      <ui-select-choices repeat="group._id as group in groups | filter: $select.search">
+        <div ng-bind-html="group.name | highlight: $select.search"></div>
+      </ui-select-choices>
+    </ui-select>
+
+  </div>
+
+  <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid || form.$pristine">Save</button>
+</form>

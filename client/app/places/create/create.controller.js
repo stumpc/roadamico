@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('CreateCtrl', function ($scope, $state, Place) {
+  .controller('CreatePlaceCtrl', function ($scope, $state, Place) {
 
     $scope.place = {locationDetails:{}};
 

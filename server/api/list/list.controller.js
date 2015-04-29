@@ -6,9 +6,9 @@ var moment = require('moment');
 var upload = require('../../components/upload');
 var Q = require('q');
 
-// Get list of lists
+// Get list of non-restricted lists
 exports.index = function(req, res) {
-  List.find(function (err, lists) {
+  List.find({groupRestriction: {$size: 0}}, function (err, lists) {
     if(err) { return handleError(res, err); }
     return res.json(200, lists);
   });
@@ -61,6 +61,7 @@ exports.update = function(req, res) {
 
     list.entries = req.body.entries;
     list.name = req.body.name || list.name;
+    list.groupRestriction = req.body.groupRestriction || list.groupRestriction;
 
     list.save(function (err, list) {
       if (err) { return handleError(res, err); }

@@ -6,7 +6,7 @@ angular.module('roadAmicoApp')
     $scope.user = Auth.getCurrentUser();
 
     $scope.canEdit = function (list) {
-      return Auth.isLoggedIn(); // TODO: Change this once permissions are implemented
+      return Auth.isLoggedIn() && ($scope.user.role === 'admin' || $scope.user.role === 'curator' || !list.curated);
     };
 
     $scope.editing = false;

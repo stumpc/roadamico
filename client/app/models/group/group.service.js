@@ -6,6 +6,10 @@ angular.module('roadAmicoApp')
       update: {
         method: 'PUT'
       },
+      allowed: {
+        url: '/api/groups/allowed',
+        method: 'GET'
+      },
       mine: {
         url: '/api/groups/mine',
         isArray: true

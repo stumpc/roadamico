@@ -1,16 +1,12 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('ProfileCtrl', function ($scope, $upload, $http, $translate, Auth, Modal, Category, timezones, languages) {
+  .controller('ProfileCtrl', function ($scope, $upload, $http, $translate, Auth, Modal) {
     $scope.message = 'Hello';
     $scope.user = Auth.getCurrentUser();
-    $scope.categories = Category;
+
     $scope.years = _.range(11).map(function (i) {
       return moment().year() + i;
-    });
-    $scope.timezones = timezones;
-    $scope.languages = _.map(languages, function (name, code) {
-      return {name: name, code: code};
     });
 
     $scope.save = function (form) {
@@ -49,47 +45,4 @@ angular.module('roadAmicoApp')
         $scope.user.photo = data;
       });
     };
-
-    $scope.idSelect = function (image) {
-      $upload.upload({
-        url: 'api/verification',
-        file: image
-      }).success(function (data) {
-        console.log(data);
-        $scope.user.verification = data;
-      });
-    };
-
-    $scope.saveCard = function () {
-      function sv(password) {
-        $http.post('/api/users/card', {
-          password: password,
-          card: $scope.newCard
-        }).success(function (data) {
-          $scope.user.financial = data;
-          $scope.addCard = false;
-          $scope.newCard = {};
-          $scope.newCardForm.$setPristine();
-        }).error(function (data) {
-          if (data === 'Forbidden') {
-            $translate('invalid-password').then(function (translation) {
-              Modal.prompt.password(translation, sv);
-            });
-          } else {
-            $translate('profile.card-save-error').then(function (translation) {
-              Modal.info.error(translation + ' <strong>' + data.message + '</strong>');
-            });
-          }
-        });
-      }
-      Modal.prompt.password(sv);
-    };
-
-    $scope.deleteCard = Modal.confirm.delete(function (id) {
-      $http.delete('/api/users/card/'+id).success(function (data) {
-        $scope.user.financial = data;
-      }).error(function () {
-        $translate('cant-delete-card').then(Modal.info.error);
-      });
-    });
   });

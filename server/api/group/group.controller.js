@@ -15,8 +15,8 @@ exports.index = function(req, res) {
     if(err) { return handleError(res, err); }
 
     groups.forEach(function (group) {
-      delete group._doc.emails;
-      delete group._doc.requests;
+      //delete group.emails;
+      delete group.requests;
     });
     return res.json(200, groups);
   });
@@ -33,6 +33,14 @@ exports.unapproved = function(req, res) {
 // Returns a list of groups that the user is allowed to join
 exports.allowed = function (req, res) {
   Group.find({approved: true, emails: req.user.email}, function (err, groups) {
+    if(err) { return handleError(res, err); }
+    return res.json(200, groups);
+  });
+};
+
+// Returns a list of groups that the user is allowed to join
+exports.check = function (req, res) {
+  Group.find({approved: true, emails: req.params.email}, function (err, groups) {
     if(err) { return handleError(res, err); }
     return res.json(200, groups);
   });

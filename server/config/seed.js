@@ -10,6 +10,7 @@ var Place = require('../api/place/place.model');
 var List = require('../api/list/list.model');
 var Event = require('../api/event/event.model');
 var Group = require('../api/group/group.model');
+var Destination = require('../api/destination/destination.model');
 var faker = require('faker');
 var _ = require('lodash');
 var Q = require('q');
@@ -48,13 +49,24 @@ _.times(10, function (i) {
 
 var groups = [{
   name: 'Group 1',
+  term: 'Spring 2015',
+  approved: true,
   emails: [users[0].email, users[1].email, users[2].email]
 }, {
   name: 'Group 2',
+  term: 'Summer 2015',
+  approved: true,
   emails: [users[0].email, users[1].email]
 }, {
   name: 'Group 3',
+  term: 'Fall 2015',
+  approved: true,
   emails: [users[0].email]
+}, {
+  name: 'Group 4',
+  term: 'Fall 2015',
+  approved: true,
+  emails: []
 }];
 
 function assignGroups() {
@@ -159,6 +171,16 @@ function generateEvents() {
 }
 
 
+var destinations = [{
+  name: 'Rome, Italy',
+  locationDetails: {geometry: {location: {k: 41.949884, D: 12.400131}}}
+}, {
+  name: 'Madrid, Spain',
+  locationDetails: {geometry: {location: {k: 40.416775, D: -3.703790}}}
+}];
+
+
+
 function createGroups() {
   var deferred = Q.defer();
   Group.remove({}, function () {
@@ -227,6 +249,17 @@ function createEvents() {
   });
 }
 
+function createDestinations() {
+  var deferred = Q.defer();
+  Destination.remove({}, function () {
+    Destination.create(destinations, function () {
+      for (var i = 0; i < destinations.length; i++) {
+        destinations[i] = arguments[1 + i];
+      }
+      deferred.resolve();
+    });
+  });
+}
 
 console.log('Seeding DB');
 createGroups()
@@ -248,5 +281,10 @@ createGroups()
   })
   .then(function () {
     console.log('Events created');
+    return createDestinations();
+  })
+  .then(function () {
+    console.log('Destinations created');
+    return createTerms();
   });
 

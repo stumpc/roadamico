@@ -19,6 +19,13 @@ var validationError = function(res, err) {
   return res.json(422, err);
 };
 
+exports.check = function (req, res) {
+  User.findOne({email: req.params.email.toLowerCase()}, function (err, user) {
+    if(err) return res.send(500, err);
+    res.json({available: !user});
+  });
+};
+
 /**
  * Get list of users
  * restriction: 'admin'
@@ -53,6 +60,7 @@ exports.create = function (req, res, next) {
   newUser.provider = 'local';
   newUser.role = 'user';
   newUser.finished = true;
+  newUser.activated = true;
   newUser.emailPrefs = config.userSettings.emailPrefs;
 
   newUser.save(function (err, user) {

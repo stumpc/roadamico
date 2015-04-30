@@ -1,41 +1,51 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('SignupCtrl', function ($scope, $location, $window, Auth, Modal) {
+  .controller('SignupCtrl', function ($scope, $location, $window, $http, $state, Modal, Auth, Destination, Group) {
     $scope.user = {};
     $scope.errors = {};
 
-    $scope.register = function(form) {
-      $scope.submitted = true;
+    $scope.destinations = Destination.query();
+    $scope.groups = Group.query();
 
-      if(form.$valid) {
-        Auth.createUser({
-          name: $scope.user.name,
-          email: $scope.user.email,
-          password: $scope.user.password
-        })
-        .then( function() {
-          // Account created, redirect to home
-          $location.path('/home');
+    $scope.groups.$promise.then(function (groups) {
+      $scope.terms = _(groups).map('term').uniq().value();
+    });
+
+    $scope.step1Complete = false;
+    $scope.step1 = function (form) {
+      if (!$scope.user.email) {
+        return;
+      }
+
+      $http.get('/api/users/check/' + encodeURIComponent($scope.user.email))
+        .success(function (result) {
+          if (result.available) {
+            $scope.step1Complete = true;
+          } else {
+            form.email.$setValidity('mongoose', false);
+            $scope.errors.email = 'That email is already is use.';
+          }
+        });
+    };
+
+    $scope.canJoin = function (group) {
+      return group.emails.indexOf($scope.user.email) > -1;
+    };
+
+
+    $scope.register = function() {
+      var user = angular.copy($scope.user);
+      user.groups = _.map(user.groups, '_id');
+      Auth.createUser(user)
+        .then(function () {
+          $state.go('home');
         })
         .catch( function(err) {
           err = err.data;
           if (err.message) {
             Modal.info.error(err.message);
           }
-
-          $scope.errors = {};
-
-          // Update validity of form fields that match the mongoose errors
-          angular.forEach(err.errors, function(error, field) {
-            form[field].$setValidity('mongoose', false);
-            $scope.errors[field] = error.message;
-          });
         });
-      }
-    };
-
-    $scope.loginOauth = function(provider) {
-      $window.location.href = '/auth/' + provider;
     };
   });

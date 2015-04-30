@@ -17,7 +17,7 @@
       <div class="col-md-6">
         <h1>{{user.name}}</h1>
 
-        <a class="btn btn-ra-red" href="/user/{{user._id}}"><i class="fa fa-user"></i> <translate>profile.view-profile</translate></a>
+        <!--<a class="btn btn-ra-red" href="/user/{{user._id}}"><i class="fa fa-user"></i> <translate>profile.view-profile</translate></a>-->
       </div>
     </div>
 
@@ -37,148 +37,148 @@
             </div>
 
             <!-- EMAIL -->
-            <div class="form-group" ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }">
-              <label><translate>Email</translate> *</label>
-              <input type="email" name="email" class="form-control" ng-model="user.email" required>
-              <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block" translate>valid-email</p>
-            </div>
+            <!--<div class="form-group" ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }">-->
+              <!--<label><translate>Email</translate> *</label>-->
+              <!--<input type="email" name="email" class="form-control" ng-model="user.email" required>-->
+              <!--<p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block" translate>valid-email</p>-->
+            <!--</div>-->
 
             <!-- Timezone -->
-            <div class="form-group" ng-class="{ 'has-error' : userForm.timezone.$invalid && !userForm.timezone.$pristine }">
-              <label><translate>Timezone</translate> *</label>
-              <ui-select ng-model="user.timezone" required>
-                <ui-select-match>{{$select.selected}}</ui-select-match>
-                <ui-select-choices repeat="timezone as timezone in timezones | filter: $select.search">
-                  <div ng-bind-html="timezone | highlight: $select.search"></div>
-                </ui-select-choices>
-              </ui-select>
-              <p ng-show="userForm.timezone.$invalid && !userForm.timezone.$pristine" class="help-block" translate>timezone-required</p>
-            </div>
+            <!--<div class="form-group" ng-class="{ 'has-error' : userForm.timezone.$invalid && !userForm.timezone.$pristine }">-->
+              <!--<label><translate>Timezone</translate> *</label>-->
+              <!--<ui-select ng-model="user.timezone" required>-->
+                <!--<ui-select-match>{{$select.selected}}</ui-select-match>-->
+                <!--<ui-select-choices repeat="timezone as timezone in timezones | filter: $select.search">-->
+                  <!--<div ng-bind-html="timezone | highlight: $select.search"></div>-->
+                <!--</ui-select-choices>-->
+              <!--</ui-select>-->
+              <!--<p ng-show="userForm.timezone.$invalid && !userForm.timezone.$pristine" class="help-block" translate>timezone-required</p>-->
+            <!--</div>-->
 
             <!-- Languages -->
-            <div class="form-group" ng-class="{ 'has-error' : userForm.languages.$invalid && !userForm.languages.$pristine }">
-              <label translate>Languages</label>
-              <ui-select multiple ng-model="user.languages" close-on-select="false" ui-select-required>
-                <ui-select-match>{{$item.name}}</ui-select-match>
-                <ui-select-choices repeat="language.code as language in languages | filter: $select.search">
-                  <div ng-bind-html="language.name | highlight: $select.search"></div>
-                </ui-select-choices>
-              </ui-select>
-              <!-- TODO: Get validation to work -->
-              <!--<p ng-show="userForm.languages.$invalid && !userForm.languages.$pristine" class="help-block">You must have at least one language.</p>-->
-            </div>
+            <!--<div class="form-group" ng-class="{ 'has-error' : userForm.languages.$invalid && !userForm.languages.$pristine }">-->
+              <!--<label translate>Languages</label>-->
+              <!--<ui-select multiple ng-model="user.languages" close-on-select="false" ui-select-required>-->
+                <!--<ui-select-match>{{$item.name}}</ui-select-match>-->
+                <!--<ui-select-choices repeat="language.code as language in languages | filter: $select.search">-->
+                  <!--<div ng-bind-html="language.name | highlight: $select.search"></div>-->
+                <!--</ui-select-choices>-->
+              <!--</ui-select>-->
+              <!--&lt;!&ndash; TODO: Get validation to work &ndash;&gt;-->
+              <!--&lt;!&ndash;<p ng-show="userForm.languages.$invalid && !userForm.languages.$pristine" class="help-block">You must have at least one language.</p>&ndash;&gt;-->
+            <!--</div>-->
 
             <!-- PHONE -->
-            <div class="form-group" ng-class="{ 'has-error' : userForm.phone.$invalid && !userForm.phone.$pristine }">
-              <label translate>phone-number</label>
-              <input type="text" name="phone" class="form-control" ng-model="user.phone">
-            </div>
+            <!--<div class="form-group" ng-class="{ 'has-error' : userForm.phone.$invalid && !userForm.phone.$pristine }">-->
+              <!--<label translate>phone-number</label>-->
+              <!--<input type="text" name="phone" class="form-control" ng-model="user.phone">-->
+            <!--</div>-->
 
             <!-- LOCATION -->
-            <div class="form-group" ng-class="{ 'has-error' : userForm.location.$invalid && !userForm.location.$pristine }">
-              <label translate>Location</label>
-              <input type="text" name="location" id='location' ng-autocomplete class="form-control" ng-model="user.location" details="user.locationDetails">
-            </div>
+            <!--<div class="form-group" ng-class="{ 'has-error' : userForm.location.$invalid && !userForm.location.$pristine }">-->
+              <!--<label translate>Location</label>-->
+              <!--<input type="text" name="location" id='location' ng-autocomplete class="form-control" ng-model="user.location" details="user.locationDetails">-->
+            <!--</div>-->
 
             <!-- WORKPLACE -->
-            <div class="form-group" ng-class="{ 'has-error' : userForm.workplace.$invalid && !userForm.workplace.$pristine }">
-              <label translate>Workplace</label>
-              <input type="text" name="workplace" class="form-control" ng-model="user.workplace">
-            </div>
+            <!--<div class="form-group" ng-class="{ 'has-error' : userForm.workplace.$invalid && !userForm.workplace.$pristine }">-->
+              <!--<label translate>Workplace</label>-->
+              <!--<input type="text" name="workplace" class="form-control" ng-model="user.workplace">-->
+            <!--</div>-->
 
             <!-- BIO -->
-            <div class="form-group" ng-class="{ 'has-error' : userForm.bio.$invalid && !userForm.bio.$pristine }">
-              <label translate>Bio</label>
-              <textarea ng-model="user.bio" class="form-control" name="bio"></textarea>
-            </div>
+            <!--<div class="form-group" ng-class="{ 'has-error' : userForm.bio.$invalid && !userForm.bio.$pristine }">-->
+              <!--<label translate>Bio</label>-->
+              <!--<textarea ng-model="user.bio" class="form-control" name="bio"></textarea>-->
+            <!--</div>-->
 
             <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid || userForm.$pristine" translate>Save</button>
           </form>
         </div>
 
-        <div class="card">
-          <form name="userPrivacyForm" ng-submit="save(userPrivacyForm)" novalidate>
-            <h2><i class="fa fa-eye"></i> <translate>profile.Privacy</translate></h2>
+        <!--<div class="card">-->
+          <!--<form name="userPrivacyForm" ng-submit="save(userPrivacyForm)" novalidate>-->
+            <!--<h2><i class="fa fa-eye"></i> <translate>profile.Privacy</translate></h2>-->
 
-            <p translate>profile.privacy-instructions</p>
+            <!--<p translate>profile.privacy-instructions</p>-->
 
-            <div class="form-group">
-              <label class="toggle" for="emailPublic">
-                <span>
-                  <input type="checkbox" ng-model="user.publicInfo.email" id="emailPublic"> <span class="handle"></span>
-                </span>
-                <translate>Email</translate>
-              </label>
-            </div>
-            <div class="form-group">
-              <label class="toggle" for="phonePublic">
-                <span>
-                  <input type="checkbox" ng-model="user.publicInfo.phone" id="phonePublic"> <span class="handle"></span>
-                </span>
-                <translate>Phone</translate>
-              </label>
-            </div>
-            <div class="form-group">
-              <label class="toggle" for="locationPublic">
-                <span>
-                  <input type="checkbox" ng-model="user.publicInfo.location" id="locationPublic"> <span class="handle"></span>
-                </span>
-                <translate>Location</translate>
-              </label>
-            </div>
-            <div class="form-group">
-              <label class="toggle" for="workplacePublic">
-                <span>
-                  <input type="checkbox" ng-model="user.publicInfo.workplace" id="workplacePublic"> <span class="handle"></span>
-                </span>
-                <translate>Workplace</translate>
-              </label>
-            </div>
+            <!--<div class="form-group">-->
+              <!--<label class="toggle" for="emailPublic">-->
+                <!--<span>-->
+                  <!--<input type="checkbox" ng-model="user.publicInfo.email" id="emailPublic"> <span class="handle"></span>-->
+                <!--</span>-->
+                <!--<translate>Email</translate>-->
+              <!--</label>-->
+            <!--</div>-->
+            <!--<div class="form-group">-->
+              <!--<label class="toggle" for="phonePublic">-->
+                <!--<span>-->
+                  <!--<input type="checkbox" ng-model="user.publicInfo.phone" id="phonePublic"> <span class="handle"></span>-->
+                <!--</span>-->
+                <!--<translate>Phone</translate>-->
+              <!--</label>-->
+            <!--</div>-->
+            <!--<div class="form-group">-->
+              <!--<label class="toggle" for="locationPublic">-->
+                <!--<span>-->
+                  <!--<input type="checkbox" ng-model="user.publicInfo.location" id="locationPublic"> <span class="handle"></span>-->
+                <!--</span>-->
+                <!--<translate>Location</translate>-->
+              <!--</label>-->
+            <!--</div>-->
+            <!--<div class="form-group">-->
+              <!--<label class="toggle" for="workplacePublic">-->
+                <!--<span>-->
+                  <!--<input type="checkbox" ng-model="user.publicInfo.workplace" id="workplacePublic"> <span class="handle"></span>-->
+                <!--</span>-->
+                <!--<translate>Workplace</translate>-->
+              <!--</label>-->
+            <!--</div>-->
 
-            <button type="submit" class="btn btn-primary" ng-disabled="userPrivacyForm.$invalid || userPrivacyForm.$pristine" translate>Save</button>
-          </form>
-        </div>
+            <!--<button type="submit" class="btn btn-primary" ng-disabled="userPrivacyForm.$invalid || userPrivacyForm.$pristine" translate>Save</button>-->
+          <!--</form>-->
+        <!--</div>-->
 
       </div>
 
       <div class="col-md-6">
 
-        <div class="card">
-          <form name="emailPrefForm" ng-submit="save(emailPrefForm)" novalidate>
-            <h2><i class="fa fa-envelope"></i> <translate>profile.email-pref</translate></h2>
+        <!--<div class="card">-->
+          <!--<form name="emailPrefForm" ng-submit="save(emailPrefForm)" novalidate>-->
+            <!--<h2><i class="fa fa-envelope"></i> <translate>profile.email-pref</translate></h2>-->
 
-            <p translate>profile.email-instructions</p>
+            <!--<p translate>profile.email-instructions</p>-->
 
-            <div class="form-group">
-              <label class="toggle" for="messages">
-                <span>
-                  <input type="checkbox" ng-model="user.emailPrefs.messages" id="messages"> <span class="handle"></span>
-                </span>
-                <translate>profile.email-messages</translate>
-              </label>
-            </div>
-            <div class="form-group">
-              <label class="toggle" for="soft">
-                <span>
-                  <input type="checkbox" ng-model="user.emailPrefs.soft" id="soft"> <span class="handle"></span>
-                </span>
-                <translate>profile.email-soft</translate>
-              </label>
-            </div>
-            <div class="form-group">
-              <label class="toggle" for="offers">
-                <span>
-                  <input type="checkbox" ng-model="user.emailPrefs.offers" id="offers"> <span class="handle"></span>
-                </span>
-                <translate>profile.email-offers</translate>
-              </label>
-            </div>
+            <!--<div class="form-group">-->
+              <!--<label class="toggle" for="messages">-->
+                <!--<span>-->
+                  <!--<input type="checkbox" ng-model="user.emailPrefs.messages" id="messages"> <span class="handle"></span>-->
+                <!--</span>-->
+                <!--<translate>profile.email-messages</translate>-->
+              <!--</label>-->
+            <!--</div>-->
+            <!--<div class="form-group">-->
+              <!--<label class="toggle" for="soft">-->
+                <!--<span>-->
+                  <!--<input type="checkbox" ng-model="user.emailPrefs.soft" id="soft"> <span class="handle"></span>-->
+                <!--</span>-->
+                <!--<translate>profile.email-soft</translate>-->
+              <!--</label>-->
+            <!--</div>-->
+            <!--<div class="form-group">-->
+              <!--<label class="toggle" for="offers">-->
+                <!--<span>-->
+                  <!--<input type="checkbox" ng-model="user.emailPrefs.offers" id="offers"> <span class="handle"></span>-->
+                <!--</span>-->
+                <!--<translate>profile.email-offers</translate>-->
+              <!--</label>-->
+            <!--</div>-->
 
-            <p translate>profile.email-hard</p>
+            <!--<p translate>profile.email-hard</p>-->
 
-            <button type="submit" class="btn btn-primary" ng-disabled="emailPrefForm.$invalid || emailPrefForm.$pristine" translate>Save</button>
-          </form>
-        </div>
+            <!--<button type="submit" class="btn btn-primary" ng-disabled="emailPrefForm.$invalid || emailPrefForm.$pristine" translate>Save</button>-->
+          <!--</form>-->
+        <!--</div>-->
 
         <div class="card">
           <h2><i class="fa fa-key"></i> <translate>profile.change-password</translate></h2>
@@ -209,128 +209,6 @@
 
             <button type="submit" class="btn btn-primary" ng-disabled="pwForm.$invalid || pwForm.$pristine" translate>Change</button>
           </form>
-        </div>
-
-        <div class="card">
-
-          <div ng-switch="user.verification.status" class="pull-right">
-            <translate>profile.account-status</translate>
-            <span ng-switch-when="approved" class="label label-success"><i class="fa fa-check"></i> <translate>Verified</translate></span>
-            <span ng-switch-when="denied" class="label label-danger"><i class="fa fa-ban"></i> <translate>profile.verification-denied</translate></span>
-            <span ng-switch-when="pending" class="label label-warning"><i class="fa fa-clock-o"></i> <translate>profile.verification-pending</translate></span>
-            <span ng-switch-default class="label label-warning"><i class="fa fa-times"></i> <translate>profile.not-verified</translate></span>
-          </div>
-
-          <div>
-            <h2><i class="fa fa-certificate"></i> <translate>profile.account-verification</translate></h2>
-          </div>
-
-          <div ng-switch="user.verification.status">
-            <div ng-switch-when="approved" translate>
-              profile.account-is-verified
-            </div>
-
-            <div ng-switch-when="denied" translate>
-              profile.account-is-denied
-            </div>
-
-            <div ng-switch-when="pending" translate>
-              profile.account-is-pending
-            </div>
-
-            <div ng-switch-default>
-              <p translate>
-                profile.verification-overview
-              </p>
-              <hr/>
-              <p translate>
-                profile.verification-process
-              </p>
-              <button class="btn btn-ra-red-hollow" ng-file-select="idSelect($files)" ng-multiple="false"><i class="fa fa-upload"></i> <translate>profile.choose-file</translate></button>
-            </div>
-          </div>
-
-
-        </div>
-
-        <div class="card">
-          <h2><i class="fa fa-credit-card"></i> <translate>profile.financial-information</translate></h2>
-
-          <div ng-show="user.financial.cards.length">
-            <strong translate>profile.saved-cards</strong>
-            <table class="table table-striped table-bordered">
-              <tr ng-repeat="card in user.financial.cards">
-                <td>{{card.display}}</td>
-                <td><translate>profile.card-expiration-short</translate> {{card.exp.month}} / {{card.exp.year}}</td>
-                <td><button class="btn btn-ra-red" ng-click="deleteCard(card.display, card._id)"><i class="fa fa-trash"></i></button></td>
-              </tr>
-            </table>
-          </div>
-          <div ng-hide="user.financial.cards.length" translate>
-            profile.no-cards
-          </div>
-
-          <hr/>
-          <button class="btn btn-ra-red-hollow" ng-click="addCard = true" ng-hide="addCard"><i class="fa fa-plus"></i> <translate>profile.add-card</translate></button>
-
-          <form name="newCardForm" ng-submit="saveCard()" ng-show="addCard" novalidate>
-
-            <!-- NUMBER -->
-            <div class="form-group" ng-class="{ 'has-error' : newCardForm.number.$invalid && !newCardForm.number.$pristine }">
-              <label translate>profile.card-number</label>
-              <input type="text" name="number" class="form-control" ng-model="newCard.number" required>
-              <p ng-show="newCardForm.number.$invalid && !newCardForm.number.$pristine" class="help-block" translate>profile.card-number-required</p>
-            </div>
-
-            <div class="row">
-              <div class="col-xs-5">
-                <!-- Expiration Month -->
-                <div class="form-group" ng-class="{ 'has-error' : newCardForm.expMonth.$invalid && !newCardForm.expMonth.$pristine }">
-                  <label translate>profile.Expiration</label>
-                  <select name="expMonth" ng-model="newCard.exp.month" class="form-control" required>
-                    <option value="1">01 - {{'January' | translate}}</option>
-                    <option value="2">02 - {{'February' | translate}}</option>
-                    <option value="3">03 - {{'March' | translate}}</option>
-                    <option value="4">04 - {{'April' | translate}}</option>
-                    <option value="5">05 - {{'May' | translate}}</option>
-                    <option value="6">06 - {{'June' | translate}}</option>
-                    <option value="7">07 - {{'July' | translate}}</option>
-                    <option value="8">08 - {{'August' | translate}}</option>
-                    <option value="9">09 - {{'September' | translate}}</option>
-                    <option value="10">10 - {{'October' | translate}}</option>
-                    <option value="11">11 - {{'November' | translate}}</option>
-                    <option value="12">12 - {{'December' | translate}}</option>
-                  </select>
-                  <p ng-show="newCardForm.expMonth.$invalid && !newCardForm.expMonth.$pristine" class="help-block" translate>profile.card-exp-required</p>
-                </div>
-              </div>
-
-              <!-- Expiration Year -->
-              <div class="col-xs-3">
-                <label>&nbsp;</label>
-                <div class="form-group" ng-class="{ 'has-error' : newCardForm.expYear.$invalid && !newCardForm.expYear.$pristine }">
-                  <select name="expYear" class="form-control" ng-model="newCard.exp.year" ng-options="year for year in years" required></select>
-                  <p ng-show="newCardForm.expYear.$invalid && !newCardForm.expYear.$pristine" class="help-block">profile.exp-year-required</p>
-                </div>
-              </div>
-
-              <!-- CVC -->
-              <div class="col-xs-3 col-xs-offset-1">
-                <div class="form-group" ng-class="{ 'has-error' : newCardForm.cvc.$invalid && !newCardForm.cvc.$pristine }">
-                  <label translate>profile.CVC</label>
-                  <input type="text" name="cvc" class="form-control" ng-model="newCard.cvc" required>
-                  <p ng-show="newCardForm.cvc.$invalid && !newCardForm.cvc.$pristine" class="help-block" translate>profile.cvc-required</p>
-                </div>
-              </div>
-            </div>
-
-            <button type="submit" class="btn btn-primary" ng-disabled="newCardForm.$invalid || newCardForm.$pristine"><i class="fa fa-lock"></i> <translate>Save</translate></button>
-
-            <p class="note" translate>profile.card-security-note</p>
-
-          </form>
-
-
         </div>
 
       </div>

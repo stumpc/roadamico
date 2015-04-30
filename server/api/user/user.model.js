@@ -17,6 +17,12 @@ var UserSchema = new Schema({
   name: String,
   email: {type: String, lowercase: true},
   photo: String,
+
+  // Where and when the user is going
+  destination: { type: Schema.Types.ObjectId, ref: 'Destination' },
+  term: String,
+
+  // We may want this again, but right now we are linking users with destinations
   location: String,
   locationDetails: {},
 

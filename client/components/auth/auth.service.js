@@ -31,11 +31,11 @@ angular.module('roadAmicoApp')
 
             $rootScope.$broadcast('auth::login', data.token);
 
-            currentUser.$promise.then(function () {
-              if (!currentUser.activated) {
-                $state.go('finalize');
-              }
-            });
+            //currentUser.$promise.then(function () {
+            //  if (!currentUser.activated) {
+            //    $state.go('finalize');
+            //  }
+            //});
             return cb();
           }).
           error(function (err) {

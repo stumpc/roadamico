@@ -6,79 +6,101 @@
       <h1 translate>sign-up</h1>
     </div>
     <div class="col-sm-12">
-      <form class="form" name="form" ng-submit="register(form)" novalidate>
 
-        <div class="form-group" ng-class="{ 'has-success': form.name.$valid && submitted,
-                                            'has-error': form.name.$invalid && submitted }">
-          <label translate>Name</label>
+      <p>
+        We're excited to have you on RoadAmico. To start off, tell us a little about yourself:
+      </p>
 
-          <input type="text" name="name" class="form-control" ng-model="user.name"
-                 required/>
-          <p class="help-block" ng-show="form.name.$error.required && submitted" translate>
-            name-required
-          </p>
+
+      <form name="form1" ng-submit="step1(form1)" novalidate>
+
+        <!-- Name -->
+        <div class="form-group" ng-class="{ 'has-error' : form1.name.$invalid && !form1.name.$pristine }">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" class="form-control" ng-model="user.name" required>
+          <p ng-show="form1.name.$invalid && !form1.name.$pristine" class="help-block">Name is required</p>
         </div>
 
-        <div class="form-group" ng-class="{ 'has-success': form.email.$valid && submitted,
-                                            'has-error': form.email.$invalid && submitted }">
-          <label translate>Email</label>
-
-          <input type="email" name="email" class="form-control" ng-model="user.email"
-                 required
-                 mongoose-error/>
-          <p class="help-block" ng-show="form.email.$error.email && submitted" translate>
-            valid-email
-          </p>
-          <p class="help-block" ng-show="form.email.$error.required && submitted" translate>
-            what-email
-          </p>
-          <p class="help-block" ng-show="form.email.$error.mongoose">
+        <!-- Email -->
+        <div class="form-group" ng-class="{ 'has-error' : form1.email.$invalid && !form1.email.$pristine }">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" class="form-control" ng-model="user.email" ng-change="form1.email.$setValidity('mongoose', true);" required>
+          <p ng-show="form1.email.$error.required && !form1.email.$pristine" class="help-block">Please enter an email address</p>
+          <p ng-show="form1.email.$error.email && !form1.email.$pristine" class="help-block">A valid email is required</p>
+          <p ng-show="form1.email.$error.mongoose" class="help-block">
             {{ errors.email }}
           </p>
         </div>
 
-        <div class="form-group" ng-class="{ 'has-success': form.password.$valid && submitted,
-                                            'has-error': form.password.$invalid && submitted }">
-          <label translate>Password</label>
-
-          <input type="password" name="password" class="form-control" ng-model="user.password"
-                 ng-minlength="8"
-                 required
-                 mongoose-error/>
-          <p class="help-block"
-             ng-show="(form.password.$error.minlength || form.password.$error.required) && submitted" translate>
-            password-length
-          </p>
-          <p class="help-block" ng-show="form.password.$error.mongoose">
-            {{ errors.password }}
-          </p>
+        <!-- Password -->
+        <div class="form-group" ng-class="{ 'has-error' : form1.password.$invalid && !form1.password.$pristine }">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" class="form-control" ng-model="user.password" ng-minlength="8" required>
+          <p ng-show="form1.password.$error.required && !form1.password.$pristine" class="help-block">Password is required</p>
+          <p ng-show="form1.password.$error.minlength && !form1.password.$pristine" class="help-block">Password must be at least 8 characters long</p>
         </div>
 
-        <div>
-          <button class="btn btn-success btn-login" type="submit" translate>
-            sign-up
-          </button>
-          <a class="btn btn-default btn-register" href="/login" translate>
-            Login
-          </a>
-        </div>
-
-        <hr>
-        <div>
-          <a class="btn btn-facebook" href="" ng-click="loginOauth('facebook')">
-            <i class="fa fa-facebook"></i> <translate>connect-facebook</translate>
-          </a>
-          <a class="btn btn-google-plus" href="" ng-click="loginOauth('google')">
-            <i class="fa fa-google-plus"></i> <translate>connect-google</translate>
-          </a>
-          <a class="btn btn-twitter" href="" ng-click="loginOauth('twitter')">
-            <i class="fa fa-twitter"></i> <translate>connect-twitter</translate>
-          </a>
-          <a class="btn btn-linkedin" href="" ng-click="loginOauth('linkedin')">
-            <i class="fa fa-linkedin"></i> <translate>connect-linkedin</translate>
-          </a>
-        </div>
+        <button type="submit" class="btn btn-ra-green" ng-disabled="form1.$invalid || form1.$pristine">Next</button>
       </form>
+
+      <div class="space-top-large" ng-if="step1Complete">
+
+        <p>
+          Tell us a little about your study abroad.
+        </p>
+
+        <form name="form2" ng-submit="register()" novalidate>
+
+          <!-- Destination -->
+          <div class="form-group" ng-class="{ 'has-error' : form2.destination.$invalid && !form2.destination.$pristine }">
+            <label for="destination">Where are you going?</label>
+
+            <ui-select id="destination" ng-model="user.destination" close-on-select="true" title="Select destination...">
+              <ui-select-match>{{$select.selected.name}}</ui-select-match>
+              <ui-select-choices repeat="destination._id as destination in destinations | filter: $select.search">
+                <div ng-bind-html="destination.name | highlight: $select.search"></div>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+
+          <!-- Term -->
+          <div class="form-group" ng-class="{ 'has-error' : form2.term.$invalid && !form2.term.$pristine }">
+            <label for="term">When will you be there?</label>
+
+            <ui-select id="term" ng-model="user.term" close-on-select="true" title="Select term...">
+              <ui-select-match>{{$select.selected}}</ui-select-match>
+              <ui-select-choices repeat="term as term in terms | filter: $select.search">
+                <div ng-bind-html="term | highlight: $select.search"></div>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+
+          <!-- Group -->
+          <div class="form-group" ng-class="{ 'has-error' : form2.term.$invalid && !form2.term.$pristine }">
+            <label for="groups">What group(s) will you be going with?</label>
+
+            <ui-select id="groups" multiple ng-model="user.groups" close-on-select="true">
+              <ui-select-match>{{$item.name}}</ui-select-match>
+              <ui-select-choices repeat="group as group in groups | filter: $select.search">
+                <div ng-bind-html="group.name | highlight: $select.search"></div>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+
+          <div ng-repeat="group in user.groups" class="space-bottom-small">
+            <div ng-show="canJoin(group)">
+              You are allowed to join <span class="badge badge-info">{{group.name}}</span>.
+            </div>
+            <span ng-hide="canJoin(group)">
+              The email that you are using is not listed as a member of <span class="badge badge-info">{{group.name}}</span>. Either request access or contact
+              your program administrator. <button class="btn btn-xs btn-ra-red-hollow"><i class="fa fa-envelope"></i> Request Access</button>
+            </span>
+          </div>
+
+          <button type="submit" class="btn btn-ra-green" ng-disabled="form2.$invalid || form2.$pristine">Create Account</button>
+        </form>
+      </div>
+
     </div>
   </div>
   <hr>

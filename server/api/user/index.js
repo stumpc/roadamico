@@ -22,6 +22,7 @@ router.post('/pic',         auth.isAuthenticated(), controller.uploadImage);
 router.get('/feed',         auth.isAuthenticated(), controller.feed);
 
 // Public routes
+router.get('/check/:email', controller.check);
 router.get('/profiles', controller.profiles);
 router.post('/reset',   controller.resetPassword);
 router.get('/:id',      controller.show);

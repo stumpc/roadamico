@@ -142,6 +142,7 @@ function generateEvents() {
         name: 'Event ' + i + ' at ' + place.locationDetails.name,
         place: place._id,
         datetime: moment().add(randInt(15) - 7, 'days').toISOString(),
+        created: moment().toISOString(),
         meetupTime: (randInt(7)+1) + ':00 PM',
         meetupPlace: faker.address.streetAddress(),
         canceled: false,

@@ -3,6 +3,152 @@
 <div class="container home-page page">
   <h1>Home</h1>
 
+  <h2>Happening around you</h2>
+  <!-- TODO: This -->
+
+  <h2 ng-show="updates.length">Updates</h2>
+  <div ng-repeat="update in updates" class="update">
+    <div ng-switch="update.type">
+      <div class="time-disp">
+        <small>{{update.timeDisp}}</small>
+      </div>
+
+
+      <!-- List Entry -->
+      <div ng-switch-when="entry">
+        <div class="title">{{update.poster.name}} added to <a ui-sref="list.view({id: update.list._id})">{{update.list.name}}</a></div>
+
+        <!-- Display a place -->
+        <div ng-if="update.place" class="place">
+          <div class="row">
+            <div class="col-sm-3">
+              <a ui-sref="place.view({id: update.place._id})">
+                <img ng-src="{{update.place.photo}}" class="thumbnail" />
+              </a>
+            </div>
+
+            <div class="col-sm-9">
+              <div class="name space-bottom-small">
+                <a ui-sref="place.view({id: entry.place._id})">{{update.place.locationDetails.name}}</a>
+                <div rating ng-model="update.place.rating" state-on="['fa', 'fa-star']" state-off="['fa', 'fa-star-o']"
+                     readonly="true" class="color-sunflower-dark space-left-large"></div>
+              </div>
+
+              <!-- Location -->
+              <div class="row space-bottom-small" ng-show="update.place.locationDetails.formatted_address">
+                <div class="col-xs-1"><i class="fa fa-lg fa-map-marker"></i></div>
+                <div class="col-xs-10">{{update.place.locationDetails.formatted_address}}</div>
+              </div>
+
+              <!-- Phone -->
+              <div class="row space-bottom-small" ng-show="update.place.locationDetails.formatted_phone_number">
+                <div class="col-xs-1"><i class="fa fa-lg fa-phone"></i></div>
+                <div class="col-xs-10">{{update.place.locationDetails.formatted_phone_number}}</div>
+              </div>
+
+              <!-- Website -->
+              <div class="row space-bottom-small" ng-show="update.place.locationDetails.website">
+                <div class="col-xs-1"><i class="fa fa-lg fa-globe"></i></div>
+                <div class="col-xs-10"><a href="{{update.place.locationDetails.website}}">Website</a></div>
+              </div>
+
+              <!-- Google+ -->
+              <div class="row space-bottom-small" ng-show="update.place.locationDetails.url">
+                <div class="col-xs-1"><i class="fa fa-lg fa-google-plus"></i></div>
+                <div class="col-xs-10"><a href="{{update.place.locationDetails.url}}">Google+ Page</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Display photo -->
+        <div ng-if="update.photo" class="row">
+          <div class="col-sm-6 col-sm-offset-3">
+            <div class="embed">
+              <img ng-src="{{update.photo}}" >
+              <p>{{update.text}}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Display rich text -->
+        <div ng-if="update.text && !update.photo" class="text">
+          <div ng-bind-html="update.text"></div>
+        </div>
+
+        <!-- Display an embed -->
+        <div ng-if="update.embed">
+          <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+              <div embedded-media="update.embed" class="embed"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Place Post -->
+      <div ng-switch-when="post" class="post">
+        <div ng-if="update.embed">
+          <div class="title">{{update.poster.name}} shared about <a ui-sref="place.view({id: update.place._id})">{{update.place.locationDetails.name}}</a></div>
+          <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+              <div embedded-media="update.embed" class="embed"></div>
+            </div>
+          </div>
+        </div>
+
+        <div ng-if="update.photo">
+          <div class="title">{{update.poster.name}} shared a photo at <a ui-sref="place.view({id: update.place._id})">{{update.place.locationDetails.name}}</a></div>
+          <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+              <img ng-src="{{update.photo}}"/>
+            </div>
+          </div>
+        </div>
+
+        <div ng-if="update.text" class="text">
+          <div class="title">{{update.poster.name}} shared about <a ui-sref="place.view({id: update.place._id})">{{update.place.locationDetails.name}}</a></div>
+          {{update.text}}
+        </div>
+      </div>
+
+
+      <!-- Event -->
+      <div ng-switch-when="event">
+        <div class="title">New event at <a ui-sref="place.view({id: update.place._id})">{{update.place.locationDetails.name}}</a></div>
+        <div class="subtitle">{{update.creator.name}} created <strong>{{update.name}}</strong></div>
+
+        <!-- Date and Time -->
+        <div class="row space-bottom-small">
+          <div class="col-xs-1 text-center"><i class="fa fa-lg fa-calendar"></i></div>
+          <div class="col-xs-10">{{update.when}}</div>
+        </div>
+
+        <!-- Group -->
+        <div class="row space-bottom-small">
+          <div class="col-xs-1 text-center"><i class="fa fa-lg fa-group"></i></div>
+          <div class="col-xs-10" ng-pluralize count="update.participants.length"
+               when="{one: '1 person going', other: '{} people going'}"></div>
+        </div>
+
+        <!-- Meetup -->
+        <div class="row" ng-show="update.meetupPlace || update.meetupTime">
+          <div class="col-xs-1 text-center"><i class="fa fa-lg fa-map-marker"></i></div>
+          <div class="col-xs-10">
+            Meeting up
+            <span ng-show="update.meetupPlace">at {{update.meetupPlace}}</span>
+            <span ng-show="update.meetupTime">at {{update.meetupTime}}</span>
+          </div>
+        </div>
+
+        <div class="space-top-small text-center">
+          <a ui-sref="place.event.view({id: update.place, eid: update._id})" class="btn btn-ra-green-hollow"><i class="fa fa-info-circle"></i> Details</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
 
 </div>
 

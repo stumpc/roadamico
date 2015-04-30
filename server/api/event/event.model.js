@@ -6,6 +6,7 @@ var mongoose = require('mongoose'),
 var EventSchema = new Schema({
   name: String,
   place: { type: Schema.Types.ObjectId, ref: 'Place' },
+  created: String,
   datetime: String,
   meetupTime: String,
   meetupPlace: String,

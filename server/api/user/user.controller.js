@@ -11,6 +11,9 @@ var genCode = require('../../components/genCode');
 var email = require('../../components/communication/email');
 var translate = require('../../components/translate');
 var Group = require('../group/group.model');
+var List = require('../list/list.model');
+var Event = require('../event/event.model');
+var Place = require('../place/place.model');
 
 var validationError = function(res, err) {
   return res.json(422, err);
@@ -136,34 +139,6 @@ exports.update = function(req, res, next) {
   });
 };
 
-//exports.follow = function(req, res, next) {
-//  var index = _.findIndex(req.user.following, function (f) { return f.provider.equals(req.body.id); });
-//  if (index > -1) {
-//    return req.json(req.user);
-//  }
-//  req.user.following.push({
-//    provider: req.body.id,
-//    datetime: moment().toISOString()
-//  });
-//  req.user.save(function (err, user) {
-//    if (err) return next(err);
-//    res.json(user);
-//  });
-//};
-//
-//exports.unfollow = function(req, res, next) {
-//  var index = _.findIndex(req.user.following, function (f) { return f.provider.equals(req.body.id); });
-//  if (index > -1) {
-//    req.user.following.splice(index, 1);
-//    req.user.save(function (err, user) {
-//      if (err) return next(err);
-//      res.json(user);
-//    });
-//  } else {
-//    res.json(403, { message: translate(req, 'invalid-provider') })
-//  }
-//};
-
 /**
  * Get my info
  */
@@ -198,43 +173,6 @@ exports.uploadImage = function (req, res, next) {
       });
     });
 };
-
-//exports.saveCard = function (req, res, next) {
-//  if(req.user.authenticate(req.body.password)) {
-//
-//    // Validate
-//    var card = req.body.card;
-//    if (!card || !card.number || !card.cvc || !card.exp.month || !card.exp.year || card.exp.month < 1 ||
-//        card.exp.month > 12) {
-//      return validationError(res, {message: translate(req, 'invalid-card-data') });
-//    }
-//
-//    req.user.addCard(card, req.body.password);
-//    req.user.save(function (err, user) {
-//      if (err) return next(err);
-//      res.json(user.financial);
-//    });
-//
-//  } else {
-//    res.send(403);
-//  }
-//};
-//
-//exports.deleteCard = function (req, res, next) {
-//  var found = false;
-//  var index = _.findIndex(req.user.financial.cards, function (card) {
-//    return card._id.equals(req.params.id);
-//  });
-//  if (index >= 0) {
-//    req.user.financial.cards.splice(index, 1);
-//    req.user.save(function (err, user) {
-//      if (err) return next(err);
-//      res.json(user.financial);
-//    });
-//  } else {
-//    res.send(404);
-//  }
-//};
 
 exports.resetPassword = function (req, res, next) {
 
@@ -294,4 +232,44 @@ exports.unfollow = function (req, res) {
       res.json(user);
     });
   }
+};
+
+/**
+ * A feed is made up of:
+ * - List entries
+ * - Place feed posts
+ * - Events
+ *
+ * @param req
+ * @param res
+ */
+exports.feed = function (req, res) {
+  var lists = _.map(req.user.following.lists, 'list');
+  var places = _.map(req.user.following.places, 'place');
+
+  List.find({_id: {$in: lists}})
+    .populate('entries.poster', 'name')
+    .populate('entries.place', 'locationDetails feed ratings')
+    .exec(function (err, lists) {
+      if (err) return res.json(500, err);
+
+      Place.find({_id: {$in: places}})
+        .populate('feed.poster', 'name')
+        .exec(function (err, places) {
+          if (err) return res.json(500, err);
+
+          Event.find({place: {$in: places}})
+            .populate('creator', 'name')
+            .populate('place', 'locationDetails')
+            .exec(function (err, events) {
+              if (err) return res.json(500, err);
+              res.json({
+                lists: lists,
+                places: places,
+                events: events
+              });
+            });
+        });
+    });
+
 };

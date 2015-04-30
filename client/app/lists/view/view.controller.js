@@ -95,7 +95,9 @@ angular.module('roadAmicoApp')
           photo: url,
           text: $scope.newEntry.text,
           embed: $scope.newEntry.embed,
-          place: $scope.newEntry.place && $scope.newEntry.place._id
+          place: $scope.newEntry.place && $scope.newEntry.place._id,
+          datetime: moment().toISOString(),
+          poster: $scope.user._id
         });
         $scope.newEntry = {};
         $scope.save();

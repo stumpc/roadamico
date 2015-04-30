@@ -31,6 +31,7 @@ exports.create = function(req, res) {
   delete req.body.participants;
   delete req.body.messages;
   if (!req.body.place) { return res.json(403, {message: 'An event must have an associated place.'}); }
+  req.body.created = moment().toISOString();
   req.body.creator = req.user._id;
   req.body.participants = [{participant: req.user._id, datetime: moment().toISOString()}];
   Event.create(req.body, function(err, event) {

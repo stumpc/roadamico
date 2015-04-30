@@ -19,8 +19,7 @@ router.put('/',             auth.isAuthenticated(), controller.update);
 router.put('/:id',          auth.isAuthenticated(), controller.update);
 router.get('/me',           auth.isAuthenticated(), controller.me);
 router.post('/pic',         auth.isAuthenticated(), controller.uploadImage);
-//router.post('/card',        auth.isAuthenticated(), controller.saveCard);
-//router.delete('/card/:id',  auth.isAuthenticated(), controller.deleteCard);
+router.get('/feed',         auth.isAuthenticated(), controller.feed);
 
 // Public routes
 router.get('/profiles', controller.profiles);

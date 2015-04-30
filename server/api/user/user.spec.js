@@ -15,9 +15,11 @@ describe('The User API', function () {
     name: 'Test User 1',
     password: 'foo',
     role: 'user',
-    followingPlaces: [
-      {place: '000011112222333344445555'}
-    ]
+    following: {
+      places: [
+        {place: '000011112222333344445555'}
+      ]
+    }
   };
 
   var place1 = {
@@ -62,9 +64,9 @@ describe('The User API', function () {
         .expect(200)
         .end(function (err, res) {
           if (err) return done(err);
-          should(_.find(res.body.followingPlaces, {place: '' + place1._id})).be.ok;
+          should(_.find(res.body.following.places, {place: '' + place1._id})).be.ok;
           User.findById(user1._id, function (err, user) {
-            should(_.find(user.followingPlaces, function (f) {
+            should(_.find(user.following.places, function (f) {
               return f.place.equals(place1._id);
             })).be.ok;
             done();
@@ -92,9 +94,9 @@ describe('The User API', function () {
         .expect(200)
         .end(function (err, res) {
           if (err) return done(err);
-          should(_.find(res.body.followingPlaces, {place: '000011112222333344445555'})).not.be.ok;
+          should(_.find(res.body.following.places, {place: '000011112222333344445555'})).not.be.ok;
           User.findById(user1._id, function (err, user) {
-            should(_.find(user.followingPlaces, function (f) {
+            should(_.find(user.following.places, function (f) {
               return f.place.equals('000011112222333344445555');
             })).not.be.ok;
             done();

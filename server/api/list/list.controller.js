@@ -62,6 +62,8 @@ exports.update = function(req, res) {
     list.entries = req.body.entries;
     list.name = req.body.name || list.name;
     list.groupRestriction = req.body.groupRestriction || list.groupRestriction;
+    list.curated = req.body.curated || list.curated;
+    list.tags = req.body.tags || list.tags;
 
     list.save(function (err, list) {
       if (err) { return handleError(res, err); }

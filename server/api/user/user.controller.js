@@ -262,17 +262,17 @@ exports.resetPassword = function (req, res, next) {
   });
 };
 
-exports.followPlace = function (req, res) {
-  var place = _.find(req.user.followingPlaces, function (f) {
-    return f.place.equals(req.params.id);
+exports.follow = function (req, res) {
+  var collection = req.user.following[req.params.target+'s'];
+  var target = _.find(collection, function (f) {
+    return f[req.params.target].equals(req.params.id);
   });
-  if (place) {
+  if (target) {
     res.send(200);
   } else {
-    req.user.followingPlaces.push({
-      place: req.params.id,
-      datetime: moment().toISOString()
-    });
+    var addition = { datetime: moment().toISOString() };
+    addition[req.params.target] = req.params.id;
+    collection.push(addition);
     req.user.save(function (err, user) {
       if (err) return res.json(500, err);
       res.json(user);
@@ -280,14 +280,15 @@ exports.followPlace = function (req, res) {
   }
 };
 
-exports.unfollowPlace = function (req, res) {
-  var placeIdx = _.findIndex(req.user.followingPlaces, function (f) {
-    return f.place.equals(req.params.id);
+exports.unfollow = function (req, res) {
+  var collection = req.user.following[req.params.target+'s'];
+  var targetIdx = _.findIndex(collection, function (f) {
+    return f[req.params.target].equals(req.params.id);
   });
-  if (placeIdx === -1) {
+  if (targetIdx === -1) {
     res.send(200);
   } else {
-    req.user.followingPlaces.splice(placeIdx, 1);
+    collection.splice(targetIdx, 1);
     req.user.save(function (err, user) {
       if (err) return res.json(500, err);
       res.json(user);

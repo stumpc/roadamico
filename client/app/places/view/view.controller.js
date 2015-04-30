@@ -12,11 +12,11 @@ angular.module('roadAmicoApp')
 
     // --- Following ---
 
-    $scope.userFollowing = _.find($scope.user.followingPlaces, {place: place._id});
+    $scope.userFollowing = _.find($scope.user.following.places, {place: place._id});
 
     $scope.follow = function () {
       $scope.user.$follow({target: 'place', tid: place._id}).then(function () {
-        $scope.userFollowing = _.find($scope.user.followingPlaces, {place: place._id});
+        $scope.userFollowing = _.find($scope.user.following.places, {place: place._id});
       });
     };
 

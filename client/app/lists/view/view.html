@@ -12,14 +12,19 @@
          ng-model-options="{ updateOn: 'default blur', debounce: {'default': 1250, 'blur': 0} }" />
 
   <!-- Controls -->
-  <div ng-show="canEdit(list)">
+  <div ng-show="canEdit(list)" class="well">
     <button ng-click="editing = true" class="btn btn-ra-teal" ng-hide="editing"><i class="fa fa-pencil"></i> Edit</button>
     <button ng-click="editing = false" class="btn btn-ra-teal" ng-show="editing"><i class="fa fa-save"></i> I'm Done Editing</button>
 
     <a class="btn btn-ra-teal-hollow" ui-sref="^.edit"><i class="fa fa-cog"></i> Settings</a>
-    <!--<div ng-show="editing">-->
-      <!--<button class="btn btn-ra-teal" ng-click="save()"><i class="fa fa-save"></i> Save</button>-->
-    <!--</div>-->
+  </div>
+
+  <!-- Follow/Comment -->
+  <div class="space-top-medium space-bottom-small" ng-hide="editing">
+    <button class="btn btn-ra-red" ng-click="openComments()"><i class="fa fa-comment"></i> Comment</button>
+
+    <button class="btn btn-ra-red" ng-click="follow()" ng-hide="userFollowing"><i class="fa fa-plus"></i> Follow</button>
+    <button class="btn btn-ra-red-hollow" ng-click="unfollow()" ng-show="userFollowing"><i class="fa fa-minus"></i> Unfollow</button>
   </div>
 
   <div ng-repeat="entry in list.entries" class="entry">
@@ -104,7 +109,57 @@
     <div class="tabs">
       <tabset justified="true">
         <tab heading="Place">
-          Coming soon...
+
+          <div class="placeSelection">
+            <label for="place">Search for and select a place to add:</label>
+            <ui-select id="place" ng-model="newEntry.place" close-on-select="false">
+              <ui-select-match>{{$select.selected.locationDetails.name}}</ui-select-match>
+              <ui-select-choices repeat="place as place in places | filter: $select.search">
+                <div ng-bind-html="place.locationDetails.name | highlight: $select.search"></div>
+              </ui-select-choices>
+            </ui-select>
+
+            <div class="row space-top-medium" ng-show="newEntry.place">
+              <div class="col-sm-3">
+                <img ng-src="{{newEntry.place.photo}}" class="thumbnail" />
+              </div>
+
+              <div class="col-sm-9">
+                <div class="name space-bottom-small">
+                  <a ui-sref="place.view({id: entry.place._id})">{{newEntry.place.locationDetails.name}}</a>
+                  <div rating ng-model="newEntry.place.rating" state-on="['fa', 'fa-star']" state-off="['fa', 'fa-star-o']"
+                       readonly="true" class="color-sunflower-dark space-left-large"></div>
+                </div>
+
+                <!-- Location -->
+                <div class="row space-bottom-small" ng-show="newEntry.place.locationDetails.formatted_address">
+                  <div class="col-xs-1"><i class="fa fa-lg fa-map-marker"></i></div>
+                  <div class="col-xs-10">{{newEntry.place.locationDetails.formatted_address}}</div>
+                </div>
+
+                <!-- Phone -->
+                <div class="row space-bottom-small" ng-show="newEntry.place.locationDetails.formatted_phone_number">
+                  <div class="col-xs-1"><i class="fa fa-lg fa-phone"></i></div>
+                  <div class="col-xs-10">{{newEntry.place.locationDetails.formatted_phone_number}}</div>
+                </div>
+
+                <!-- Website -->
+                <div class="row space-bottom-small" ng-show="newEntry.place.locationDetails.website">
+                  <div class="col-xs-1"><i class="fa fa-lg fa-globe"></i></div>
+                  <div class="col-xs-10"><a href="{{newEntry.place.locationDetails.website}}">Website</a></div>
+                </div>
+
+                <!-- Google+ -->
+                <div class="row space-bottom-small" ng-show="newEntry.place.locationDetails.url">
+                  <div class="col-xs-1"><i class="fa fa-lg fa-google-plus"></i></div>
+                  <div class="col-xs-10"><a href="{{newEntry.place.locationDetails.url}}">Google+ Page</a></div>
+                </div>
+              </div>
+
+              <button class="btn btn-ra-red space-top-medium" ng-click="newEntry = {}"><i class="fa fa-times"></i> Cancel</button>
+            </div>
+          </div>
+
         </tab>
         <tab heading="Writing">
           <div text-angular ng-model="newEntry.text"></div>
@@ -122,6 +177,11 @@
 
   <div ng-hide="list.entries.length">
     Nothing has been added to this list yet.
+  </div>
+
+  <!-- Controls -->
+  <div ng-show="editing && list.entries.length" class="well">
+    <button ng-click="editing = false" class="btn btn-ra-teal" ng-show="editing"><i class="fa fa-save"></i> I'm Done Editing</button>
   </div>
 
 </div>

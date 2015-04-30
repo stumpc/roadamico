@@ -1,7 +1,11 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('ViewListCtrl', function ($scope, $q, $upload, Auth, list, List, placeUtil) {
+  .controller('ViewListCtrl', function ($scope, $q, $upload, $modal, $location, $document, Auth, list, List, Place,
+                                        placeUtil) {
+
+    $document[0].title = 'RoadAmico - ' + list.name;
+
     $scope.list = list;
     $scope.user = Auth.getCurrentUser();
 
@@ -11,6 +15,39 @@ angular.module('roadAmicoApp')
 
     $scope.editing = false;
     $scope.newEntry = {};
+
+    // Following
+
+    $scope.userFollowing = _.find($scope.user.following.lists, {list: list._id});
+
+    $scope.follow = function () {
+      $scope.user.$follow({target: 'list', tid: list._id}).then(function () {
+        $scope.userFollowing = _.find($scope.user.following.lists, {list: list._id});
+      });
+    };
+
+    $scope.unfollow = function () {
+      $scope.user.$unfollow({target: 'list', tid: list._id}).then(function () {
+        $scope.userFollowing = null;
+      });
+    };
+
+    // Comment
+
+    $scope.disqus = {
+      id: 'list:' + list._id,
+      url: $location.absUrl()
+    };
+
+    $scope.openComments = function () {
+      var modalScope = $scope.$new();
+      $modal.open({
+        templateUrl: 'app/lists/view/commentModal.html',
+        scope: modalScope
+      });
+    };
+
+    // Editing
 
     function process() {
       _.forEach(list.entries, function (entry) {
@@ -27,6 +64,16 @@ angular.module('roadAmicoApp')
         process();
       });
     };
+
+    $scope.selectedPlace = {};
+
+    $scope.places = Place.query();
+    $scope.places.$promise.then(function () {
+      _.forEach($scope.places, function (place) {
+        place.rating = placeUtil.getRating(place);
+        place.photo = placeUtil.getPhoto(place);
+      });
+    });
 
     $scope.add = function () {
       var promise;
@@ -48,7 +95,7 @@ angular.module('roadAmicoApp')
           photo: url,
           text: $scope.newEntry.text,
           embed: $scope.newEntry.embed,
-          place: $scope.newEntry.place
+          place: $scope.newEntry.place && $scope.newEntry.place._id
         });
         $scope.newEntry = {};
         $scope.save();

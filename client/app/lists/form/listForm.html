@@ -31,5 +31,16 @@
 
   </div>
 
+  <!-- Tags -->
+  <div class="form-group" ng-class="{ 'has-error' : form.name.$invalid && !form.name.$pristine }">
+    <label for="tags">Tags</label>
+    <input type="text" id="tags" name="tags" class="form-control" ng-model="list.tags" ng-list>
+    <p class="help-block">Enter comma-separated tags</p>
+  </div>
+
+  <div class="space-bottom-medium">
+    <span class="badge badge-info space-right-small" ng-repeat="tag in list.tags">{{tag}}</span>
+  </div>
+
   <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid || form.$pristine">Save</button>
 </form>

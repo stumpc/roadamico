@@ -3,13 +3,15 @@
 <div class="container home-page page">
   <h1>Lists</h1>
 
-  <a ui-sref="createList" class="btn">Create a new list</a>
+  <a ui-sref="createList" ng-show="isLoggedIn()" class="btn">Create a new list</a>
   <hr/>
 
-  <h2>Your group lists</h2>
-  <ul>
-    <li ng-repeat="list in groupLists"><a ui-sref="list.view({id:list._id})">{{list.name}}</a></li>
-  </ul>
+  <div ng-show="groupLists.length">
+    <h2>Your group lists</h2>
+    <ul>
+      <li ng-repeat="list in groupLists"><a ui-sref="list.view({id:list._id})">{{list.name}}</a></li>
+    </ul>
+  </div>
 
   <h2>Public Lists</h2>
   <ul>

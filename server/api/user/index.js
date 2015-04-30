@@ -12,9 +12,9 @@ router.get('/',             auth.hasRole('admin'), controller.index);
 router.delete('/:id',       auth.hasRole('admin'), controller.destroy);
 
 // User routes
-router.put('/:id/password',       auth.isAuthenticated(), controller.changePassword);
-router.put('/follow/place/:id',   auth.isAuthenticated(), controller.followPlace);
-router.put('/unfollow/place/:id', auth.isAuthenticated(), controller.unfollowPlace);
+router.put('/:id/password',         auth.isAuthenticated(), controller.changePassword);
+router.put('/follow/:target/:id',   auth.isAuthenticated(), controller.follow);
+router.put('/unfollow/:target/:id', auth.isAuthenticated(), controller.unfollow);
 router.put('/',             auth.isAuthenticated(), controller.update);
 router.put('/:id',          auth.isAuthenticated(), controller.update);
 router.get('/me',           auth.isAuthenticated(), controller.me);

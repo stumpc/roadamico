@@ -28,22 +28,24 @@ var UserSchema = new Schema({
   languages: [],
 
   // Following
-  followingPlaces: [{
-    place: { type: Schema.Types.ObjectId, ref: 'Place' },
-    datetime: {
-      type: String, default: function() {
-        return moment().toISOString()
+  following: {
+    places: [{
+      place: { type: Schema.Types.ObjectId, ref: 'Place' },
+      datetime: {
+        type: String, default: function() {
+          return moment().toISOString()
+        }
       }
-    }
-  }],
-  followingLists: [{
-    list: { type: Schema.Types.ObjectId, ref: 'List' },
-    datetime: {
-      type: String, default: function() {
-        return moment().toISOString()
+    }],
+    lists: [{
+      list: { type: Schema.Types.ObjectId, ref: 'List' },
+      datetime: {
+        type: String, default: function() {
+          return moment().toISOString()
+        }
       }
-    }
-  }],
+    }]
+  },
 
   // Groups this user is a member of
   groups: [{

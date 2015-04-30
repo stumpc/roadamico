@@ -211,7 +211,12 @@ exports.invite = function (req, res) {
     var approved = req.user.role === 'admin' ||   // Admins can invite
       req.user._id.equals(group.administrator) || // Group owners can invite
       _.contains(group.emails, req.user.email);   // Group members can invite
-    if (!approved) return res.send(403);
+    if (!approved) {
+      console.log('User role', req.user.role);
+      console.log('User id', req.user._id + '');
+      console.log('Group administrator', group.administrator + '');
+      return res.send(403);
+    }
 
     //console.log('Before:',group);
     //console.log('After:',group);

@@ -1,180 +1,65 @@
-<div class="landing">
-  <div class="navbar navbar-inverse navbar-static-top">
-    <div class="container">
-      <div class="navbar-header">
-        <button class="navbar-toggle" type="button" ng-click="isCollapsed = !isCollapsed">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a href="/" class="navbar-brand cursive">
-          <img class="brand-logo" src="/assets/images/logo/logo-sm-white.png" alt="RoadAmico"/>
-          RoadAmico
-        </a>
-      </div>
-      <div collapse="isCollapsed" class="navbar-collapse collapse" id="navbar-main">
-        <ul class="nav navbar-nav">
-          <li ng-repeat="item in menu" ng-class="{active: isActive(item.link)}" ng-if="!item.authenticated">
-            <a ng-href="{{item.link}}">{{item.title}}</a>
-          </li>
-          <li ng-show="isAdmin()" ng-class="{active: isActive('/admin')}"><a href="/admin">Admin</a></li>
-        </ul>
+<div ng-include="'components/navbar/navbar.html'"></div>
 
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="/login">Pre-Release Access</a></li>
-          <!--<li ng-hide="isLoggedIn()" ng-class="{active: isActive('/login')}"><a href="/login">Login</a></li>-->
-          <!--<li ng-show="isLoggedIn()"><p class="navbar-text">Hello {{ getCurrentUser().name }}</p> </li>-->
-          <!--<li ng-show="isLoggedIn()" ng-class="{active: isActive('/settings')}"><a href="/settings"><i class="fa fa-cog"></i></a></li>-->
-          <!--<li ng-show="isLoggedIn()" ng-class="{active: isActive('/profile')}"><a href="/profile"><i class="fa fa-user"></i></a></li>-->
-          <!--<li ng-show="isLoggedIn()" ng-class="{active: isActive('/logout')}"><a href="" ng-click="logout()">Logout</a></li>-->
-        </ul>
-      </div>
+<div class="landing-page">
+  <div class="panel1">
+    <h1 class="cursive">RoadAmico</h1>
+
+    <div class="message space-top-medium">
+      Discover and Define
+      <br/>
+      the world around you
     </div>
   </div>
 
-  <!-- Header -->
-  <div class="row header-background">
-    <div class="col-md-5 col-md-offset-1">
-
-      <div class="container">
-        <header class="hero-unit">
-          <div class="row">
-            <div class="col-md-6">
-              <h1>
-                <em>{{'landing-travelers' | translate}}</em><br/>
-                <span class="color-bluejeans-light">{{'landing-unite' | translate}}</span>
-              </h1>
-
-              <div class="space-top-large">
-                <p>Quality services. Real reviews. Instant booking.</p>
-                <p>RoadAmico connects you with the lifestyle activities you love wherever your business takes you.</p>
-              </div>
-
-              <div class="space-top-large space-bottom-medium">
-                <strong>Enter your email for early access &amp; six months free.</strong>
-
-                <form class="form-inline space-top-small">
-                  <div class="form-group">
-                    <label class="sr-only" for="email1">Email address</label>
-                    <input type="email" class="form-control" id="email1" placeholder="Enter email" ng-model="email">
-                  </div>
-                  <button type="submit" class="btn btn-ra-red" ng-click="signup()">Sign Up</button>
-                </form>
-
-              </div>
-            </div>
+  <div class="panel2">
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="bg-ra-red flag">
+          <div class="text-center">
+            <h3>Find things to do</h3>
           </div>
-        </header>
+          <p>
+            Discover places in your city. Meet up with others to go visit them. RoadAmico features places known by local experts.
+          </p>
+        </div>
       </div>
-
+      <div class="col-sm-4">
+        <div class="bg-ra-teal flag">
+          <div class="text-center">
+            <h3>Explore your city</h3>
+          </div>
+          <p>
+            RoadAmico hosts public and curated lists ...
+          </p>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="bg-ra-green flag">
+          <div class="text-center">
+            <h3>Share what you learn</h3>
+          </div>
+          <p>
+            Help fellow students learn about the culture and history of the city by sharing what you learn and discover.
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Thing 2 -->
-  <section class="learn-more">
+  <div class="panel3">
     <div class="container">
-      <h2 class="text-center cursive">Learn More <i class="fa fa-arrow-down"></i></h2>
+      <h2 class="text-center">Curated Content for Students</h2>
 
       <div class="row">
-        <div class="col-md-6 text-center">
-          <h3>
-            <span class="color-bluejeans-light">Bring your</span><br/>
-            <span class="color-bluejeans-light">lifestyle</span><br/>
-            on the go
-          </h3>
+        <div class="col-sm-4 col-sm-offset-2">
+          Thing 1
         </div>
-        <div class="col-md-6">
-          <p>
-            Want a manicure in Rome? A reiki session in San Diego? A snowboarding lesson at Lake Tahoe? No sweat:
-            RoadAmico connects you to the real people fellow business travelers trust who provide you the experiences you
-            deserve.
-          </p>
-          <p>
-            Book instantly. When you're on the go, you don't have time to wait around. Our global calendar shows you only
-            service providers available exactly when you need them every hour. With a few clicks, your appointment is
-            ready no matter where you are.
-          </p>
-          <p>
-            Read trusted recommendations from fellow travelers: only RoadAmico members can leave reviews.
-          </p>
-          <p>
-            Write reviews with peace of mind: service providers cannot see who their reviewers are.
-          </p>
+        <div class="col-sm-4 col-sm-offset-2">
+          Thing 2
         </div>
       </div>
     </div>
-  </section>
-
-  <section class="how-it-works">
-    <h2 class="text-center cursive">How It Works</h2>
-
-    <div class="row">
-
-      <div class="col-sm-4">
-        <div class="bg-ra-red box text-center">
-          <h3>Plan <br/> <i class="fa fa-calendar"></i></h3>
-          <p>Enter your destination, dates, time, and service.</p>
-        </div>
-      </div>
-
-      <div class="col-sm-4">
-        <div class="bg-lavender-light box text-center">
-          <h3>Pick <br/> <i class="fa fa-user-plus"></i></h3>
-          <p>Press "Book" to schedule and pre-pay the provider who best fits you.</p>
-        </div>
-      </div>
-
-      <div class="col-sm-4">
-        <div class="bg-bluejeans-light box text-center">
-          <h3>Go <br/> <i class="fa fa-clock-o"></i></h3>
-          <p>You can reschedule or cancel at any time. All that's left is to show up!</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-sm-6 col-sm-offset-3 text-center">
-        <div class="fa fa-2x fa-check"></div>
-        After your scheduled service or activity, leave a review for fellow travelers to pay it forward as a member of the RoadAmico community.
-      </div>
-    </div>
-  </section>
-
-  <section class="pre-register">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6 col-md-offset-6">
-          <h3>Pre-Register Today</h3>
-
-          <p>
-            Just by signing up now, you'll receive your <strong>first six months free.</strong> When we launch, you can
-            win the chance to be part of the very first group traveling the world hassle-free through RoadAmico.
-          </p>
-
-          <form class="form-inline space-top-small">
-            <div class="form-group">
-              <label class="sr-only" for="email2">Email address</label>
-              <input type="email" class="form-control" id="email2" placeholder="Enter email" ng-model="email">
-            </div>
-            <button type="submit" class="btn btn-ra-red" ng-click="signup()">Sign Up</button>
-          </form>
-
-          <h3 class="color-bluejeans-light">Double Your Experience</h3>
-
-          <p>
-            Refer a friend of colleague for an <strong>entire year</strong> of premium lifestyle services at your
-            fingertips.
-          </p>
-
-          <button class="btn btn-ra-red-hollow" ng-click="refer()">Refer</button>
-
-          <div class="see-you-soon cursive">See you soon!</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div ng-include="'components/footer/footer.html'"></div>
-
+  </div>
 </div>
+
+<div ng-include="'components/footer/footer.html'"></div>

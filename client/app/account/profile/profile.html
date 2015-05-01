@@ -31,9 +31,50 @@
 
             <!-- NAME -->
             <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
-              <label><translate>Name</translate> *</label>
+              <label><translate>Name</translate></label>
               <input type="text" name="name" class="form-control" ng-model="user.name" required>
               <p ng-show="userForm.name.$invalid && !userForm.name.$pristine" class="help-block" translate>name-required</p>
+            </div>
+
+            <div class="form-group">
+              <label>Email</label>
+              <p class="form-control-static">{{user.email}}</p>
+            </div>
+
+            <!-- Destination -->
+            <div class="form-group" ng-class="{ 'has-error' : form2.destination.$invalid && !form2.destination.$pristine }">
+              <label for="destination">Study Abroad Destination?</label>
+
+              <ui-select id="destination" ng-model="user.destination" close-on-select="true" title="Select destination...">
+                <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                <ui-select-choices repeat="destination._id as destination in destinations | filter: $select.search">
+                  <div ng-bind-html="destination.name | highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select>
+            </div>
+
+            <!-- Term -->
+            <div class="form-group" ng-class="{ 'has-error' : form2.term.$invalid && !form2.term.$pristine }">
+              <label for="term">Term</label>
+
+              <ui-select id="term" ng-model="user.term" close-on-select="true" title="Select term...">
+                <ui-select-match>{{$select.selected}}</ui-select-match>
+                <ui-select-choices repeat="term as term in terms | filter: $select.search">
+                  <div ng-bind-html="term | highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select>
+            </div>
+
+            <!-- Group -->
+            <div class="form-group" ng-class="{ 'has-error' : form2.term.$invalid && !form2.term.$pristine }">
+              <label for="groups">Groups</label>
+
+              <ui-select id="groups" multiple ng-model="user.groups" close-on-select="true">
+                <ui-select-match>{{$item.name}}</ui-select-match>
+                <ui-select-choices repeat="group._id as group in groups | filter: $select.search">
+                  <div ng-bind-html="group.name | highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select>
             </div>
 
             <!-- EMAIL -->

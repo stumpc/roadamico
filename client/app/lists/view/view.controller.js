@@ -18,11 +18,11 @@ angular.module('roadAmicoApp')
 
     // Following
 
-    $scope.userFollowing = _.find($scope.user.following.lists, {list: list._id});
+    $scope.userFollowing = _.find($scope.user.following && $scope.user.following.lists, {list: list._id});
 
     $scope.follow = function () {
       $scope.user.$follow({target: 'list', tid: list._id}).then(function () {
-        $scope.userFollowing = _.find($scope.user.following.lists, {list: list._id});
+        $scope.userFollowing = _.find($scope.user.following && $scope.user.following.lists, {list: list._id});
       });
     };
 

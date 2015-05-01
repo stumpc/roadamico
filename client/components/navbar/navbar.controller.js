@@ -1,21 +1,25 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('NavbarCtrl', function ($scope, $location, Auth, config, filterChain) {
+  .controller('NavbarCtrl', function ($scope, $location, Auth, config, $state, Search) {
     $scope.config = config;
 
+    var always = function () { return true; };
     $scope.menu = [
       {
         title: 'Home',
-        link: '/home'
+        link: '/home',
+        auth: Auth.isLoggedIn
       },
       {
         title: 'Places',
-        link: '/places'
+        link: '/places',
+        auth: always
       },
       {
         title: 'Lists',
-        link: '/lists'
+        link: '/lists',
+        auth: always
       }
     ];
 
@@ -47,6 +51,12 @@ angular.module('roadAmicoApp')
     $scope.isActive = function(route) {
       //return route === $location.path();
       return $location.path().indexOf(route) === 0;
+    };
+
+    $scope.search = function (query) {
+      Search.newSearch(query).then(function () {
+        $state.go('search');
+      });
     };
 
     // Notifications

@@ -1,0 +1,124 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container search-page">
+  <h1>Search</h1>
+
+  <form ng-submit="search()">
+    <div class="row">
+      <div class="col-sm-10">
+        <input type="text" ng-model="newQuery" class="form-control"/>
+      </div>
+      <div class="col-sm-2">
+        <button class="btn btn-block btn-ra-green"><i class="fa fa-search"></i> Search</button>
+      </div>
+    </div>
+  </form>
+
+  <div ng-show="query">
+    <h2>Results</h2>
+    <div class="space-bottom-medium">
+      <small>{{results.length}} results for "{{query}}"</small>
+    </div>
+
+    <div ng-repeat="result in results" class="result">
+
+      <div ng-switch="result.type">
+
+        <div ng-switch-when="place">
+          <div class="row">
+            <div class="col-sm-3">
+              <a ui-sref="place.view({id: result._id})">
+                <img ng-src="{{result.photo}}" class="thumbnail" />
+              </a>
+            </div>
+
+            <div class="col-sm-9">
+              <div class="name space-bottom-small">
+                <div class="title">
+                  <span class="badge badge-danger space-right-medium">
+                    <i class="fa fa-home"></i> Place
+                  </span>
+                  <a ui-sref="place.view({id: result._id})">{{result.locationDetails.name}}</a>
+
+                  <div rating ng-model="result.rating" state-on="['fa', 'fa-star']" state-off="['fa', 'fa-star-o']"
+                       readonly="true" class="color-sunflower-dark space-left-large"></div>
+                </div>
+              </div>
+
+              <!-- Location -->
+              <div class="row space-bottom-small" ng-show="result.locationDetails.formatted_address">
+                <div class="col-xs-1"><i class="fa fa-lg fa-map-marker"></i></div>
+                <div class="col-xs-10">{{result.locationDetails.formatted_address}}</div>
+              </div>
+
+              <!-- Phone -->
+              <div class="row space-bottom-small" ng-show="result.locationDetails.formatted_phone_number">
+                <div class="col-xs-1"><i class="fa fa-lg fa-phone"></i></div>
+                <div class="col-xs-10">{{result.locationDetails.formatted_phone_number}}</div>
+              </div>
+
+              <!-- Website -->
+              <div class="row space-bottom-small" ng-show="result.locationDetails.website">
+                <div class="col-xs-1"><i class="fa fa-lg fa-globe"></i></div>
+                <div class="col-xs-10"><a href="{{result.locationDetails.website}}">Website</a></div>
+              </div>
+
+              <!-- Google+ -->
+              <div class="row space-bottom-small" ng-show="result.locationDetails.url">
+                <div class="col-xs-1"><i class="fa fa-lg fa-google-plus"></i></div>
+                <div class="col-xs-10"><a href="{{result.locationDetails.url}}">Google+ Page</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div ng-switch-when="list">
+          <div class="title">
+            <span class="badge badge-info space-right-medium">
+              <i class="fa fa-list"></i>
+              <span ng-show="result.curated">Curated</span>
+              <span ng-hide="result.curated">Public</span>
+              list
+            </span>
+            <a ui-sref="list.view({id: result._id})">{{result.name}}</a>
+          </div>
+        </div>
+
+        <div ng-switch-when="event">
+          <div class="title space-bottom-small">
+            <span class="badge badge-success space-right-medium">
+              <i class="fa fa-calendar"></i> Event
+            </span>
+            <a ui-sref="place.event.view({id: result.place, eid: result._id})">{{result.name}}</a>
+          </div>
+
+          <!-- Date and Time -->
+          <div class="row space-bottom-small">
+            <div class="col-xs-1 text-center"><i class="fa fa-lg fa-calendar"></i></div>
+            <div class="col-xs-10">{{result.when}}</div>
+          </div>
+
+          <!-- Group -->
+          <div class="row space-bottom-small">
+            <div class="col-xs-1 text-center"><i class="fa fa-lg fa-group"></i></div>
+            <div class="col-xs-10" ng-pluralize count="result.participants.length"
+                 when="{one: '1 person going', other: '{} people going'}"></div>
+          </div>
+
+          <!-- Meetup -->
+          <div class="row" ng-show="result.meetupPlace || result.meetupTime">
+            <div class="col-xs-1 text-center"><i class="fa fa-lg fa-map-marker"></i></div>
+            <div class="col-xs-10">
+              Meeting up
+              <span ng-show="result.meetupPlace">at {{result.meetupPlace}}</span>
+              <span ng-show="result.meetupTime">at {{result.meetupTime}}</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div ng-include="'components/footer/footer.html'"></div>

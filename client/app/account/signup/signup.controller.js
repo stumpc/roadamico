@@ -35,9 +35,7 @@ angular.module('roadAmicoApp')
 
 
     $scope.register = function() {
-      var user = angular.copy($scope.user);
-      user.groups = _.map(user.groups, '_id');
-      Auth.createUser(user)
+      Auth.createUser($scope.user)
         .then(function () {
           $state.go('home');
         })

@@ -6,7 +6,6 @@ angular.module('roadAmicoApp')
       .state('landing', {
         url: '/',
         templateUrl: 'app/landing/landing.html',
-        controller: 'LandingCtrl',
-        title: 'RoadAmico - Enhance your experiences abroad!'
+        controller: 'LandingCtrl'
       });
   });

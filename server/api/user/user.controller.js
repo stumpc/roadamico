@@ -130,17 +130,19 @@ exports.update = function(req, res, next) {
   delete req.body.activated;
   delete req.body.role;
   delete req.body.following;
-  delete req.body.groups;
 
   var updated = _.merge(req.user, req.body);
   if (req.body.languages) {
     updated.languages = req.body.languages;
     updated.markModified('languages');
   }
+  if (req.body.groups) {
+    updated.groups = req.body.groups;
+    updated.markModified('groups');
+  }
 
   updated.save(function (err, user) {
     if (err) return validationError(res, err);
-
     delete updated.salt;
     delete updated.hashedPassword;
     res.json(user);

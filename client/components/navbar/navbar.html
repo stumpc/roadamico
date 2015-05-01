@@ -13,39 +13,30 @@
       </a>
     </div>
     <div collapse="isCollapsed" class="navbar-collapse collapse" id="navbar-main">
+
+      <!-- Primary Nav -->
       <ul class="nav navbar-nav" ng-show="config.appLive || isLoggedIn()">
-        <li ng-repeat="item in menu" ng-class="{active: isActive(item.link)}" ng-if="!item.authenticated">
+        <li ng-repeat="item in menu" ng-class="{active: isActive(item.link)}" ng-if="item.auth()">
             <a ng-href="{{item.link}}">{{item.title}}</a>
         </li>
         <li ng-show="isAdmin()" ng-class="{active: isActive('/admin')}"><a href="/admin">Admin</a></li>
       </ul>
 
+      <!-- Account controls -->
       <ul class="nav navbar-nav navbar-right">
         <li ng-hide="!config.appLive || isLoggedIn()" ng-class="{active: isActive('/signup')}"><a href="/signup">Sign up</a></li>
         <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/login')}"><a href="/login">Login</a></li>
-        <!--<li ng-show="isLoggedIn()"><p class="navbar-text">Hello {{ getCurrentUser().name }}</p> </li>-->
-        <!--<li ng-show="isLoggedIn()" ng-class="{active: isActive('/messages')}">-->
-          <!--<a ui-sref="messages">-->
-            <!--<i class="fa fa-comment"></i>-->
-            <!--<span class="badge badge-light" ng-show="messages | unread | toMe | count">{{messages | unread | toMe | count}}</span></a>-->
-        <!--</li>-->
-        <!--<li ng-show="isLoggedIn()" class="notificationIcon">-->
-          <!--<a href="#" ng-click="toggleNotifications()">-->
-            <!--<i class="fa fa-flag"></i>-->
-            <!--<span class="badge badge-light" ng-show="messages | notifications | unread | count">{{messages | notifications | unread | count}}</span>-->
-          <!--</a>-->
-
-          <!--<div class="notificationPopup" ng-show="notificationsVisible">-->
-            <!--<div ng-repeat="notification in (messages | notifications)" class="notification">-->
-              <!--<p>{{notification.message}}</p>-->
-              <!--<small>{{notification.time | date:'medium'}}</small>-->
-            <!--</div>-->
-
-          <!--</div>-->
-        <!--</li>-->
         <li ng-show="isLoggedIn()" ng-class="{active: isActive('/profile')}"><a href="/profile"><i class="fa fa-user"></i></a></li>
         <li ng-show="isLoggedIn()" ng-class="{active: isActive('/logout')}" class="logout"><a href="" ng-click="logout()"><i class="fa fa-sign-out"></i></a></li>
       </ul>
+
+      <!-- Search -->
+      <form class="navbar-form navbar-right" role="search" ng-submit="search(searchQuery)" ng-hide="isActive('/search')">
+        <div class="form-group space-right-medium">
+          <input type="text" class="form-control search" ng-model="searchQuery" placeholder="Search">
+        </div>
+        <!--<button type="submit" class="btn btn-sm btn-white-hollow">Submit</button>-->
+      </form>
     </div>
   </div>
 </div>

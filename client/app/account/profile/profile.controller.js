@@ -1,12 +1,15 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('ProfileCtrl', function ($scope, $upload, $http, $translate, Auth, Modal) {
+  .controller('ProfileCtrl', function ($scope, $upload, $http, $translate, Auth, Modal, Destination, Group) {
     $scope.message = 'Hello';
     $scope.user = Auth.getCurrentUser();
 
-    $scope.years = _.range(11).map(function (i) {
-      return moment().year() + i;
+    $scope.destinations = Destination.query();
+    $scope.groups = Group.query();
+
+    $scope.groups.$promise.then(function (groups) {
+      $scope.terms = _(groups).map('term').uniq().value();
     });
 
     $scope.save = function (form) {

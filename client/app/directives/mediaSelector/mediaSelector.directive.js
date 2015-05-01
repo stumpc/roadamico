@@ -14,6 +14,8 @@ angular.module('roadAmicoApp')
         scope.data = scope.data || {};
         //scope.urlRegex = /[-a-zA-Z0-9@:%_\+.~#?&/=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&/=]*)?/gi;
 
+        scope.loading = false;
+
         // --- Drag and drop ---
 
         element.on('dragenter', function (event) {
@@ -65,8 +67,10 @@ angular.module('roadAmicoApp')
 
         scope.$watch('data.url', function (value) {
           if (!value) return;
+          scope.loading = true;
           $http.get('/api/utils/embed/' + encodeURIComponent(value))
             .success(function (result) {
+              scope.loading = false;
               scope.data.embed = result;
             });
         });

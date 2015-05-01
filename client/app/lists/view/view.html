@@ -13,10 +13,11 @@
 
   <!-- Controls -->
   <div ng-show="canEdit(list)" class="well">
-    <button ng-click="editing = true" class="btn btn-ra-teal" ng-hide="editing"><i class="fa fa-pencil"></i> Edit</button>
-    <button ng-click="editing = false" class="btn btn-ra-teal" ng-show="editing"><i class="fa fa-save"></i> I'm Done Editing</button>
+    <a ui-sref="^.edit" class="btn btn-ra-teal" ng-hide="editing"><i class="fa fa-pencil"></i> Edit</a>
+    <a ui-sref="^.view" class="btn btn-ra-teal" ng-show="editing"><i class="fa fa-save"></i> I'm Done Editing</a>
 
-    <a class="btn btn-ra-teal-hollow" ui-sref="^.edit"><i class="fa fa-cog"></i> Settings</a>
+    <a class="btn btn-ra-teal-hollow" ui-sref="^.settings"><i class="fa fa-cog"></i> Settings</a>
+    <button ng-show="editing" class="btn btn-ra-red-hollow" ng-click="delete()"><i class="fa fa-trash"></i> Delete</button>
   </div>
 
   <!-- Follow/Comment -->
@@ -181,7 +182,7 @@
 
   <!-- Controls -->
   <div ng-show="editing && list.entries.length" class="well">
-    <button ng-click="editing = false" class="btn btn-ra-teal" ng-show="editing"><i class="fa fa-save"></i> I'm Done Editing</button>
+    <a ui-sref="^.view" class="btn btn-ra-teal" ng-show="editing"><i class="fa fa-save"></i> I'm Done Editing</a>
   </div>
 
 </div>

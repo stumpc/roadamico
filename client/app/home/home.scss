@@ -1,5 +1,30 @@
 .home-page {
 
+  .panel1 {
+    background: url(/assets/images/home/rome.jpg) center;
+    background-size: cover;
+    min-height: 300px;
+    margin: -20px 0 0 0;
+    padding: 50px 0 0 0;
+    color: white;
+
+    h1 {
+      font-size: 40px;
+      background: rgba(0,0,0,0.2);
+      padding: 20px;
+      border-radius: 4px;
+    }
+  }
+
+  .panel2 {
+    background: url(/assets/images/patterns/footer_lodyas.png) repeat;
+    color: $lightgray-light;
+    min-height: 250px;
+    border-bottom: 5px solid $darkgray-dark;
+    border-top: 5px solid $darkgray-dark;
+    margin: -15px 0 0 0;
+  }
+
   .update {
     margin: 10px 0;
     border: 1px solid $mediumgray-dark;
@@ -7,6 +32,7 @@
     box-shadow: 1px 1px 2px rgba(0,0,0,0.2);
     padding: 10px;
     position: relative;
+    background: white;
 
     .time-disp {
       position: absolute;

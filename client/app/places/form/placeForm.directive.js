@@ -7,7 +7,8 @@ angular.module('roadAmicoApp')
       restrict: 'EA',
       scope: {
         originalPlace: '=place',
-        onSave: '&'
+        onSave: '&',
+        back: '@?'
       },
       link: function (scope, element, attrs) {
         scope.place = angular.copy(scope.originalPlace);

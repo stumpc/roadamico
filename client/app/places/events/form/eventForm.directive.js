@@ -7,7 +7,8 @@ angular.module('roadAmicoApp')
       restrict: 'EA',
       scope: {
         originalEvent: '=event',
-        onSave: '&'
+        onSave: '&',
+        back: '@?'
       },
       link: function (scope, element, attrs) {
 

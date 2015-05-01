@@ -1,14 +1,60 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<div class="container page">
+<div class="container page places-page">
   <h1>Places</h1>
 
-  <a ng-show="isLoggedIn()" class="btn" ui-sref="createPlace">Create a new place</a>
+  <a ng-show="isLoggedIn()" class="btn" ui-sref="createPlace">Add a new place</a>
 
   <hr/>
-  <ul>
-    <li ng-repeat="place in places"><a ui-sref="place.view({id: place._id})">{{place.locationDetails.name}}</a></li>
-  </ul>
+
+  <div ng-repeat="place in places" class="place">
+    <div class="row">
+      <div class="col-sm-3">
+        <a ui-sref="place.view({id: place._id})">
+          <img ng-src="{{place.photo}}" class="thumbnail" />
+        </a>
+      </div>
+
+      <div class="col-sm-9">
+        <div class="name space-bottom-small">
+          <div>
+            <a ui-sref="place.view({id: place._id})">{{place.locationDetails.name}}</a>
+
+            <div rating ng-model="place.rating" state-on="['fa', 'fa-star']" state-off="['fa', 'fa-star-o']"
+                 readonly="true" class="color-sunflower-dark space-left-large"></div>
+          </div>
+        </div>
+
+        <!-- Location -->
+        <div class="row space-bottom-small" ng-show="place.locationDetails.formatted_address">
+          <div class="col-xs-1"><i class="fa fa-lg fa-map-marker"></i></div>
+          <div class="col-xs-10">{{place.locationDetails.formatted_address}}</div>
+        </div>
+
+        <!-- Phone -->
+        <div class="row space-bottom-small" ng-show="place.locationDetails.formatted_phone_number">
+          <div class="col-xs-1"><i class="fa fa-lg fa-phone"></i></div>
+          <div class="col-xs-10">{{place.locationDetails.formatted_phone_number}}</div>
+        </div>
+
+        <!-- Website -->
+        <div class="row space-bottom-small" ng-show="place.locationDetails.website">
+          <div class="col-xs-1"><i class="fa fa-lg fa-globe"></i></div>
+          <div class="col-xs-10"><a href="{{place.locationDetails.website}}">Website</a></div>
+        </div>
+
+        <!-- Google+ -->
+        <div class="row space-bottom-small" ng-show="place.locationDetails.url">
+          <div class="col-xs-1"><i class="fa fa-lg fa-google-plus"></i></div>
+          <div class="col-xs-10"><a href="{{place.locationDetails.url}}">Google+ Page</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--<ul>-->
+    <!--<li ng-repeat="place in places"><a ui-sref="place.view({id: place._id})">{{place.locationDetails.name}}</a></li>-->
+  <!--</ul>-->
 
 </div>
 

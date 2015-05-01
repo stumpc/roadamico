@@ -6,6 +6,14 @@ var Notification = require('../notification/notification.model');
 var moment = require('moment');
 
 // Get list of events by place id
+exports.all = function(req, res) {
+  Event.find({}, function (err, events) {
+    if(err) { return handleError(res, err); }
+    return res.json(200, events);
+  });
+};
+
+// Get list of events by place id
 exports.index = function(req, res) {
   Event.find({place: req.params.id}, function (err, events) {
     if(err) { return handleError(res, err); }

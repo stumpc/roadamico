@@ -1,9 +1,15 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <div class="container">
+  <ol class="breadcrumb">
+    <li><a ui-sref="lists">Lists</a></li>
+    <li><a ui-sref="^.view">{{list.name}}</a></li>
+    <li class="active">Edit</li>
+  </ol>
+
   <h1>Edit List</h1>
 
-  <div list-form list="list" on-save="save(updated)"></div>
+  <div list-form list="list" on-save="save(updated)" back="^.view"></div>
 </div>
 
 <div ng-include="'components/footer/footer.html'"></div>

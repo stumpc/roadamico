@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('ViewListCtrl', function ($scope, $q, $upload, $modal, $location, $document, Auth, list, List, Place,
-                                        placeUtil) {
+  .controller('ViewListCtrl', function ($scope, $q, $upload, $modal, $location, $document, $state, Auth, list, List, Place,
+                                        placeUtil, editing, Modal) {
 
     $document[0].title = 'RoadAmico - ' + list.name;
 
@@ -13,7 +13,7 @@ angular.module('roadAmicoApp')
       return Auth.isLoggedIn() && ($scope.user.role === 'admin' || $scope.user.role === 'curator' || !list.curated);
     };
 
-    $scope.editing = false;
+    $scope.editing = editing;
     $scope.newEntry = {};
 
     // Following
@@ -67,8 +67,9 @@ angular.module('roadAmicoApp')
 
     $scope.selectedPlace = {};
 
-    $scope.places = Place.query();
-    $scope.places.$promise.then(function () {
+    Place.query().$promise.then(function (places) {
+      $scope.places = _.sortBy(places, function (place) { return place.locationDetails.name; });
+
       _.forEach($scope.places, function (place) {
         place.rating = placeUtil.getRating(place);
         place.photo = placeUtil.getPhoto(place);
@@ -123,6 +124,15 @@ angular.module('roadAmicoApp')
       var entry = list.entries.splice(index, 1)[0];
       list.entries.splice(index + 1, 0, entry);
       $scope.save();
+    };
+
+
+    $scope.delete = function () {
+      Modal.confirm.delete(function () {
+        list.$remove().then(function () {
+          $state.go('lists');
+        })
+      })(list.name);
     };
 
   });

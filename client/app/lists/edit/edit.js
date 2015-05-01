@@ -3,8 +3,8 @@
 angular.module('roadAmicoApp')
   .config(function ($stateProvider) {
     $stateProvider
-      .state('list.edit', {
-        url: '/edit',
+      .state('list.settings', {
+        url: '/settings',
         templateUrl: 'app/lists/edit/edit.html',
         controller: 'EditListCtrl'
       });

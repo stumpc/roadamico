@@ -2,7 +2,7 @@
 
 angular.module('roadAmicoApp')
   .controller('ViewListCtrl', function ($scope, $q, $upload, $modal, $location, $document, $state, Auth, list, List, Place,
-                                        placeUtil, editing, Modal) {
+                                        placeUtil, editing, Modal, Geolocator, Google) {
 
     $document[0].title = 'RoadAmico - ' + list.name;
 
@@ -134,5 +134,54 @@ angular.module('roadAmicoApp')
         })
       })(list.name);
     };
+
+
+    // --- Map ---
+
+    // Map async loader
+    var mapLoader = (function () {
+      var deferred = $q.defer();
+      $scope.$on('mapInitialized', function(event, map) {
+        deferred.resolve(map);
+      });
+      return deferred.promise;
+    }());
+
+    // Get an array of the places
+    var placeArray = _(list.entries)
+      .filter(function (entry) {
+        return entry.place;
+      })
+      .map(function (entry) {
+        return entry.place;
+      })
+      .value();
+
+    // Get the lat/lon coords
+    var coords = _.map(placeArray, function (place) {
+      return Geolocator(place);
+    });
+    mapLoader.then(function (map) {
+
+      $q.all(coords).then(function (data) {
+        var average = [0, 0];
+        _.forEach(data, function (coord) {
+          average[0] += coord.A;
+          average[1] += coord.F;
+
+          new Google.maps.Marker({
+            position: coord,
+            map: map
+          });
+
+        });
+        var pos = new Google.maps.LatLng(average[0] / data.length, average[1] / data.length);
+        map.setCenter(pos);
+      });
+    });
+
+
+
+
 
   });

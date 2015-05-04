@@ -28,6 +28,8 @@
     <button class="btn btn-ra-red-hollow" ng-click="unfollow()" ng-show="userFollowing"><i class="fa fa-minus"></i> Unfollow</button>
   </div>
 
+  <map zoom="12" center="[35.910419, -79.049592]" scrollwheel="false"></map>
+
   <div ng-repeat="entry in list.entries" class="entry">
     <div class="edit-controls" ng-show="editing">
       <button ng-click="remove($index)" class="btn btn-ra-red btn-xs btn-block"><i class="fa fa-times"></i></button>

@@ -5,10 +5,8 @@ angular.module('roadAmicoApp')
     $scope.list = list;
 
     $scope.save = function (updated) {
-      updated.$update().then(function (_list) {
-        angular.copy(_list, list);
-        //console.log(_list);
-        //console.log(list);
+      angular.copy(updated, list);
+      list.$update().then(function () {
         $state.go('^.view');
       });
     };

@@ -9,9 +9,27 @@ angular.module('roadAmicoApp')
     $scope.list = list;
     $scope.user = Auth.getCurrentUser();
 
-    $scope.canEdit = function (list) {
-      return Auth.isLoggedIn() && ($scope.user.role === 'admin' || $scope.user.role === 'curator' || !list.curated);
+    //$scope.canEdit = function (list) {
+    //  return Auth.isLoggedIn() && ($scope.user.role === 'admin' || $scope.user.role === 'curator' || !list.curated);
+    //};
+
+
+    $scope.canEdit = function (settings) {
+      if (!Auth.isLoggedIn()) {
+        return false;
+      }
+      var a = $scope.user.role === 'admin' || $scope.user.role === 'curator';
+      var b = !!_.find(list.owners, function (userId) {
+        return userId === $scope.user._id;
+      });
+      var c = !!_.find(list.groupRestriction, function (group) {
+        return group.administrator === $scope.user._id;
+      });
+      var d = list.open && !settings;
+      return a || b || c || d;
     };
+
+
 
     $scope.editing = editing;
     $scope.newEntry = {};
@@ -49,11 +67,14 @@ angular.module('roadAmicoApp')
 
     // Editing
 
+    $scope.ratings = {};
+    $scope.photos = {};
+
     function process() {
       _.forEach(list.entries, function (entry) {
         if (entry.place) {
-          entry.place.rating = placeUtil.getRating(entry.place);
-          entry.place.photo = placeUtil.getPhoto(entry.place);
+          $scope.ratings[entry.place._id] = placeUtil.getRating(entry.place);
+          $scope.photos[entry.place._id] = placeUtil.getPhoto(entry.place);
         }
       });
     }
@@ -71,8 +92,8 @@ angular.module('roadAmicoApp')
       $scope.places = _.sortBy(places, function (place) { return place.locationDetails.name; });
 
       _.forEach($scope.places, function (place) {
-        place.rating = placeUtil.getRating(place);
-        place.photo = placeUtil.getPhoto(place);
+        $scope.ratings[place._id] = placeUtil.getRating(place);
+        $scope.photos[place._id] = placeUtil.getPhoto(place);
       });
     });
 

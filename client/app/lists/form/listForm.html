@@ -8,14 +8,30 @@
     <p ng-show="form.name.$invalid && !form.name.$pristine" class="help-block">Name is required</p>
   </div>
 
-  <!-- Curated -->
-  <div class="form-group" ng-show="canCurate()">
-    <label class="toggle" for="curated">
+  <!-- Owners -->
+  <div class="form-group" ng-if="groups.length">
+    <label for="owners">Owners:</label>
+
+    <ui-select id="owners" multiple ng-model="list.owners" close-on-select="false">
+      <ui-select-match>{{$item.name}} ({{$item.email}})</ui-select-match>
+      <ui-select-choices repeat="user._id as user in users | filter: $select.search">
+        <div ng-bind-html="(user.name + ' (' + user.email + ')') | highlight: $select.search"></div>
+      </ui-select-choices>
+    </ui-select>
+
+  </div>
+
+  <!-- Open -->
+  <div class="form-group">
+    <label class="toggle" for="open">
       <span>
-        <input type="checkbox" ng-model="list.curated" id="curated"> <span class="handle"></span>
+        <input type="checkbox" ng-model="list.open" id="open"> <span class="handle"></span>
       </span>
-      Is this list curated?
+      Is this list open?
     </label>
+    <p>
+      An open list is one where anybody can edit the contents, but can't change the settings.
+    </p>
   </div>
 
   <!-- Restriction -->

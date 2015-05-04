@@ -10,8 +10,8 @@ angular.module('roadAmicoApp')
         method: 'POST',
         url: '/api/lists/:id/entry'
       },
-      groupLists: {
-        url: '/api/lists/groups',
+      publicLists: {
+        url: '/api/lists/public',
         isArray: true
       }
     });

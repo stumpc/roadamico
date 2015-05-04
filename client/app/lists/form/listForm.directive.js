@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .directive('listForm', function (Group, Auth) {
+  .directive('listForm', function (Group, Auth, User) {
     return {
       templateUrl: 'app/lists/form/listForm.html',
       restrict: 'EA',
@@ -14,6 +14,7 @@ angular.module('roadAmicoApp')
 
         scope.list = angular.copy(scope.originalList) || {};
         scope.groups = Group.mine();
+        scope.users = User.profiles();
 
         var user = Auth.getCurrentUser();
         scope.canCurate = function () {

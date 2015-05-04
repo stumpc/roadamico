@@ -133,27 +133,23 @@ UserSchema
       name:         this.name,
       joined:       this.joined,
       photo:        this.photo,
-      categories:   this.categories,
-      verification: this.verification,
-      activated:    this.activated,
-      timezone:     this.timezone,
-      languages:    this.languages
+      email:        this.email
     };
 
     // Add in public information
-    if (this.publicInfo.email) {
-      profile.email = this.email;
-    }
-    if (this.publicInfo.phone) {
-      profile.phone = this.phone;
-    }
-    if (this.publicInfo.location) {
-      profile.location = this.location;
-      profile.locationDetails = this.locationDetails;
-    }
-    if (this.publicInfo.workplace) {
-      profile.workplace = this.workplace;
-    }
+    //if (this.publicInfo.email) {
+    //  profile.email = this.email;
+    //}
+    //if (this.publicInfo.phone) {
+    //  profile.phone = this.phone;
+    //}
+    //if (this.publicInfo.location) {
+    //  profile.location = this.location;
+    //  profile.locationDetails = this.locationDetails;
+    //}
+    //if (this.publicInfo.workplace) {
+    //  profile.workplace = this.workplace;
+    //}
 
     return profile;
   });

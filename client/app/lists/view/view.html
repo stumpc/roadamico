@@ -12,12 +12,12 @@
          ng-model-options="{ updateOn: 'default blur', debounce: {'default': 1250, 'blur': 0} }" />
 
   <!-- Controls -->
-  <div ng-show="canEdit(list)" class="well">
+  <div ng-show="canEdit()" class="well">
     <a ui-sref="^.edit" class="btn btn-ra-teal" ng-hide="editing"><i class="fa fa-pencil"></i> Edit</a>
     <a ui-sref="^.view" class="btn btn-ra-teal" ng-show="editing"><i class="fa fa-save"></i> I'm Done Editing</a>
 
-    <a class="btn btn-ra-teal-hollow" ui-sref="^.settings"><i class="fa fa-cog"></i> Settings</a>
-    <button ng-show="editing" class="btn btn-ra-red-hollow" ng-click="delete()"><i class="fa fa-trash"></i> Delete</button>
+    <a class="btn btn-ra-teal-hollow" ng-show="canEdit(true)" ui-sref="^.settings"><i class="fa fa-cog"></i> Settings</a>
+    <button ng-show="editing && canEdit(true)" class="btn btn-ra-red-hollow" ng-click="delete()"><i class="fa fa-trash"></i> Delete</button>
   </div>
 
   <!-- Follow/Comment -->
@@ -42,14 +42,14 @@
       <div class="row">
         <div class="col-sm-3">
           <a ui-sref="place.view({id: entry.place._id})">
-            <img ng-src="{{entry.place.photo}}" class="thumbnail" />
+            <img ng-src="{{photos[entry.place._id]}}" class="thumbnail" />
           </a>
         </div>
 
         <div class="col-sm-9">
           <div class="name space-bottom-small">
             <a ui-sref="place.view({id: entry.place._id})">{{entry.place.locationDetails.name}}</a>
-            <div rating ng-model="entry.place.rating" state-on="['fa', 'fa-star']" state-off="['fa', 'fa-star-o']"
+            <div rating ng-model="ratings[entry.place._id]" state-on="['fa', 'fa-star']" state-off="['fa', 'fa-star-o']"
                  readonly="true" class="color-sunflower-dark space-left-large"></div>
           </div>
 
@@ -124,13 +124,13 @@
 
             <div class="row space-top-medium" ng-show="newEntry.place">
               <div class="col-sm-3">
-                <img ng-src="{{newEntry.place.photo}}" class="thumbnail" />
+                <img ng-src="{{photos[newEntry.place._id]}}" class="thumbnail" />
               </div>
 
               <div class="col-sm-9">
                 <div class="name space-bottom-small">
                   <a ui-sref="place.view({id: entry.place._id})">{{newEntry.place.locationDetails.name}}</a>
-                  <div rating ng-model="newEntry.place.rating" state-on="['fa', 'fa-star']" state-off="['fa', 'fa-star-o']"
+                  <div rating ng-model="ratings[newEntry.place._id]" state-on="['fa', 'fa-star']" state-off="['fa', 'fa-star-o']"
                        readonly="true" class="color-sunflower-dark space-left-large"></div>
                 </div>
 

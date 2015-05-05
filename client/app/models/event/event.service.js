@@ -26,6 +26,17 @@ angular.module('roadAmicoApp')
       cancel: {
         url: '/api/events/:id/cancel',
         method: 'PUT'
+      },
+
+      // Public methods for non-authenticated users
+      publicList: {
+        url: '/api/events/public/place/:id',
+        method: 'GET',
+        isArray: true
+      },
+      getPublic: {
+        url: '/api/events/public/:id',
+        method: 'GET'
       }
     });
   });

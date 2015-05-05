@@ -6,9 +6,14 @@ var auth = require('../../auth/auth.service');
 
 var router = express.Router();
 
-router.get('/',           controller.all);
-router.get('/place/:id',  controller.index);
-router.get('/:id',        controller.show);
+router.get('/public/',           controller.all);
+router.get('/public/place/:id',  controller.index);
+router.get('/public/:id',        controller.show);
+
+router.get('/',           auth.isAuthenticated(), controller.all);
+router.get('/place/:id',  auth.isAuthenticated(), controller.index);
+router.get('/:id',        auth.isAuthenticated(), controller.show);
+
 router.post('/',          auth.isAuthenticated(), controller.create);
 router.put('/:id',        auth.isAuthenticated(), controller.update);
 router.patch('/:id',      auth.isAuthenticated(), controller.update);

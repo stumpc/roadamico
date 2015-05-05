@@ -17,7 +17,7 @@ angular.module('roadAmicoApp')
           if (value && typeof value === 'object') {
             scope.group.location = value.name;
 
-            if (value.geometry) {
+            if (value.geometry && value.location) {
               value.geometry.location.latitude = value.geometry.location.lat();
               value.geometry.location.longitude = value.geometry.location.lng();
             }

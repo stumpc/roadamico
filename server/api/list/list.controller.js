@@ -22,7 +22,7 @@ var canView = _.curry(function (user, list) {
   }
   var b = user.role === 'admin' || user.role === 'curator';
   var c = !!_.find(list.groupRestriction, function (group) {
-    return group.administrator.equals(user._id) || !!_.find(user.groups, function (groupId) {
+    return (group.administrator && group.administrator.equals(user._id)) || !!_.find(user.groups, function (groupId) {
       return group._id.equals(groupId);
     });
   });
@@ -36,7 +36,7 @@ var canEdit = _.curry(function (user, list) {
     return userId.equals(user._id);
   });
   var c = !!_.find(list.groupRestriction, function (group) {
-    return group.administrator.equals(user._id);
+    return group.administrator && group.administrator.equals(user._id);
   });
   return a || b || c || list.open;
 });
@@ -81,7 +81,7 @@ exports.show = function (req, res) {
   List.findById(req.params.id)
     .populate('entries.place', 'locationDetails ratings feed')
     //.populate('owners', 'email name')
-    .populate('groupRestriction', 'administrator')
+    .populate('groupRestriction', 'administrator name')
     .exec(function (err, list) {
       if (err) {
         return handleError(res, err);
@@ -144,7 +144,10 @@ exports.update = function (req, res) {
         if (err) {
           return handleError(res, err);
         }
-        var populateOpts = {path: 'entries.place', select: 'locationDetails ratings feed'};
+        var populateOpts = [
+          {path: 'entries.place', select: 'locationDetails ratings feed'},
+          {path: 'groupRestriction', select: 'administrator name'}
+        ];
         list.populate(populateOpts, function (err, list) {
           if (err) {
             return handleError(res, err);

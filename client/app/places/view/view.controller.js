@@ -10,6 +10,7 @@ angular.module('roadAmicoApp')
     $scope.isLoggedIn = Auth.isLoggedIn;
     //console.log(place.locationDetails);
 
+
     // --- Following ---
 
     $scope.userFollowing = _.find($scope.user.following && $scope.user.following.places, {place: place._id});
@@ -91,8 +92,12 @@ angular.module('roadAmicoApp')
 
     // --- Events ---
 
-    var allEvents = Event.list({id: place._id});
-    allEvents.$promise.then(function (events) {
+    var eventQuery = Event.list;
+    if (!Auth.isLoggedIn()) {
+      eventQuery = Event.publicList;
+    }
+
+    eventQuery({id: place._id}).$promise.then(function (events) {
       $scope.allEvents = _(events)
         .forEach(function (event) { // Add workable and displayable time data
           event.moment = moment(event.datetime);

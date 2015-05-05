@@ -13,6 +13,7 @@ angular.module('roadAmicoApp')
       link: function (scope, element, attrs) {
 
         scope.list = angular.copy(scope.originalList) || {};
+        scope.list.groupRestriction = _.map(scope.list.groupRestriction, '_id');
         scope.groups = Group.mine();
         scope.users = User.profiles();
 

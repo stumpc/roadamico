@@ -80,7 +80,7 @@ exports.join = function (req, res) {
 
 // Gets the groups that the user is a member of
 exports.mine = function (req, res) {
-  Group.find({_id: {$in: req.user.groups}}, function (err, groups) {
+  Group.find({$or: [{_id: {$in: req.user.groups}}, {administrator: req.user._id}]}, function (err, groups) {
     if (err) {
       return handleError(res, err);
     }

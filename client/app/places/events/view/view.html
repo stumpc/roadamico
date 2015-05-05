@@ -11,6 +11,11 @@
 
   <h1>{{event.name}}</h1>
 
+  <!--{{event.groupRestriction}}-->
+  <div class="space-bottom-medium">
+    <span class="badge badge-info space-right-small" ng-repeat="group in event.groupRestriction">{{group.name}}</span>
+  </div>
+
   <div ng-show="isLoggedIn() && event.userGoing" class="row">
     <div class="col-md-6">
       <div class="well bg-ra-green text-center going-message">
@@ -24,7 +29,7 @@
   </div>
 
 
-  <div ng-show="event.creator == user._id" class="space-bottom-medium">
+  <div ng-show="canEdit()" class="space-bottom-medium">
     <a ui-sref="^.edit" class="btn btn-ra-teal-hollow"><i class="fa fa-pencil"></i> Edit</a>
     <button class="btn btn-ra-red-hollow" ng-click="cancel('cancel: ' + event.name)"><i class="fa fa-times"></i> Cancel Event</button>
   </div>

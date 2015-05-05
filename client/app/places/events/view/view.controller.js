@@ -6,6 +6,19 @@ angular.module('roadAmicoApp')
     $scope.user = Auth.getCurrentUser();
     $scope.isLoggedIn = Auth.isLoggedIn;
 
+
+    // Can edit if admin, creator, or leader of restriction group
+    $scope.canEdit = function () {
+      var a = $scope.user.role === 'admin' || $scope.user.role === 'curator';
+      var b = event.creator === $scope.user._id;
+      var c = !!_.find(event.groupRestriction, function (group) {
+        return group.administrator === $scope.user._id;
+      });
+      return a || b || c;
+    };
+
+
+
     // Event
     $scope.event = event;
     event.moment = moment(event.datetime);

@@ -21,7 +21,7 @@ var EventSchema = new Schema({
     text: String
   }],
   creator:  { type: Schema.Types.ObjectId, ref: 'User' },
-  groupRestriction: { type: Schema.Types.ObjectId, ref: 'Group' }
+  groupRestriction: [{ type: Schema.Types.ObjectId, ref: 'Group' }]
 });
 
 module.exports = mongoose.model('Event', EventSchema);

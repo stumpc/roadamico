@@ -8,8 +8,20 @@ angular.module('roadAmicoApp')
         templateUrl: 'app/places/events/events.html',
         controller: 'EventsCtrl',
         resolve: {
-          events: function (Event, place) {
-            return Event.list({id: place._id}).$promise;
+          events: function ($q, Event, place, Auth) {
+            var deferred = $q.defer();
+            Auth.isLoggedInAsync(function (isLoggedIn) {
+              if (isLoggedIn) {
+                Event.list({id: place._id}).$promise.then(function (events) {
+                  deferred.resolve(events);
+                });
+              } else {
+                Event.publicList({id: place._id}).$promise.then(function (events) {
+                  deferred.resolve(events);
+                });
+              }
+            });
+            return deferred.promise;
           }
         }
       });

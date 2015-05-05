@@ -12,7 +12,11 @@ angular.module('roadAmicoApp')
         $scope.place.location = value.formatted_address;
         $scope.place.phone = value.formatted_phone_number;
 
-        console.log(value);
+        if (value.geometry) {
+          console.log(value.geometry);
+          value.geometry.location.latitude = value.geometry.location.lat();
+          value.geometry.location.longitude = value.geometry.location.lng();
+        }
 
         if (value.photos) {
           $scope.place.feed = value.photos.map(function (photo) {

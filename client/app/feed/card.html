@@ -1,6 +1,10 @@
 <div class="card">
   <div class="inner-card" ng-controller="CardCtrl">
 
+    <div ng-show="card.canDelete" class="delete-button">
+      <button class="btn btn-xs btn-ra-red" ng-click="card.remove()"><i class="fa fa-times"></i></button>
+    </div>
+
     <div ng-if="card.embed">
       <!--<img ng-src="{{card.embed[0].thumbnail_url}}" ng-click="viewCard(card)" />-->
       <!--<div class="title">{{card.embed[0].title}}</div>-->

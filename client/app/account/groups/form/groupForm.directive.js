@@ -14,8 +14,13 @@ angular.module('roadAmicoApp')
         scope.group = angular.copy(scope.originalGroup);
 
         scope.$watch('group.locationDetails', function (value) {
-          if (value) {
+          if (value && typeof value === 'object') {
             scope.group.location = value.name;
+
+            if (value.geometry) {
+              value.geometry.location.latitude = value.geometry.location.lat();
+              value.geometry.location.longitude = value.geometry.location.lng();
+            }
           }
         });
 

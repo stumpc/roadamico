@@ -8,6 +8,7 @@ angular.module('roadAmicoApp')
 
     $scope.list = list;
     $scope.user = Auth.getCurrentUser();
+    $scope.isLoggedIn = Auth.isLoggedIn;
 
     //$scope.canEdit = function (list) {
     //  return Auth.isLoggedIn() && ($scope.user.role === 'admin' || $scope.user.role === 'curator' || !list.curated);
@@ -158,6 +159,13 @@ angular.module('roadAmicoApp')
 
 
     // --- Map ---
+
+    $scope.mapVisible = false;
+    _.forEach(list.entries, function (entry) {
+      if (entry.place) {
+        $scope.mapVisible = true;
+      }
+    });
 
     // Map async loader
     var mapLoader = (function () {

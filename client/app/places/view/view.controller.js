@@ -2,7 +2,7 @@
 
 angular.module('roadAmicoApp')
   .controller('ViewPlaceCtrl', function ($scope, $q, $location, $document, $modal, $sce, Auth, $upload, place, Place,
-                                         Event, Google, Geolocator, placeUtil) {
+                                         Event, Google, Geolocator, placeUtil, Modal) {
     $document[0].title = 'RoadAmico - ' + place.locationDetails.name;
 
     $scope.place = place;
@@ -122,6 +122,18 @@ angular.module('roadAmicoApp')
 
     // --- Feed ---
 
+    _.forEach(place.feed, function (post) {
+      post.canDelete = $scope.user._id === post.poster || $scope.user.role === 'admin';
+      post.remove = function () {
+        Modal.confirm.delete(function () {
+          var index = _.findIndex(place.feed, post);
+          Place.removePost({id: place._id, index: index}).$promise.then(function (_place) {
+            angular.copy(_place, place);
+          });
+          //place.feed.splice(index, 1);
+        })('this post', null);
+      };
+    });
 
     $scope.newPost = {};
 

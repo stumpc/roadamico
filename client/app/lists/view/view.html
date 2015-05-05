@@ -24,11 +24,15 @@
   <div class="space-top-medium space-bottom-small" ng-hide="editing">
     <button class="btn btn-ra-red" ng-click="openComments()"><i class="fa fa-comment"></i> Comment</button>
 
-    <button class="btn btn-ra-red" ng-click="follow()" ng-hide="userFollowing"><i class="fa fa-plus"></i> Follow</button>
-    <button class="btn btn-ra-red-hollow" ng-click="unfollow()" ng-show="userFollowing"><i class="fa fa-minus"></i> Unfollow</button>
+    <span ng-show="isLoggedIn()">
+      <button class="btn btn-ra-red" ng-click="follow()" ng-hide="userFollowing"><i class="fa fa-plus"></i> Follow</button>
+      <button class="btn btn-ra-red-hollow" ng-click="unfollow()" ng-show="userFollowing"><i class="fa fa-minus"></i> Unfollow</button>
+    </span>
   </div>
 
-  <map zoom="12" center="[35.910419, -79.049592]" scrollwheel="false"></map>
+  <div ng-show="!editing && mapVisible">
+    <map zoom="12" center="[35.910419, -79.049592]" scrollwheel="false"></map>
+  </div>
 
   <div ng-repeat="entry in list.entries" class="entry">
     <div class="edit-controls" ng-show="editing">

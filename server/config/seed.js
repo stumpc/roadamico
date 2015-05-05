@@ -106,7 +106,7 @@ function generatePlaces() {
         name: 'Place de ' + faker.name.lastName(),
         formatted_address: faker.address.streetAddress() + ' ' + faker.address.streetName() + ', Rome, Italy',
         formatted_phone_number: faker.phone.phoneNumber(),
-        geometry: {location: {k: pos[0], D: pos[1]}}
+        geometry: {location: {latitude: pos[0], longitude: pos[1]}}
       },
       //phone: faker.phone.phoneNumber(),
       description: faker.lorem.paragraphs(randInt(4) + 2),
@@ -173,10 +173,10 @@ function generateEvents() {
 
 var destinations = [{
   name: 'Rome, Italy',
-  locationDetails: {geometry: {location: {k: 41.949884, D: 12.400131}}}
+  locationDetails: {geometry: {location: {latitude: 41.949884, longitude: 12.400131}}}
 }, {
   name: 'Madrid, Spain',
-  locationDetails: {geometry: {location: {k: 40.416775, D: -3.703790}}}
+  locationDetails: {geometry: {location: {latitude: 40.416775, longitude: -3.703790}}}
 }];
 
 

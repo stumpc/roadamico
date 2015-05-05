@@ -4,8 +4,8 @@ angular.module('roadAmicoApp')
   .factory('Geolocator', function ($q, Google) {
 
     function getLatLng(geometry) {
-      var lat = geometry.location.k;
-      var lng = geometry.location.D;
+      var lat = geometry.location.latitude;
+      var lng = geometry.location.longitude;
       return new Google.maps.LatLng(lat, lng);
     }
 

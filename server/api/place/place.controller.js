@@ -71,15 +71,10 @@ exports.removePost = function (req, res) {
     if (err) { return handleError(res, err); }
     if(!place) { return res.send(404); }
 
-    var postIdx = _.findIndex(place.feed, function (update) {
-      return update._id.equals(req.params.fid);
-    });
-    if (postIdx === -1) return res.send(404);
-    var post = place.feed[postIdx];
-
+    var post = place.feed[req.params.index];
     if (!post.poster.equals(req.user._id) && req.user.role !== 'admin') return res.send(403);
 
-    place.feed.splice(postIdx, 1);
+    place.feed.splice(req.params.index, 1);
     place.save(function (err, place) {
       if (err) return next(err);
       res.send(place);

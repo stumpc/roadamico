@@ -16,7 +16,7 @@ angular.module('roadAmicoApp')
       },
       removePost: {
         method: 'DELETE',
-        url: '/api/places/:id/feed/:fid'
+        url: '/api/places/:id/feed/:index'
       }
     });
   });

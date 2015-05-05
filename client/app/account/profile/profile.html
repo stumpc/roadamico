@@ -65,161 +65,9 @@
               </ui-select>
             </div>
 
-            <!-- Group -->
-            <div class="form-group" ng-class="{ 'has-error' : form2.term.$invalid && !form2.term.$pristine }">
-              <label for="groups">Groups</label>
-
-              <ui-select id="groups" multiple ng-model="user.groups" close-on-select="true">
-                <ui-select-match>{{$item.name}}</ui-select-match>
-                <ui-select-choices repeat="group._id as group in groups | filter: $select.search">
-                  <div ng-bind-html="group.name | highlight: $select.search"></div>
-                </ui-select-choices>
-              </ui-select>
-            </div>
-
-            <!-- EMAIL -->
-            <!--<div class="form-group" ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }">-->
-              <!--<label><translate>Email</translate> *</label>-->
-              <!--<input type="email" name="email" class="form-control" ng-model="user.email" required>-->
-              <!--<p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block" translate>valid-email</p>-->
-            <!--</div>-->
-
-            <!-- Timezone -->
-            <!--<div class="form-group" ng-class="{ 'has-error' : userForm.timezone.$invalid && !userForm.timezone.$pristine }">-->
-              <!--<label><translate>Timezone</translate> *</label>-->
-              <!--<ui-select ng-model="user.timezone" required>-->
-                <!--<ui-select-match>{{$select.selected}}</ui-select-match>-->
-                <!--<ui-select-choices repeat="timezone as timezone in timezones | filter: $select.search">-->
-                  <!--<div ng-bind-html="timezone | highlight: $select.search"></div>-->
-                <!--</ui-select-choices>-->
-              <!--</ui-select>-->
-              <!--<p ng-show="userForm.timezone.$invalid && !userForm.timezone.$pristine" class="help-block" translate>timezone-required</p>-->
-            <!--</div>-->
-
-            <!-- Languages -->
-            <!--<div class="form-group" ng-class="{ 'has-error' : userForm.languages.$invalid && !userForm.languages.$pristine }">-->
-              <!--<label translate>Languages</label>-->
-              <!--<ui-select multiple ng-model="user.languages" close-on-select="false" ui-select-required>-->
-                <!--<ui-select-match>{{$item.name}}</ui-select-match>-->
-                <!--<ui-select-choices repeat="language.code as language in languages | filter: $select.search">-->
-                  <!--<div ng-bind-html="language.name | highlight: $select.search"></div>-->
-                <!--</ui-select-choices>-->
-              <!--</ui-select>-->
-              <!--&lt;!&ndash; TODO: Get validation to work &ndash;&gt;-->
-              <!--&lt;!&ndash;<p ng-show="userForm.languages.$invalid && !userForm.languages.$pristine" class="help-block">You must have at least one language.</p>&ndash;&gt;-->
-            <!--</div>-->
-
-            <!-- PHONE -->
-            <!--<div class="form-group" ng-class="{ 'has-error' : userForm.phone.$invalid && !userForm.phone.$pristine }">-->
-              <!--<label translate>phone-number</label>-->
-              <!--<input type="text" name="phone" class="form-control" ng-model="user.phone">-->
-            <!--</div>-->
-
-            <!-- LOCATION -->
-            <!--<div class="form-group" ng-class="{ 'has-error' : userForm.location.$invalid && !userForm.location.$pristine }">-->
-              <!--<label translate>Location</label>-->
-              <!--<input type="text" name="location" id='location' ng-autocomplete class="form-control" ng-model="user.location" details="user.locationDetails">-->
-            <!--</div>-->
-
-            <!-- WORKPLACE -->
-            <!--<div class="form-group" ng-class="{ 'has-error' : userForm.workplace.$invalid && !userForm.workplace.$pristine }">-->
-              <!--<label translate>Workplace</label>-->
-              <!--<input type="text" name="workplace" class="form-control" ng-model="user.workplace">-->
-            <!--</div>-->
-
-            <!-- BIO -->
-            <!--<div class="form-group" ng-class="{ 'has-error' : userForm.bio.$invalid && !userForm.bio.$pristine }">-->
-              <!--<label translate>Bio</label>-->
-              <!--<textarea ng-model="user.bio" class="form-control" name="bio"></textarea>-->
-            <!--</div>-->
-
             <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid || userForm.$pristine" translate>Save</button>
           </form>
         </div>
-
-        <!--<div class="card">-->
-          <!--<form name="userPrivacyForm" ng-submit="save(userPrivacyForm)" novalidate>-->
-            <!--<h2><i class="fa fa-eye"></i> <translate>profile.Privacy</translate></h2>-->
-
-            <!--<p translate>profile.privacy-instructions</p>-->
-
-            <!--<div class="form-group">-->
-              <!--<label class="toggle" for="emailPublic">-->
-                <!--<span>-->
-                  <!--<input type="checkbox" ng-model="user.publicInfo.email" id="emailPublic"> <span class="handle"></span>-->
-                <!--</span>-->
-                <!--<translate>Email</translate>-->
-              <!--</label>-->
-            <!--</div>-->
-            <!--<div class="form-group">-->
-              <!--<label class="toggle" for="phonePublic">-->
-                <!--<span>-->
-                  <!--<input type="checkbox" ng-model="user.publicInfo.phone" id="phonePublic"> <span class="handle"></span>-->
-                <!--</span>-->
-                <!--<translate>Phone</translate>-->
-              <!--</label>-->
-            <!--</div>-->
-            <!--<div class="form-group">-->
-              <!--<label class="toggle" for="locationPublic">-->
-                <!--<span>-->
-                  <!--<input type="checkbox" ng-model="user.publicInfo.location" id="locationPublic"> <span class="handle"></span>-->
-                <!--</span>-->
-                <!--<translate>Location</translate>-->
-              <!--</label>-->
-            <!--</div>-->
-            <!--<div class="form-group">-->
-              <!--<label class="toggle" for="workplacePublic">-->
-                <!--<span>-->
-                  <!--<input type="checkbox" ng-model="user.publicInfo.workplace" id="workplacePublic"> <span class="handle"></span>-->
-                <!--</span>-->
-                <!--<translate>Workplace</translate>-->
-              <!--</label>-->
-            <!--</div>-->
-
-            <!--<button type="submit" class="btn btn-primary" ng-disabled="userPrivacyForm.$invalid || userPrivacyForm.$pristine" translate>Save</button>-->
-          <!--</form>-->
-        <!--</div>-->
-
-      </div>
-
-      <div class="col-md-6">
-
-        <!--<div class="card">-->
-          <!--<form name="emailPrefForm" ng-submit="save(emailPrefForm)" novalidate>-->
-            <!--<h2><i class="fa fa-envelope"></i> <translate>profile.email-pref</translate></h2>-->
-
-            <!--<p translate>profile.email-instructions</p>-->
-
-            <!--<div class="form-group">-->
-              <!--<label class="toggle" for="messages">-->
-                <!--<span>-->
-                  <!--<input type="checkbox" ng-model="user.emailPrefs.messages" id="messages"> <span class="handle"></span>-->
-                <!--</span>-->
-                <!--<translate>profile.email-messages</translate>-->
-              <!--</label>-->
-            <!--</div>-->
-            <!--<div class="form-group">-->
-              <!--<label class="toggle" for="soft">-->
-                <!--<span>-->
-                  <!--<input type="checkbox" ng-model="user.emailPrefs.soft" id="soft"> <span class="handle"></span>-->
-                <!--</span>-->
-                <!--<translate>profile.email-soft</translate>-->
-              <!--</label>-->
-            <!--</div>-->
-            <!--<div class="form-group">-->
-              <!--<label class="toggle" for="offers">-->
-                <!--<span>-->
-                  <!--<input type="checkbox" ng-model="user.emailPrefs.offers" id="offers"> <span class="handle"></span>-->
-                <!--</span>-->
-                <!--<translate>profile.email-offers</translate>-->
-              <!--</label>-->
-            <!--</div>-->
-
-            <!--<p translate>profile.email-hard</p>-->
-
-            <!--<button type="submit" class="btn btn-primary" ng-disabled="emailPrefForm.$invalid || emailPrefForm.$pristine" translate>Save</button>-->
-          <!--</form>-->
-        <!--</div>-->
 
         <div class="card">
           <h2><i class="fa fa-key"></i> <translate>profile.change-password</translate></h2>
@@ -250,6 +98,43 @@
 
             <button type="submit" class="btn btn-primary" ng-disabled="pwForm.$invalid || pwForm.$pristine" translate>Change</button>
           </form>
+        </div>
+
+      </div>
+
+      <div class="col-md-6">
+
+        <div class="card">
+          <h2>Groups</h2>
+
+          <form name="groupForm" ng-submit="save(groupForm)" novalidate>
+
+            <!-- Group -->
+            <div class="form-group" ng-class="{ 'has-error' : form2.term.$invalid && !form2.term.$pristine }">
+              <label for="groups">Groups you're a part of:</label>
+
+              <ui-select id="groups" multiple ng-model="user.groups" close-on-select="true">
+                <ui-select-match>{{$item.name}}</ui-select-match>
+                <ui-select-choices repeat="group._id as group in groups | filter: $select.search">
+                  <div ng-bind-html="group.name | highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select>
+            </div>
+
+            <button type="submit" class="btn btn-primary" ng-disabled="groupForm.$invalid || groupForm.$pristine" translate>Save</button>
+          </form>
+
+          <hr/>
+
+          <label for="myGroups">Groups you lead:</label>
+
+          <p ng-hide="myGroups.length">You don't currently lead any groups</p>
+          <ul id="myGroups">
+            <li ng-repeat="group in myGroups"><a ui-sref="editGroup({id: group._id})">{{group.name}}</a></li>
+          </ul>
+
+          <a ui-sref="createGroup" class="btn btn-primary"><i class="fa fa-group"></i> Create a Group</a>
+
         </div>
 
       </div>

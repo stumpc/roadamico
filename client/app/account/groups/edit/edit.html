@@ -1,0 +1,26 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container">
+
+  <ol class="breadcrumb">
+    <li><a ui-sref="profile">Profile</a></li>
+    <li class="active">Edit Group</li>
+  </ol>
+
+  <h1>Edit Group</h1>
+
+  <button class="btn btn-ra-red-hollow" ng-click="deleteGroup()"><i class="fa fa-trash"></i> Delete Group</button>
+
+  <div ng-show="members.length">
+    <label for="members">Members:</label>
+    <ul id="members">
+      <li ng-repeat="member in members">
+        {{member.name}} ({{member.email}})
+        <button ng-click="removeMember(member, $index)" class="btn btn-link">Remove</button>
+      </li>
+    </ul>
+  </div>
+  <div class="space-top-medium" group-form group="group" back="profile" on-save="update(updated)"></div>
+</div>
+
+<div ng-include="'components/footer/footer.html'"></div>

@@ -1,0 +1,27 @@
+
+<form name="form" ng-submit="save(group)" novalidate>
+
+  <!-- Name -->
+  <div class="form-group" ng-class="{ 'has-error' : form.name.$invalid && !form.name.$pristine }">
+    <label for="name">Name *</label>
+    <input type="text" id="name" name="name" class="form-control" ng-model="group.name" required>
+    <p ng-show="form.name.$invalid && !form.name.$pristine" class="help-block">Name is required</p>
+  </div>
+
+  <!-- Location Details -->
+  <div class="form-group" ng-class="{ 'has-error' : form.locationDetails.$invalid && !form.locationDetails.$pristine }">
+    <label for="locationDetails">Location *</label>
+    <input type="text" name="locationDetails" id="locationDetails" class="form-control" g-places-autocomplete
+           ng-model="group.locationDetails" required />
+    <p ng-show="form.locationDetails.$invalid && !form.locationDetails.$pristine" class="help-block">Location is required</p>
+  </div>
+
+  <!-- Location -->
+  <div class="form-group" ng-class="{ 'has-error' : form.location.$invalid && !form.location.$pristine }">
+    <label for="location">Location Name</label>
+    <input type="text" name="location" id="location" class="form-control" ng-model="group.location" />
+  </div>
+
+  <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid || form.$pristine"><i class="fa fa-save"></i> Save</button>
+  <a ng-show="back" ui-sref="{{back}}" class="btn"><i class="fa fa-times"></i> Cancel</a>
+</form>

@@ -53,7 +53,7 @@ angular.module('roadAmicoApp')
                 title: 'Confirm Delete',
                 html: '<p>Are you sure you want to delete <strong>' + name + '</strong> ?</p>',
                 buttons: [{
-                  classes: 'btn-danger',
+                  classes: 'btn-ra-red',
                   text: 'Delete',
                   click: function (e) {
                     deleteModal.close(e);

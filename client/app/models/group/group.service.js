@@ -13,6 +13,18 @@ angular.module('roadAmicoApp')
       mine: {
         url: '/api/groups/mine',
         isArray: true
+      },
+      own: {
+        url: '/api/groups/own',
+        isArray: true
+      },
+      members: {
+        url: '/api/groups/:id/members',
+        isArray: true
+      },
+      removeMember: {
+        url: '/api/groups/:id/members/:memberId/remove',
+        method: 'PUT'
       }
     });
   });

@@ -7,6 +7,7 @@ angular.module('roadAmicoApp')
 
     $scope.destinations = Destination.query();
     $scope.groups = Group.query();
+    $scope.myGroups = Group.own();
 
     $scope.groups.$promise.then(function (groups) {
       $scope.terms = _(groups).map('term').uniq().value();

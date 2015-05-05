@@ -1,0 +1,16 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container">
+
+  <ol class="breadcrumb">
+    <li><a ui-sref="profile">Profile</a></li>
+    <li class="active">Create Group</li>
+  </ol>
+
+  <h1>Create Group</h1>
+
+  <div group-form back="profile" on-save="create(updated)"></div>
+
+</div>
+
+<div ng-include="'components/footer/footer.html'"></div>

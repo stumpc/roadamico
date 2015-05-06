@@ -2,9 +2,11 @@
 
 [![Build Status](https://travis-ci.org/camman3d/RoadAmico.svg)](https://travis-ci.org/camman3d/RoadAmico)
 
-View the site at: https://road-amico.herokuapp.com/
+View the site at: https://www.roadamico.com/
 
 ## Requirements
+
+> The following instructions are based on Mac OS X and Homebrew.
 
 * Git (`brew install git`)
 * Node.js/NPM (`brew install node`)

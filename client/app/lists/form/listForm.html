@@ -34,6 +34,19 @@
     </p>
   </div>
 
+  <!-- Published -->
+  <div class="form-group">
+    <label class="toggle" for="published">
+      <span>
+        <input type="checkbox" ng-model="list.published" id="published"> <span class="handle"></span>
+      </span>
+      Publish this list?
+    </label>
+    <p>
+      When unpublished, only admins and list owners can view the list.
+    </p>
+  </div>
+
   <!-- Restriction -->
   <div class="form-group" ng-if="groups.length">
     <label for="restriction">Restrict to Group(s)</label>

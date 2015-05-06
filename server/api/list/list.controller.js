@@ -14,9 +14,9 @@ var Q = require('q');
  *   2. Requires groupRestriction to be populated with adminstrator
  */
 
-// Can view if admin, not restricted, or member of restriction group
+// Can view if admin, not restricted and published, or member of restriction group and published
 var canView = _.curry(function (user, list) {
-  var a = !(list.groupRestriction && list.groupRestriction.length);
+  var a = !(list.groupRestriction && list.groupRestriction.length) && list.published;
   if (!user) {
     return a;
   }
@@ -25,8 +25,11 @@ var canView = _.curry(function (user, list) {
     return (group.administrator && group.administrator.equals(user._id)) || !!_.find(user.groups, function (groupId) {
       return group._id.equals(groupId);
     });
+  }) && list.published;
+  var d = !!_.find(list.owners, function (owner) {
+    return owner.equals(user._id);
   });
-  return a || b || c;
+  return a || b || c || d;
 });
 
 // Can edit if admin, owner of list, leader of restriction group, or list is open
@@ -139,6 +142,7 @@ exports.update = function (req, res) {
       list.open = req.body.open || list.open;
       list.owners = req.body.owners || list.owners;
       list.tags = req.body.tags || list.tags;
+      list.published = req.body.published || list.published;
 
       list.save(function (err, list) {
         if (err) {

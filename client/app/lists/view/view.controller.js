@@ -195,8 +195,8 @@ angular.module('roadAmicoApp')
       $q.all(coords).then(function (data) {
         var average = [0, 0];
         _.forEach(data, function (coord) {
-          average[0] += coord.A;
-          average[1] += coord.F;
+          average[0] += coord.lat();
+          average[1] += coord.lng();
 
           new Google.maps.Marker({
             position: coord,

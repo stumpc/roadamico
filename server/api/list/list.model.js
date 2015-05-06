@@ -17,6 +17,7 @@ var ListSchema = new Schema({
 
   curated: Boolean, // Deprecated
 
+  published: Boolean,
   groupRestriction: [{ type: Schema.Types.ObjectId, ref: 'Group' }],
   owners: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   open: Boolean

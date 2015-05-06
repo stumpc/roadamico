@@ -7,7 +7,10 @@
   <hr/>
 
   <ul>
-    <li ng-repeat="list in lists"><a ui-sref="list.view({id:list._id})">{{list.name}}</a></li>
+    <li ng-repeat="list in lists">
+      <a ui-sref="list.view({id:list._id})">{{list.name}}</a>
+      <span class="badge badge-success" ng-hide="list.published">Unpublished</span>
+    </li>
   </ul>
 
 </div>

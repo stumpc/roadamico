@@ -177,6 +177,12 @@ var destinations = [{
 }, {
   name: 'Madrid, Spain',
   locationDetails: {geometry: {location: {latitude: 40.416775, longitude: -3.703790}}}
+}, {
+  name: 'Seville, Spain',
+  locationDetails: {geometry: {location: {latitude: 37.389092, longitude: -5.984459}}}
+}, {
+  name: 'Florence, Italy',
+  locationDetails: {geometry: {location: {latitude: 43.767918, longitude: 11.252379}}}
 }];
 
 

@@ -129,6 +129,11 @@
                 <div ng-bind-html="place.locationDetails.name | highlight: $select.search"></div>
               </ui-select-choices>
             </ui-select>
+              <div class="row space-top-medium">
+                  <div class="col-sm-3">
+                      Place Not found?  <button class="btn btn-primary" data-ng-click="showAddPlaceForm()">Add Place</button>
+                  </div>
+              </div>
 
             <div class="row space-top-medium" ng-show="newEntry.place">
               <div class="col-sm-3">

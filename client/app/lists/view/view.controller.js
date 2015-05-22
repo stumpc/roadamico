@@ -89,15 +89,18 @@ angular.module('roadAmicoApp')
 
     $scope.selectedPlace = {};
 
-    Place.query().$promise.then(function (places) {
-      $scope.places = _.sortBy(places, function (place) { return place.locationDetails.name; });
+    var getPlaces= function(){
+        Place.query().$promise.then(function (places) {
+            $scope.places = _.sortBy(places, function (place) { return place.locationDetails.name; });
 
-      _.forEach($scope.places, function (place) {
-        $scope.ratings[place._id] = placeUtil.getRating(place);
-        $scope.photos[place._id] = placeUtil.getPhoto(place);
-      });
-    });
+            _.forEach($scope.places, function (place) {
+                $scope.ratings[place._id] = placeUtil.getRating(place);
+                $scope.photos[place._id] = placeUtil.getPhoto(place);
+            });
+        });
+    };
 
+    getPlaces();
     $scope.add = function () {
       var promise;
       if ($scope.newEntry.file) {
@@ -210,7 +213,71 @@ angular.module('roadAmicoApp')
     });
 
 
+        $scope.showAddPlaceForm = function(){
+            var modalInstance = $modal.open({
+                templateUrl: 'app/lists/view/addPlaceForm.html',
+                controller: function ($scope, $modalInstance, addPlaceForm) {
+                    $scope.form = {};
 
+                    $scope.place = {locationDetails:{}};
+
+                    $scope.$watch('place.locationDetails', function (value) {
+
+                        if (typeof value === 'object') {
+                            $scope.place.name = value.name;
+                            $scope.place.location = value.formatted_address;
+                            $scope.place.phone = value.formatted_phone_number;
+
+                            if (value.geometry && value.geometry.location) {
+                                console.log(value.geometry);
+                                value.geometry.location.latitude = value.geometry.location.lat();
+                                value.geometry.location.longitude = value.geometry.location.lng();
+                            }
+
+                            if (value.photos) {
+                                $scope.place.feed = value.photos.map(function (photo) {
+                                    return {
+                                        datetime: moment().toISOString(),
+                                        photo: photo.getUrl({'maxWidth': photo.width, 'maxHeight': photo.height})
+                                    }
+                                });
+                            }
+                        }
+
+                    });
+
+                    $scope.addPlace = function () {
+                        if ($scope.form.addPlaceForm.$valid) {
+                            console.log('add place form is in scope');
+                            $modalInstance.close('closed');
+
+                            Place.save($scope.place).$promise.then(function (place) {
+                                console.log(place);
+                                getPlaces();
+                            });
+                        } else {
+                            console.log('add place form is not in scope');
+                        }
+                    };
+
+                    $scope.cancel = function () {
+                        $modalInstance.dismiss('cancel');
+                    };
+                },
+                scope: $scope,
+                resolve: {
+                    addPlaceForm: function () {
+                        return $scope.addPlaceForm;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (selectedItem) {
+                $scope.selected = selectedItem;
+            }, function () {
+                console.log('Modal dismissed at: ' + new Date());
+            });
+        };
 
 
   });

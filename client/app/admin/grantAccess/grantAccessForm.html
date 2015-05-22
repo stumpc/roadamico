@@ -1,0 +1,46 @@
+<div class="modal-header">
+    <h3>Grant Access!</h3>
+</div>
+<form name="form.grantAccessForm" ng-submit="sendGrantAccess()" novalidate>
+    <div class="modal-body">
+        <!-- EMAIL -->
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" class="form-control" ng-model="email" required>
+            <p ng-show="form.grantAccessForm.email.$invalid && !form.grantAccessForm.email.$pristine" class="help-block">Enter a valid email.</p>
+        </div>
+
+        <!-- REFERRAL -->
+        <div class="form-group">
+            <label>Referral</label>
+            <input type="text" name="referral" class="form-control" ng-model="referral" required>
+            <p ng-show="form.grantAccessForm.referral.$invalid && !form.grantAccessForm.referral.$pristine" class="help-block">Referral is required.</p>
+        </div>
+
+        <!-- DATE OF GRANT -->
+        <div class="form-group">
+            <label>Date to Grant</label>
+            <p class="input-group">
+                <input type="text" class="form-control" datepicker-popup  name="dateOfGrant" ng-model="dateOfGrant" is-open="opened"
+                       min-date="minDate" datepicker-options="dateOptions"  ng-required="true" close-text="Close" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </p>
+            <p ng-show="form.grantAccessForm.dateOfGrant.$invalid && !form.grantAccessForm.dateOfGrant.$pristine" class="help-block">Date is required.</p>
+        </div>
+
+        <div class="form-group">
+            <label>Role</label>
+            <select class="form-control" name="user_role" ng-model="user_role" ng-options="role as role for role in roles" required></select>
+
+            <p ng-show="form.grantAccessForm.user_role.$invalid && !form.grantAccessForm.user_role.$pristine" class="help-block">Role is required.</p>
+        </div>
+
+
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" ng-disabled="form.grantAccessForm.$invalid">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</form>

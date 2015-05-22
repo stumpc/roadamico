@@ -1,0 +1,57 @@
+<div class="modal-header">
+    <h3>Create a new Place</h3>
+</div>
+<form name="form.addPlaceForm" ng-submit="addPlace()" novalidate>
+    <div class="modal-body">
+        <!-- Location -->
+        <div class="form-group" ng-class="{ 'has-error' : form.location.$invalid && !form.location.$pristine }">
+            <label for="location">Enter the Name or Address of the Place</label>
+            <input type="text" name="location" id="location" class="form-control" g-places-autocomplete ng-model="place.locationDetails" required />
+            <p ng-show="form.location.$invalid && !form.location.$pristine" class="help-block">This is required</p>
+        </div>
+
+        <div class="name">
+            <h1>{{place.locationDetails.name}}</h1>
+        </div>
+
+        <div class="row space-top-small space-bottom-small">
+            <div class="col-md-12">
+
+                <!-- Location -->
+                <div class="row space-bottom-small" ng-show="place.locationDetails.formatted_address">
+                    <div class="col-xs-1"><i class="fa fa-lg fa-map-marker"></i></div>
+                    <div class="col-xs-10">{{place.locationDetails.formatted_address}}</div>
+                </div>
+
+                <!-- Phone -->
+                <div class="row space-bottom-small" ng-show="place.locationDetails.formatted_phone_number">
+                    <div class="col-xs-1"><i class="fa fa-lg fa-phone"></i></div>
+                    <div class="col-xs-10">{{place.locationDetails.formatted_phone_number}}</div>
+                </div>
+
+                <!-- Website -->
+                <div class="row space-bottom-small" ng-show="place.locationDetails.website">
+                    <div class="col-xs-1"><i class="fa fa-lg fa-globe"></i></div>
+                    <div class="col-xs-10"><a href="{{place.locationDetails.website}}">Website</a></div>
+                </div>
+
+                <!-- Google+ -->
+                <div class="row space-bottom-small" ng-show="place.locationDetails.url">
+                    <div class="col-xs-1"><i class="fa fa-lg fa-google-plus"></i></div>
+                    <div class="col-xs-10"><a href="{{place.locationDetails.url}}">Google+ Page</a></div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Description -->
+        <div class="form-group" ng-show="place.locationDetails">
+            <label for="description">Describe this place a little bit:</label>
+            <textarea name="description" id="description" class="form-control" ng-model="place.description"></textarea>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" ng-disabled="form.addPlaceForm.$invalid">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</form>

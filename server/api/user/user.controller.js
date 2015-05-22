@@ -31,7 +31,7 @@ exports.check = function (req, res) {
  * restriction: 'admin'
  */
 exports.index = function(req, res) {
-  User.find({}, '-salt -hashedPassword -financial', function (err, users) {
+  User.find({}, '-salt -hashedPassword -financial').sort({ name: 'asc' }).exec(function (err, users) {
     if(err) return res.send(500, err);
     res.json(200, users);
   });

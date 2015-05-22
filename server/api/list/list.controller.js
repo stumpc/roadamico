@@ -58,7 +58,7 @@ exports.publicIndex = function (req, res) {
 
 // Get list of visible lists
 exports.index = function (req, res) {
-  List.find({})
+  List.find({}).sort({ 'name': 'asc'})
     .populate('groupRestriction', 'administrator')
     .exec(function (err, lists) {
       if (err) {

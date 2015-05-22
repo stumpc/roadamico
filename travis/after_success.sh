@@ -1,5 +1,5 @@
-git config --global user.email "camman3d@gmail.com"
-git config --global user.name "Josh Monson"
+git config --global user.email "lugongora@gmail.com"
+git config --global user.name "roadamico"
 echo "Host heroku.com" >> ~/.ssh/config
 echo "   StrictHostKeyChecking no" >> ~/.ssh/config
 echo "   CheckHostIP no" >> ~/.ssh/config;

@@ -2,14 +2,16 @@
 
 angular.module('roadAmicoApp')
   .controller('PlacesCtrl', function ($scope, Place, Auth, placeUtil) {
+    $scope.showLoader = true;
     $scope.places = Place.query();
-    $scope.showLoader = false;
+
 
     $scope.places.$promise.then(function () {
       _.forEach($scope.places, function (result) {
         result.rating = placeUtil.getRating(result);
         result.photo = placeUtil.getPhoto(result);
       });
+      $scope.showLoader = false;
     });
 
     $scope.deletePlace = function(place){

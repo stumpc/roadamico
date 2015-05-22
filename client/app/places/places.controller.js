@@ -16,7 +16,7 @@ angular.module('roadAmicoApp')
         $scope.showLoader = true;
         var params = {id: place._id};
         Place.remove(params, function(){
-            $scope.places = Place.query();
+            $scope.places.splice($scope.places.indexOf(place));
             $scope.showLoader = false;
         });
 

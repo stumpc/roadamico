@@ -11,7 +11,7 @@ exports.index = function(req, res) {
   //Place.find(function (err, places) {
   Place.find({}).sort({ "locationDetails.name": 'asc' }).exec(function (err, places) {
       places.forEach(function(place) {
-          console.log(place.locationDetails.name);
+          //console.log(place.locationDetails.name);
       });
     if(err) { return handleError(res, err); }
     return res.json(200, places);

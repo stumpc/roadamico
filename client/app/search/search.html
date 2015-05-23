@@ -68,6 +68,12 @@
                 <div class="col-xs-1"><i class="fa fa-lg fa-google-plus"></i></div>
                 <div class="col-xs-10"><a href="{{result.locationDetails.url}}">Google+ Page</a></div>
               </div>
+
+              <!-- Description -->
+              <div class="row space-bottom-small" ng-show="result.description">
+                  <div class="col-xs-1"></div>
+                  <div class="col-xs-10">{{ result.description }}</div>
+              </div>
             </div>
           </div>
         </div>

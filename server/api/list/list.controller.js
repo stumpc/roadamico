@@ -82,7 +82,7 @@ exports.index = function (req, res) {
 // Get a single list
 exports.show = function (req, res) {
   List.findById(req.params.id)
-    .populate('entries.place', 'locationDetails ratings feed')
+    .populate('entries.place', 'locationDetails ratings feed description')
     //.populate('owners', 'email name')
     .populate('groupRestriction', 'administrator name')
     .exec(function (err, list) {
@@ -149,7 +149,7 @@ exports.update = function (req, res) {
           return handleError(res, err);
         }
         var populateOpts = [
-          {path: 'entries.place', select: 'locationDetails ratings feed'},
+          {path: 'entries.place', select: 'locationDetails ratings feed description'},
           {path: 'groupRestriction', select: 'administrator name'}
         ];
         list.populate(populateOpts, function (err, list) {

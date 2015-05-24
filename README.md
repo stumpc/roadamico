@@ -1,6 +1,6 @@
 # RoadAmico
 
-[![Build Status](https://travis-ci.org/camman3d/RoadAmico.svg)](https://travis-ci.org/camman3d/RoadAmico)
+[![Build Status](https://travis-ci.org/roadamico/roadamico.svg?branch=master)](https://travis-ci.org/roadamico/roadamico)
 
 View the site at: https://www.roadamico.com/
 
@@ -21,8 +21,8 @@ View the site at: https://www.roadamico.com/
 First clone the repo:
 
 ```
-git clone https://github.com/camman3d/RoadAmico.git
-cd RoadAmico
+git clone https://github.com/roadamico/roadamico.git
+cd roadAmico
 ```
 
 Then, install the deps:

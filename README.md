@@ -1,6 +1,6 @@
 # RoadAmico
 
-[![Build Status](https://travis-ci.org/camman3d/RoadAmico.svg)](https://travis-ci.org/camman3d/RoadAmico)
+[![Build Status](https://travis-ci.org/roadamico/roadamico.svg?branch=master)](https://travis-ci.org/roadamico/roadamico)
 
 View the site at: https://www.roadamico.com/
 

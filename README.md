@@ -21,8 +21,8 @@ View the site at: https://www.roadamico.com/
 First clone the repo:
 
 ```
-git clone https://github.com/camman3d/RoadAmico.git
-cd RoadAmico
+git clone https://github.com/roadamico/roadamico.git
+cd roadAmico
 ```
 
 Then, install the deps:

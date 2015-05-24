@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var Place = require('./place.model');
+var List = require('../list/list.model');
 var moment = require('moment');
 var upload = require('../../components/upload');
 var Q = require('q');
@@ -10,11 +11,31 @@ var Q = require('q');
 exports.index = function(req, res) {
   //Place.find(function (err, places) {
   Place.find({}).sort({ "locationDetails.name": 'asc' }).exec(function (err, places) {
+      var itemsLeft = places.length;
+      var place_list = [];
       places.forEach(function(place) {
+          List.find({ "entries.place": place._id }, function(err, lists){
+              if(err) { return handleError(res, err); }
+              var aplace = {};
+              aplace._id = place._id;
+              aplace.description = place.description;
+              aplace.feed = place.feed;
+              aplace.ratings = place.ratings;
+              aplace.location = place.location;
+              aplace.locationDetails = place.locationDetails;
+              aplace.list = lists;
+              place_list.push(aplace);
+
+              if(!--itemsLeft){
+                  return res.json(200, place_list);
+              }
+              //return res.json(200, places);
+          });
           //console.log(place.locationDetails.name);
       });
-    if(err) { return handleError(res, err); }
-    return res.json(200, places);
+    //if(err) { return handleError(res, err); }
+    //console.log('HEY');
+    //return res.json(200, places);
   });
 };
 

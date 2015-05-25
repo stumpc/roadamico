@@ -38,89 +38,90 @@
     <map zoom="12" center="[35.910419, -79.049592]" scrollwheel="false"></map>
   </div>
 
-  <div ng-repeat="entry in list.entries" class="entry">
-    <div class="edit-controls" ng-show="editing">
-      <button ng-click="remove($index)" class="btn btn-ra-red btn-xs btn-block"><i class="fa fa-times"></i></button>
-      <button ng-click="moveUp($index)" class="btn btn-ra-teal btn-xs btn-block"><i class="fa fa-arrow-up"></i></button>
-      <button ng-click="moveDown($index)" class="btn btn-ra-teal btn-xs btn-block"><i class="fa fa-arrow-down"></i></button>
-    </div>
-
-    <!-- Display a place -->
-    <div ng-if="entry.place" class="place">
-      <div class="row">
-        <div class="col-sm-3">
-          <a ui-sref="place.view({id: entry.place._id})">
-            <img ng-src="{{photos[entry.place._id]}}" class="thumbnail" />
-          </a>
+  <div ui-sortable="sortableOptions" ng-model="list.entries">
+      <div ng-repeat="entry in list.entries" class="entry">
+        <div class="edit-controls" ng-show="editing">
+          <button ng-click="remove($index)" class="btn btn-ra-red btn-xs btn-block"><i class="fa fa-times"></i></button>
+          <button ng-click="moveUp($index)" class="btn btn-ra-teal btn-xs btn-block"><i class="fa fa-arrow-up"></i></button>
+          <button ng-click="moveDown($index)" class="btn btn-ra-teal btn-xs btn-block"><i class="fa fa-arrow-down"></i></button>
         </div>
 
-        <div class="col-sm-9">
-          <div class="name space-bottom-small">
-            <a ui-sref="place.view({id: entry.place._id})">{{entry.place.locationDetails.name}}</a>
-            <div rating ng-model="ratings[entry.place._id]" state-on="['fa', 'fa-star']" state-off="['fa', 'fa-star-o']"
-                 readonly="true" class="color-sunflower-dark space-left-large"></div>
-          </div>
-
-          <!-- Location -->
-          <div class="row space-bottom-small" ng-show="entry.place.locationDetails.formatted_address">
-            <div class="col-xs-1"><i class="fa fa-lg fa-map-marker"></i></div>
-            <div class="col-xs-10">{{entry.place.locationDetails.formatted_address}}</div>
-          </div>
-
-          <!-- Phone -->
-          <div class="row space-bottom-small" ng-show="entry.place.locationDetails.formatted_phone_number">
-            <div class="col-xs-1"><i class="fa fa-lg fa-phone"></i></div>
-            <div class="col-xs-10">{{entry.place.locationDetails.formatted_phone_number}}</div>
-          </div>
-
-          <!-- Website -->
-          <div class="row space-bottom-small" ng-show="entry.place.locationDetails.website">
-            <div class="col-xs-1"><i class="fa fa-lg fa-globe"></i></div>
-            <div class="col-xs-10"><a href="{{entry.place.locationDetails.website}}">Website</a></div>
-          </div>
-
-          <!-- Google+ -->
-          <div class="row space-bottom-small" ng-show="entry.place.locationDetails.url">
-            <div class="col-xs-1"><i class="fa fa-lg fa-google-plus"></i></div>
-            <div class="col-xs-10"><a href="{{entry.place.locationDetails.url}}">Google+ Page</a></div>
-          </div>
-
-            <!-- Description -->
-            <div class="row space-bottom-small" ng-show="entry.place.description">
-                <div class="col-xs-1"></div>
-                <div class="col-xs-10">{{entry.place.description}}</div>
+        <!-- Display a place -->
+        <div ng-if="entry.place" class="place">
+          <div class="row">
+            <div class="col-sm-3">
+              <a ui-sref="place.view({id: entry.place._id})">
+                <img ng-src="{{photos[entry.place._id]}}" class="thumbnail" />
+              </a>
             </div>
+
+            <div class="col-sm-9">
+              <div class="name space-bottom-small">
+                <a ui-sref="place.view({id: entry.place._id})">{{entry.place.locationDetails.name}}</a>
+                <div rating ng-model="ratings[entry.place._id]" state-on="['fa', 'fa-star']" state-off="['fa', 'fa-star-o']"
+                     readonly="true" class="color-sunflower-dark space-left-large"></div>
+              </div>
+
+              <!-- Location -->
+              <div class="row space-bottom-small" ng-show="entry.place.locationDetails.formatted_address">
+                <div class="col-xs-1"><i class="fa fa-lg fa-map-marker"></i></div>
+                <div class="col-xs-10">{{entry.place.locationDetails.formatted_address}}</div>
+              </div>
+
+              <!-- Phone -->
+              <div class="row space-bottom-small" ng-show="entry.place.locationDetails.formatted_phone_number">
+                <div class="col-xs-1"><i class="fa fa-lg fa-phone"></i></div>
+                <div class="col-xs-10">{{entry.place.locationDetails.formatted_phone_number}}</div>
+              </div>
+
+              <!-- Website -->
+              <div class="row space-bottom-small" ng-show="entry.place.locationDetails.website">
+                <div class="col-xs-1"><i class="fa fa-lg fa-globe"></i></div>
+                <div class="col-xs-10"><a href="{{entry.place.locationDetails.website}}">Website</a></div>
+              </div>
+
+              <!-- Google+ -->
+              <div class="row space-bottom-small" ng-show="entry.place.locationDetails.url">
+                <div class="col-xs-1"><i class="fa fa-lg fa-google-plus"></i></div>
+                <div class="col-xs-10"><a href="{{entry.place.locationDetails.url}}">Google+ Page</a></div>
+              </div>
+
+                <!-- Description -->
+                <div class="row space-bottom-small" ng-show="entry.place.description">
+                    <div class="col-xs-1"></div>
+                    <div class="col-xs-10">{{entry.place.description}}</div>
+                </div>
+            </div>
+          </div>
         </div>
+
+        <!-- Display photo -->
+        <div ng-if="entry.photo" class="row">
+          <div class="col-sm-6 col-sm-offset-3">
+            <div class="embed">
+              <img ng-src="{{entry.photo}}" >
+              <p>{{entry.text}}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Display rich text -->
+        <div ng-if="entry.text && !entry.photo" class="text">
+          <div ng-hide="editing" ng-bind-html="entry.text"></div>
+          <div ng-if="editing" text-angular ng-model="entry.text" ng-change="save()" ng-model-options="{ updateOn: 'blur' }"></div>
+        </div>
+
+        <!-- Display an embed -->
+        <div ng-if="entry.embed">
+          <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+              <div embedded-media="entry.embed" class="embed"></div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
-
-    <!-- Display photo -->
-    <div ng-if="entry.photo" class="row">
-      <div class="col-sm-6 col-sm-offset-3">
-        <div class="embed">
-          <img ng-src="{{entry.photo}}" >
-          <p>{{entry.text}}</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Display rich text -->
-    <div ng-if="entry.text && !entry.photo" class="text">
-      <div ng-hide="editing" ng-bind-html="entry.text"></div>
-      <div ng-if="editing" text-angular ng-model="entry.text" ng-change="save()" ng-model-options="{ updateOn: 'blur' }"></div>
-    </div>
-
-    <!-- Display an embed -->
-    <div ng-if="entry.embed">
-      <div class="row">
-        <div class="col-sm-6 col-sm-offset-3">
-          <div embedded-media="entry.embed" class="embed"></div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
   <div class="new-entry" ng-show="editing">
     <h2>Add something to the list:</h2>
     <div class="tabs">

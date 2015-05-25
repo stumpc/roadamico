@@ -131,6 +131,12 @@ angular.module('roadAmicoApp')
     };
 
 
+    $scope.sortableOptions = {
+        update: function(e, ui) {
+            $scope.save();
+        }
+    };
+
 
     $scope.remove = function (index) {
       list.entries.splice(index, 1);

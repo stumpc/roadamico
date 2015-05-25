@@ -33,6 +33,8 @@ module.exports = function(config) {
       'client/bower_components/angular-deckgrid/angular-deckgrid.js',
       'client/bower_components/textAngular/dist/textAngular-rangy.min.js',
       'client/bower_components/textAngular/dist/textAngular.min.js',
+      'client/bower_components/jquery-ui/jquery-ui.js',
+      'client/bower_components/angular-ui-sortable/sortable.js',
       'client/app/app.js',
       'client/app/app.coffee',
       'client/app/**/*.js',

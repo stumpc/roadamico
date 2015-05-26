@@ -91,6 +91,33 @@ exports.addEntry = function (req, res) {
   });
 };
 
+exports.saveEntryPhoto = function(req, res){
+    Place.findById(req.params.id, function (err, place) {
+        if (err) { return handleError(res, err); }
+        if(!place) { return res.send(404); }
+
+        if(place.feed.length == 0){
+            req.body.datetime = moment().toISOString();
+            req.body.poster = req.user._id;
+            place.feed.push(req.body);
+            place.save(function (err, place) {
+                if (err) return next(err);
+                res.send(place);
+            });
+        }
+        else {
+            place.feed.forEach(function(feed_item){
+                feed_item.photo = req.body.photo;
+            });
+            place.save(function (err, place) {
+                if (err) return next(err);
+                res.send(place);
+            });
+        }
+
+    });
+};
+
 exports.removePost = function (req, res) {
   Place.findById(req.params.id, function (err, place) {
     if (err) { return handleError(res, err); }

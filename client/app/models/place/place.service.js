@@ -14,6 +14,10 @@ angular.module('roadAmicoApp')
         method: 'POST',
         url: '/api/places/:id/feed'
       },
+      saveFeedPhoto: {
+        method: 'POST',
+        url: '/api/places/:id/save-feed-photo'
+      },
       removePost: {
         method: 'DELETE',
         url: '/api/places/:id/feed/:index'

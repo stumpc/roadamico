@@ -1,0 +1,17 @@
+<div class="row">
+    <div class="col-md-6 col-md-offset-0">
+        <div class="photo-uploader">
+
+            <form name="form" novalidate ng-submit="share()">
+
+                <div class="form-group" ng-hide="data.file || data.embed">
+                    <label for="file">Upload a picture:</label>
+                    <br/>
+                    <button id="file" class="btn btn-ra-red-hollow btn-sm space-right-small" ng-file-select="onFileSelect($files)" ng-multiple="false"><i class="fa fa-upload"></i> Select file</button>
+                    or drag and drop a file.
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

@@ -74,6 +74,7 @@ angular.module('roadAmicoApp')
     function process() {
       _.forEach(list.entries, function (entry) {
         if (entry.place) {
+
           $scope.ratings[entry.place._id] = placeUtil.getRating(entry.place);
           $scope.photos[entry.place._id] = placeUtil.getPhoto(entry.place);
         }
@@ -260,6 +261,7 @@ angular.module('roadAmicoApp')
                             Place.save($scope.place).$promise.then(function (place) {
                                 console.log(place);
                                 getPlaces();
+                                $scope.newEntry.place = place;
                             });
                         } else {
                             console.log('add place form is not in scope');
@@ -285,5 +287,16 @@ angular.module('roadAmicoApp')
             });
         };
 
+        $scope.showFileSelect = false;
 
-  });
+        $scope.showFileUpload = function(){
+            $scope.showFileSelect = true;
+        };
+
+        $scope.$watch('photos[newEntry.place._id]', function (value) {
+            if(value && value.indexOf("blob") != -1){
+                $scope.showFileSelect = false;
+            }
+        });
+
+    });

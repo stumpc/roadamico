@@ -14,6 +14,7 @@ router.patch('/:id',  controller.update);
 router.delete('/:id', controller.destroy);
 
 router.post('/:id/feed',        auth.isAuthenticated(), controller.addEntry);
+router.post('/:id/save-feed-photo',        auth.isAuthenticated(), controller.saveEntryPhoto);
 router.delete('/:id/feed/:index', auth.isAuthenticated(), controller.removePost);
 router.post('/:id/rate',        auth.isAuthenticated(), controller.rate);
 

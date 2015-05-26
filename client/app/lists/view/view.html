@@ -145,6 +145,9 @@
             <div class="row space-top-medium" ng-show="newEntry.place">
               <div class="col-sm-3">
                 <img ng-src="{{photos[newEntry.place._id]}}" class="thumbnail" />
+                <div class="space-bottom-smaller"><a href="" ng-click="showFileUpload()">Edit</a></div>
+                  <div photo-uploader ng-hide="!showFileSelect" ng-model="newEntry"
+                       on-open="showFileUpload()" show-file-select='showFileSelect'></div>
               </div>
 
               <div class="col-sm-9">

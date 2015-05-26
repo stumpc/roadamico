@@ -1,7 +1,7 @@
-var bb = require('batbelt'),
+var bb = require('./node_modules/batbelt'),
     pkg = require('./package.json'),
-    request = require('superagent'),
-    sprintf = require('sprintf').sprintf,
+    request = require('./node_modules/superagent'),
+    sprintf = require('./node_modules/sprintf').sprintf,
     hashish = require('hashish'),
     querystring = require('querystring');
 

@@ -25,8 +25,8 @@
         </div>
 
         <div ng-show="data.photo">
-          <img ng-src="{{data.photo}}" />
-
+          <img ng-src="{{data.photo}}" ng-show="data.type.indexOf('image') != -1" />
+          <a href="{{data.url}}" target="_blank" ng-hide="data.type == 'image/jpeg'">{{data.url}}</a>
           <label for="imgDescription">Say something about this picture:</label>
           <textarea name="imgDescription" id="imgDescription" ng-model="data.text" class="form-control"></textarea>
         </div>

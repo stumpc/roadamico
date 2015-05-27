@@ -62,6 +62,9 @@ angular.module('roadAmicoApp')
         scope.onFileSelect = function (files) {
           scope.data.file = files[0];
           scope.data.photo = URL.createObjectURL(files[0]);
+          scope.data.type = files[0].type;
+          scope.data.url = files[0].name;
+          //console.log(scope.data.type);
         };
 
 

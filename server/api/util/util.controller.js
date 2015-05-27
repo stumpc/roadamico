@@ -6,9 +6,12 @@ var upload = require('../../components/upload');
 
 // Gets the embed.ly object
 exports.embed = function(req, res) {
+    console.log('req.params.url: ' + req.params.url);
   embedder(req.params.url).then(function (embed) {
+      console.log("RRRRRRRRRRRRRRRRRRRRRRRRRR: " + embed);
     res.json(embed);
   }).catch(function (err) {
+      console.log("TTTTTTTTTT: " + JSON.stringify(err));
     handleError(res, err);
   });
 };

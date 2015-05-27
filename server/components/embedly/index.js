@@ -2,7 +2,7 @@ var bb = require('./node_modules/batbelt'),
     pkg = require('./package.json'),
     request = require('./node_modules/superagent'),
     sprintf = require('./node_modules/sprintf').sprintf,
-    hashish = require('hashish'),
+    hashish = require('./node_modules/hashish'),
     querystring = require('querystring');
 
 function defaultLogger() {
@@ -91,7 +91,7 @@ function embedly(opts, callback) {
           var services = JSON.parse(res.text);
           services.push({regex: [".*\.jpg", ".*\.png", ".*\.gif"], type: 'image'});
           services.push({regex: [".*\.html", ".*\.com"], type: 'webpage'});
-          services.push({regex: [".*\.docx", ".*\.doc", ".*\.txt", ".*\.pdf"], type: 'webpage'});
+          services.push({regex: [".*\.docx", ".*\.doc", ".*\.txt", ".*\.pdf"], type: 'file'});
           var regExpText = services.map(function(service) {
                 return service.regex.join("|");
               }).join("|");

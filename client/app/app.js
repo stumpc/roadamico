@@ -1,13 +1,13 @@
 'use strict';
 
 angular.module('roadAmicoApp', [
+  'ngCookies',
   'ngResource',
   'ngSanitize',
   'btford.socket-io',
   'ui.router',
   'ui.bootstrap',
   'angularFileUpload',
-  'ngCookies',
   'ngAutocomplete',
   'google.places',
   'ngMap',

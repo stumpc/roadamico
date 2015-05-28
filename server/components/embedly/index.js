@@ -90,7 +90,8 @@ function embedly(opts, callback) {
           //console.log(res.text);
           var services = JSON.parse(res.text);
           services.push({regex: [".*\.jpg", ".*\.png", ".*\.gif"], type: 'image'});
-          services.push({regex: [".*\.html"], type: 'webpage'});
+          services.push({regex: [".*\.html", ".*\.com"], type: 'webpage'});
+          services.push({regex: [".*\.docx", ".*\.doc", ".*\.txt", ".*\.pdf"], type: 'webpage'});
           var regExpText = services.map(function(service) {
                 return service.regex.join("|");
               }).join("|");

@@ -21,6 +21,14 @@ exports.uploadImage = function (req, res) {
   });
 };
 
+exports.uploadRawFile = function (req, res) {
+    upload.file(req.files.file).then(function (url) {
+        res.json({url: url});
+    }).catch(function (err) {
+        handleError(res, err);
+    });
+};
+
 
 function handleError(res, err) {
   return res.send(500, err);

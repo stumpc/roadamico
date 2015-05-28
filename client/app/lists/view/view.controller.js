@@ -107,7 +107,7 @@ angular.module('roadAmicoApp')
       if ($scope.newEntry.file) {
         var deferred = $q.defer();
         $upload.upload({
-          url: '/api/utils/upload',
+          url: ($scope.newEntry.file.type.indexOf('image') != -1) ? '/api/utils/upload' : '/api/utils/upload-file',
           file: $scope.newEntry.file
         }).success(function (data) {
           deferred.resolve(data.url);

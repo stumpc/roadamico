@@ -96,7 +96,8 @@
         </div>
 
         <!-- Display photo -->
-        <div ng-if="entry.photo" class="row">
+        <div ng-if="entry.photo && (entry.photo.toLowerCase().indexOf('.jpg') > -1 || entry.photo.toLowerCase().indexOf('.png') > -1
+            || entry.photo.toLowerCase().indexOf('.gif') > -1 || entry.photo.toLowerCase().indexOf('.tif') > -1)" class="row">
           <div class="col-sm-6 col-sm-offset-3">
             <div class="embed">
               <img ng-src="{{entry.photo}}" >
@@ -105,6 +106,17 @@
           </div>
         </div>
 
+      <!-- Display files -->
+        <div ng-if="entry.photo && (entry.photo.toLowerCase().indexOf('.jpg') == -1 && entry.photo.toLowerCase().indexOf('.png') == -1
+            && entry.photo.toLowerCase().indexOf('.gif') == -1 && entry.photo.toLowerCase().indexOf('.tif') == -1)" class="row">
+          <div class="col-sm-6 col-sm-offset-3">
+              <div class="embed">
+                  <a href="{{entry.photo}}" target="_blank">{{ entry.embed.url }}</a>
+                  <p>{{entry.text}}</p>
+          </div>
+        </div>
+      </div>
+
         <!-- Display rich text -->
         <div ng-if="entry.text && !entry.photo" class="text">
           <div ng-hide="editing" ng-bind-html="entry.text"></div>
@@ -112,7 +124,7 @@
         </div>
 
         <!-- Display an embed -->
-        <div ng-if="entry.embed">
+        <div ng-if="entry.embed && !entry.photo">
           <div class="row">
             <div class="col-sm-6 col-sm-offset-3">
               <div embedded-media="entry.embed" class="embed"></div>

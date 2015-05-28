@@ -26,7 +26,12 @@ module.exports = {
       fs.unlinkSync(file.path);
       deferred.resolve(faker.image.imageUrl());
     } else {
-      deferred.reject('File upload not implemented yet');
+      //deferred.reject('File upload not implemented yet');
+        cloudinary.uploader.upload(file.path, function(result) {
+            fs.unlinkSync(file.path); // Delete the file
+            console.log("RESULT URL: " + result.url);
+            deferred.resolve(result.url);
+        }, { resource_type: 'raw'});
     }
 
     return deferred.promise;

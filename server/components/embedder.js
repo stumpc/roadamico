@@ -1,8 +1,8 @@
 /**
  * Created by josh on 4/15/15.
  */
-var embedly = require('embedly');
-//var embedly = require('./embedly');
+//var embedly = require('embedly');
+var embedly = require('./embedly');
 var Q = require('q');
 var config = require('../config/environment');
 

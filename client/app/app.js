@@ -18,15 +18,15 @@ angular.module('roadAmicoApp', [
   'textAngular',
   'ui.sortable'
 ])
-  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+  .config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProvider', function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
       .otherwise('/');
 
     $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push('authInterceptor');
-  })
+  }])
 
-  .factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {
+  .factory('authInterceptor', ['$rootScope', '$q', '$cookieStore', '$location', function ($rootScope, $q, $cookieStore, $location) {
     return {
       // Add authorization token to headers
       request: function (config) {
@@ -52,9 +52,9 @@ angular.module('roadAmicoApp', [
         }
       }
     };
-  })
+  }])
 
-  .run(function ($rootScope, $location, $document, Auth) {
+  .run(['$rootScope', '$location', '$document', 'Auth', function ($rootScope, $location, $document, Auth) {
     // Check authentication when moving between pages (states)
     $rootScope.$on('$stateChangeStart', function (event, next) {
       Auth.isLoggedInAsync(function(loggedIn) {
@@ -77,4 +77,4 @@ angular.module('roadAmicoApp', [
         }
       });
     });
-  });
+  }]);

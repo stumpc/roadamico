@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .factory('Auth', function Auth($location, $rootScope, $http, User, $cookieStore, $q, $state) {
+  .factory('Auth', ['$location', '$rootScope', '$http','User', '$cookieStore', '$q', '$state',
+        function Auth($location, $rootScope, $http, User, $cookieStore, $q, $state) {
     var currentUser = {};
     if ($cookieStore.get('token')) {
       currentUser = User.get();
@@ -152,4 +153,4 @@ angular.module('roadAmicoApp')
         return $cookieStore.get('token');
       }
     };
-  });
+  }]);

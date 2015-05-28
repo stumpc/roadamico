@@ -1,5 +1,5 @@
 'use strict';
-/*
+
 describe('Controller: ResetpasswordCtrl', function () {
 
   // load the controller's module
@@ -19,4 +19,3 @@ describe('Controller: ResetpasswordCtrl', function () {
     expect(1).toEqual(1);
   });
 });
-*/

@@ -45,7 +45,8 @@ module.exports = function (grunt) {
       },
       prod: {
         options: {
-          script: 'dist/server/app.js'
+          //script: 'dist/server/app.js'
+          script: 'server/app.js'
         }
       }
     },
@@ -78,8 +79,7 @@ module.exports = function (grunt) {
           '<%= yeoman.client %>/{app,components}/**/*.spec.js',
           '<%= yeoman.client %>/{app,components}/**/*.mock.js'
         ],
-        //tasks: ['newer:jshint:all', 'karma']
-        tasks: ['newer:jshint:all']
+        tasks: ['newer:jshint:all', 'karma']
       },
       injectSass: {
         files: [
@@ -617,7 +617,7 @@ module.exports = function (grunt) {
         'concurrent:test',
         'injector',
         'autoprefixer',
-        //'karma'
+        'karma'
       ]);
     }
 

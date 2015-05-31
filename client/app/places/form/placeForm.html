@@ -29,4 +29,5 @@
 
   <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid || form.$pristine"><i class="fa fa-save"></i> Save</button>
   <a ng-show="back" ui-sref="{{back}}" class="btn"><i class="fa fa-times"></i> Cancel</a>
+  <a ng-href="javascript:void(0);" ng-show="isLoggedIn && place.canDelete" class="btn btn-ra-red" ng-click="deletePlace()">Delete</a>
 </form>

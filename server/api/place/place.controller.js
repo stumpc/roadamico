@@ -78,10 +78,54 @@ exports.index = function(req, res) {
 
 // Get a single place
 exports.show = function(req, res) {
+  var role = "", user_id;
   Place.findById(req.params.id, function (err, place) {
-    if(err) { return handleError(res, err); }
-    if(!place) { return res.send(404); }
-    return res.json(place);
+        if(err) { return handleError(res, err); }
+        if(!place) { return res.send(404); }
+          var promise;
+          if(req.headers.authorization){
+              var deferred = Q.defer();
+              var parts = req.headers.authorization.split(' ');
+              if (parts.length == 2) {
+                  var credentials = parts[1];
+                  jwt.verify(credentials, config.secrets.session, {}, function(err, decoded) {
+                      user_id = decoded._id;
+                      User.findById(mongoose.Types.ObjectId(user_id), function(err, _user) {
+                          if(err){
+                              res.send(403);
+                          }
+                          role = _user.role;
+                          deferred.resolve();
+                      })
+                  });
+              }
+              promise = deferred.promise;
+          }
+          else {
+              promise =  Q.when();
+          }
+          promise.then(function(){
+              List.find({ "entries.place": place._id }, function(err, lists){
+                  if(err) { return handleError(res, err); }
+                  var aplace = {};
+                  aplace._id = place._id;
+                  aplace.description = place.description;
+                  aplace.feed = place.feed;
+                  aplace.ratings = place.ratings;
+                  aplace.location = place.location;
+                  aplace.locationDetails = place.locationDetails;
+                  aplace.list = lists;
+
+                  if(role == "admin" || (lists.length == 1 && lists[0].owners.indexOf(user_id) > -1)){
+                      aplace.canDelete = true;
+                  }
+                  else {
+                      aplace.canDelete = false;
+                  }
+                  return res.json(200, aplace);
+              });
+        });
+
   });
 };
 

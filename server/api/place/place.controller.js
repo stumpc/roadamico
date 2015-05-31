@@ -19,7 +19,11 @@ exports.index = function(req, res) {
       var itemsLeft = places.length;
       var place_list = [];
       var role = "", user_id;
+
+
+      var promise;
       if(req.headers.authorization){
+          var deferred = Q.defer();
           var parts = req.headers.authorization.split(' ');
           if (parts.length == 2) {
               var credentials = parts[1];
@@ -30,43 +34,47 @@ exports.index = function(req, res) {
                           res.send(403);
                       }
                       role = _user.role;
+                      deferred.resolve();
                   })
               });
           }
+          promise = deferred.promise;
       }
-      places.forEach(function(place) {
-          List.find({ "entries.place": place._id }, function(err, lists){
-              if(err) { return handleError(res, err); }
-              var aplace = {};
-              aplace._id = place._id;
-              aplace.description = place.description;
-              aplace.feed = place.feed;
-              aplace.ratings = place.ratings;
-              aplace.location = place.location;
-              aplace.locationDetails = place.locationDetails;
-              aplace.list = lists;
+      else {
+          promise =  Q.when();
+      }
 
-              if(role == "admin" || (lists.length == 1 && lists[0].owners.indexOf(user_id) > -1)){
-                  aplace.canDelete = true;
-              }
-              else {
-                  aplace.canDelete = false;
-              }
+      promise.then(function(){
+          places.forEach(function(place) {
+              List.find({ "entries.place": place._id }, function(err, lists){
+                  if(err) { return handleError(res, err); }
+                  var aplace = {};
+                  aplace._id = place._id;
+                  aplace.description = place.description;
+                  aplace.feed = place.feed;
+                  aplace.ratings = place.ratings;
+                  aplace.location = place.location;
+                  aplace.locationDetails = place.locationDetails;
+                  aplace.list = lists;
 
-              place_list.push(aplace);
+                  if(role == "admin" || (lists.length == 1 && lists[0].owners.indexOf(user_id) > -1)){
+                      aplace.canDelete = true;
+                  }
+                  else {
+                      aplace.canDelete = false;
+                  }
 
-              if(!--itemsLeft){
-                  return res.json(200, place_list);
-              }
-              //return res.json(200, places);
+                  place_list.push(aplace);
+
+                  if(!--itemsLeft){
+                      return res.json(200, place_list);
+                  }
+              });
           });
-          //console.log(place.locationDetails.name);
       });
-    //if(err) { return handleError(res, err); }
-    //console.log('HEY');
-    //return res.json(200, places);
   });
 };
+
 
 // Get a single place
 exports.show = function(req, res) {

@@ -1,11 +1,16 @@
 'use strict';
 
 var _ = require('lodash');
+var auth = require('../../auth/auth.service');
 var Place = require('./place.model');
+var User = require('../user/user.model');
 var List = require('../list/list.model');
 var moment = require('moment');
 var upload = require('../../components/upload');
 var Q = require('q');
+var jwt = require('jsonwebtoken');
+var config = require('../../config/environment');
+var mongoose = require('mongoose');
 
 // Get list of places
 exports.index = function(req, res) {
@@ -13,6 +18,22 @@ exports.index = function(req, res) {
   Place.find({}).sort({ "locationDetails.name": 'asc' }).exec(function (err, places) {
       var itemsLeft = places.length;
       var place_list = [];
+      var role = "", user_id;
+      if(req.headers.authorization){
+          var parts = req.headers.authorization.split(' ');
+          if (parts.length == 2) {
+              var credentials = parts[1];
+              jwt.verify(credentials, config.secrets.session, {}, function(err, decoded) {
+                  user_id = decoded._id;
+                  User.findById(mongoose.Types.ObjectId(user_id), function(err, _user) {
+                      if(err){
+                          res.send(403);
+                      }
+                      role = _user.role;
+                  })
+              });
+          }
+      }
       places.forEach(function(place) {
           List.find({ "entries.place": place._id }, function(err, lists){
               if(err) { return handleError(res, err); }
@@ -24,6 +45,14 @@ exports.index = function(req, res) {
               aplace.location = place.location;
               aplace.locationDetails = place.locationDetails;
               aplace.list = lists;
+
+              if(role == "admin" || (lists.length == 1 && lists[0].owners.indexOf(user_id) > -1)){
+                  aplace.canDelete = true;
+              }
+              else {
+                  aplace.canDelete = false;
+              }
+
               place_list.push(aplace);
 
               if(!--itemsLeft){
@@ -136,14 +165,59 @@ exports.removePost = function (req, res) {
 
 // Deletes a place from the DB.
 exports.destroy = function(req, res) {
-  Place.findById(req.params.id, function (err, place) {
-    if(err) { return handleError(res, err); }
-    if(!place) { return res.send(404); }
-    place.remove(function(err) {
-      if(err) { return handleError(res, err); }
-      return res.send(204);
-    });
-  });
+    var parts = req.headers.authorization.split(' ');
+    if (parts.length == 2) {
+        var credentials = parts[1];
+        jwt.verify(credentials, config.secrets.session, {}, function(err, decoded) {
+            User.findById(mongoose.Types.ObjectId(decoded._id), function(err, _user) {
+                if(err){
+                    res.send(403);
+                }
+
+                if(_user.role == 'admin') {
+                    Place.findById(req.params.id, function (err, place) {
+                        if(err) { return handleError(res, err); }
+                        if(!place) { return res.send(404); }
+                        place.remove(function(err) {
+                            if(err) {
+                                return handleError(res, err);
+                            }
+                            return res.send(204);
+                        });
+                    });
+                }
+                else {
+                    List.find({"entries.place" : req.params.id}, function(err, lists){
+                        if(err) { return handleError(res, err); }
+                        if(!lists){ return res.send(404); }
+                        if(lists.length == 1) {
+                            var owners = [];
+                            //console.log(lists[0].owners.indexOf(decoded._id));
+                            if(lists[0].owners.indexOf(decoded._id) > -1){
+                                Place.findById(req.params.id, function (err, place) {
+                                    if(err) { return handleError(res, err); }
+                                    if(!place) { return res.send(404); }
+                                    place.remove(function(err) {
+                                        if(err) { return handleError(res, err); }
+                                        return res.send(204);
+                                    });
+                                });
+                            }
+
+                        }
+                        else{
+                            return res.send(403);
+                        }
+
+                    });
+                }
+            });
+
+        });
+    }
+    else {
+        res.send(403);
+    }
 };
 
 exports.rate = function (req, res) {

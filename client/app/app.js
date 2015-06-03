@@ -3,7 +3,7 @@
 angular.module('roadAmicoApp', [
   'ngCookies',
   'ngResource',
-  'ngSanitize',
+  //'ngSanitize',
   'btford.socket-io',
   'ui.router',
   'ui.bootstrap',

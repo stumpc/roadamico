@@ -291,7 +291,7 @@ exports.rate = function (req, res) {
         score: req.body.score
       });
     }
-
+    console.log(JSON.stringify(place.ratings));
     place.save(function(err, place) {
       if(err) { return handleError(res, err); }
       return res.send(200, place);

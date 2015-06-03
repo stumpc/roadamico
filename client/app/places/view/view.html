@@ -54,7 +54,8 @@
             </div>
 
             <div class="space-top-small">
-              <div rating ng-model="rating" state-on="['fa', 'fa-star']" state-off="['fa', 'fa-star-o']" readonly="true"></div>
+              <div rating ng-model="rating" state-on="['fa', 'fa-star']" state-off="['fa', 'fa-star-o']" readonly="false"
+                      ng-click="rate(rating);"></div>
               <br/>
               <small><em>Based on {{place.ratings.length}} ratings</em></small>
               <br/>

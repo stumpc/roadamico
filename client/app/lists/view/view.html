@@ -22,6 +22,9 @@
 
     <a class="btn btn-ra-teal-hollow" ng-show="canEdit(true)" ui-sref="^.settings"><i class="fa fa-cog"></i> Settings</a>
     <button ng-show="editing && canEdit(true)" class="btn btn-ra-red-hollow" ng-click="delete()"><i class="fa fa-trash"></i> Delete</button>
+    <div rating ng-model="rating" state-on="['fa', 'fa-star']" state-off="['fa', 'fa-star-o']" readonly="false"
+           ng-click="rate(rating);"></div>
+      <small><em>Based on {{list.ratings.length}} ratings</em></small>
   </div>
 
   <!-- Follow/Comment -->

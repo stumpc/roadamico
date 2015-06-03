@@ -2,7 +2,7 @@
 
 angular.module('roadAmicoApp')
   .controller('ViewListCtrl', function ($scope, $q, $upload, $modal, $location, $document, $state, Auth, list, List, Place,
-                                        placeUtil, editing, Modal, Geolocator, Google) {
+                                        placeUtil, listUtil, editing, Modal, Geolocator, Google) {
 
     $document[0].title = 'RoadAmico - ' + list.name;
 
@@ -298,5 +298,15 @@ angular.module('roadAmicoApp')
                 $scope.showFileSelect = false;
             }
         });
+
+        $scope.rating = listUtil.getRating(list);
+
+        $scope.rate = function (value) {
+            console.log(value);
+            List.rate({id: list._id}, {score: value}).$promise.then(function (_list) {
+                angular.copy(_list, list);
+                $scope.rating = listUtil.getRating(list);
+            });
+        };
 
     });

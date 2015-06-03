@@ -17,6 +17,10 @@ angular.module('roadAmicoApp')
       publicLists: {
         url: '/api/lists/public',
         isArray: true
+      },
+      rate: {
+        method: 'POST',
+        url: '/api/lists/:id/rate'
       }
     });
   });

@@ -141,7 +141,14 @@ function generateLists() {
     return new List({
       name: faker.company.catchPhrase(),
       curated: false,
-      entries: _.times(10, randomListEntry)
+      entries: _.times(10, randomListEntry),
+      ratings: _.times(2, function () {
+        return {
+            datetime: moment().subtract(randInt(50), 'days').toISOString(),
+            poster: users[randInt(7)+1]._id,
+            score: randInt(5) + 1
+        };
+      })
     });
   });
 }

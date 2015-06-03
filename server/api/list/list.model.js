@@ -20,7 +20,12 @@ var ListSchema = new Schema({
   published: Boolean,
   groupRestriction: [{ type: Schema.Types.ObjectId, ref: 'Group' }],
   owners: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-  open: Boolean
+  open: Boolean,
+  ratings: [{
+    datetime: String,
+    poster: { type: Schema.Types.ObjectId, ref: 'User' },
+    score: Number
+  }]
 });
 
 module.exports = mongoose.model('List', ListSchema);

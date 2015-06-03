@@ -213,3 +213,30 @@ exports.destroy = function (req, res) {
 function handleError(res, err) {
   return res.send(500, err);
 }
+
+// For Rating a Playlist
+exports.rate = function (req, res) {
+    List.findById(req.params.id, function (err, list) {
+        if(err) { return handleError(res, err); }
+        if(!list) { return res.send(404); }
+
+        // See if this user has already rated
+        var rating = _.find(list.ratings, function (rating) {
+            return req.user._id.equals(rating.poster);
+        });
+        if (rating) {
+            rating.datetime = moment().toISOString();
+            rating.score = req.body.score;
+        } else {
+            list.ratings.push({
+                datetime: moment().toISOString(),
+                poster: req.user._id,
+                score: req.body.score
+            });
+        }
+        list.save(function(err, list) {
+            if(err) { return handleError(res, err); }
+            return res.send(200, list);
+        });
+    });
+};

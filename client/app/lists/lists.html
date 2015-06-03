@@ -11,7 +11,7 @@
       <a ui-sref="list.view({id:list._id})">{{list.name}}</a>
       <span class="badge badge-success" ng-hide="list.published">Unpublished</span>
         <div rating ng-model="list.rating" state-on="['fa', 'fa-star']" state-off="['fa', 'fa-star-o']"
-             readonly="true" class="color-sunflower-dark space-left-large"></div>
+             data-readonly="true" class="color-sunflower-dark space-left-large"></div>
     </li>
   </ul>
 

@@ -16,6 +16,10 @@ var mongoose = require('mongoose');
 exports.index = function(req, res) {
   //Place.find(function (err, places) {
   Place.find({}).sort({ "locationDetails.name": 'asc' }).exec(function (err, places) {
+   /*places.forEach(function(place){
+      console.log(place.locationDetails.name);
+   });*/
+  //Place.where("locationDetails.name").ne(null).sort({ "locationDetails.name": 'asc' }).exec(function (err, places) {
       var itemsLeft = places.length;
       var place_list = [];
       var role = "", user_id;
@@ -67,6 +71,7 @@ exports.index = function(req, res) {
                   place_list.push(aplace);
 
                   if(!--itemsLeft){
+                      place_list.sort(compare);
                       return res.json(200, place_list);
                   }
               });
@@ -74,6 +79,14 @@ exports.index = function(req, res) {
       });
   });
 };
+
+var compare = function(place1, place2) {
+    if (place1.locationDetails.name < place2.locationDetails.name)
+        return -1;
+    if (place1.locationDetails.name > place2.locationDetails.name)
+        return 1;
+    return 0;
+}
 
 
 // Get a single place

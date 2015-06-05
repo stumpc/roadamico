@@ -1,0 +1,28 @@
+.lists {
+	font-size: 16px;
+	list-style-type: none;
+
+
+	li{
+		margin-top:3px; 
+
+
+		.glyphicon-road {
+			color: #e74c3c;
+			font-size: 18px;
+			padding-right: 9px;
+		}
+
+		.listname {
+			font-size: 18px;
+
+		}
+
+	}
+
+	.list-group-item:first-child {
+		border-top-width: 1px;
+	  border-top-style: solid;
+	  border-top-color: rgb(230, 233, 237);
+	}
+}

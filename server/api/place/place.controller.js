@@ -81,10 +81,30 @@ exports.index = function(req, res) {
 };
 
 var compare = function(place1, place2) {
-    if (place1.locationDetails.name < place2.locationDetails.name)
-        return -1;
-    if (place1.locationDetails.name > place2.locationDetails.name)
-        return 1;
+   if(place1.locationDetails.name === undefined && place2.locationDetails.name === undefined){
+        if (place1.locationDetails < place2.locationDetails)
+            return -1;
+        if (place1.locationDetails > place2.locationDetails)
+            return 1;
+    }
+    else if(place1.locationDetails.name === undefined && place2.locationDetails.name){
+        if (place1.locationDetails < place2.locationDetails.name)
+            return -1;
+        if (place1.locationDetails > place2.locationDetails.name)
+            return 1;
+    }
+    else if(place1.locationDetails.name && place2.locationDetails.name === undefined ){
+        if (place1.locationDetails.name < place2.locationDetails)
+            return -1;
+        if (place1.locationDetails.name > place2.locationDetails)
+            return 1;
+    }
+    else {
+        if (place1.locationDetails.name < place2.locationDetails.name)
+            return -1;
+        if (place1.locationDetails.name > place2.locationDetails.name)
+            return 1;
+    }
     return 0;
 }
 

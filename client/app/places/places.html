@@ -1,6 +1,12 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <div class="container page places-page">
+  <div class="jumbotron">
+    <div class="jumbotron-photo">
+      <img src="/assets/images/banner.jpg">
+    </div>
+  </div>
+
   <h1>Places</h1>
 
   <a ng-show="isLoggedIn()" class="btn" ui-sref="createPlace">Add a new place</a>

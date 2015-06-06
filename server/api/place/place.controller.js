@@ -164,10 +164,23 @@ exports.show = function(req, res) {
 
 // Creates a new place in the DB.
 exports.create = function(req, res) {
-  Place.create(req.body, function(err, place) {
-    if(err) { return handleError(res, err); }
-    return res.json(201, place);
+   Place.find({'locationDetails.name': req.body.name}, function(err, place) {
+      if (err) {
+          return handleError(res, err);
+      }
+      if(!place || place.length === 0) {
+          Place.create(req.body, function(err, place) {
+              if(err) {
+                  return handleError(res, err);
+              }
+              return res.json(201, place);
+          });
+      }
+      else {
+          return res.json(200, {"msg": "Place already exists." });
+      }
   });
+
 };
 
 // Updates an existing place in the DB.
@@ -220,9 +233,7 @@ exports.saveEntryPhoto = function(req, res){
             });
         }
         else {
-            place.feed.forEach(function(feed_item){
-                feed_item.photo = req.body.photo;
-            });
+            place.feed[0].photo = req.body.photo;
             place.save(function (err, place) {
                 if (err) return next(err);
                 res.send(place);

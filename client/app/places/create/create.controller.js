@@ -32,7 +32,17 @@ angular.module('roadAmicoApp')
 
     $scope.create = function () {
       Place.save($scope.place).$promise.then(function (place) {
-        $state.go('place.view', {id: place._id});
+        if (place.msg === 'Place already exists.')  {
+            toastr.options = {
+                "timeOut": 2000,
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            };
+            toastr.error(place.msg, 'Error');
+        }
+        else{
+            $state.go('place.view', {id: place._id});
+        }
       });
     }
   });

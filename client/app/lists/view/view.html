@@ -104,15 +104,16 @@
           <div class="col-sm-6 col-sm-offset-3">
             <div class="embed">
               <img ng-src="{{entry.photo}}" >
-              <p ng-hide="showTextEditor">
+              <p ng-hide="showTextEditor[$index]">
                   {{entry.text}}
               </p>
-              <div ng-hide="!editing || showTextEditor" class="space-bottom-smaller"><a href="" ng-click="showTextEditor=true">Edit</a></div>
-              <p ng-show="showTextEditor">
+              <div ng-hide="!editing || showTextEditor[$index]" class="space-bottom-smaller">
+                  <a href="" ng-click="showTextEditor_$index=true; editCaption($index);">Edit</a></div>
+              <p ng-show="showTextEditor[$index]">
                   <label for="imgDescriptionEdit">Say something about this picture:</label>
                   <textarea name="imgDescriptionEdit" id="imgDescriptionEdit" ng-model="entry.text" class="form-control"></textarea>
-                  <div class="buttons" ng-show="showTextEditor">
-                     <button class="btn btn-ra-teal" ng-click="save()">
+                  <div class="buttons" ng-show="showTextEditor[$index]">
+                     <button class="btn btn-ra-teal" ng-click="save();showTextEditor[$index]=false;">
                          <i class="fa fa-save"></i> Save
                      </button>
                   </div>
@@ -127,7 +128,18 @@
           <div class="col-sm-6 col-sm-offset-3">
               <div class="embed">
                   <a href="{{entry.photo}}" target="_blank">{{ entry.embed.url }}</a>
-                  <p>{{entry.text}}</p>
+                  <p ng-hide="showTextEditor[$index]">{{entry.text}}</p>
+                  <div ng-hide="!editing || showTextEditor[$index]" class="space-bottom-smaller">
+                      <a href="" ng-click="showTextEditor[$index]=true;editCaption($index);">Edit</a></div>
+                  <p ng-show="showTextEditor[$index]">
+                      <label for="fileDescriptionEdit">Say something about this file:</label>
+                      <textarea name="fileDescriptionEdit" id="fileDescriptionEdit" ng-model="entry.text" class="form-control"></textarea>
+                  <div class="buttons" ng-show="showTextEditor[$index]">
+                      <button class="btn btn-ra-teal" ng-click="save();showTextEditor[$index]=false;">
+                          <i class="fa fa-save"></i> Save
+                      </button>
+                  </div>
+                  </p>
           </div>
         </div>
       </div>

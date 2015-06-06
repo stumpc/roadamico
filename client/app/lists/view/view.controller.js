@@ -10,6 +10,7 @@ angular.module('roadAmicoApp')
     $scope.user = Auth.getCurrentUser();
     $scope.isLoggedIn = Auth.isLoggedIn;
 
+    $scope.showTextEditor = [];
     //$scope.canEdit = function (list) {
     //  return Auth.isLoggedIn() && ($scope.user.role === 'admin' || $scope.user.role === 'curator' || !list.curated);
     //};
@@ -316,6 +317,14 @@ angular.module('roadAmicoApp')
                 angular.copy(_list, list);
                 $scope.rating = listUtil.getRating(list);
             });
+        };
+
+
+        $scope.editCaption = function(index) {
+            for(var i = 0; i < $scope.showTextEditor.length; i++) {
+                $scope.showTextEditor[i] = false;
+            }
+            $scope.showTextEditor[index] = true;
         };
 
     });

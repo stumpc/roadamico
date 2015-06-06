@@ -104,7 +104,19 @@
           <div class="col-sm-6 col-sm-offset-3">
             <div class="embed">
               <img ng-src="{{entry.photo}}" >
-              <p>{{entry.text}}</p>
+              <p ng-hide="showTextEditor">
+                  {{entry.text}}
+              </p>
+              <div ng-hide="!editing || showTextEditor" class="space-bottom-smaller"><a href="" ng-click="showTextEditor=true">Edit</a></div>
+              <p ng-show="showTextEditor">
+                  <label for="imgDescriptionEdit">Say something about this picture:</label>
+                  <textarea name="imgDescriptionEdit" id="imgDescriptionEdit" ng-model="entry.text" class="form-control"></textarea>
+                  <div class="buttons" ng-show="showTextEditor">
+                     <button class="btn btn-ra-teal" ng-click="save()">
+                         <i class="fa fa-save"></i> Save
+                     </button>
+                  </div>
+              </p>
             </div>
           </div>
         </div>

@@ -259,9 +259,18 @@ angular.module('roadAmicoApp')
                             $modalInstance.close('closed');
 
                             Place.save($scope.place).$promise.then(function (place) {
-                                console.log(place);
-                                getPlaces();
-                                $scope.newEntry.place = place;
+                                if (place.msg === 'Place already exists.')  {
+                                    toastr.options = {
+                                        "timeOut": 2000,
+                                        "showMethod": "fadeIn",
+                                        "hideMethod": "fadeOut"
+                                    };
+                                    toastr.error(place.msg, 'Error');
+                                }
+                                else{
+                                    getPlaces();
+                                    $scope.newEntry.place = place;
+                                }
                             });
                         } else {
                             console.log('add place form is not in scope');

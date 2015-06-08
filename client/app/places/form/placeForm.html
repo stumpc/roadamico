@@ -1,4 +1,12 @@
-
+<!-- Photo -->
+<div class="row">
+    <div class="col-sm-3">
+        <img ng-src="{{ photos[entry.place._id] }}" class="thumbnail" alt="{{place.locationDetails.name}}" />
+        <div class="space-bottom-smaller"><a href="javascript://" ng-click="showFileUpload()">Edit</a></div>
+        <div photo-uploader ng-hide="!showFileSelect" ng-model="entry"
+             on-open="showFileUpload()" show-file-select='showFileSelect'></div>
+    </div>
+</div>
 <form name="form" ng-submit="save(place)" novalidate>
 
   <!-- Name -->

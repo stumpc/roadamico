@@ -5,11 +5,14 @@
   <!-- Information -->
   <div class="container place-info">
     <ol class="breadcrumb">
-      <li><a ui-sref="places">Places</a></li>
+      <li><a ui-sref="places" >Places</a></li>
       <li class="active">{{place.locationDetails.name}}</li>
     </ol>
 
     <div class="row">
+        <div class="col-sm-3">
+            <img ng-src="{{ place.photo }}" class="thumbnail" />
+        </div>
       <div class="col-md-7">
         <!-- Name -->
         <div class="name">
@@ -54,8 +57,9 @@
             </div>
 
             <div class="space-top-small">
-              <div rating ng-model="rating" state-on="['fa', 'fa-star']" state-off="['fa', 'fa-star-o']" readonly="false"
-                      ng-click="rate(rating);"></div>
+              <div ng-if="isLoggedIn()" rating ng-model="rating" state-on="['fa', 'fa-star']" state-off="['fa', 'fa-star-o']"
+                   readonly="false" ng-click="rate(rating);"></div>
+                <div ng-if="!isLoggedIn()" rating ng-model="rating" state-on="['fa', 'fa-star']" state-off="['fa', 'fa-star-o']" readonly="true"></div>
               <br/>
               <small><em>Based on {{place.ratings.length}} ratings</em></small>
               <br/>

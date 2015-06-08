@@ -6,6 +6,7 @@ angular.module('roadAmicoApp')
     $document[0].title = 'RoadAmico - ' + place.locationDetails.name;
 
     $scope.place = place;
+    $scope.place.photo = placeUtil.getPhoto(place);
     $scope.user = Auth.getCurrentUser();
     $scope.isLoggedIn = Auth.isLoggedIn;
     //console.log(place.locationDetails);

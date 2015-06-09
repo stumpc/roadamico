@@ -13,14 +13,17 @@
       <!-- Name -->
       <div class="name">
         <h1>{{place.locationDetails.name}}</h1>
-        <a ng-show="isLoggedIn()" class="btn btn-sm" ui-sref="place.edit({id: place._id})"><i class="fa fa-pencil"></i> Edit</a>
+        <a ng-show="isLoggedIn()" class="btn btn-sm" ui-sref="place.edit({id: place._id})"><i class="fa fa-pencil"></i>Edit</a>
       </div>
     </div>
 
-    <div class="row">      
-      <div class="col-md-6">
-        
-        <div class="row space-top-small space-bottom-small">
+    <div class="row">     
+      <div class="col-md-6 panel panel-default ">
+        <div class="panel-heading">
+          <h3 class="panel-title"><div class="col-xs-1"><i class="fa fa-lg fa-th-list"></i></div>Details</h3>
+        </div> 
+
+        <div class="panel-body row space-top-small space-bottom-small">
           <div class="col-md-6">
             <!-- Cover Picture -->
             <img ng-src="{{ place.photo }}" class="thumbnail" />
@@ -70,16 +73,25 @@
         </div>
 
         <!-- Description -->
-        <hr/>
-        <div>{{place.description}}</div>
+        <!--<hr/>-->
+        <div class="panel-heading">
+          <h3 class="panel-title"><div class="col-xs-1"><i class="fa fa-lg fa-align-left"></i></div>Description</h3>
+        </div> 
+        <div class="panel-body">
+          <p>{{place.description}}</p>
+        </div>
       </div>
 
-      <div class="col-md-6">
-        <!-- Map -->
-        <div ng-if="place.locationDetails">
-          <map zoom="12" center="[35.910419, -79.049592]" scrollwheel="false"></map>
+      <div class="col-md-6 panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><div class="col-xs-1"><i class="fa fa-lg fa-globe"></i></div></i>Map</h3>
+        </div> 
+        <div class="panel-body">
+          <!-- Map -->
+          <div ng-if="place.locationDetails">
+            <map zoom="12" center="[35.910419, -79.049592]" scrollwheel="false"></map>
+          </div>
         </div>
-
       </div>
     </div>
   </div>

@@ -18,13 +18,17 @@
     &:hover .name a {
       display: block;
     }
+
+    .panel {
+      padding-top: 10px;
+    }
   }
 
 
   .photo-viewer {
     background: $darkgray-dark;
     color: white;
-    
+
     .photo-holder {
       white-space: nowrap;
       height: 240px;

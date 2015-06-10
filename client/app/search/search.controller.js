@@ -2,7 +2,7 @@
 
 angular.module('roadAmicoApp')
   .controller('SearchCtrl', function ($scope, Search, placeUtil) {
-
+    $scope.showLoader = true;
     function process() {
       _.forEach($scope.results, function (result) {
         if (result.type === 'place') {
@@ -13,6 +13,7 @@ angular.module('roadAmicoApp')
           result.when = moment(result.datetime).format('llll');
         }
       });
+        $scope.showLoader = false;
     }
 
     $scope.results = Search.getResults();
@@ -21,10 +22,17 @@ angular.module('roadAmicoApp')
     process();
 
     $scope.search = function () {
-      Search.newSearch($scope.newQuery).then(function (results) {
-        $scope.query = $scope.newQuery;
-        $scope.results = results;
-        process();
-      });
+      if($scope.newQuery.length > 0){
+          $scope.showLoader = true;
+          Search.newSearch($scope.newQuery).then(function (results) {
+            $scope.query = $scope.newQuery;
+            $scope.results = results;
+            process();
+          });
+      }
+      else {
+          $scope.query = $scope.newQuery;
+          $scope.results = [];
+      }
     };
   });

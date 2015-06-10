@@ -11,7 +11,7 @@
 
   <a ui-sref="createList" ng-show="isLoggedIn()" class="btn">Create a new list</a>
   <hr/>
-
+  <img class="spinner" ng-src="/assets/images/loading_spinner.gif" ng-show="showLoader">
   <ul class="lists list-group">
     <li class="list-group-item" ng-repeat="list in lists">
       

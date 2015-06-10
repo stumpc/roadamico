@@ -3,6 +3,7 @@
 angular.module('roadAmicoApp')
   .controller('ListsCtrl', function ($scope, List, Auth, listUtil) {
     $scope.isLoggedIn = Auth.isLoggedIn;
+    $scope.showLoader = true;
 
     if (Auth.isLoggedIn()) {
       $scope.lists = List.query();
@@ -15,6 +16,7 @@ angular.module('roadAmicoApp')
         _.forEach($scope.lists, function (result) {
             result.rating = listUtil.getRating(result);
         });
+        $scope.showLoader = false;
     });
 
   });

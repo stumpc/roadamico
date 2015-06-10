@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .directive('placeForm', function ($location, Auth, Place, placeUtil) {
+  .directive('placeForm', function ($state, $timeout, $location, Auth, Place, placeUtil) {
     return {
       templateUrl: 'app/places/form/placeForm.html',
       restrict: 'EA',
@@ -16,6 +16,7 @@ angular.module('roadAmicoApp')
         scope.photos = {};
         scope.photos[scope.entry.place._id] = placeUtil.getPhoto(scope.entry.place);
         scope.isLoggedIn = Auth.isLoggedIn;
+        scope.showLoader = false;
 
 
         scope.save = function () {
@@ -37,6 +38,11 @@ angular.module('roadAmicoApp')
           scope.$watch('photos[entry.place._id]', function (value) {
               if(value && (_.contains(value, "blob"))){
                   scope.showFileSelect = false;
+                  scope.showLoader = true;
+                  return $timeout(function () {
+                      scope.showLoader = false;
+                      $state.go('.', {}, { reload: true });
+                  }, 2000);
               }
           });
       }

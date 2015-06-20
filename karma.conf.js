@@ -41,6 +41,7 @@ module.exports = function(config) {
       'client/bower_components/textAngular/dist/textAngular-sanitize.min.js',
       'client/bower_components/textAngular/dist/textAngular.min.js',
       'client/bower_components/jquery-ui/jquery-ui.js',
+      'client/bower_components/angular-block-ui/dist/angular-block-ui.min.js',
       'client/bower_components/angular-ui-sortable/sortable.js',
       'client/app/app.js',
       //'client/app/app.coffee',

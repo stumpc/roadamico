@@ -55,6 +55,26 @@ angular.module('roadAmicoApp')
                     uploadPhoto(files[0]);
                 };
 
+                scope.$watch('data.url_photo', function (value) {
+                    if(value && value.length > 0){
+                        scope.loading = true;
+                        scope.$parent.photos[scope.data.place._id] = value;
+                        $http.get('/api/utils/embed/' + encodeURIComponent(value)).success(function (result) {
+                            scope.loading = false;
+                            //scope.data.embed = result;
+                            var feed = {
+                                datetime: moment().toISOString(),
+                                photo: result.url
+                            }
+                            Place.saveFeedPhoto({id: scope.data.place._id}, feed).$promise.then(function (_place) {
+                                scope.loading = false;
+                                scope.data.url_photo = "";
+                                delete scope.data.embed;
+                            });
+                        });
+                    }
+                });
+
                 var uploadPhoto = function(file) {
                     scope.loading = true;
                     var promise;
@@ -63,20 +83,16 @@ angular.module('roadAmicoApp')
                         url: '/api/utils/upload',
                         file: file
                     }).success(function (data) {
-                        deferred.resolve(data.url);
+                        deferred.resolve(data.url_photo);
                     });
                     promise = deferred.promise;
                     promise.then(function (url) {
-                        //console.log('URL: ' + url);
                         var feed = {
                             datetime: moment().toISOString(),
                             photo: url
                         }
                         Place.saveFeedPhoto({id: scope.data.place._id}, feed).$promise.then(function (_place) {
                             scope.loading = false;
-                            //angular.copy(_place, scope.data.place);
-                            //scope.$parent.showFileSelect = false;
-                            //scope.showFileSelect = false;
                         });
                     });
                 };

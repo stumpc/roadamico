@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .controller('ViewListCtrl', function ($scope, $q, $upload, $modal, $location, $document, $state, Auth, list, List, Place,
-                                        placeUtil, listUtil, editing, Modal, Geolocator, Google) {
+  .controller('ViewListCtrl', function ($scope, $q, $upload, $modal, $location, $document, $state, $timeout, Auth, list, List, Place,
+                                        placeUtil, listUtil, editing, Modal, Geolocator, Google, blockUI) {
 
     $document[0].title = 'RoadAmico - ' + list.name;
 
@@ -237,7 +237,6 @@ angular.module('roadAmicoApp')
                             $scope.place.phone = value.formatted_phone_number;
 
                             if (value.geometry && value.geometry.location) {
-                                console.log(value.geometry);
                                 value.geometry.location.latitude = value.geometry.location.lat();
                                 value.geometry.location.longitude = value.geometry.location.lng();
                             }
@@ -256,7 +255,6 @@ angular.module('roadAmicoApp')
 
                     $scope.addPlace = function () {
                         if ($scope.form.addPlaceForm.$valid) {
-                            console.log('add place form is in scope');
                             $modalInstance.close('closed');
 
                             Place.save($scope.place).$promise.then(function (place) {
@@ -304,15 +302,21 @@ angular.module('roadAmicoApp')
         };
 
         $scope.$watch('photos[newEntry.place._id]', function (value) {
-            if(value && value.indexOf("blob") != -1){
+            if( value && (value.indexOf("blob") != -1 ||  value.indexOf("jpg") != -1 ||
+                value.indexOf("jpeg") != -1 || value.indexOf("png") != -1 || value.indexOf("gif") != -1)){
                 $scope.showFileSelect = false;
+                $scope.showLoader = true;
+                blockUI.start();
+                return $timeout(function () {
+                    $scope.showLoader = false;
+                    blockUI.stop();
+                }, 3000);
             }
         });
 
         $scope.rating = listUtil.getRating(list);
 
         $scope.rate = function (value) {
-            console.log(value);
             List.rate({id: list._id}, {score: value}).$promise.then(function (_list) {
                 angular.copy(_list, list);
                 $scope.rating = listUtil.getRating(list);

@@ -66,16 +66,15 @@ angular.module('roadAmicoApp')
             scope.data.type = files[0].type;
             scope.data.url = files[0].name;
           }
-          //console.log(scope.data.type);
         };
 
 
         scope.$watch('data.url', function (value) {
           if (!value) return;
           scope.loading = true;
-          //console.log("Value: " +value);
           $http.get('/api/utils/embed/' + encodeURIComponent(value))
             .success(function (result) {
+              console.log(JSON.stringify(result));
               scope.loading = false;
               scope.data.embed = result;
             });

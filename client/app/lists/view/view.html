@@ -145,7 +145,7 @@
       </div>
 
         <!-- Display rich text -->
-        <div ng-if="entry.text && !entry.photo" class="text">
+        <div ng-if="entry.text && !entry.photo && !entry.embed" class="text">
           <div ng-hide="editing" ng-bind-html="entry.text"></div>
           <div ng-if="editing" text-angular ng-model="entry.text" ng-change="save()" ng-model-options="{ updateOn: 'blur' }"></div>
         </div>
@@ -154,7 +154,22 @@
         <div ng-if="entry.embed && !entry.photo">
           <div class="row">
             <div class="col-sm-6 col-sm-offset-3">
-              <div embedded-media="entry.embed" class="embed"></div>
+                <div class="embed">
+                  <div embedded-media="entry.embed" class="embed"></div>
+                    <p ng-hide="showTextEditor[$index]">{{entry.text}}</p>
+                    <div ng-hide="!editing || showTextEditor[$index]" class="space-bottom-smaller">
+                        <a href="" ng-click="showTextEditor_$index=true; editCaption($index);">Edit</a>
+                    </div>
+                    <p ng-show="showTextEditor[$index]">
+                        <label for="imgDescriptionEdit">Say something about this picture:</label>
+                        <textarea name="imgDescriptionEdit" id="imgDescriptionEdit" ng-model="entry.text" class="form-control"></textarea>
+                        <div class="buttons" ng-show="showTextEditor[$index]">
+                            <button class="btn btn-ra-teal" ng-click="save();showTextEditor[$index]=false;">
+                                <i class="fa fa-save"></i> Save
+                            </button>
+                        </div>
+                    </p>
+                </div>
             </div>
           </div>
         </div>
@@ -187,6 +202,7 @@
                 <div class="space-bottom-smaller"><a href="" ng-click="showFileUpload()">Edit</a></div>
                   <div photo-uploader ng-hide="!showFileSelect" ng-model="newEntry"
                        on-open="showFileUpload()" show-file-select='showFileSelect'></div>
+                  <img class="spinner" ng-src="/assets/images/loading_spinner.gif" ng-show="showLoader">
               </div>
 
               <div class="col-sm-9">

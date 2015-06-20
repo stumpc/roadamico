@@ -3,13 +3,33 @@
         <div class="photo-uploader">
 
             <form name="form" novalidate ng-submit="share()">
+                <!-- Embed -->
+                <div class="form-group" ng-hide="data.file" ng-class="{ 'has-error' : form.url.$invalid }">
+                    <div ng-hide="loading">
+                        <label for="url">Enter URL:</label>
+                        <input id="url" name="url" type="text" class="form-control space-top-small space-bottom-small" placeholder="http://..."
+                               ng-model="data.url_photo" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"/>
+                    </div>
+                    <div class="text-center" ng-show="loading">
+                        <i class="fa fa-3x fa-spinner fa-spin"></i>
+                    </div>
 
-                <div class="form-group" ng-hide="data.file || data.embed">
+                </div>
+
+                <div class="form-group" ng-hide="data.file">
                     <label for="file">Upload a picture:</label>
                     <br/>
                     <button id="file" class="btn btn-ra-red-hollow btn-sm space-right-small" ng-file-select="onFileSelect($files)" ng-multiple="false"><i class="fa fa-upload"></i> Select file</button>
                     or drag and drop a file.
                 </div>
+
+                <div ng-show="data.photo">
+                    <img ng-src="{{data.photo}}" ng-show="data.type.indexOf('image') != -1" />
+                    <a href="{{data.url_photo}}" target="_blank" ng-hide="data.type == 'image/jpeg'">{{data.url_photo}}</a>
+                    <label for="imgDescription">Say something about this picture:</label>
+                    <textarea name="imgDescription" id="imgDescription" ng-model="data.text" class="form-control"></textarea>
+                </div>
+
             </form>
 
         </div>

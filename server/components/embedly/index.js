@@ -127,7 +127,6 @@ embedly.prototype.canonizeParams = function(params) {
 
 embedly.prototype.matchUrls = function(urls) {
   if (!this.config.servicesRegExp) {
-      console.log("00000000000000");
     return urls.slice(0);
   } else {
       console.log("this.config.servicesRegExp");

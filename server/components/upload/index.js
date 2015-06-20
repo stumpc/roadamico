@@ -29,7 +29,6 @@ module.exports = {
       //deferred.reject('File upload not implemented yet');
         cloudinary.uploader.upload(file.path, function(result) {
             fs.unlinkSync(file.path); // Delete the file
-            console.log("RESULT URL: " + result.url);
             deferred.resolve(result.url);
         }, { resource_type: 'raw'});
     }

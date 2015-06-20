@@ -16,7 +16,8 @@ angular.module('roadAmicoApp', [
   'angularUtils.directives.dirDisqus',
   'akoenig.deckgrid',
   'textAngular',
-  'ui.sortable'
+  'ui.sortable',
+  'blockUI'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider

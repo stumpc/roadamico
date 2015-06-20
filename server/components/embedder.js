@@ -18,20 +18,16 @@ module.exports = function (url) {
     });
   } else {
     // Embedly API: https://github.com/embedly/embedly-node
-      console.log('KEY: '+ config.embedly.key);
+      //console.log('KEY: '+ config.embedly.key);
     new embedly({key: config.embedly.key}, function (err, api) {
       if (err) {
-          console.log('EEEEEEEEEEEEEEEEE');
         return deferred.reject(err);
       }
-        console.log('kkkkkkkkkk'+url);
-        console.log('api: '+ JSON.stringify(api));
+
       api.oembed({url: url}, function (err, obj) {
         if (err) {
-            console.log('ERROR' + JSON.stringify(err));
           return deferred.reject(err);
         }
-          console.log('AAAAAAAAAAAAAA');
         deferred.resolve(obj[0]);
       });
     });

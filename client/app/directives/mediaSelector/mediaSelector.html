@@ -34,6 +34,11 @@
         <div ng-show="data.embed">
           <div embedded-media="data.embed"></div>
         </div>
+        <br>
+        <div ng-show="data.url && !data.photo">
+          <label for="linkDescription">Say something about this link:</label>
+          <textarea name="linkDescription" id="linkDescription" ng-model="data.text" class="form-control"></textarea>
+        </div>
 
         <div class="share">
           <button type="button" class="btn btn-ra-red" ng-show="data.file || data.embed" ng-click="cancel()"><i class="fa fa-times"></i> Cancel</button>

@@ -42,7 +42,7 @@ angular.module('roadAmicoApp')
                   return $timeout(function () {
                       scope.showLoader = false;
                       $state.go('.', {}, { reload: true });
-                  }, 2000);
+                  }, 3000);
               }
           });
       }

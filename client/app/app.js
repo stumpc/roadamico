@@ -19,12 +19,13 @@ angular.module('roadAmicoApp', [
   'ui.sortable',
   'blockUI'
 ])
-  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, blockUIConfig) {
     $urlRouterProvider
       .otherwise('/');
 
     $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push('authInterceptor');
+    blockUIConfig.autoBlock = false;
   })
 
   .factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {

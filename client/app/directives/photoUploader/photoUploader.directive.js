@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-    .directive('photoUploader', function ($http, $q, $upload, Place) {
+    .directive('photoUploader', function ($http, $q, $upload, Place, blockUI) {
         return {
             templateUrl: 'app/directives/photoUploader/photoUploader.html',
             restrict: 'EA',
@@ -58,6 +58,7 @@ angular.module('roadAmicoApp')
                 scope.$watch('data.url_photo', function (value) {
                     if(value && value.length > 0){
                         scope.loading = true;
+                        blockUI.start();
                         scope.$parent.photos[scope.data.place._id] = value;
                         $http.get('/api/utils/embed/' + encodeURIComponent(value)).success(function (result) {
                             scope.loading = false;
@@ -68,6 +69,7 @@ angular.module('roadAmicoApp')
                             }
                             Place.saveFeedPhoto({id: scope.data.place._id}, feed).$promise.then(function (_place) {
                                 scope.loading = false;
+                                blockUI.stop();
                                 scope.data.url_photo = "";
                                 delete scope.data.embed;
                             });
@@ -77,6 +79,7 @@ angular.module('roadAmicoApp')
 
                 var uploadPhoto = function(file) {
                     scope.loading = true;
+                    blockUI.start();
                     var promise;
                     var deferred = $q.defer();
                     $upload.upload({
@@ -93,6 +96,7 @@ angular.module('roadAmicoApp')
                         }
                         Place.saveFeedPhoto({id: scope.data.place._id}, feed).$promise.then(function (_place) {
                             scope.loading = false;
+                            blockUI.stop();
                         });
                     });
                 };

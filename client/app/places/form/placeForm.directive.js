@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .directive('placeForm', function ($state, $timeout, $location, Auth, Place, placeUtil) {
+  .directive('placeForm', function ($state, $timeout, $location, Auth, Place, placeUtil, blockUI) {
     return {
       templateUrl: 'app/places/form/placeForm.html',
       restrict: 'EA',
@@ -36,11 +36,13 @@ angular.module('roadAmicoApp')
           };
 
           scope.$watch('photos[entry.place._id]', function (value) {
-              if(value && (_.contains(value, "blob"))){
+              if( value && (value.indexOf("blob") != -1 )){
                   scope.showFileSelect = false;
                   scope.showLoader = true;
+                  blockUI.start();
                   return $timeout(function () {
                       scope.showLoader = false;
+                      blockUI.stop();
                       $state.go('.', {}, { reload: true });
                   }, 3000);
               }

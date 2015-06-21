@@ -56,6 +56,7 @@ angular.module('roadAmicoApp')
                 };
 
                 scope.$watch('data.url_photo', function (value) {
+                    //console.log("VALUE: " + value);
                     if(value && value.length > 0){
                         scope.loading = true;
                         blockUI.start();
@@ -82,11 +83,12 @@ angular.module('roadAmicoApp')
                     blockUI.start();
                     var promise;
                     var deferred = $q.defer();
+                    //console.log("url_photo: " + file);
                     $upload.upload({
                         url: '/api/utils/upload',
                         file: file
                     }).success(function (data) {
-                        deferred.resolve(data.url_photo);
+                        deferred.resolve(data.url);
                     });
                     promise = deferred.promise;
                     promise.then(function (url) {
@@ -94,6 +96,7 @@ angular.module('roadAmicoApp')
                             datetime: moment().toISOString(),
                             photo: url
                         }
+                        //console.log('URL' + url);
                         Place.saveFeedPhoto({id: scope.data.place._id}, feed).$promise.then(function (_place) {
                             scope.loading = false;
                             blockUI.stop();

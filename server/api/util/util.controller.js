@@ -15,7 +15,7 @@ exports.embed = function(req, res) {
 
 exports.uploadImage = function (req, res) {
   upload.image(req.files.file).then(function (url) {
-    res.json({url: url});
+    res.json({url: decodeURIComponent(url)});
   }).catch(function (err) {
     handleError(res, err);
   });

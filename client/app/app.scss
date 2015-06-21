@@ -16,6 +16,34 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
     padding: 0.2em 0;
 }
 
+// Custom BlockUI style
+
+
+.block-ui-message-container {
+  position: absolute;
+  top: 35%;
+  left: 0;
+  right: 0;
+  height: 0;
+  text-align: center;
+  z-index: 10001;
+}
+
+.block-ui-message {
+  display: inline-block;
+  text-align: center;
+  background-color: #fff !important;
+  color: #e74c3c !important;
+  padding: 20px;
+  border-radius: 4px;
+  font-size: 20px;
+  font-weight: bold;
+  /* needed for IE */
+  filter: alpha(opacity=100);
+}
+
+
+
 // Component styles are injected through grunt
 // injector
 @import '_branding.scss';

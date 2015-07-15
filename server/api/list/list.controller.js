@@ -22,7 +22,7 @@ var canView = _.curry(function (user, list) {
   }
   var b = user.role === 'admin' || user.role === 'curator';
   var c = !!_.find(list.groupRestriction, function (group) {
-    return (group.administrator && group.administrator.equals(user._id)) || !!_.find(user.groups, function (groupId) {
+    return (group && group.administrator && group.administrator.equals(user._id)) || !!_.find(user.groups, function (groupId) {
       return group._id.equals(groupId);
     });
   }) && list.published;

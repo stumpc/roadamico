@@ -6,5 +6,7 @@ before_script:
   - gem install sass
   - bower install
 services: mongodb
+notifications:
+  slack: roadamico:DIzDkCfGkYdNEOO1iif9tqME
 after_success:
   - bash ./travis/after_success.sh

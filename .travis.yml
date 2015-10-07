@@ -8,5 +8,7 @@ before_script:
 services: mongodb
 notifications:
   slack: roadamico:DIzDkCfGkYdNEOO1iif9tqME
+before_deploy:
+  - rvm 1.9.3 do gem install net-ssh -v 2.9.2
 after_success:
   - bash ./travis/after_success.sh

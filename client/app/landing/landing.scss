@@ -170,48 +170,59 @@ body {
       font-size: 3em;
     }
 
-    .circular1 {
-      width: 300px;
-      height: 300px;
-      border-radius: 150px;
-      margin: 0 auto;
-      -webkit-border-radius: 150px;
-      -moz-border-radius: 150px;
-      background: url(/assets/images/landing/LuciaBinotti.jpg) no-repeat;
-      background-size: cover;
-      box-shadow: 0 0 8px rgba(0, 0, 0, .8);
-      -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
-      -moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+    .teammembers {
+      margin-top: 2%;
+      margin-bottom: 2%;
+
+      .circular1 {
+        width: 300px;
+        height: 300px;
+        border-radius: 150px;
+        margin: 0 auto;
+        -webkit-border-radius: 150px;
+        -moz-border-radius: 150px;
+        background: url(/assets/images/landing/LuciaBinotti.jpg) no-repeat;
+        background-size: cover;
+        box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+        -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+        -moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+      }
+
+      .circular2 {
+        width: 300px;
+        height: 300px;
+        border-radius: 150px;
+        margin: 0 auto;
+        -webkit-border-radius: 150px;
+        -moz-border-radius: 150px;
+        background: url(/assets/images/landing/BeatriceBinotti.jpg) no-repeat;
+        background-size: cover;
+        box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+        -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+        -moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+      }
+
+      .circular3 {
+        width: 300px;
+        height: 300px;
+        border-radius: 150px;
+        margin: 0 auto; 
+        -webkit-border-radius: 150px;
+        -moz-border-radius: 150px;
+        background: url(/assets/images/landing/AndreaLarson.jpg) no-repeat;
+        background-size: cover;
+        box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+        -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+        -moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+      }
     }
 
-    .circular2 {
-      width: 300px;
-      height: 300px;
-      border-radius: 150px;
-      margin: 0 auto;
-      -webkit-border-radius: 150px;
-      -moz-border-radius: 150px;
-      background: url(/assets/images/landing/BeatriceBinotti.JPG) no-repeat;
-      background-size: cover;
-      box-shadow: 0 0 8px rgba(0, 0, 0, .8);
-      -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
-      -moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
-    }
-
-    .circular3 {
-      width: 300px;
-      height: 300px;
-      border-radius: 150px;
-      margin: 0 auto; 
-      -webkit-border-radius: 150px;
-      -moz-border-radius: 150px;
-      background: url(/assets/images/landing/AndreaLarson.jpg) no-repeat;
-      background-size: cover;
-      box-shadow: 0 0 8px rgba(0, 0, 0, .8);
-      -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
-      -moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
-    }
+    
   }
+
+
+
+
 
 
   .panel1 {

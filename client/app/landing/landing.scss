@@ -226,9 +226,23 @@ body {
     color: #fff;
     background-color: #e74c3c;
 
+    h2 {
+      padding-bottom: 2%;
+    }
+
   }
 
-
+  .header2{
+    margin: 0px 0 0 0;
+    padding: 100px 0 0 0;
+    min-height: 600px !important;
+    height: 100%;
+    background: url(/assets/images/landing/madrid2.jpg) center;
+    background-size: cover;
+    text-align: center;
+    vertical-align: middle;
+    color: rgb(51, 51, 51);
+  }
 
   .panel1 {
     margin: -20px 0 0 0;

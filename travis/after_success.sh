@@ -12,6 +12,15 @@ if [[ $TRAVIS_PULL_REQUEST == "false" && $TRAVIS_BRANCH == "master" ]]
     echo yes | grunt buildcontrol:heroku
     heroku keys:remove `cat ~/.ssh/id_rsa.pub | cut -d \  -f 3`
 fi
+if [[ $TRAVIS_PULL_REQUEST == "false" && $TRAVIS_BRANCH == "development" ]]
+  then
+    gem install heroku
+    echo yes | heroku keys:add
+    grunt build
+    echo yes | grunt buildcontrol:heroku
+    heroku keys:remove `cat ~/.ssh/id_rsa.pub | cut -d \  -f 3`
+fi
+
 if [[ $TRAVIS_PULL_REQUEST == "false" ]]
   then
     echo $TRAVIS_BRANCH

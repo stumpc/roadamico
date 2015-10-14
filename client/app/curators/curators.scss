@@ -1,0 +1,159 @@
+html,
+body {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    display: block;
+}
+
+.landing-page {
+
+  .btn-dark {
+      border-radius: 0;
+      color: #fff;
+      background-color: rgba(0,0,0,0.4);
+  }
+
+  .btn-dark:hover,
+  .btn-dark:focus,
+  .btn-dark:active {
+      color: #fff;
+      background-color: rgba(0,0,0,0.7);
+  }
+
+  .btn-light {
+      border-radius: 0;
+      color: #333;
+      background-color: rgb(255,255,255);
+  }
+
+  .btn-light:hover,
+  .btn-light:focus,
+  .btn-light:active {
+      color: #333;
+      background-color: rgba(255,255,255,0.8);
+  }
+  
+  .text-vertical-center {
+    text-align: center;
+    vertical-align: middle;
+    padding-top: -50px;
+  }
+
+  .text-vertical-center h1 {
+    font-family: 'Satisfy', cursive;
+    margin: -20px;
+    padding: 0;
+    font-size: 4.5em;
+    font-weight: 700;
+  }
+
+  .headercur {
+    margin: -20px 0 0 0;
+    padding: 100px 0 0 0;
+    min-height: 600px;
+    height: 100%;
+    background: url(/assets/images/landing/florence.jpg) center;
+    background-size: cover;
+    text-align: center;
+    vertical-align: middle;
+    color: rgb(51, 51, 51);
+
+    .space-top-medium{
+      h1 {
+        font-family: 'Satisfy', cursive;
+        margin:0;
+        font-size: 4.5em;
+        font-weight: 700;
+      }
+    }
+    
+  }
+
+  .about {
+    p {
+      font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+
+    h2 {
+      font-weight: 500;
+      font-family: 'Satisfy', cursive;
+      font-size: 36px;
+    }
+
+  }
+
+  .services {
+    color: #fff;
+    background-color: #e74c3c;
+
+    hr.small {
+      max-width: 100px;
+    }
+
+    .text-primary{
+      color: #e74c3c
+    }
+
+    p{
+      min-height: 50px;
+    }
+  }
+
+  .panel1 {
+    margin: -20px 0 0 0;
+    padding: 100px 0 0 0;
+    height: 300px;
+    background: url(/assets/images/landing/road.jpg) center;
+    background-size: cover;
+
+    color: white;
+    text-align: center;
+
+    h1 {
+      margin: 0;
+    }
+  }
+
+  .panel2 {
+    background: url(/assets/images/patterns/dark_embroidery.png);
+    min-height: 250px;
+    color: white;
+    padding: 20px;
+    box-shadow: inset 0 0 100px black;
+
+    .flag {
+      padding: 5px 15px 15px 15px;
+      border-radius: 4px;
+      margin-top: 30px;
+      box-shadow: 3px 3px 8px rgba(0,0,0,0.4);
+    }
+  }
+
+  .studyabroad {
+    border-top: 3px $darkgray-light solid;
+    min-height: 250px;
+
+    p {
+      font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-weight: 200;
+      font-size: 21px;
+    }
+
+    h2 {
+      font-weight: 500;
+      font-family: 'Satisfy', cursive;
+      font-size: 36px;
+    }
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  hr {
+    border-top: 1px solid $darkgray-dark;
+    margin: 50px;
+  }
+
+}

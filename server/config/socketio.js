@@ -18,6 +18,7 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+  require('../api/curators/curators.socket').register(socket);
   require('../api/destination/destination.socket').register(socket);
   require('../api/util/util.socket').register(socket);
   require('../api/notification/notification.socket').register(socket);

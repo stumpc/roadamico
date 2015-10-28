@@ -1,276 +1,240 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
-
 <div class="list-view container">
   <ol class="breadcrumb">
     <li><a ui-sref="lists">Lists</a></li>
     <li class="active">{{list.name}}</li>
   </ol>
-
   <h1 ng-hide="editing">{{list.name}}</h1>
   <input type="text" class="form-control space-top-medium space-bottom-medium list-name"
-         ng-model="list.name" ng-show="editing" ng-change="save()"
-         ng-model-options="{ updateOn: 'default blur', debounce: {'default': 1250, 'blur': 0} }" />
-
+  ng-model="list.name" ng-show="editing" ng-change="save()"
+  ng-model-options="{ updateOn: 'default blur', debounce: {'default': 1250, 'blur': 0} }" />
   <div class="space-bottom-medium">
     <span class="badge badge-info space-right-small" ng-repeat="group in list.groupRestriction">{{group.name}}</span>
   </div>
-
   <!-- Controls -->
   <div ng-show="canEdit()" class="well">
     <a ui-sref="^.edit" class="btn btn-ra-teal" ng-hide="editing"><i class="fa fa-pencil"></i> Edit</a>
     <a ui-sref="^.view" class="btn btn-ra-teal" ng-show="editing"><i class="fa fa-save"></i> I'm Done Editing</a>
-
     <a class="btn btn-ra-teal-hollow" ng-show="canEdit(true)" ui-sref="^.settings"><i class="fa fa-cog"></i> Settings</a>
     <button ng-show="editing && canEdit(true)" class="btn btn-ra-red-hollow" ng-click="delete()"><i class="fa fa-trash"></i> Delete</button>
     <div rating ng-model="rating" state-on="['fa', 'fa-star']" state-off="['fa', 'fa-star-o']" readonly="false"
-           ng-click="rate(rating);"></div>
-      <small><em>Based on {{list.ratings.length}} ratings</em></small>
+    ng-click="rate(rating);"></div>
+    <small><em>Based on {{list.ratings.length}} ratings</em></small>
   </div>
-
   <!-- Follow/Comment -->
   <div class="space-top-medium space-bottom-small" ng-hide="editing">
     <button class="btn btn-ra-red" ng-click="openComments()"><i class="fa fa-comment"></i> Comment</button>
-
     <span ng-show="isLoggedIn()">
       <button class="btn btn-ra-red" ng-click="follow()" ng-hide="userFollowing"><i class="fa fa-plus"></i> Follow</button>
       <button class="btn btn-ra-red-hollow" ng-click="unfollow()" ng-show="userFollowing"><i class="fa fa-minus"></i> Unfollow</button>
     </span>
   </div>
-
   <div ng-show="!editing && mapVisible">
     <map zoom="12" center="[35.910419, -79.049592]" scrollwheel="false"></map>
   </div>
-
   <div ui-sortable="sortableOptions" ng-model="list.entries">
-      <div ng-repeat="entry in list.entries" class="entry">
-        <div class="edit-controls" ng-show="editing">
-          <button ng-click="remove($index)" class="btn btn-ra-red btn-xs btn-block"><i class="fa fa-times"></i></button>
-          <button ng-click="moveUp($index)" class="btn btn-ra-teal btn-xs btn-block"><i class="fa fa-arrow-up"></i></button>
-          <button ng-click="moveDown($index)" class="btn btn-ra-teal btn-xs btn-block"><i class="fa fa-arrow-down"></i></button>
-        </div>
-
-        <!-- Display a place -->
-        <div ng-if="entry.place" class="place">
-          <div class="row">
-            <div class="col-sm-3">
-              <a ui-sref="place.view({id: entry.place._id})">
-                <img ng-src="{{photos[entry.place._id]}}" class="thumbnail" />
-              </a>
+    <div ng-repeat="entry in list.entries" class="entry">
+      <div class="edit-controls" ng-show="editing">
+        <button ng-click="remove($index)" class="btn btn-ra-red btn-xs btn-block"><i class="fa fa-times"></i></button>
+        <button ng-click="moveUp($index)" class="btn btn-ra-teal btn-xs btn-block"><i class="fa fa-arrow-up"></i></button>
+        <button ng-click="moveDown($index)" class="btn btn-ra-teal btn-xs btn-block"><i class="fa fa-arrow-down"></i></button>
+      </div>
+      <!-- Display a place -->
+      <div ng-if="entry.place" class="place">
+        <div class="row">
+          <div class="col-sm-3">
+            <a ui-sref="place.view({id: entry.place._id})">
+              <img ng-src="{{photos[entry.place._id]}}" class="thumbnail" />
+            </a>
+          </div>
+          <div class="col-sm-9">
+            <div class="name space-bottom-small">
+              <a ui-sref="place.view({id: entry.place._id})">{{entry.place.locationDetails.name}}</a>
+              <div rating ng-model="ratings[entry.place._id]" state-on="['fa', 'fa-star']" state-off="['fa', 'fa-star-o']"
+              readonly="true" class="color-sunflower-dark space-left-large"></div>
             </div>
-
-            <div class="col-sm-9">
-              <div class="name space-bottom-small">
-                <a ui-sref="place.view({id: entry.place._id})">{{entry.place.locationDetails.name}}</a>
-                <div rating ng-model="ratings[entry.place._id]" state-on="['fa', 'fa-star']" state-off="['fa', 'fa-star-o']"
-                     readonly="true" class="color-sunflower-dark space-left-large"></div>
-              </div>
-
-              <!-- Location -->
-              <div class="row space-bottom-small" ng-show="entry.place.locationDetails.formatted_address">
-                <div class="col-xs-1"><i class="fa fa-lg fa-map-marker"></i></div>
-                <div class="col-xs-10">{{entry.place.locationDetails.formatted_address}}</div>
-              </div>
-
-              <!-- Phone -->
-              <div class="row space-bottom-small" ng-show="entry.place.locationDetails.formatted_phone_number">
-                <div class="col-xs-1"><i class="fa fa-lg fa-phone"></i></div>
-                <div class="col-xs-10">{{entry.place.locationDetails.formatted_phone_number}}</div>
-              </div>
-
-              <!-- Website -->
-              <div class="row space-bottom-small" ng-show="entry.place.locationDetails.website">
-                <div class="col-xs-1"><i class="fa fa-lg fa-globe"></i></div>
-                <div class="col-xs-10"><a href="{{entry.place.locationDetails.website}}">Website</a></div>
-              </div>
-
-              <!-- Google+ -->
-              <div class="row space-bottom-small" ng-show="entry.place.locationDetails.url">
-                <div class="col-xs-1"><i class="fa fa-lg fa-google-plus"></i></div>
-                <div class="col-xs-10"><a href="{{entry.place.locationDetails.url}}">Google+ Page</a></div>
-              </div>
-
-                <!-- Description -->
-                <div class="row space-bottom-small" ng-show="entry.place.description">
-                    <div class="col-xs-1"></div>
-                    <div class="col-xs-10">{{entry.place.description}}</div>
-                </div>
+            <!-- Location -->
+            <div class="row space-bottom-small" ng-show="entry.place.locationDetails.formatted_address">
+              <div class="col-xs-1"><i class="fa fa-lg fa-map-marker"></i></div>
+              <div class="col-xs-10">{{entry.place.locationDetails.formatted_address}}</div>
+            </div>
+            <!-- Phone -->
+            <div class="row space-bottom-small" ng-show="entry.place.locationDetails.formatted_phone_number">
+              <div class="col-xs-1"><i class="fa fa-lg fa-phone"></i></div>
+              <div class="col-xs-10">{{entry.place.locationDetails.formatted_phone_number}}</div>
+            </div>
+            <!-- Website -->
+            <div class="row space-bottom-small" ng-show="entry.place.locationDetails.website">
+              <div class="col-xs-1"><i class="fa fa-lg fa-globe"></i></div>
+              <div class="col-xs-10"><a href="{{entry.place.locationDetails.website}}">Website</a></div>
+            </div>
+            <!-- Google+ -->
+            <div class="row space-bottom-small" ng-show="entry.place.locationDetails.url">
+              <div class="col-xs-1"><i class="fa fa-lg fa-google-plus"></i></div>
+              <div class="col-xs-10"><a href="{{entry.place.locationDetails.url}}">Google+ Page</a></div>
+            </div>
+            <!-- Description -->
+            <div class="row space-bottom-small" ng-show="entry.place.description">
+              <div class="col-xs-1"></div>
+              <div class="col-xs-10">{{entry.place.description}}</div>
             </div>
           </div>
         </div>
-
-        <!-- Display photo -->
-        <div ng-if="entry.photo && (entry.photo.toLowerCase().indexOf('.jpg') > -1 || entry.photo.toLowerCase().indexOf('.png') > -1
-            || entry.photo.toLowerCase().indexOf('.gif') > -1 || entry.photo.toLowerCase().indexOf('.tif') > -1)" class="row">
+      </div>
+      <!-- Display photo -->
+      <div ng-if="entry.photo && (entry.photo.toLowerCase().indexOf('.jpg') > -1 || entry.photo.toLowerCase().indexOf('.png') > -1
+        || entry.photo.toLowerCase().indexOf('.gif') > -1 || entry.photo.toLowerCase().indexOf('.tif') > -1)" class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+          <div class="embed">
+            <img ng-src="{{entry.photo}}" >
+            <p ng-hide="showTextEditor[$index]">
+              {{entry.text}}
+            </p>
+            <div ng-hide="!editing || showTextEditor[$index]" class="space-bottom-smaller">
+              <a href="" ng-click="showTextEditor_$index=true; editCaption($index);">Edit</a></div>
+              <p ng-show="showTextEditor[$index]">
+                <label for="imgDescriptionEdit">Say something about this picture:</label>
+                <textarea name="imgDescriptionEdit" id="imgDescriptionEdit" ng-model="entry.text" class="form-control"></textarea>
+                <div class="buttons" ng-show="showTextEditor[$index]">
+                  <button class="btn btn-ra-teal" ng-click="save();showTextEditor[$index]=false;">
+                  <i class="fa fa-save"></i> Save
+                  </button>
+                </div>
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- Display files -->
+        <div ng-if="entry.photo && (entry.photo.toLowerCase().indexOf('.jpg') == -1 && entry.photo.toLowerCase().indexOf('.png') == -1
+          && entry.photo.toLowerCase().indexOf('.gif') == -1 && entry.photo.toLowerCase().indexOf('.tif') == -1)" class="row">
           <div class="col-sm-6 col-sm-offset-3">
             <div class="embed">
-              <img ng-src="{{entry.photo}}" >
-              <p ng-hide="showTextEditor[$index]">
-                  {{entry.text}}
-              </p>
+              <a href="{{entry.photo}}" target="_blank">{{ entry.embed.url }}</a>
+              <p ng-hide="showTextEditor[$index]">{{entry.text}}</p>
               <div ng-hide="!editing || showTextEditor[$index]" class="space-bottom-smaller">
-                  <a href="" ng-click="showTextEditor_$index=true; editCaption($index);">Edit</a></div>
-              <p ng-show="showTextEditor[$index]">
-                  <label for="imgDescriptionEdit">Say something about this picture:</label>
-                  <textarea name="imgDescriptionEdit" id="imgDescriptionEdit" ng-model="entry.text" class="form-control"></textarea>
+                <a href="" ng-click="showTextEditor[$index]=true;editCaption($index);">Edit</a></div>
+                <p ng-show="showTextEditor[$index]">
+                  <label for="fileDescriptionEdit">Say something about this file:</label>
+                  <textarea name="fileDescriptionEdit" id="fileDescriptionEdit" ng-model="entry.text" class="form-control"></textarea>
                   <div class="buttons" ng-show="showTextEditor[$index]">
-                     <button class="btn btn-ra-teal" ng-click="save();showTextEditor[$index]=false;">
-                         <i class="fa fa-save"></i> Save
-                     </button>
+                    <button class="btn btn-ra-teal" ng-click="save();showTextEditor[$index]=false;">
+                    <i class="fa fa-save"></i> Save
+                    </button>
                   </div>
-              </p>
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-
-      <!-- Display files -->
-        <div ng-if="entry.photo && (entry.photo.toLowerCase().indexOf('.jpg') == -1 && entry.photo.toLowerCase().indexOf('.png') == -1
-            && entry.photo.toLowerCase().indexOf('.gif') == -1 && entry.photo.toLowerCase().indexOf('.tif') == -1)" class="row">
-          <div class="col-sm-6 col-sm-offset-3">
-              <div class="embed">
-                  <a href="{{entry.photo}}" target="_blank">{{ entry.embed.url }}</a>
-                  <p ng-hide="showTextEditor[$index]">{{entry.text}}</p>
-                  <div ng-hide="!editing || showTextEditor[$index]" class="space-bottom-smaller">
-                      <a href="" ng-click="showTextEditor[$index]=true;editCaption($index);">Edit</a></div>
-                  <p ng-show="showTextEditor[$index]">
-                      <label for="fileDescriptionEdit">Say something about this file:</label>
-                      <textarea name="fileDescriptionEdit" id="fileDescriptionEdit" ng-model="entry.text" class="form-control"></textarea>
-                  <div class="buttons" ng-show="showTextEditor[$index]">
-                      <button class="btn btn-ra-teal" ng-click="save();showTextEditor[$index]=false;">
-                          <i class="fa fa-save"></i> Save
-                      </button>
-                  </div>
-                  </p>
+          <!-- Display rich text -->
+          <div ng-if="entry.text && !entry.photo && !entry.embed" class="text">
+            <div ng-hide="editing" ng-bind-html="entry.text"></div>
+            <div ng-if="editing" text-angular ng-model="entry.text" ng-change="save()" ng-model-options="{ updateOn: 'blur' }"></div>
           </div>
-        </div>
-      </div>
-
-        <!-- Display rich text -->
-        <div ng-if="entry.text && !entry.photo && !entry.embed" class="text">
-          <div ng-hide="editing" ng-bind-html="entry.text"></div>
-          <div ng-if="editing" text-angular ng-model="entry.text" ng-change="save()" ng-model-options="{ updateOn: 'blur' }"></div>
-        </div>
-
-        <!-- Display an embed -->
-        <div ng-if="entry.embed && !entry.photo">
-          <div class="row">
-            <div class="col-sm-6 col-sm-offset-3">
+          <!-- Display an embed -->
+          <div ng-if="entry.embed && !entry.photo">
+            <div class="row">
+              <div class="col-sm-6 col-sm-offset-3">
                 <div class="embed">
                   <div embedded-media="entry.embed" class="embed"></div>
-                    <p ng-hide="showTextEditor[$index]">{{entry.text}}</p>
-                    <div ng-hide="!editing || showTextEditor[$index]" class="space-bottom-smaller">
-                        <a href="" ng-click="showTextEditor_$index=true; editCaption($index);">Edit</a>
+                  <p ng-hide="showTextEditor[$index]">{{entry.text}}</p>
+                  <div ng-hide="!editing || showTextEditor[$index]" class="space-bottom-smaller">
+                    <a href="" ng-click="showTextEditor_$index=true; editCaption($index);">Edit</a>
+                  </div>
+                  <p ng-show="showTextEditor[$index]">
+                    <label for="imgDescriptionEdit">Say something about this picture:</label>
+                    <textarea name="imgDescriptionEdit" id="imgDescriptionEdit" ng-model="entry.text" class="form-control"></textarea>
+                    <div class="buttons" ng-show="showTextEditor[$index]">
+                      <button class="btn btn-ra-teal" ng-click="save();showTextEditor[$index]=false;">
+                      <i class="fa fa-save"></i> Save
+                      </button>
                     </div>
-                    <p ng-show="showTextEditor[$index]">
-                        <label for="imgDescriptionEdit">Say something about this picture:</label>
-                        <textarea name="imgDescriptionEdit" id="imgDescriptionEdit" ng-model="entry.text" class="form-control"></textarea>
-                        <div class="buttons" ng-show="showTextEditor[$index]">
-                            <button class="btn btn-ra-teal" ng-click="save();showTextEditor[$index]=false;">
-                                <i class="fa fa-save"></i> Save
-                            </button>
-                        </div>
-                    </p>
+                  </p>
                 </div>
+              </div>
             </div>
           </div>
         </div>
-
       </div>
-    </div>
-  <div class="new-entry" ng-show="editing">
-    <h2>Add something to the list:</h2>
-    <div class="tabs">
-      <tabset justified="true">
-        <tab heading="Place">
-
+      <div class="new-entry" ng-show="editing">
+        <h2>Add something to the list:</h2>
+        <div class="tabs">
+          <tabset justified="true">
+          <tab heading="Place">
           <div class="placeSelection">
             <label for="place">Search for and select a place to add:</label>
             <ui-select id="place" ng-model="newEntry.place" close-on-select="false">
-              <ui-select-match>{{$select.selected.locationDetails.name}}</ui-select-match>
-              <ui-select-choices repeat="place as place in places | filter: $select.search">
-                <div ng-bind-html="place.locationDetails.name | highlight: $select.search"></div>
-              </ui-select-choices>
+            <ui-select-match>{{$select.selected.locationDetails.name}}</ui-select-match>
+            <ui-select-choices repeat="place as place in places | filter: $select.search">
+            <div ng-bind-html="place.locationDetails.name | highlight: $select.search"></div>
+            </ui-select-choices>
             </ui-select>
-              <div class="row space-top-medium">
-                  <div class="col-sm-3">
-                      Place Not found?  <button class="btn btn-primary" data-ng-click="showAddPlaceForm()">Add Place</button>
-                  </div>
+            <div class="row space-top-medium">
+              <div class="col-sm-3">
+                Place Not found?  <button class="btn btn-primary" data-ng-click="showAddPlaceForm()">Add Place</button>
               </div>
-
+            </div>
             <div class="row space-top-medium" ng-show="newEntry.place">
               <div class="col-sm-3">
                 <img ng-src="{{photos[newEntry.place._id]}}" class="thumbnail" />
                 <div class="space-bottom-smaller"><a href="" ng-click="showFileUpload()">Edit</a></div>
-                  <div photo-uploader ng-hide="!showFileSelect" ng-model="newEntry"
-                       on-open="showFileUpload()" show-file-select='showFileSelect'></div>
-                  <img class="spinner" ng-src="/assets/images/loading_spinner.gif" ng-show="showLoader">
+                <div photo-uploader ng-hide="!showFileSelect" ng-model="newEntry"
+                on-open="showFileUpload()" show-file-select='showFileSelect'></div>
+                <img class="spinner" ng-src="/assets/images/loading_spinner.gif" ng-show="showLoader">
               </div>
-
               <div class="col-sm-9">
                 <div class="name space-bottom-small">
                   <a ui-sref="place.view({id: entry.place._id})">{{newEntry.place.locationDetails.name}}</a>
                   <div rating ng-model="ratings[newEntry.place._id]" state-on="['fa', 'fa-star']" state-off="['fa', 'fa-star-o']"
-                       readonly="true" class="color-sunflower-dark space-left-large"></div>
+                  readonly="true" class="color-sunflower-dark space-left-large"></div>
                 </div>
-
                 <!-- Location -->
                 <div class="row space-bottom-small" ng-show="newEntry.place.locationDetails.formatted_address">
                   <div class="col-xs-1"><i class="fa fa-lg fa-map-marker"></i></div>
                   <div class="col-xs-10">{{newEntry.place.locationDetails.formatted_address}}</div>
                 </div>
-
                 <!-- Phone -->
                 <div class="row space-bottom-small" ng-show="newEntry.place.locationDetails.formatted_phone_number">
                   <div class="col-xs-1"><i class="fa fa-lg fa-phone"></i></div>
                   <div class="col-xs-10">{{newEntry.place.locationDetails.formatted_phone_number}}</div>
                 </div>
-
                 <!-- Website -->
                 <div class="row space-bottom-small" ng-show="newEntry.place.locationDetails.website">
                   <div class="col-xs-1"><i class="fa fa-lg fa-globe"></i></div>
                   <div class="col-xs-10"><a href="{{newEntry.place.locationDetails.website}}">Website</a></div>
                 </div>
-
                 <!-- Google+ -->
                 <div class="row space-bottom-small" ng-show="newEntry.place.locationDetails.url">
                   <div class="col-xs-1"><i class="fa fa-lg fa-google-plus"></i></div>
                   <div class="col-xs-10"><a href="{{newEntry.place.locationDetails.url}}">Google+ Page</a></div>
                 </div>
-
                 <!-- Description Text -->
                 <div class="row space-bottom-small" ng-show="newEntry.place.description">
-                   <div class="col-xs-1"></div>
-                   <div class="col-xs-10">{{ newEntry.place.description }}</div>
+                  <div class="col-xs-1"></div>
+                  <div class="col-xs-10">{{ newEntry.place.description }}</div>
                 </div>
               </div>
-
               <button class="btn btn-ra-red space-top-medium" ng-click="newEntry = {}"><i class="fa fa-times"></i> Cancel</button>
             </div>
           </div>
-
-        </tab>
-        <tab heading="Writing">
+          </tab>
+          <tab heading="Writing">
           <div text-angular ng-model="newEntry.text"></div>
-        </tab>
-        <tab heading="Media">
+          </tab>
+          <tab heading="Media">
           <div media-selector ng-model="newEntry"></div>
-        </tab>
-      </tabset>
-
-      <div class="buttons">
-        <button class="btn btn-ra-teal" ng-click="add()"><i class="fa fa-plus"></i> Add</button>
+          </tab>
+          </tabset>
+          <div class="buttons">
+            <button class="btn btn-ra-teal" ng-click="add()"><i class="fa fa-plus"></i> Add</button>
+          </div>
+        </div>
+      </div>
+      <div ng-hide="list.entries.length">
+        Nothing has been added to this list yet.
+      </div>
+      <!-- Controls -->
+      <div ng-show="editing && list.entries.length" class="well">
+        <a ui-sref="^.view" class="btn btn-ra-teal" ng-show="editing"><i class="fa fa-save"></i> I'm Done Editing</a>
       </div>
     </div>
-  </div>
-
-  <div ng-hide="list.entries.length">
-    Nothing has been added to this list yet.
-  </div>
-
-  <!-- Controls -->
-  <div ng-show="editing && list.entries.length" class="well">
-    <a ui-sref="^.view" class="btn btn-ra-teal" ng-show="editing"><i class="fa fa-save"></i> I'm Done Editing</a>
-  </div>
-
-</div>
-
-<div ng-include="'components/footer/footer.html'"></div>
+    <div ng-include="'components/footer/footer.html'"></div>

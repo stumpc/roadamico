@@ -23,6 +23,7 @@ after_success:
   # Build
   - git config --global user.name "Christian Stump"
   - git config --global user.email "christian.m.stump@gmail.com"
+  - grunt build
   - grunt buildcontrol:herokuDev
   # Commit and Push dist folder to Heroku
   #  - cd dist

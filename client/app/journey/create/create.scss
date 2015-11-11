@@ -129,6 +129,7 @@
   width: 100%;
   vertical-align: middle; 
   text-align: center; 
+  
   p {
     width: 100%;
   }
@@ -136,4 +137,15 @@
 
 .cent {
     width: 100%;
+    margin:auto;
+    display: block;
+    border:3px solid #73AD21;
+}
+
+.para {
+    font-size: 20px;
+}
+
+.whiteText{
+    color:#fff;
 }

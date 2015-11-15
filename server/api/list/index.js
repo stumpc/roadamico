@@ -10,12 +10,12 @@ var router = express.Router();
 router.get('/public', controller.publicIndex);
 router.get('/', auth.isAuthenticated(), controller.index);
 router.get('/:id/public', controller.show);
-router.get('/:id', auth.isAuthenticated(), controller.show);
+router.get('/:id',    auth.isAuthenticated(), controller.show);
 router.post('/',      auth.isAuthenticated(), controller.create);
 router.put('/:id',    auth.isAuthenticated(), controller.update);
 router.patch('/:id',  auth.isAuthenticated(), controller.update);
 router.delete('/:id', auth.isAuthenticated(), controller.destroy);
 router.post('/:id/entry', auth.isAuthenticated(), controller.addEntry);
-router.post('/:id/rate',        auth.isAuthenticated(), controller.rate);
+router.post('/:id/rate',  auth.isAuthenticated(), controller.rate);
 
 module.exports = router;

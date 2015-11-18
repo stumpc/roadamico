@@ -7,7 +7,7 @@
                     Destinations
                 </a>
                 <ul ui:sortable ng:model="list">
-                    <li ng:repeat="item in list" class="whiteText">{{item}}</li>
+                    <li ng:repeat="(text, link) in list" class="whiteText"><a ng-href="journey/create/{{link}}">{{text}}</a></li>
                 </ul>
             </ul>
         </div>

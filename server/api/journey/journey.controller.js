@@ -6,9 +6,9 @@ var upload = require('../../components/upload');
 
 // Get list of journeys
 exports.index = function(req, res) {
-  Journey.find(function (err, journeys) {
-    if(err) { 
-      return handleError(res, err); 
+  Journey.find({}, function(err, journeys) {
+    if (err) {
+      return handleError(res, err);
     }
     return res.status(200).json(journeys);
   });
@@ -16,12 +16,12 @@ exports.index = function(req, res) {
 
 // Get a single journey
 exports.show = function(req, res) {
-  Journey.findById(req.params.id, function (err, journey) {
-    if(err) { 
-      return handleError(res, err); 
+  Journey.findById(req.params.id, function(err, journey) {
+    if (err) {
+      return handleError(res, err);
     }
-    if(!journey) { 
-      return res.status(404).send('Not Found'); 
+    if (!journey) {
+      return res.status(404).send('Not Found');
     }
     return res.json(journey);
   });
@@ -30,8 +30,8 @@ exports.show = function(req, res) {
 // Creates a new journey in the DB.
 exports.create = function(req, res) {
   Journey.create(req.body, function(err, journey) {
-    if(err) { 
-      return handleError(res, err); 
+    if (err) {
+      return handleError(res, err);
     }
     return res.status(201).json(journey);
   });
@@ -39,20 +39,20 @@ exports.create = function(req, res) {
 
 // Updates an existing journey in the DB.
 exports.update = function(req, res) {
-  if(req.body._id) { 
-    delete req.body._id; 
+  if (req.body._id) {
+    delete req.body._id;
   }
-  Journey.findById(req.params.id, function (err, journey) {
-    if (err) { 
-      return handleError(res, err); 
+  Journey.findById(req.params.id, function(err, journey) {
+    if (err) {
+      return handleError(res, err);
     }
-    if(!journey) { 
-      return res.status(404).send('Not Found'); 
+    if (!journey) {
+      return res.status(404).send('Not Found');
     }
     var updated = _.merge(journey, req.body);
-    updated.save(function (err) {
-      if (err) { 
-        return handleError(res, err); 
+    updated.save(function(err) {
+      if (err) {
+        return handleError(res, err);
       }
       return res.status(200).json(journey);
     });
@@ -61,16 +61,16 @@ exports.update = function(req, res) {
 
 // Deletes a journey from the DB.
 exports.destroy = function(req, res) {
-  Journey.findById(req.params.id, function (err, journey) {
-    if(err) { 
-      return handleError(res, err); 
+  Journey.findById(req.params.id, function(err, journey) {
+    if (err) {
+      return handleError(res, err);
     }
-    if(!journey) { 
-      return res.status(404).send('Not Found'); 
+    if (!journey) {
+      return res.status(404).send('Not Found');
     }
     journey.remove(function(err) {
-      if(err) { 
-        return handleError(res, err); 
+      if (err) {
+        return handleError(res, err);
       }
       return res.status(204).send('No Content');
     });

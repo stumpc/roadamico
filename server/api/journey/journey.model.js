@@ -4,9 +4,9 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var JourneySchema = new Schema({
+  datetime: String,
   name: String,
-  info: String,
-  active: Boolean
+  html: String
 });
 
 module.exports = mongoose.model('Journey', JourneySchema);

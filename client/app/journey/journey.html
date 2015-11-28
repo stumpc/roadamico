@@ -12,7 +12,10 @@
     <li class="list-group-item" ng-repeat="x in journeys">
       <h4 class="list-group-item-heading">
         <span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span>
-        <a class="listname"> {{x.name}}</a>
+        <!-- This is very hacky but it's the best option we have for right now... -->
+        <!-- To all future people reading this, it would probably be best that you learn ui-sref
+        if you want to get this right in the future. -->
+        <a href="/journey/create?id={{x._id}}"class="listname"> {{x.name}}</a> 
       </h4>
     </li>
   </ul>

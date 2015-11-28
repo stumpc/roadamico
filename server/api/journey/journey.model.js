@@ -5,8 +5,8 @@ var mongoose = require('mongoose'),
 
 var JourneySchema = new Schema({
   name: String,
-  destinations: [String],
-  html: String
+  html: String,
+  destinations: [String]
 });
 
 module.exports = mongoose.model('Journey', JourneySchema);

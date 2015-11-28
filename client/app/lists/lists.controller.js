@@ -5,11 +5,11 @@ angular.module('roadAmicoApp')
     $scope.isLoggedIn = Auth.isLoggedIn;
     $scope.showLoader = true;
 
-    if (Auth.isLoggedIn()) {
+    // if (Auth.isLoggedIn()) {
       $scope.lists = List.query();
-    } else {
-      $scope.lists = List.publicLists();
-    }
+    // } else {
+    //   $scope.lists = List.publicLists();
+    // }
 
 
     $scope.lists.$promise.then(function () {

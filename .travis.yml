@@ -1,14 +1,13 @@
 language: node_js
 node_js:
-  - '0.11'
+- '0.11'
 before_install:
-  - rvm install 2.2.2
+- rvm install 2.2.2
 before_script:
-  - npm install -g bower grunt-cli
-  - gem install sass
-  - bower install
+- npm install -g bower grunt-cli
+- gem install sass
+- bower install
 services: mongodb
-notifications:
-  slack: roadamico:DIzDkCfGkYdNEOO1iif9tqME
 after_success:
-  - bash ./travis/after_success.sh
+  bash ./travis/after_success.sh
+  

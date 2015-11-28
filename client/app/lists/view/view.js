@@ -1,14 +1,14 @@
 'use strict';
 
 angular.module('roadAmicoApp')
-  .config(function ($stateProvider) {
+  .config(function($stateProvider) {
     $stateProvider
       .state('list.view', {
         url: '/view',
         templateUrl: 'app/lists/view/view.html',
         controller: 'ViewListCtrl',
         resolve: {
-          editing: function () {
+          editing: function() {
             return false;
           }
         }
@@ -18,7 +18,7 @@ angular.module('roadAmicoApp')
         templateUrl: 'app/lists/view/view.html',
         controller: 'ViewListCtrl',
         resolve: {
-          editing: function () {
+          editing: function() {
             return true;
           }
         }

@@ -1,5 +1,5 @@
-git config --global user.email "haider.mahmood@gmail.com"
-git config --global user.name "Haider Mahmood"
+git config --global user.email "christian.m.stump@gmail.com"
+git config --global user.name "Christian Stump"
 echo "Host heroku.com" >> ~/.ssh/config
 echo "   StrictHostKeyChecking no" >> ~/.ssh/config
 echo "   CheckHostIP no" >> ~/.ssh/config;
@@ -9,9 +9,10 @@ if [[ $TRAVIS_PULL_REQUEST == "false" && $TRAVIS_BRANCH == "development" ]]
     gem install heroku
     echo yes | heroku keys:add
     grunt build
-    echo yes | grunt buildcontrol:heroku
+    echo yes | grunt buildcontrol:herokuDev
     heroku keys:remove `cat ~/.ssh/id_rsa.pub | cut -d \  -f 3`
 fi
+
 if [[ $TRAVIS_PULL_REQUEST == "false" ]]
   then
     echo $TRAVIS_BRANCH

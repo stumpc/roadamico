@@ -1,0 +1,20 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+<div class="container home-page page listsview-page">
+  <div class="jumbotron">
+    <div class="jumbotron-photo">
+      <img src="/assets/images/banner.jpg">
+    </div>
+  </div>
+  <h1>Journeys</h1>
+  <a href="/journey/create" class="btn">Create a new journey</a>
+  <hr/>
+  <ul>
+    <li class="list-group-item" ng-repeat="x in journeys">
+      <h4 class="list-group-item-heading">
+        <span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span>
+        <a class="listname"> {{x.name}}</a>
+      </h4>
+    </li>
+  </ul>
+</div>
+<div ng-include="'components/footer/footer.html'"></div>

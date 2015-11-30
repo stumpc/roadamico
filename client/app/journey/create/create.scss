@@ -154,6 +154,7 @@ div p {
     font-size: 20px;
 }
 
+<<<<<<< HEAD
 #map_wrapper {
     height: 400px;
 }
@@ -162,3 +163,12 @@ div p {
     width: 100%;
     height: 100%;
 }
+=======
+img[style*="float: left"] {
+    margin-right: 14px;
+}
+
+img[style*="float: right"]{
+    margin-left: 14px;
+}
+>>>>>>> 9b88120be79f9d0a7010b9e06ef1d04abf806f3e

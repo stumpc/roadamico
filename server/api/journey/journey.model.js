@@ -5,8 +5,8 @@ var mongoose = require('mongoose'),
 
 var JourneySchema = new Schema({
   name: String,
-  info: String,
-  active: Boolean
+  html: String,
+  destinations: [String]
 });
 
 module.exports = mongoose.model('Journey', JourneySchema);

@@ -17,3 +17,6 @@ angular.module('roadAmicoApp')
     //$scope.list = ["Old Well", "Clock Tower", "Kenan Stadium", "Davis Library", "Undergrad Library", "Franklin Street", "Polk Place", "Wesley's House"];
     $scope.list = x;
   });
+
+
+ 

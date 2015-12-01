@@ -16,6 +16,7 @@ angular.module('roadAmicoApp')
 
                     $scope.placeName = res.data.name;
                     $scope.newEntry.text = res.data.html;
+                    console.log($scope.newEntry.text);
 
                     var dests = res.data.destinations;
 

@@ -10,12 +10,14 @@ angular.module('roadAmicoApp')
         //$scope.list = ["Old Well", "Clock Tower", "Kenan Stadium", "Davis Library", "Undergrad Library", "Franklin Street", "Polk Place", "Wesley's House"];
         $scope.lists = { };
 
+
         if (journeyId != null) {
             $http.get('/api/journey/' + journeyId)
                 .then(function(res) {
+                	$scope.newEntry = { };
 
                     $scope.placeName = res.data.name;
-                    //$scope.newEntry.text = res.data.html;
+                    $scope.newEntry.text = res.data.html;
                     console.log(res);
 
                     var dests = res.data.destinations;

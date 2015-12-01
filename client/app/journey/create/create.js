@@ -11,12 +11,12 @@ angular.module('roadAmicoApp')
   });
 
 
-jQuery(function($) {
-    // Asynchronously Load the map API 
-    var script = document.createElement('script');
-    script.src = "http://maps.googleapis.com/maps/api/js?sensor=false&callback=initialize";
-    document.body.appendChild(script);
-});
+// jQuery(function($) {
+//     // Asynchronously Load the map API 
+//     // var script = document.createElement('script');
+//     // script.src = "http://maps.googleapis.com/maps/api/js?sensor=false&callback=initialize";
+//     // document.body.appendChild(script);
+// });
 
 function initialize() {
     var map;
@@ -82,3 +82,4 @@ function initialize() {
     });
     
 }
+// google.maps.event.addDomListener(window, "load", initialize);

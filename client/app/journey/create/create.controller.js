@@ -41,7 +41,7 @@ angular.module('roadAmicoApp')
                 return [value];
             });
 
-            console.log(array);q
+            console.log(array);
 
             var postData = {
                 destinations: array,

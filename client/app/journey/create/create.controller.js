@@ -8,7 +8,7 @@ angular.module('roadAmicoApp')
         var journeyId = location.search.split('id=')[1]
 
         //$scope.list = ["Old Well", "Clock Tower", "Kenan Stadium", "Davis Library", "Undergrad Library", "Franklin Street", "Polk Place", "Wesley's House"];
-        $scope.lists = { };
+        $scope.lists = [ ];
 
 
         if (journeyId != null) {
@@ -21,16 +21,22 @@ angular.module('roadAmicoApp')
 
                     var dests = res.data.destinations;
 
-                    for (var i = 0; i < dests.length; i++) {
-                        $scope.lists[dests[i]] = dests[i].replace(" ", "");
-                    }
+                    // for (var i = 0; i < dests.length; i++) {
+                    //     $scope.lists[dests[i]] = dests[i].replace(" ", "");
+                    // }
+                    $scope.lists = dests;
 
                 });
         }
 
         $scope.addList = function() {
-            $scope.lists[$scope.list] = $scope.list.replace(" ", "");
+        	var addedList = {
+        		text: $scope.list,
+        		link: $scope.list.replace(" ", "")
+        	};
+        	$scope.lists.push(addedList);
             $scope.list = '';
+            console.log($scope.lists);
         };
 
         $scope.create = function() {
@@ -60,12 +66,12 @@ angular.module('roadAmicoApp')
             // Change from object to array for database entry. Without this it wouldn't be
             // compatable as of right now
 
-            var ar = $.map($scope.lists, function(value, index) {
-                return [value];
-            });
+            // var ar = $.map($scope.lists, function(value, index) {
+            //     return [value];
+            // });
 
             var newData = {
-                destinations: ar,
+                destinations: $scope.lists,
                 name: $scope.placeName,
                 html: $scope.newEntry.text
             };

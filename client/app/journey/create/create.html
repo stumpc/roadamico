@@ -18,7 +18,11 @@
                 </form>
 
                 <ul ui:sortable ng:model="lists">
-                    <li ng:repeat="(text, link) in lists" class="whiteText"><a ng-href="journey/create/{{link}}">{{text}}</a></li>
+                    <li ng:repeat="destination in lists" class="whiteText">
+                        <a ng-href="journey/create/{{destination.link}}">
+                            {{destination.text}}
+                        </a>
+                    </li>
                 </ul>
             </ul>
         </div>

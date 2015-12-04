@@ -58,6 +58,7 @@ angular.module('roadAmicoApp')
             };
 
             $http.post('/api/journey/', postData);
+            window.location.href = "/journey";
         };
 
         $scope.update = function() {
@@ -79,5 +80,6 @@ angular.module('roadAmicoApp')
             console.log(newData.destinations);
 
             $http.put('/api/journey/' + journeyId, newData);
+            window.location.href = "/journey";
         };
     });

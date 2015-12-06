@@ -39,20 +39,28 @@ angular.module('roadAmicoApp')
             console.log($scope.lists);
         };
 
+        $scope.save = function() {
+        	if(journeyId == null){
+        		$scope.create();
+        	} else {
+        		$scope.update();
+        	}
+        }
+
         $scope.create = function() {
             var date = new Date();
             
             // Change from object to array for database entry. Without this it wouldn't be
             // compatable as of right now
 
-            var array = $.map($scope.lists, function(value, index) {
-                return [value];
-            });
+            // var array = $.map($scope.lists, function(value, index) {
+            //     return [value];
+            // });
 
-            console.log(array);
+            // console.log(array);
 
             var postData = {
-                destinations: array,
+                destinations: $scope.lists,
                 name: $scope.placeName,
                 html: $scope.newEntry.text
             };
@@ -71,8 +79,24 @@ angular.module('roadAmicoApp')
             //     return [value];
             // });
 
+			// var destinationArray = $.map($scope.lists, function(value, index) {
+   //              return [value];
+   //          });
+
+   //          console.log(destinationArray);
+   			var destArray = [ ];
+   			var i;
+
+   			for(i = 0; i < $scope.lists.length; i++){
+   				var addedArray = {
+   					link: $scope.lists[i].link,
+   					text: $scope.lists[i].text
+   				}
+   				destArray.push(addedArray);
+   			}
+
             var newData = {
-                destinations: $scope.lists,
+                destinations: destArray,
                 name: $scope.placeName,
                 html: $scope.newEntry.text
             };

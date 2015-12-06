@@ -50,6 +50,8 @@ exports.update = function(req, res) {
       return res.status(404).send('Not Found');
     }
     var updated = _.merge(journey, req.body);
+    updated.markModified('destinations');
+    console.log(updated);
     updated.save(function(err) {
       if (err) {
         return handleError(res, err);
